@@ -9,3 +9,4 @@ git clone https://git.launchpad.net/testflinger-cli
 git clone https://git.launchpad.net/snappy-device-agents
 
 cp ../code/testflinger.conf ./testflinger/testflinger.conf
+cp ../code/testflinger-agent.conf ./testflinger-agent/testflinger-agent.conf

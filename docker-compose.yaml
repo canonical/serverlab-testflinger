@@ -7,9 +7,9 @@ services:
 
     networks:
       needham_int:
-        ipv4_address: 10.1.11.12
-    ports:
-      - "6379:6379"
+        ipv4_address: 10.1.11.14
+    expose:
+      - "6379"
     hostname: testflinger-db
 
     volumes:
@@ -35,9 +35,9 @@ services:
 
     networks:
       needham_int:
-        ipv4_address: 10.1.11.13
-    ports:
-      - "8000:8000"
+        ipv4_address: 10.1.11.10
+    expose:
+      - "8000"
     hostname: testflinger-api
 
     volumes:
@@ -78,7 +78,7 @@ services:
 
     networks:
       needham_int:
-        ipv4_address: 10.1.11.14
+        ipv4_address: 10.1.11.13
     hostname: testflinger-snappy
 
     volumes:
@@ -94,9 +94,9 @@ services:
 
     networks:
       needham_ext:
-        ipv4_address: 10.245.128.10
+        ipv4_address: 10.245.128.12
       needham_int:
-        ipv4_address: 10.1.11.10
+        ipv4_address: 10.1.11.12
     hostname: testflinger-cli
 
     volumes:
