@@ -18,10 +18,17 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
 
-    command: ["redis-server","--bind 0.0.0.0","--maxmemory 4096mb","--maxmemory-policy allkeys-lfu"]
+    command: [
+      "redis-server",
+      "--bind 0.0.0.0",
+      "--maxmemory 4096mb",
+      "--maxmemory-policy allkeys-lfu"
+    ]
 
   api:
     depends_on:
+      - db
+    links:
       - db
     # build image w/ deps
     build: 
@@ -38,8 +45,6 @@ services:
     volumes:
       - tf_data:/data
 
-    # user:
-    #   - ubuntu
     command: ["gunicorn","--bind 0.0.0.0:8000","testflinger:app"]
 
   agent:
@@ -60,13 +65,6 @@ services:
     volumes:
       - tf_data:/data
 
-    user: ubuntu
-    entrypoint:
-      # api key = final arg
-      - "maas login testflinger_a http://10.245.128.4:5240/MAAS/ \
-      YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD"
-
-    user: root
     command: ["/sbin/my_init","--","setuser","app","bash"]
 
   snappy:
@@ -103,13 +101,6 @@ services:
     volumes:
       - tf_data:/data
 
-    user: ubuntu
-    entrypoint:
-      # api key = final arg
-      - "maas login testflinger_a http://10.245.128.4:5240/MAAS/ \
-      YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD"
-
-    user: root
     command: ["/sbin/my_init","--","setuser","app","bash"]
 
 networks:
