@@ -11,8 +11,8 @@ COPY ./src/testflinger /data/testflinger
 WORKDIR /data/testflinger
 
 # Remove Redis from install scripts
-RUN sed -i '23 s/^/#/' ./setup.py \
-  && sed -i '30 s/^/#/' ./setup.py
+# RUN sed -i '23 s/^/#/' ./setup.py \
+#   && sed -i '30 s/^/#/' ./setup.py
 
 # Run setup
 RUN ./setup.py install
