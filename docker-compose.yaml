@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
   db:
@@ -6,7 +6,7 @@ services:
     image: redis
 
     networks:
-      internal:
+      needham_int:
         ipv4_address: 10.1.11.12
     ports:
       - "6379:6379"
@@ -28,15 +28,13 @@ services:
   api:
     depends_on:
       - db
-    links:
-      - db
     # build image w/ deps
-    build: 
+    build:
       context: .
       dockerfile: testflinger-api
 
     networks:
-      internal:
+      needham_int:
         ipv4_address: 10.1.11.13
     ports:
       - "8000:8000"
@@ -44,6 +42,9 @@ services:
 
     volumes:
       - tf_data:/data
+
+    environment:
+      - TESTFLINGER_CONFIG=/data/testflinger/testflinger.conf
 
     command: "gunicorn --bind 0.0.0.0:8000 testflinger:app" 
 
@@ -56,9 +57,9 @@ services:
       dockerfile: testflinger-agent
 
     networks:
-      external:
+      needham_ext:
         ipv4_address: 10.245.128.11
-      internal:
+      needham_int:
         ipv4_address: 10.1.11.11
     hostname: testflinger-agent
 
@@ -76,7 +77,7 @@ services:
       dockerfile: testflinger-snappy
 
     networks:
-      internal:
+      needham_int:
         ipv4_address: 10.1.11.14
     hostname: testflinger-snappy
 
@@ -92,9 +93,9 @@ services:
       dockerfile: testflinger-cli
 
     networks:
-      external:
+      needham_ext:
         ipv4_address: 10.245.128.10
-      internal:
+      needham_int:
         ipv4_address: 10.1.11.10
     hostname: testflinger-cli
 
@@ -104,12 +105,23 @@ services:
     command: ["/sbin/my_init","--","setuser","app","bash"]
 
 networks:
-  internal:
-    # use discrete docker network
-    external: true
-  external:
-    # use discrete docker network
-    external: true
+  needham_int:
+    driver: macvlan
+    driver_opts:
+        parent: eno1
+    ipam:
+      config:
+        - subnet: "10.1.10.0/23"
+          gateway: 10.1.10.2
+
+  needham_ext:
+    driver: macvlan
+    driver_opts:
+        parent: eno2
+    ipam:
+      config:
+        - subnet: "10.245.128.0/22"
+          gateway: 10.245.128.1
 
 volumes:
   db_data: {}
