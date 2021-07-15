@@ -104,6 +104,26 @@ services:
 
     command: ["/sbin/my_init","--","setuser","app","bash"]
 
+  # logstash:
+  #     depends_on:
+  #       - snappy
+  #     labels:
+  #       com.example.service: "logstash"
+  #       com.example.description: "For logging data"
+  #     image: logstash
+
+  #     networks:
+  #       needham_int:
+  #         ipv4_address: 10.1.11.15
+  #     expose:
+  #       - "5959"
+  #     hostname: testflinger-log
+
+  #     volumes:
+  #       - log_data/:/var
+
+  #     command: "logstash -f /logstash_dir/logstash.conf"
+
 networks:
   needham_int:
     driver: macvlan
@@ -126,3 +146,4 @@ networks:
 volumes:
   db_data: {}
   tf_data: {}
+  #  log_data: {}
