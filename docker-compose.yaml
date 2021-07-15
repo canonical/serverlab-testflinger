@@ -1,0 +1,125 @@
+version: "3"
+
+services:
+  db:
+    # use docker redis image
+    image: redis
+
+    networks:
+      internal:
+        ipv4_address: 10.1.11.12
+    ports:
+      - "6379:6379"
+    hostname: testflinger-db
+
+    volumes:
+      - db_data:/var/lib/redis
+
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+    command: ["redis-server","--bind 0.0.0.0","--maxmemory 4096mb","--maxmemory-policy allkeys-lfu"]
+
+  api:
+    depends_on:
+      - db
+    # build image w/ deps
+    build: 
+      context: .
+      dockerfile: testflinger-api
+
+    networks:
+      internal:
+        ipv4_address: 10.1.11.13
+    ports:
+      - "8000:8000"
+    hostname: testflinger-api
+
+    volumes:
+      - tf_data:/data
+
+    # user:
+    #   - ubuntu
+    command: ["gunicorn","--bind 0.0.0.0:8000","testflinger:app"]
+
+  agent:
+    depends_on:
+      - api
+    # build image w/ deps
+    build: 
+      context: .
+      dockerfile: testflinger-agent
+
+    networks:
+      external:
+        ipv4_address: 10.245.128.11
+      internal:
+        ipv4_address: 10.1.11.11
+    hostname: testflinger-agent
+
+    volumes:
+      - tf_data:/data
+
+    user: ubuntu
+    entrypoint:
+      # api key = final arg
+      - "maas login testflinger_a http://10.245.128.4:5240/MAAS/ \
+      YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD"
+
+    user: root
+    command: ["/sbin/my_init","--","setuser","app","bash"]
+
+  snappy:
+    depends_on:
+      - agent
+    # build image w/ deps
+    build: 
+      context: .
+      dockerfile: testflinger-snappy
+
+    networks:
+      internal:
+        ipv4_address: 10.1.11.14
+    hostname: testflinger-snappy
+
+    volumes:
+      - tf_data:/data
+
+  cli:
+    depends_on:
+      - snappy
+    # build image w/ deps
+    build: 
+      context: .
+      dockerfile: testflinger-cli
+
+    networks:
+      external:
+        ipv4_address: 10.245.128.10
+      internal:
+        ipv4_address: 10.1.11.10
+    hostname: testflinger-cli
+
+    volumes:
+      - tf_data:/data
+
+    user: ubuntu
+    entrypoint:
+      # api key = final arg
+      - "maas login testflinger_a http://10.245.128.4:5240/MAAS/ \
+      YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD"
+
+    user: root
+    command: ["/sbin/my_init","--","setuser","app","bash"]
+
+networks:
+  internal:
+    # use discrete docker network
+    external: true
+  external:
+    # use discrete docker network
+    external: true
+
+volumes:
+  db_data: {}
+  tf_data: {}

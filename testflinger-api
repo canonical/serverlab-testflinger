@@ -1,0 +1,18 @@
+FROM python:3.8-slim-buster
+
+EXPOSE 8000
+
+# Facilitate logging
+RUN mkdir -p /var/log/testflinger \
+  && chmod 777 /var/log/testflinger
+
+# Copy src
+COPY ./src/testflinger /data/testflinger
+WORKDIR /data/testflinger
+
+# Remove Redis from install scripts
+RUN sed -i '23 s/^/#/' ./setup.py \
+  && sed -i '30 s/^/#/' ./setup.py
+
+# Run setup
+RUN ./setup.py install

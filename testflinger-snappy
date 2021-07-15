@@ -1,0 +1,17 @@
+FROM python:3.8-slim-buster
+
+# Facilitate logging
+RUN mkdir -p /var/log/testflinger \
+  && chmod 777 /var/log/testflinger
+
+# Copy src
+COPY ./src/testflinger-agent /data/snappy
+WORKDIR /data/snappy
+RUN mkdir sut/
+
+# Copy snappy-agent files
+COPY ./sut/snappy/* /data/snappy/snappy-device-agents/sut/
+RUN ln -s /data/snappy/snappy-device-agents/snappy-device-agent
+
+# Run setup
+RUN ./setup.py install
