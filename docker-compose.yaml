@@ -109,6 +109,8 @@ services:
     volumes:
       - tf_data:/data
 
+    command: "/sbin/my_init -- bash -l"
+
   cli:
     depends_on:
       - snappy
@@ -131,6 +133,9 @@ services:
 
     volumes:
       - tf_data:/data
+
+    # environment:
+    #   - TESTFLINGER_SERVER=10.172.10.13
 
     command: "/sbin/my_init -- bash -l"
 
