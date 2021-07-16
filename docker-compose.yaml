@@ -102,6 +102,8 @@ services:
     restart: unless-stopped
 
     networks:
+      needham_ext:
+        ipv4_address: 10.245.128.12
       docker_int:
         ipv4_address: 10.172.10.12
     hostname: testflinger-snappy
