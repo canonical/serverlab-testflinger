@@ -82,7 +82,6 @@ services:
 
     command: "/sbin/my_init -- bash -l"
 
-    # restart: always
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
     #   interval: 3s
