@@ -81,3 +81,9 @@ WORKDIR /data/testflinger-cli
 RUN python3 setup.py install
 
 RUN chown -R ubuntu:ubuntu /data/
+
+# COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
+# RUN chmod 755 /tmp/tf-entrypoint.sh
+# USER ubuntu
+# ENTRYPOINT ["/tmp/tf-entrypoint.sh"]
+# USER root
