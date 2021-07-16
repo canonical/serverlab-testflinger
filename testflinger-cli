@@ -67,8 +67,8 @@ RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
 # Copy src
+RUN mkdir -p /data/testflinger-cli/sut/
 COPY ./src/testflinger-cli /data/testflinger-cli
-RUN mkdir /data/testflinger-cli/sut/
 
 # Copy tf-cli files
 COPY ./sut/cli/* /data/testflinger-cli/sut/

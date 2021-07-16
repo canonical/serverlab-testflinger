@@ -63,8 +63,8 @@ RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
 # Copy src
+RUN mkdir -p /data/snappy-device-agents/sut/
 COPY ./src/snappy-device-agents /data/snappy-device-agents
-RUN mkdir /data/snappy-device-agents/sut/
 
 # Copy snappy-agent config files
 COPY ./sut/snappy/* /data/snappy-device-agents/sut/

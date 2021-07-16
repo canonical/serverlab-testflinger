@@ -67,8 +67,8 @@ RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
 # Copy src
+RUN mkdir -p /data/testflinger-agent/sut/
 COPY ./src/testflinger-agent /data/testflinger-agent
-RUN mkdir /data/testflinger-agent/sut/
 
 # Copy tf-agent config files
 COPY ./sut/agent/* /data/testflinger-agent/sut/
