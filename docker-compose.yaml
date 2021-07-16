@@ -1,13 +1,16 @@
-version: "2"
+# 2.4 for networks -> gateway, init
+
+version: "2.4"
 
 services:
   db:
     # use docker redis image
     image: redis
+    init: true
 
     networks:
-      needham_int:
-        ipv4_address: 10.1.11.14
+      docker_int:
+        ipv4_address: 10.172.10.14
     expose:
       - "6379"
     hostname: testflinger-db
@@ -32,12 +35,16 @@ services:
     build:
       context: .
       dockerfile: testflinger-api
+    stdin_open: true
+    tty: true
+    privileged: true
+    init: true
 
     networks:
-      needham_int:
-        ipv4_address: 10.1.11.10
-    expose:
-      - "8000"
+      docker_int:
+        ipv4_address: 10.172.10.13
+    ports:
+      - "10.1.11.159:8000:8000"
     hostname: testflinger-api
 
     volumes:
@@ -55,18 +62,22 @@ services:
     build: 
       context: .
       dockerfile: testflinger-agent
+    stdin_open: true
+    tty: true
+    privileged: true
+    init: true
 
     networks:
       needham_ext:
-        ipv4_address: 10.245.128.11
-      needham_int:
-        ipv4_address: 10.1.11.11
+        ipv4_address: 10.245.128.10
+      docker_int:
+        ipv4_address: 10.172.10.10
     hostname: testflinger-agent
 
     volumes:
       - tf_data:/data
 
-    command: ["/sbin/my_init","--","setuser","app","bash"]
+    command: "/sbin/my_init -- bash -l"
 
   snappy:
     depends_on:
@@ -75,11 +86,16 @@ services:
     build: 
       context: .
       dockerfile: testflinger-snappy
+    stdin_open: true
+    tty: true
+    privileged: true
+    init: true
 
     networks:
-      needham_int:
-        ipv4_address: 10.1.11.13
+      docker_int:
+        ipv4_address: 10.172.10.12
     hostname: testflinger-snappy
+    init: true
 
     volumes:
       - tf_data:/data
@@ -91,18 +107,22 @@ services:
     build: 
       context: .
       dockerfile: testflinger-cli
+    stdin_open: true
+    tty: true
+    privileged: true
+    init: true
 
     networks:
       needham_ext:
-        ipv4_address: 10.245.128.12
-      needham_int:
-        ipv4_address: 10.1.11.12
+        ipv4_address: 10.245.128.11
+      docker_int:
+        ipv4_address: 10.172.10.11
     hostname: testflinger-cli
 
     volumes:
       - tf_data:/data
 
-    command: ["/sbin/my_init","--","setuser","app","bash"]
+    command: "/sbin/my_init -- bash -l"
 
   # logstash:
   #     depends_on:
@@ -113,26 +133,26 @@ services:
   #     image: logstash
 
   #     networks:
-  #       needham_int:
-  #         ipv4_address: 10.1.11.15
+  #       docker_int:
+  #         ipv4_address: 10.172.10.15
   #     expose:
   #       - "5959"
   #     hostname: testflinger-log
 
   #     volumes:
-  #       - log_data/:/var
+  #       - log_data:/var
 
   #     command: "logstash -f /logstash_dir/logstash.conf"
 
 networks:
-  needham_int:
-    driver: macvlan
+  docker_int:
+    driver: bridge
     driver_opts:
-        parent: eno1
+        parent: docker0
     ipam:
       config:
-        - subnet: "10.1.10.0/23"
-          gateway: 10.1.10.2
+        - subnet: "10.172.10.1/24"
+          gateway: 10.172.10.1
 
   needham_ext:
     driver: macvlan
@@ -146,4 +166,4 @@ networks:
 volumes:
   db_data: {}
   tf_data: {}
-  #  log_data: {}
+  # log_data: {}
