@@ -11,7 +11,7 @@ services:
 
     networks:
       docker_int:
-        ipv4_address: 10.172.10.14
+        ipv4_address: 10.172.10.12
     expose:
       - "6379"
     hostname: testflinger-db
@@ -77,6 +77,7 @@ services:
 
     volumes:
       - agent_data:/data/testflinger-agent
+      - snappy_data:/data/snappy-device-agents
 
     command: "/sbin/my_init -- bash -l"
 
@@ -85,30 +86,6 @@ services:
     #   interval: 3s
     #   retries: 5
     #   start_period: 30s
-
-  snappy:
-    depends_on:
-      - agent
-    # build image w/ deps
-    build: 
-      context: .
-      dockerfile: testflinger-snappy
-    stdin_open: true
-    tty: true
-    privileged: true
-    restart: unless-stopped
-
-    networks:
-      needham_ext:
-        ipv4_address: 10.245.128.12
-      docker_int:
-        ipv4_address: 10.172.10.12
-    hostname: testflinger-snappy
-
-    volumes:
-      - snappy_data:/data/snappy-device-agents
-
-    command: "/sbin/my_init -- bash -l"
 
   cli:
     depends_on:
