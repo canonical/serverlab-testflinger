@@ -7,7 +7,6 @@ EXPOSE 8000
 RUN apt-get update \
   && apt-get install -y \
     --no-install-recommends \
-    build-essential \
     curl \
     git \
     wget \
@@ -17,17 +16,24 @@ RUN apt-get update \
     python3-requests \
     python3-click
 
+RUN useradd -ms /bin/bash ubuntu 
+
 # facilitate logging
 RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
-# clone src
-WORKDIR /data
-RUN git clone https://git.launchpad.net/testflinger
+# clone src in volume dir
+WORKDIR /data/testflinger
+RUN git init \
+  && git remote add origin https://git.launchpad.net/testflinger \
+  && git fetch origin \
+  && git checkout -b master --track origin/master
 
 # run setup
-WORKDIR /data/testflinger
 RUN ./setup.py install
 
 # copy tf config files
 COPY ./code/testflinger.conf /data/testflinger
+
+# adjust perms on src files
+RUN chown -R ubuntu:ubuntu /data/testflinger

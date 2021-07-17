@@ -62,16 +62,18 @@ RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
 RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
-# clone src
-WORKDIR /data
-RUN git clone https://git.launchpad.net/snappy-device-agents
+# clone src in volume dir
+WORKDIR /data/snappy-device-agents
+RUN git init \
+  && git remote add origin https://git.launchpad.net/snappy-device-agents \
+  && git fetch origin \
+  && git checkout -b master --track origin/master
 # RUN ln -s /data/snappy-device-agents/snappy-device-agent
 
 # copy sut files
-RUN mkdir /data/snappy-device-agents/sut/
+RUN mkdir ./sut/
 COPY ./sut/snappy/* /data/snappy-device-agents/sut/
 
-WORKDIR /data/snappy-device-agents
 # USER ubuntu
 RUN python3 setup.py install
 
