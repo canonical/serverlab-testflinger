@@ -11,7 +11,7 @@ services:
 
     networks:
       docker_int:
-        ipv4_address: 10.172.10.12
+        ipv4_address: 10.172.10.13
     expose:
       - "6379"
     hostname: testflinger-db
@@ -43,7 +43,7 @@ services:
 
     networks:
       docker_int:
-        ipv4_address: 10.172.10.13
+        ipv4_address: 10.172.10.12
     ports:
       - "10.1.11.159:8000:8000"
     hostname: testflinger-api
@@ -89,7 +89,7 @@ services:
 
   cli:
     depends_on:
-      - snappy
+      - agent
     # build image w/ deps
     build: 
       context: .
@@ -116,7 +116,7 @@ services:
 
   # logstash:
   #     depends_on:
-  #       - snappy
+  #       - cli
   #     labels:
   #       com.example.service: "logstash"
   #       com.example.description: "For logging data"
