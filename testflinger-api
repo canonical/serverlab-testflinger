@@ -3,6 +3,8 @@ FROM python:3.8-slim-buster
 # REST api
 EXPOSE 8000
 
+ENV PATH /data/testflinger:$PATH
+
 # install deps
 RUN apt-get update \
   && apt-get install -y \
