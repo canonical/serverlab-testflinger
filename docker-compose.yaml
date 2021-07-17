@@ -39,7 +39,6 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    init: true
     restart: unless-stopped
 
     networks:
@@ -50,7 +49,7 @@ services:
     hostname: testflinger-api
 
     volumes:
-      - tf_data:/data/testflinger
+      - api_data:/data/testflinger
 
     environment:
       - TESTFLINGER_CONFIG=/data/testflinger/testflinger.conf
@@ -67,7 +66,6 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    init: true
     restart: unless-stopped
 
     networks:
@@ -78,7 +76,7 @@ services:
     hostname: testflinger-agent
 
     volumes:
-      - tf_data:/data/testflinger-agent
+      - agent_data:/data/testflinger-agent
 
     command: "/sbin/my_init -- bash -l"
 
@@ -98,7 +96,6 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    init: true
     restart: unless-stopped
 
     networks:
@@ -109,7 +106,7 @@ services:
     hostname: testflinger-snappy
 
     volumes:
-      - tf_data:/data/snappy-device-agents
+      - snappy_data:/data/snappy-device-agents
 
     command: "/sbin/my_init -- bash -l"
 
@@ -123,7 +120,6 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    init: true
     restart: unless-stopped
 
     networks:
@@ -134,7 +130,7 @@ services:
     hostname: testflinger-cli
 
     volumes:
-      - tf_data:/data/testflinger-cli
+      - cli_data:/data/testflinger-cli
 
     # environment:
     #   - TESTFLINGER_SERVER=10.172.10.13
@@ -182,5 +178,8 @@ networks:
 
 volumes:
   db_data: {}
-  tf_data: {}
+  api_data: {}
+  agent_data: {}
+  snappy_data: {}
+  cli_data: {}
   # log_data: {}
