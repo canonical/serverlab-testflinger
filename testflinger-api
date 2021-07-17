@@ -1,16 +1,19 @@
 FROM python:3.8-slim-buster
 
-# Facilitate logging
+# REST api
+EXPOSE 8000
+
+# facilitate logging
 RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
-# Copy src
-COPY ./src/testflinger /data/testflinger
+# clone src
+WORKDIR /data
+RUN git clone https://git.launchpad.net/testflinger
+
+# run setup
 WORKDIR /data/testflinger
-
-# Remove Redis from install scripts
-# RUN sed -i '23 s/^/#/' ./setup.py \
-#   && sed -i '30 s/^/#/' ./setup.py
-
-# Run setup
 RUN ./setup.py install
+
+# copy tf config files
+COPY ./code/testflinger.conf /data/testflinger

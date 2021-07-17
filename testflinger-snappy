@@ -1,4 +1,4 @@
-# Container image
+# container image
 FROM phusion/baseimage:focal-1.0.0
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -7,7 +7,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-# Install deps
+# install deps
 RUN apt-get update \
   && apt-get install -y \
     --no-install-recommends \
@@ -28,21 +28,21 @@ RUN apt-get update \
     python3-requests \
     python3-click
 
-# Clean up APT when done
+# clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Add ubuntu and testflinger users
+# add ubuntu and testflinger users
 RUN useradd -ms /bin/bash ubuntu \
   && useradd -ms /bin/bash testflinger
 
-# Add to sudoers
+# add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Add SSH access
+# add SSH access
 RUN rm -f /etc/service/sshd/down \
   && /etc/my_init.d/00_regen_ssh_host_keys.sh > /dev/null 2>&1
 
-# Generate ssh-keys, import auth_keys
+# generate ssh-keys, import auth_keys
 COPY ./ssh/authorized_keys /tmp/authorized_keys
 USER ubuntu
 RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
@@ -58,26 +58,28 @@ RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
   && cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
   && rm -f /tmp/authorized_keys
 
-# Facilitate logging
+# facilitate logging
 RUN mkdir -p /var/log/testflinger \
   && chmod 777 /var/log/testflinger
 
-# Copy src
-RUN mkdir -p /data/snappy-device-agents/sut/
-COPY ./src/snappy-device-agents /data/snappy-device-agents
-
-# Copy snappy-agent config files
-COPY ./sut/snappy/* /data/snappy-device-agents/sut/
+# clone src
+WORKDIR /data
+RUN git clone https://git.launchpad.net/snappy-device-agents
 # RUN ln -s /data/snappy-device-agents/snappy-device-agent
 
-# Install missing deps
-RUN pip install netifaces
+# copy sut files
+RUN mkdir /data/snappy-device-agents/sut/
+COPY ./sut/snappy/* /data/snappy-device-agents/sut/
 
-# Run setup as ubuntu for process cntrl
 WORKDIR /data/snappy-device-agents
+# USER ubuntu
 RUN python3 setup.py install
 
-RUN chown -R ubuntu:ubuntu /data/
+# install missing deps
+RUN pip install netifaces
+
+# adjust perms on src files
+RUN chown -R ubuntu:ubuntu /data/snappy-device-agents
 
 # COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
 # RUN chmod 755 /tmp/tf-entrypoint.sh
