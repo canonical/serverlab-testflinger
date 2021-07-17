@@ -1,9 +1,14 @@
 FROM python:3.8-slim-buster
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV HOME /root
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV PATH /data/testflinger:$PATH
+
 # REST api
 EXPOSE 8000
-
-ENV PATH /data/testflinger:$PATH
 
 # install deps
 RUN apt-get update \
