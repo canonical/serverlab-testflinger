@@ -80,8 +80,8 @@ services:
       - snappy_data:/data/snappy-device-agents
 
     entrypoint:
-      - "/tmp/tf-entrypoint.sh"
-    command: "/sbin/my_init -- bash -l"
+      - "/sbin/my_init -- bash -l"
+    command: "/tmp/tf-entrypoint.sh"
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
@@ -115,8 +115,8 @@ services:
     #   - TESTFLINGER_SERVER=10.172.10.12
 
     entrypoint:
-      - "/tmp/tf-entrypoint.sh"
-    command: "/sbin/my_init -- bash -l"
+      - "/sbin/my_init -- bash -l"
+    command: "/tmp/tf-entrypoint.sh"
 
   # logstash:
   #     depends_on:
