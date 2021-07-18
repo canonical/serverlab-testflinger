@@ -51,7 +51,8 @@ services:
     environment:
       - TESTFLINGER_CONFIG=/data/testflinger/testflinger.conf
 
-    command: "gunicorn --bind 0.0.0.0:8000 testflinger:app" 
+    entrypoint:
+      - "/usr/local/bin/gunicorn --bind 0.0.0.0:8000 testflinger:app" 
 
   agent:
     depends_on:
