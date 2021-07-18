@@ -1,4 +1,3 @@
-# container image
 FROM phusion/baseimage:focal-1.0.0
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -94,12 +93,8 @@ RUN git init \
 RUN mkdir ./sut/
 COPY ./sut/snappy/* /data/snappy-device-agents/sut/
 
-# adjust perms on src files
-RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
-  && chown -R ubuntu:ubuntu /data/snappy-device-agents
-
 # run tf-agent setup
-USER ubuntu
+# USER ubuntu
 WORKDIR /data/testflinger-agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
   && python3 setup.py install
@@ -115,8 +110,12 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 # install missing deps
 RUN pip install netifaces
 
+# adjust perms on src files
+RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
+  && chown -R ubuntu:ubuntu /data/snappy-device-agents
+
 # switch back to root for init
-USER root
+# USER root
 
 # COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
 # RUN chmod 755 /tmp/tf-entrypoint.sh

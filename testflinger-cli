@@ -1,4 +1,3 @@
-# container image
 FROM phusion/baseimage:focal-1.0.0
 
 ENV DEBIAN_FRONTEND noninteractive

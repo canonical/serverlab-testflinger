@@ -124,7 +124,7 @@ services:
 
   #     networks:
   #       docker_int:
-  #         ipv4_address: 10.172.10.15
+  #         ipv4_address: 10.172.10.14
   #     expose:
   #       - "5959"
   #     hostname: testflinger-log
