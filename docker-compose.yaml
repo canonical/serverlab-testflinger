@@ -79,8 +79,6 @@ services:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
 
-    entrypoint:
-      - "/sbin/my_init -- bash -l"
     command: "/tmp/tf-entrypoint.sh"
 
     # healthcheck:
@@ -114,8 +112,6 @@ services:
     # environment:
     #   - TESTFLINGER_SERVER=10.172.10.12
 
-    entrypoint:
-      - "/sbin/my_init -- bash -l"
     command: "/tmp/tf-entrypoint.sh"
 
   # logstash:
