@@ -35,8 +35,7 @@ services:
     build:    # build image w/ deps
       context: .
       dockerfile: testflinger-api
-    stdin_open: true
-    tty: true
+    init: true
     restart: unless-stopped
 
     networks:
