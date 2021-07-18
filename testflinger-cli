@@ -86,5 +86,5 @@ RUN pip install netifaces
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-cli
 
-COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
-RUN chmod 755 /tmp/tf-entrypoint.sh
+COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
+RUN chmod 755 /opt/tf-entrypoint.sh

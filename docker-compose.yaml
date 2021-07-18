@@ -32,8 +32,7 @@ services:
   api:
     depends_on:
       - db
-    # build image w/ deps
-    build:
+    build:    # build image w/ deps
       context: .
       dockerfile: testflinger-api
     stdin_open: true
@@ -79,7 +78,7 @@ services:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
 
-    command: "/tmp/tf-entrypoint.sh"
+    command: "/opt/tf-entrypoint.sh"
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
@@ -112,7 +111,7 @@ services:
     # environment:
     #   - TESTFLINGER_SERVER=10.172.10.12
 
-    command: "/tmp/tf-entrypoint.sh"
+    command: "/opt/tf-entrypoint.sh"
 
   # logstash:
   #     depends_on:
