@@ -1,0 +1,8 @@
+device_ip: 10.1.10.12
+node_id: mwr8d7
+node_name: plumcot
+maas_user: testflinger_a
+agent_name: plumcot
+env:
+    HEXR_DEVICE_SECURE_ID: a002000000H5ItO
+    DEVICE_IP: 10.1.10.12
