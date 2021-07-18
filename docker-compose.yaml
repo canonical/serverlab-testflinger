@@ -37,7 +37,6 @@ services:
       dockerfile: testflinger-api
     stdin_open: true
     tty: true
-    privileged: true
     restart: unless-stopped
 
     networks:
