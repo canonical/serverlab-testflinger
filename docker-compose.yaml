@@ -110,7 +110,7 @@ services:
       - cli_data:/data/testflinger-cli
 
     # environment:
-    #   - TESTFLINGER_SERVER=10.172.10.13
+    #   - TESTFLINGER_SERVER=10.172.10.12
 
     command: "/sbin/my_init -- bash -l"
 
