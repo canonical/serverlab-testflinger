@@ -114,10 +114,5 @@ RUN pip install netifaces
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents
 
-# switch back to root for init
-# USER root
-
-# COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
-# RUN chmod 755 /tmp/tf-entrypoint.sh
-# USER ubuntu
-# ENTRYPOINT ["/tmp/tf-entrypoint.sh"]
+COPY ./code/tf-entrypoint.sh /tmp/tf-entrypoint.sh
+RUN chmod 755 /tmp/tf-entrypoint.sh
