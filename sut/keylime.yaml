@@ -3,4 +3,4 @@ provision_data:
   distro: focal
 test_data:
   test_cmds: |
-    ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
+    ./checkflinger -s keylime --series focal --server 10.245.128.10 test -t usb-only

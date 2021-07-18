@@ -10,7 +10,7 @@ ENV PATH /data/testflinger-agent:$PATH
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
 
-# install deps
+# install deps & cleanup
 RUN apt-get update \
   && apt-get install -y \
     --no-install-recommends \
@@ -33,8 +33,11 @@ RUN apt-get update \
     python3-click \
     maas-cli
 
-# clean up APT when done
+# clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# link python3 bin
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # add ubuntu and testflinger users
 RUN useradd -ms /bin/bash ubuntu \
@@ -106,9 +109,6 @@ RUN echo && echo "Running snappy-device-agents setup:" \
   && . env/bin/activate \
   && python3 setup.py install \
   && deactivate
-
-# install missing deps
-RUN pip install netifaces
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
