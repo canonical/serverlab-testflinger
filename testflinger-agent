@@ -6,7 +6,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-ENV PATH /data/testflinger-agent:$PATH
+ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
