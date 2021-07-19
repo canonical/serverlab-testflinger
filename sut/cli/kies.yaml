@@ -1,8 +1,8 @@
-job_queue: keylime
+job_queue: kies
 provision_data:
   distro: focal
 test_data:
   test_cmds: |
     ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
 # logstash_host: 10.172.10.14 # port 5959
-# agent_name: keylime
+# agent_name: kies
