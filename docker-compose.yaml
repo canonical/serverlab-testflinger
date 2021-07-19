@@ -41,15 +41,14 @@ services:
     networks:
       docker_int:
         ipv4_address: 10.172.10.12
+    expose:
+      - "8000"
     ports:
       - "10.1.11.159:8000:8000"
     hostname: testflinger-api
 
     volumes:
       - api_data:/data/testflinger
-
-    environment:
-      - TESTFLINGER_CONFIG=/data/testflinger/testflinger.conf
 
     command: "gunicorn --bind 0.0.0.0:8000 testflinger:app" 
 
@@ -62,7 +61,6 @@ services:
       dockerfile: testflinger-agent
     stdin_open: true
     tty: true
-    privileged: true
     restart: unless-stopped
 
     networks:
@@ -93,7 +91,6 @@ services:
       dockerfile: testflinger-cli
     stdin_open: true
     tty: true
-    privileged: true
     restart: unless-stopped
 
     networks:
@@ -105,9 +102,6 @@ services:
 
     volumes:
       - cli_data:/data/testflinger-cli
-
-    # environment:
-    #   - TESTFLINGER_SERVER=10.172.10.12
 
     command: "/opt/tf-entrypoint.sh"
 

@@ -3,4 +3,6 @@ provision_data:
   distro: focal
 test_data:
   test_cmds: |
-    ./checkflinger -s keylime --series focal --server 10.245.128.10 test -t usb-only
+    ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
+# logstash_host: 10.172.10.14 # port 5959
+# agent_name: keylime
