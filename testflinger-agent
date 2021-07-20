@@ -114,5 +114,17 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents
 
+# copy entrypoint to container
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
+
+# set user passwords
+# secure method
+RUN --mount=type=secret,id=./secrets/ubuntu,dst=/run/secrets/ubuntu \
+  cat /run/secrets/ubuntu | chpasswd
+RUN --mount=type=secret,id=./secrets/testflinger,dst=/run/secrets/testflinger \
+  cat /run/secrets/testflinger | chpasswd
+
+# insecure method
+# RUN echo "ubuntu:<password>" | chpasswd \
+  # && echo "testflinger:<password>" | chpasswd
