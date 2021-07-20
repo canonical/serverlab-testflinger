@@ -91,7 +91,6 @@ RUN git init \
   && git remote add origin https://git.launchpad.net/snappy-device-agents \
   && git fetch origin \
   && git checkout -b master --track origin/master
-# RUN ln -s /data/snappy-device-agents/snappy-device-agent
 
 # copy snappy-agent sut files
 RUN mkdir ./sut/
