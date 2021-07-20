@@ -120,14 +120,8 @@ RUN chmod 755 /opt/tf-entrypoint.sh
 
 # set user passwords
 # secure method
-RUN --mount=type=secret,\
-  id=ubuntu,\
-  src=./secrets/ubuntu,\
-  target=/run/secrets/ubuntu cat /run/secrets/ubuntu | chpasswd
-RUN --mount=type=secret,\
-  id=testflinger,\
-  src=./secrets/testflinger,\
-  target=/run/secrets/testflinger cat /run/secrets/testflinger | chpasswd
+RUN --mount=type=secret,id=ubuntu,src=./secrets/ubuntu,target=/run/secrets/ubuntu cat /run/secrets/ubuntu | chpasswd
+RUN --mount=type=secret,id=testflinger,src=./secrets/testflinger,target=/run/secrets/testflinger cat /run/secrets/testflinger | chpasswd
 
 # insecure method
 # RUN echo "ubuntu:<password>" | chpasswd \
