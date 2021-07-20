@@ -44,7 +44,7 @@ services:
     expose:
       - "8000"
     ports:
-      - "10.1.11.159:8000:8000"
+      - "10.245.130.9:8000:8000"
     hostname: testflinger-api
 
     volumes:

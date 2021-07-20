@@ -1,2 +1,5 @@
 # ignore ssh keys 
 ssh/
+
+#ignore secrets
+secrets/
