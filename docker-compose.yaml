@@ -70,6 +70,10 @@ services:
         ipv4_address: 10.172.10.10
     hostname: testflinger-agent
 
+    secrets:
+      - ubuntu
+      - testflinger
+
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
@@ -99,6 +103,10 @@ services:
       docker_int:
         ipv4_address: 10.172.10.11
     hostname: testflinger-cli
+
+    secrets:
+      - ubuntu
+      - testflinger
 
     volumes:
       - cli_data:/data/testflinger-cli
@@ -151,3 +159,9 @@ volumes:
   snappy_data: {}
   cli_data: {}
   # log_data: {}
+
+secrets:
+  ubuntu:
+    file: ./secrets/ubuntu
+  testflinger:
+    file: ./secrets/testflinger
