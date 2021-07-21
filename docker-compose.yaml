@@ -69,8 +69,8 @@ services:
     hostname: testflinger-agent
 
     secrets:
-      - ubuntu
-      - testflinger
+      - ubuntu_secret
+      - testflinger_secret
 
     volumes:
       - agent_data:/data/testflinger-agent
@@ -103,8 +103,8 @@ services:
     hostname: testflinger-cli
 
     secrets:
-      - ubuntu
-      - testflinger
+      - ubuntu_secret
+      - testflinger_secret
 
     volumes:
       - cli_data:/data/testflinger-cli
@@ -159,7 +159,7 @@ volumes:
   # log_data: {}
 
 secrets:
-  ubuntu:
+  ubuntu_secret:
     external: true
-  testflinger:
+  testflinger_secret:
     external: true
