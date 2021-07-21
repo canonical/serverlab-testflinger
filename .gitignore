@@ -2,4 +2,4 @@
 ssh/
 
 #ignore secrets
-secrets/
+.secrets/
