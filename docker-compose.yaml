@@ -45,6 +45,10 @@ services:
       - "10.245.130.9:8000:8000"
     hostname: testflinger-api
 
+    # for secrets
+    tmpfs:
+      - /run
+
     volumes:
       - api_data:/data/testflinger
 
@@ -67,6 +71,10 @@ services:
       docker_int:
         ipv4_address: 10.172.10.10
     hostname: testflinger-agent
+
+    # for secrets
+    tmpfs:
+      - /run
 
     secrets:
       - ubuntu_secret
@@ -149,10 +157,6 @@ networks:
       config:
         - subnet: "10.245.128.0/22"
           # gateway: 10.245.128.1
-
-# for secrets
-tmpfs:
-  - /run
 
 secrets:
   ubuntu_secret:
