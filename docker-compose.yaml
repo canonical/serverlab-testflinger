@@ -160,6 +160,6 @@ volumes:
 
 secrets:
   ubuntu:
-    external=
+    external: true
   testflinger:
-    file: ./secrets/testflinger
+    external: true
