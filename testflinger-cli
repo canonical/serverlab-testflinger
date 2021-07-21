@@ -90,7 +90,7 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-cli
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
-# set user passwords
+## set user passwords
 # secure method
 RUN echo && echo && echo && echo && echo && echo "###########################################"
 RUN --mount=type=secret,id=ubuntu_secret cat /run/secrets/ubuntu_secret
