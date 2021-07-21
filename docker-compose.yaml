@@ -1,6 +1,4 @@
-# 2.4 for networks -> gateway, init
-
-version: "2.4"
+version: "3.8"
 
 services:
   db:
@@ -141,7 +139,7 @@ networks:
     ipam:
       config:
         - subnet: "10.172.10.1/24"
-          gateway: 10.172.10.1
+          # gateway: 10.172.10.1
 
   needham_ext:
     driver: macvlan
@@ -150,7 +148,7 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/22"
-          gateway: 10.245.128.1
+          # gateway: 10.245.128.1
 
 volumes:
   db_data: {}
@@ -162,6 +160,6 @@ volumes:
 
 secrets:
   ubuntu:
-    file: ./secrets/ubuntu
+    external=
   testflinger:
     file: ./secrets/testflinger
