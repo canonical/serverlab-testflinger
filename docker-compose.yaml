@@ -49,6 +49,11 @@ services:
     tmpfs:
       - /run
 
+    secrets:
+      - source: testflinger_secret
+        target: testflinger_secret
+        mode: 0440
+
     volumes:
       - api_data:/data/testflinger
 
@@ -77,8 +82,9 @@ services:
       - /run
 
     secrets:
-      - ubuntu_secret
-      - testflinger_secret
+      - source: ubuntu_secret
+        target: ubuntu_secret
+        mode: 0440
 
     volumes:
       - agent_data:/data/testflinger-agent
