@@ -1,5 +1,11 @@
 version: "3.8"
 
+secrets:
+  ubuntu_secret:
+    external: true
+  testflinger_secret:
+    external: true
+
 services:
   db:
     # use docker redis image
@@ -157,9 +163,3 @@ volumes:
   snappy_data: {}
   cli_data: {}
   # log_data: {}
-
-secrets:
-  ubuntu_secret:
-    external: true
-  testflinger_secret:
-    external: true
