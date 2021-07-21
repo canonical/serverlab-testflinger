@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.5"
 
 services:
   db:
@@ -49,11 +49,6 @@ services:
     tmpfs:
       - /run
 
-    secrets:
-      - source: testflinger_secret
-        target: testflinger_secret
-        mode: 0440
-
     volumes:
       - api_data:/data/testflinger
 
@@ -84,7 +79,8 @@ services:
     secrets:
       - source: ubuntu_secret
         target: ubuntu_secret
-        mode: 0440
+      - source: testflinger_secret
+        target: testflinger_secret
 
     volumes:
       - agent_data:/data/testflinger-agent
@@ -117,8 +113,10 @@ services:
     hostname: testflinger-cli
 
     secrets:
-      - ubuntu_secret
-      - testflinger_secret
+      - source: ubuntu_secret
+        target: ubuntu_secret
+      - source: testflinger_secret
+        target: testflinger_secret
 
     volumes:
       - cli_data:/data/testflinger-cli
@@ -153,7 +151,7 @@ networks:
     ipam:
       config:
         - subnet: "10.172.10.1/24"
-          # gateway: 10.172.10.1
+          gateway: 10.172.10.1
 
   needham_ext:
     driver: macvlan
@@ -162,7 +160,7 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/22"
-          # gateway: 10.245.128.1
+          gateway: 10.245.128.1
 
 secrets:
   ubuntu_secret:
