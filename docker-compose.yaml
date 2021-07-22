@@ -1,4 +1,4 @@
-version: "3.5"
+version: "2.4"
 
 services:
   db:
@@ -30,7 +30,7 @@ services:
   api:
     depends_on:
       - db
-    build:    # build image w/ deps
+    build:
       context: .
       dockerfile: testflinger-api
     init: true
@@ -57,7 +57,6 @@ services:
   agent:
     depends_on:
       - api
-    # build image w/ deps
     build: 
       context: .
       dockerfile: testflinger-agent
@@ -97,7 +96,6 @@ services:
   cli:
     depends_on:
       - agent
-    # build image w/ deps
     build: 
       context: .
       dockerfile: testflinger-cli
