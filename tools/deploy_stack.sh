@@ -8,20 +8,24 @@ secrets_file=./.tfscr
 # therefore, we must use discrete docker build cmds
 docker build -t redis \
   --progress=plain \
-  .  2>&1
+  --no-cache \
+  .  2>&1 
 docker build -f testflinger-api \
   -t python:3.8-slim-buster \
   --progress=plain \
+  --no-cache \
   .  2>&1
 docker build -f testflinger-agent \
   -t phusion/baseimage:focal-1.0.0 \
   --secret id=tf_secret,src=$secrets_file \
   --progress=plain \
+  --no-cache \
   .  2>&1
 docker build -f testflinger-cli \
   -t phusion/baseimage:focal-1.0.0 \
   --secret id=tf_secret,src=$secrets_file \
   --progress=plain \
+  --no-cache \
   .  2>&1
 
 # start stack

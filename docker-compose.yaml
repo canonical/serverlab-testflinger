@@ -68,7 +68,6 @@ services:
     hostname: testflinger-agent
 
     volumes:
-      - ./docker/app/secrets:/run/secrets
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
 
@@ -98,7 +97,6 @@ services:
     hostname: testflinger-cli
 
     volumes:
-      - ./docker/app/secrets:/run/secrets
       - cli_data:/data/testflinger-cli
 
     command: "/opt/tf-entrypoint.sh"
