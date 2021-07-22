@@ -1,4 +1,4 @@
-version: "2.4"
+version: "3"
 
 services:
   db:
@@ -149,7 +149,6 @@ networks:
     ipam:
       config:
         - subnet: "10.172.10.1/24"
-          gateway: 10.172.10.1
 
   needham_ext:
     driver: macvlan
@@ -158,7 +157,7 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/22"
-          gateway: 10.245.128.1
+          # gateway: 10.245.128.1
 
 secrets:
   ubuntu_secret:
