@@ -7,6 +7,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
 
+ARG ubuntu_scr
+ARG testflinger_scr
+
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
 
@@ -113,9 +116,12 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents
 
-# copy entrypoint to container
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
+# set user passwords (temp pw)
+RUN chpasswd ubuntu:$ubuntu_scr
+RUN chpasswd testflinger:$testflinger_scr
+
 # set user passwords (secure method)
-RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 
+# RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 

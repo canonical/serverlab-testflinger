@@ -1,32 +1,16 @@
 #!/usr/bin/bash
 
+ubuntu_scr=ch4ng3m3
+testflinger_scr=u24xeO6EKuWt
+
 export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
 
-secrets_file=./.tfscr
-
-# docker-compose build does not support build secrets (in dev)
-# therefore, we must use discrete docker build cmds
-docker build -t redis \
-  --progress=plain \
+docker-compose build \
+  --build-arg ubuntu_scr=$ubuntu_scr testflinger_scr=$testflinger_scr
+  --progress=tty \
   --no-cache \
-  .  2>&1 
-docker build -f testflinger-api \
-  -t python:3.8-slim-buster \
-  --progress=plain \
-  --no-cache \
-  .  2>&1
-docker build -f testflinger-agent \
-  -t phusion/baseimage:focal-1.0.0 \
-  --secret id=tf_secret,src=$secrets_file \
-  --progress=plain \
-  --no-cache \
-  .  2>&1
-docker build -f testflinger-cli \
-  -t phusion/baseimage:focal-1.0.0 \
-  --secret id=tf_secret,src=$secrets_file \
-  --progress=plain \
-  --no-cache \
-  .  2>&1
+  --force-rm 2>&1
 
 # start stack
 docker-compose start --detach 2>&1
