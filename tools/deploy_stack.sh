@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-ubuntu_scr=ch4ng3m3
-testflinger_scr=u24xeO6EKuWt
+ubuntu_scr=(ch4ng3m3)
+testflinger_scr=(u24xeO6EKuWt)
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
