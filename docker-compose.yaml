@@ -67,12 +67,6 @@ services:
         ipv4_address: 10.172.10.10
     hostname: testflinger-agent
 
-    secrets:
-      - source: ubuntu_secret
-        target: ubuntu_secret
-      - source: testflinger_secret
-        target: testflinger_secret
-
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
@@ -101,12 +95,6 @@ services:
       docker_int:
         ipv4_address: 10.172.10.11
     hostname: testflinger-cli
-
-    secrets:
-      - source: ubuntu_secret
-        target: ubuntu_secret
-      - source: testflinger_secret
-        target: testflinger_secret
 
     volumes:
       - cli_data:/data/testflinger-cli
@@ -149,12 +137,6 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/22"
-
-secrets:
-  ubuntu_secret:
-    external: true
-  testflinger_secret:
-    external: true
 
 volumes:
   db_data: {}
