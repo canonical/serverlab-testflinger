@@ -89,11 +89,5 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-cli
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
-# set user passwords
-# secure method
-RUN --mount=type=secret,id=ubuntu_secret,required=true chpasswd < /run/secrets/ubuntu_secret 
-RUN --mount=type=secret,id=testflinger_secret,required=true chpasswd < /run/secrets/testflinger_secret
-
-# insecure method
-# RUN echo "ubuntu:<password>" | chpasswd \
-  # && echo "testflinger:<password>" | chpasswd
+# set user passwords (secure method)
+RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 
