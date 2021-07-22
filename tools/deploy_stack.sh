@@ -13,7 +13,7 @@ docker-compose build \
   --force-rm 2>&1
 
 # start stack
-docker-compose start --detach 2>&1
+docker-compose up --detach 2>&1
 
 # rm $secrets_file
 
