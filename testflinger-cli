@@ -94,8 +94,8 @@ COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
 # set user passwords (temp pw)
-RUN chpasswd ubuntu:$ubuntu_scr
-RUN chpasswd testflinger:$testflinger_scr
+RUN echo "ubuntu:${ubuntu_scr}" | chpasswd \
+  && echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 
