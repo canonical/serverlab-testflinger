@@ -8,7 +8,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
 
 ARG ubuntu_scr
-ARG testflinger_scr
+# ARG testflinger_scr
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
@@ -121,7 +121,7 @@ RUN chmod 755 /opt/tf-entrypoint.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
-RUN echo "testflinger:${testflinger_scr}" | chpasswd
+# RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 

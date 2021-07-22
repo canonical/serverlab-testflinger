@@ -7,7 +7,7 @@ export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 
 docker-compose build \
-  --build-arg "ubuntu_scr=$ubuntu_scr testflinger_scr=$testflinger_scr" \
+  --build-arg ubuntu_scr=$ubuntu_scr \
   --progress=tty \
   --no-cache \
   --force-rm 2>&1
@@ -19,3 +19,5 @@ docker-compose up --detach 2>&1
 
 # todo:
 # add user input for pw, echo to file and rm at eof?
+#  --build-arg "ubuntu_scr=$ubuntu_scr testflinger_scr=$testflinger_scr" \
+#
