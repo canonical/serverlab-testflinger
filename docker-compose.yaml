@@ -23,7 +23,7 @@ services:
     command: [
       "redis-server",
       "--bind 0.0.0.0",
-      "--maxmemory 4096mb",
+      "--maxmemory 16384mb",
       "--maxmemory-policy allkeys-lfu"
     ]
 
@@ -43,8 +43,6 @@ services:
         ipv4_address: 10.172.10.10
     expose:
       - "8000"
-    ports:
-      - "10.245.130.9:8000:8000"
     hostname: testflinger-api
 
     volumes:
