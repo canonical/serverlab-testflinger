@@ -8,6 +8,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 
 docker-compose build \
   --build-arg ubuntu_scr=$ubuntu_scr \
+  --build-arg testflinger_scr=$testflinger_scr \
   --progress=tty \
   --no-cache \
   --force-rm 2>&1

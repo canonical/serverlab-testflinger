@@ -3,7 +3,7 @@ version: "3.8"
 services:
   db:
     # use docker redis image
-    image: redis
+    image: redis:latest
     init: true
     restart: unless-stopped
 
@@ -37,8 +37,10 @@ services:
     restart: unless-stopped
 
     networks:
+      needham_ext:
+        ipv4_address: 10.245.128.10
       docker_int:
-        ipv4_address: 10.172.10.12
+        ipv4_address: 10.172.10.10
     expose:
       - "8000"
     ports:
@@ -62,9 +64,9 @@ services:
 
     networks:
       needham_ext:
-        ipv4_address: 10.245.128.10
+        ipv4_address: 10.245.128.11
       docker_int:
-        ipv4_address: 10.172.10.10
+        ipv4_address: 10.172.10.11
     hostname: testflinger-agent
 
     volumes:
@@ -91,9 +93,9 @@ services:
 
     networks:
       needham_ext:
-        ipv4_address: 10.245.128.11
+        ipv4_address: 10.245.128.12
       docker_int:
-        ipv4_address: 10.172.10.11
+        ipv4_address: 10.172.10.12
     hostname: testflinger-cli
 
     volumes:
