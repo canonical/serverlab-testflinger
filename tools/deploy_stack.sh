@@ -16,9 +16,5 @@ docker-compose build \
 # start stack
 docker-compose up --detach 2>&1
 
-# rm $secrets_file
-
 # todo:
-# add user input for pw, echo to file and rm at eof?
-#  --build-arg "ubuntu_scr=$ubuntu_scr testflinger_scr=$testflinger_scr" \
-#
+# add user input for pw?
