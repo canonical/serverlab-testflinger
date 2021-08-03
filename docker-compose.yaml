@@ -48,6 +48,9 @@ services:
     volumes:
       - api_data:/data/testflinger
 
+    environment:
+      - PATH=/data/testflinger:$PATH
+
     command: "gunicorn --bind 0.0.0.0:8000 testflinger:app" 
 
   agent:
@@ -70,6 +73,9 @@ services:
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
+
+    environment:
+      - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
     command: "/opt/tf-entrypoint.sh"
 
@@ -98,6 +104,9 @@ services:
 
     volumes:
       - cli_data:/data/testflinger-cli
+
+    environment:
+      - PATH=/data/testflinger-cli:$PATH
 
     command: "/opt/tf-entrypoint.sh"
 

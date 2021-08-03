@@ -53,20 +53,31 @@ RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN rm -f /etc/service/sshd/down \
   && /etc/my_init.d/00_regen_ssh_host_keys.sh > /dev/null 2>&1
 
-# generate ssh-keys, import auth_keys
+# prepare ssh key ops
 COPY ./ssh/authorized_keys /tmp/authorized_keys
+COPY ./code/export_ssh-pubkey.py /opt/export_ssh-pubkey.py
+
+# gen ssh keys, update pubkey, import auth_keys, export pubkey into maas
 USER ubuntu
+# generate ssh key and insert real hostname into pubkey
 RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
-  && cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
+  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/ubuntu/.ssh/id_rsa.pub
+# import auth_keys
+RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
+# import pubkey into maas
+RUN /opt/export_ssh-pubkey.py
 
 USER testflinger
 RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
-  && cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
+  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/testflinger/.ssh/id_rsa.pub
+RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
+RUN /opt/export_ssh-pubkey.py
 
-# root must be last
+# root must be last; do not export root pubkey into maas
 USER root
 RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
-  && cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
+  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/root/.ssh/id_rsa.pub
+RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
   && rm -f /tmp/authorized_keys
 
 # facilitate logging
