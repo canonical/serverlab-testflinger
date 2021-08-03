@@ -92,7 +92,7 @@ def main():
 
     if args.mhost and args.mport:
         url = (
-            u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
+            u'http://%s:%s/MAAS/api/2.0/account/prefs/sshkeys/' % (
                 args.mhost, args.mport))
     elif args.mhost and not args.mport:
         url = (
