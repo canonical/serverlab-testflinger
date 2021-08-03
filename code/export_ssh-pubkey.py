@@ -14,11 +14,9 @@ def file_read(fpath):
     """Read file."""
     try:
         with open(fpath, 'r') as _file:
-            data = _file.read()
+            return _file.read()
     except OSError:
         print('Unable to read file: %s' % fpath)
-
-    return data
 
 
 def delete_pubkey(auth1, url, session):
