@@ -66,14 +66,14 @@ RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-cli|gI' /home/ubuntu/.ssh/id_rsa.pub
 # import auth_keys
 RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
-# import pubkey into maas
-RUN /opt/export_ssh-pubkey.py
+# export pubkey into maas
+# RUN /opt/export_ssh-pubkey.py
 
 USER testflinger
 RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-cli|gI' /home/testflinger/.ssh/id_rsa.pub
 RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
-RUN /opt/export_ssh-pubkey.py
+# RUN /opt/export_ssh-pubkey.py
 
 # root must be last; do not import root pubkey into maas
 USER root

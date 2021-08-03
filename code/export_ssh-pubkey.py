@@ -3,7 +3,7 @@
 
 import os
 import json
-
+import argparse
 from pathlib import Path
 from requests import Request, Session
 from requests_oauthlib import OAuth1
@@ -21,7 +21,6 @@ def file_read(fpath):
 
 def delete_pubkey(auth1, url, session):
     """DELETE pubkey via url."""
-    # session = Session()
     hostname = os.uname()[1]
     request = Request('GET', url, auth=auth1)
     response = session.send(request.prepare())
@@ -46,7 +45,6 @@ def delete_pubkey(auth1, url, session):
 def post_pubkey(auth1, ssh_key, url):
     """POST pubkey via url."""
     payload = {'key': ssh_key}
-
     session = Session()
     request = Request('POST', url, data=payload, auth=auth1)
     response = session.send(request.prepare())
@@ -71,17 +69,42 @@ def post_pubkey(auth1, ssh_key, url):
 
 def main():
     # call with api_key and url components (maas ip, port) as args
-    url = (
-        u'http://10.245.128.4:5240/MAAS/api/2.0/account/prefs/sshkeys/')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path', help='/base/path/of/keyfile/')
+    parser.add_argument('--mapi', help='maas api key')
+    parser.add_argument('--mhost', help='maas server ip')
+    parser.add_argument('--mport', help='maas server port')
+    args = parser.parse_args()
 
-    api_key = (
-        u'YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD')
+    if args.path:
+        ssh_key = file_read(os.path.join(
+            str(args.path), '.ssh', 'id_rsa.pub'))
+    else:
+        ssh_key = file_read(os.path.join(
+            str(Path.home()), '.ssh', 'id_rsa.pub'))
+
+    if args.mapi:
+        api_key = args.mapi
+    else:
+        api_key = (
+            u'YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD')
+        # raise OSError
+
+    if args.mhost and args.mport:
+        url = (
+            u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
+                args.mhost, args.mport))
+    elif args.mhost and not args.mport:
+        url = (
+            u'http://%s:5240/MAAS/api/2.0/account/prefs/sshkeys/' % args.mhost)
+    else:
+        url = (
+            u'http://10.245.128.4:5240/MAAS/api/2.0/account/prefs/sshkeys/')
+        # raise OSError
+
     api_key = tuple(api_key.split(':'))
     auth1 = OAuth1(api_key[0], u'',
                    api_key[1], api_key[2])
-
-    ssh_key = file_read(os.path.join(
-        str(Path.home()), '.ssh', 'id_rsa.pub'))
 
     response = post_pubkey(auth1, ssh_key, url)
     print('- OK: ' + str(response.ok))
