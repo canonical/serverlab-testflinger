@@ -78,7 +78,7 @@ RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
 # root must be last
 USER root
 RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
-  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/root/.ssh/id_rsa.pub
+  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /root/.ssh/id_rsa.pub
 RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
   && rm -f /tmp/authorized_keys
 
