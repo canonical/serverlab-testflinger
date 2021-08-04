@@ -12,9 +12,9 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 docker-compose build \
   --build-arg ubuntu_scr=$ubuntu_scr \
   --build-arg testflinger_scr=$testflinger_scr \
-  --build-arg testflinger_scr=$maas_api_key \
-  --build-arg testflinger_scr=$maas_host \
-  --build-arg testflinger_scr=$maas_port \
+  --build-arg maas_api_key=$maas_api_key \
+  --build-arg maas_host=$maas_host \
+  --build-arg maas_port=$maas_port \
   --progress=tty \
   --no-cache \
   --force-rm 2>&1
