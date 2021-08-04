@@ -71,18 +71,18 @@ RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
 RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
 # export pubkey into maas
 RUN /opt/export_ssh-pubkey.py --path /home/ubuntu/ \
-                              --mapi {maas_api_key} \
-                              --mhost {maas_host} \
-                              --mport {maas_port}
+                              --mapi ${maas_api_key} \
+                              --mhost ${maas_host} \
+                              --mport ${maas_port}
 
 USER testflinger
 RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/testflinger/.ssh/id_rsa.pub
 RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
 RUN /opt/export_ssh-pubkey.py --path /home/testflinger/ \
-                              --mapi {maas_api_key} \
-                              --mhost {maas_host} \
-                              --mport {maas_port}
+                              --mapi ${maas_api_key} \
+                              --mhost ${maas_host} \
+                              --mport ${maas_port}
 
 # root must be last; do not export root pubkey into maas
 USER root
