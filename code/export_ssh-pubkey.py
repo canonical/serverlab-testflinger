@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """Export exec user's ssh pubkey (.ssh/id_rsa.pub) into Maas."""
 
 import os
@@ -120,7 +121,7 @@ def main():
         print(response.text)
 
         if response.ok:
-            print('\n* Sucessfully exported ssh pubkey!')
+            print('- Sucessfully exported ssh pubkey!')
 
 
 if __name__ == '__main__':
