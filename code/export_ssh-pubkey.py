@@ -14,7 +14,7 @@ def file_read(fpath):
     """Read file."""
     try:
         with open(fpath, 'r') as _file:
-            return _file.read()
+            return _file.read().splitlines()
     except OSError:
         print('Unable to read file: %s' % fpath)
 
@@ -86,9 +86,7 @@ def main():
     if args.mapi:
         api_key = args.mapi
     else:
-        api_key = (
-            u'YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD')
-        # raise OSError
+        raise OSError
 
     if args.mhost and args.mport:
         url = (
@@ -98,9 +96,7 @@ def main():
         url = (
             u'http://%s:5240/MAAS/api/2.0/account/prefs/sshkeys/' % args.mhost)
     else:
-        url = (
-            u'http://10.245.128.4:5240/MAAS/api/2.0/account/prefs/sshkeys/')
-        # raise OSError
+        raise OSError
 
     api_key = tuple(api_key.split(':'))
     auth1 = OAuth1(api_key[0], u'',
@@ -116,7 +112,7 @@ def main():
         print(response.text)
 
     if response.ok:
-        print('\n#### Sucessfully exported SSH pubkey! ####')
+        print('\n* Sucessfully exported ssh pubkey!')
 
 
 if __name__ == '__main__':
