@@ -19,9 +19,9 @@ chown testflinger:testflinger /home/testflinger/.maascli.db
 
 echo "Exporting ssh pubkey..."
 /opt/export_ssh-pubkey.py --path /home/ubuntu/ \
-                          --mapi ${MAAS_API_KEY} \
-                          --mhost ${MAAS_HOST} \
-                          --mport ${MAAS_PORT} 2>&1
+                          --mapi $MAAS_API_KEY \
+                          --mhost $MAAS_HOST \
+                          --mport $MAAS_PORT
 echo
 echo "###########################"
 echo
