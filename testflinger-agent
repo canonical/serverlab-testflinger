@@ -79,7 +79,7 @@ USER testflinger
 RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/testflinger/.ssh/id_rsa.pub
 RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
-RUN /opt/export_ssh-pubkey.py --path /home/ubuntu/ \
+RUN /opt/export_ssh-pubkey.py --path /home/testflinger/ \
                               --mapi {maas_api_key} \
                               --mhost {maas_host} \
                               --mport {maas_port}
