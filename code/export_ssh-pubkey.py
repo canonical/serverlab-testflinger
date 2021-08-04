@@ -106,10 +106,14 @@ def main():
     auth1 = OAuth1(api_key[0], u'',
                    api_key[1], api_key[2])
 
-    response = post_pubkey(auth1, ssh_key, url)
-    print('- OK: ' + str(response.ok))
-    print('- Status code: ' + str(response.status_code))
-    print(response.text)
+    try:
+        response = post_pubkey(auth1, ssh_key, url)
+    except OSError:
+        print('Check server paramaters.')
+    else:
+        print('- OK: ' + str(response.ok))
+        print('- Status code: ' + str(response.status_code))
+        print(response.text)
 
     if response.ok:
         print('\n#### Sucessfully exported SSH pubkey! ####')
