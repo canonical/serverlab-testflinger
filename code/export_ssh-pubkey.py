@@ -93,11 +93,14 @@ def main():
             u'http://%s:%s/MAAS/api/2.0/account/prefs/sshkeys/' % (
                 args.mhost, args.mport))
     elif args.mhost and not args.mport:
+        def_port = 5240
         url = (
-            u'http://%s:5240/MAAS/api/2.0/account/prefs/sshkeys/' % args.mhost)
+            u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
+                args.mhost, def_port))
     else:
         raise OSError
 
+    # split api_key into tuple for auth components
     api_key = tuple(api_key.split(':'))
     auth1 = OAuth1(api_key[0], u'',
                    api_key[1], api_key[2])
