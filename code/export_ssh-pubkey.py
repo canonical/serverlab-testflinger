@@ -1,4 +1,4 @@
- #!/usr/bin/python3
+#!/usr/bin/python3
 """Export exec user's ssh pubkey (.ssh/id_rsa.pub) into Maas."""
 
 import os
