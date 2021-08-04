@@ -4,7 +4,6 @@
 import os
 import json
 import argparse
-from time import sleep
 from pathlib import Path
 from requests import Request, Session
 from requests_oauthlib import OAuth1
@@ -59,7 +58,6 @@ def post_pubkey(auth1, ssh_key, url):
         print('        - Status code: ' + str(response_delete.status_code))
 
         if response_delete:
-            sleep(.5)
             print('    * post:')
             request = Request('POST', url, data=payload, auth=auth1)
             response = session.send(request.prepare())
@@ -88,7 +86,7 @@ def main():
     if args.mapi:
         api_key = args.mapi
     else:
-        raise OSError('API key required!')
+        raise OSError
 
     if args.mhost and args.mport:
         url = (
@@ -100,7 +98,7 @@ def main():
             u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
                 args.mhost, def_port))
     else:
-        raise OSError('MaaS host required!')
+        raise OSError
 
     # split api_key into tuple for auth components
     api_key = tuple(api_key.split(':'))
@@ -116,8 +114,8 @@ def main():
         print('- Status code: ' + str(response.status_code))
         print(response.text)
 
-        if response.ok:
-            print('\n* Sucessfully exported ssh pubkey!')
+    if response.ok:
+        print('\n* Sucessfully exported ssh pubkey!')
 
 
 if __name__ == '__main__':
