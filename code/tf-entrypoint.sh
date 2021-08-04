@@ -12,12 +12,11 @@ echo "Logging into maas server..."
 /usr/bin/maas login $TF_MAAS_ACT http://$MAAS_HOST:$MAAS_PORT/MAAS/ $MAAS_API_KEY
 
 echo "Replicating maas-cli db..."
-cp /root/.maascli.db /home/ubuntu/ \
-  && cp /root/.maascli.db /home/testflinger/ \
-  && chown ubuntu:ubuntu /home/ubuntu/.maascli.db \
-  && chown testflinger:testflinger /home/testflinger/.maascli.db \
-  && echo "- done"
-  && echo
+cp /root/.maascli.db /home/ubuntu/
+cp /root/.maascli.db /home/testflinger/
+chown ubuntu:ubuntu /home/ubuntu/.maascli.db
+chown testflinger:testflinger /home/testflinger/.maascli.db
+echo
 
 echo "Exporting ssh pubkey..."
 /opt/export_ssh-pubkey.py --path /home/ubuntu/ \
