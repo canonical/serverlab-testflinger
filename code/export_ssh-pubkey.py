@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+ #!/usr/bin/python3
 """Export exec user's ssh pubkey (.ssh/id_rsa.pub) into Maas."""
 
 import os
@@ -34,6 +34,8 @@ def delete_pubkey(auth1, url, session):
         id_n = 0
 
     if id_n:
+        # throttle api calls
+        sleep(.4)
         url_id = (url + '%i/' % id_n)
         request = Request('DELETE', url_id, auth=auth1)
         response = session.send(request.prepare())
@@ -59,7 +61,8 @@ def post_pubkey(auth1, ssh_key, url):
         print('        - Status code: ' + str(response_delete.status_code))
 
         if response_delete:
-            sleep(.5)
+            # throttle api calls
+            sleep(.4)
             print('    * post:')
             request = Request('POST', url, data=payload, auth=auth1)
             response = session.send(request.prepare())
