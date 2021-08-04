@@ -3,7 +3,7 @@
 TF_MAAS_ACT=testflinger_a
 MAAS_SERVER=10.245.128.4
 MAAS_PORT=5240
-MAAS_API_KEY=(YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD)
+MAAS_API_KEY='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'
 
 echo
 echo "###########################"

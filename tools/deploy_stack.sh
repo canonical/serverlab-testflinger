@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
-ubuntu_scr=(ch4ng3m3)
-testflinger_scr=(u24xeO6EKuWt)
-maas_api_key=(YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD)
-maas_host=('10.245.128.4')
-maas_port=('5240')
+ubuntu_scr=ch4ng3m3
+testflinger_scr=u24xeO6EKuWt
+maas_api_key='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'
+maas_host=10.245.128.4
+maas_port=5240
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
