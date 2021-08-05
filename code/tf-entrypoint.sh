@@ -16,17 +16,17 @@ cp /root/.maascli.db /home/ubuntu/
 cp /root/.maascli.db /home/testflinger/
 chown ubuntu:ubuntu /home/ubuntu/.maascli.db
 chown testflinger:testflinger /home/testflinger/.maascli.db
-echo
 
+echo
 echo "Exporting ssh pubkeys..."
 echo "- User: ubuntu"
-/opt/export_ssh-pubkey.py --path /home/ubuntu/ \
+/opt/export_ssh_pubkey.py --path /home/ubuntu/ \
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT
 echo
 echo "- User: testflinger"
-/opt/export_ssh-pubkey.py --path /home/testflinger/ \
+/opt/export_ssh_pubkey.py --path /home/testflinger/ \
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT

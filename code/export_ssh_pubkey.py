@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+
 """Export exec user's ssh pubkey (.ssh/id_rsa.pub) into Maas."""
 
 import os
 import json
 import argparse
+from time import sleep
 from pathlib import Path
 from requests import Request, Session
 from requests_oauthlib import OAuth1
@@ -33,6 +35,8 @@ def delete_pubkey(auth1, url, session):
         id_n = 0
 
     if id_n:
+        # throttle api calls
+        sleep(.4)
         url_id = (url + '%i/' % id_n)
         request = Request('DELETE', url_id, auth=auth1)
         response = session.send(request.prepare())
@@ -54,15 +58,17 @@ def post_pubkey(auth1, ssh_key, url):
         print('Replacing offending key...')
         print('    * delete:')
         response_delete = delete_pubkey(auth1, url, session)
-        print('        - OK: ' + str(response_delete.ok))
-        print('        - Status code: ' + str(response_delete.status_code))
+        print('        - OK: %r' % response_delete.ok)
+        print('        - Status code: %i' % response_delete.status_code)
 
         if response_delete:
+            # throttle api calls
+            sleep(.4)
             print('    * post:')
             request = Request('POST', url, data=payload, auth=auth1)
             response = session.send(request.prepare())
-            print('        - OK: ' + str(response.ok))
-            print('        - Status code: ' + str(response.status_code))
+            print('        - OK: %r' % response.ok)
+            print('        - Status code: %i' % response.status_code)
 
     return response
 
@@ -86,7 +92,7 @@ def main():
     if args.mapi:
         api_key = args.mapi
     else:
-        raise OSError
+        raise RuntimeError('API key required!')
 
     if args.mhost and args.mport:
         url = (
@@ -98,24 +104,28 @@ def main():
             u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
                 args.mhost, def_port))
     else:
-        raise OSError
+        raise RuntimeError('MaaS host required!')
 
     # split api_key into tuple for auth components
     api_key = tuple(api_key.split(':'))
-    auth1 = OAuth1(api_key[0], u'',
-                   api_key[1], api_key[2])
+
+    try:
+        auth1 = OAuth1(api_key[0], u'',
+                       api_key[1], api_key[2])
+    except (IndexError, OSError):
+        raise RuntimeError('Check API key paramaters')
 
     try:
         response = post_pubkey(auth1, ssh_key, url)
     except OSError:
-        print('Check server paramaters.')
+        raise RuntimeError('Check MaaS host paramaters')
     else:
-        print('- OK: ' + str(response.ok))
-        print('- Status code: ' + str(response.status_code))
+        print('- OK: %r' % response.ok)
+        print('- Status code: %i' % response.status_code)
         print(response.text)
 
-    if response.ok:
-        print('\n* Sucessfully exported ssh pubkey!')
+        if response.ok:
+            print('- Successfully exported ssh pubkey!')
 
 
 if __name__ == '__main__':

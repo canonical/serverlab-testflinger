@@ -57,7 +57,7 @@ RUN rm -f /etc/service/sshd/down \
 
 # prepare ssh key ops
 COPY ./ssh/authorized_keys /tmp/authorized_keys
-COPY ./code/export_ssh-pubkey.py /opt/export_ssh-pubkey.py
+COPY ./code/export_ssh_pubkey.py /opt/export_ssh_pubkey.py
 
 # gen ssh keys, update pubkey, import auth_keys
 USER ubuntu
