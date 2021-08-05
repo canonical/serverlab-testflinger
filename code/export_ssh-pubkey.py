@@ -125,7 +125,7 @@ def main():
         print(response.text)
 
         if response.ok:
-            print('- Sucessfully exported ssh pubkey!')
+            print('- Successfully exported ssh pubkey!')
 
 
 if __name__ == '__main__':
