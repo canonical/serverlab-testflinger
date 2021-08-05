@@ -92,7 +92,7 @@ def main():
     if args.mapi:
         api_key = args.mapi
     else:
-        raise OSError('API key required!')
+        raise RuntimeError('API key required!')
 
     if args.mhost and args.mport:
         url = (
@@ -104,17 +104,21 @@ def main():
             u'http://%s:%i/MAAS/api/2.0/account/prefs/sshkeys/' % (
                 args.mhost, def_port))
     else:
-        raise OSError('MaaS host required!')
+        raise RuntimeError('MaaS host required!')
 
     # split api_key into tuple for auth components
     api_key = tuple(api_key.split(':'))
-    auth1 = OAuth1(api_key[0], u'',
-                   api_key[1], api_key[2])
+
+    try:
+        auth1 = OAuth1(api_key[0], u'',
+                       api_key[1], api_key[2])
+    except (IndexError, OSError):
+        raise RuntimeError('Check API key paramaters')
 
     try:
         response = post_pubkey(auth1, ssh_key, url)
     except OSError:
-        print('Check server paramaters.')
+        raise RuntimeError('Check MaaS host paramaters')
     else:
         print('- OK: ' + str(response.ok))
         print('- Status code: ' + str(response.status_code))
