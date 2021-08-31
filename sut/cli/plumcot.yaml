@@ -1,8 +1,0 @@
-job_queue: plumcot
-provision_data:
-  distro: focal
-test_data:
-  test_cmds: |
-    ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
-# logstash_host: 10.172.10.14 # port 5959
-# agent_name: plumcot

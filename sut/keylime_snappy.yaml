@@ -1,8 +1,8 @@
-device_ip: 10.1.10.11
+device_ip: 10.245.130.21
 node_id: bpydxs
 node_name: keylime
 maas_user: testflinger_a
 agent_name: keylime
 env:
     HEXR_DEVICE_SECURE_ID: a002000000EuC0D
-    DEVICE_IP: 10.1.10.11
+    DEVICE_IP: 10.245.130.21

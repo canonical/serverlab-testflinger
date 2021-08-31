@@ -1,0 +1,8 @@
+device_ip: 10.245.130.18
+node_id: pkbrge
+node_name: serviceberry
+maas_user: testflinger_a
+agent_name: serviceberry
+env:
+    HEXR_DEVICE_SECURE_ID: a002000000EuC0h
+    DEVICE_IP: 10.245.130.18

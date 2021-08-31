@@ -1,0 +1,8 @@
+device_ip: 10.245.130.22
+node_id: dghm44
+node_name: polari
+maas_user: testflinger_a
+agent_name: polari
+env:
+    HEXR_DEVICE_SECURE_ID: p6rBUqTxZYtJBfeoJMakCW
+    DEVICE_IP: 10.245.130.22

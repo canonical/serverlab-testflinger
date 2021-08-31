@@ -1,8 +1,8 @@
-device_ip: 10.1.10.15
+device_ip: 10.245.130.24
 node_id: dppba8
 node_name: joliet
 maas_user: testflinger_a
 agent_name: joliet
 env:
     HEXR_DEVICE_SECURE_ID: eyodx7THtDUUP23XCszDxA
-    DEVICE_IP: 10.1.10.15
+    DEVICE_IP: 10.245.130.24

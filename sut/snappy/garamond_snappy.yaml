@@ -1,8 +1,0 @@
-device_ip: 10.1.10.17
-node_id: wkwxnb
-node_name: garamond
-maas_user: testflinger_a
-agent_name: garamond
-env:
-    HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
-    DEVICE_IP: 10.1.10.17

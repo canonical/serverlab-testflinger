@@ -77,7 +77,13 @@ services:
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
-    command: "/opt/tf-entrypoint.sh"
+    command: [
+      "MAAS_SERVER=${MAAS_SERVER}",
+      "MAAS_PORT=${MAAS_PORT}",
+      "MAAS_API_KEY=${MAAS_API_KEY}",
+      "TF_MAAS_ACT=${TF_MAAS_ACT}"
+      "/opt/tf-entrypoint.sh"
+    ]
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
@@ -108,7 +114,13 @@ services:
     environment:
       - PATH=/data/testflinger-cli:$PATH
 
-    command: "/opt/tf-entrypoint.sh"
+    command: [
+      "MAAS_SERVER=${MAAS_SERVER}",
+      "MAAS_PORT=${MAAS_PORT}",
+      "MAAS_API_KEY=${MAAS_API_KEY}",
+      "TF_MAAS_ACT=${TF_MAAS_ACT}"
+      "/opt/tf-entrypoint.sh"
+    ]
 
   # logstash:
   #     depends_on:

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.14
+node_id: qnfxr4
+node_name: prunes
+maas_user: testflinger_a
+agent_name: prunes
+env:
+    HEXR_DEVICE_SECURE_ID: a00D000000IGBG6
+    DEVICE_IP: 10.245.130.14

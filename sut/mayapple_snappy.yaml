@@ -1,0 +1,8 @@
+device_ip: 10.245.130.8
+node_id: fbh36g
+node_name: mayapple
+maas_user: testflinger_a
+agent_name: mayapple
+env:
+    HEXR_DEVICE_SECURE_ID: a0020000009zubi
+    DEVICE_IP: 10.245.130.8

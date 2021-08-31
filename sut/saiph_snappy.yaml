@@ -1,0 +1,8 @@
+device_ip: 10.245.130.12
+node_id: gbe7qy
+node_name: saiph
+maas_user: testflinger_a
+agent_name: saiph
+env:
+    HEXR_DEVICE_SECURE_ID: a00D000000IjNgp
+    DEVICE_IP: 10.245.130.12

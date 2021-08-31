@@ -1,0 +1,8 @@
+device_ip: 10.245.130.29
+node_id: syr86p
+node_name: doubletusk
+maas_user: testflinger_a
+agent_name: doubletusk
+env:
+    HEXR_DEVICE_SECURE_ID: wLWDLeWK5H9JbeezsyLZoK
+    DEVICE_IP: 10.245.130.29

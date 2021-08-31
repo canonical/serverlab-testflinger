@@ -1,8 +1,0 @@
-device_ip: 10.1.10.14
-node_id: ksnms7
-node_name: drapion
-maas_user: testflinger_a
-agent_name: drapion
-env:
-    HEXR_DEVICE_SECURE_ID: a00D000000gYPrSIAW
-    DEVICE_IP: 10.1.10.14

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.32
+node_id: yxwy6r
+node_name: jamano
+maas_user: testflinger_a
+agent_name: jamano
+env:
+    HEXR_DEVICE_SECURE_ID: f65c82xBxy4uMDdDRwpfrk
+    DEVICE_IP: 10.245.130.32

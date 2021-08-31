@@ -1,0 +1,8 @@
+device_ip: 10.245.130.3
+node_id: m8xqfs
+node_name: lalande
+maas_user: testflinger_a
+agent_name: lalande
+env:
+    HEXR_DEVICE_SECURE_ID: zy5AdR6Wey5at2DfbH8Pe4
+    DEVICE_IP: 10.245.130.3

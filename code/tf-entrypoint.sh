@@ -1,9 +1,10 @@
 #!/usr/bin/bash
 
-TF_MAAS_ACT=testflinger_a
-MAAS_HOST=10.245.128.4
-MAAS_PORT=5240
-MAAS_API_KEY='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'
+# these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
+: ${TF_MAAS_ACT:=testflinger}
+: ${MAAS_HOST:=10.120.10.10}
+: ${MAAS_PORT:=5240}
+: ${MAAS_API_KEY:=''}
 
 echo
 echo "###########################"
