@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   db:
@@ -51,12 +51,12 @@ services:
     environment:
       - PATH=/data/testflinger:$PATH
 
-    command: "gunicorn --bind 0.0.0.0:8000 testflinger:app" 
+    command: "gunicorn --bind 0.0.0.0:8000 testflinger:app"
 
   agent:
     depends_on:
       - api
-    build: 
+    build:
       context: .
       dockerfile: testflinger-agent
     stdin_open: true
@@ -77,13 +77,7 @@ services:
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
-    command: [
-      "MAAS_SERVER=${MAAS_SERVER}",
-      "MAAS_PORT=${MAAS_PORT}",
-      "MAAS_API_KEY=${MAAS_API_KEY}",
-      "TF_MAAS_ACT=${TF_MAAS_ACT}"
-      "/opt/tf-entrypoint.sh"
-    ]
+    command: "/opt/tf-entrypoint.sh"
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
@@ -94,7 +88,7 @@ services:
   cli:
     depends_on:
       - agent
-    build: 
+    build:
       context: .
       dockerfile: testflinger-cli
     stdin_open: true
@@ -114,13 +108,7 @@ services:
     environment:
       - PATH=/data/testflinger-cli:$PATH
 
-    command: [
-      "MAAS_SERVER=${MAAS_SERVER}",
-      "MAAS_PORT=${MAAS_PORT}",
-      "MAAS_API_KEY=${MAAS_API_KEY}",
-      "TF_MAAS_ACT=${TF_MAAS_ACT}"
-      "/opt/tf-entrypoint.sh"
-    ]
+    command: "/opt/tf-entrypoint.sh"
 
   # logstash:
   #     depends_on:
