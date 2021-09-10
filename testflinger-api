@@ -43,9 +43,8 @@ RUN git init \
 # Remove gunicorn from install scripts
 # RUN sed -i '22 s/^/#/' ./setup.py 
 
-# install custom gunicorn
-# RUN pip3 install gunicorn[gevent]
-RUN pip install gevent
+# install gunicorn threading deps
+RUN pip install gthread
 
 # run setup
 RUN ./setup.py install
