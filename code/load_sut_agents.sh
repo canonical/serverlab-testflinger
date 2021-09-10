@@ -6,6 +6,7 @@ echo
 echo "Starting SUT agents:"
 echo
 
+# check if exists
 mkdir /var/log/tf-agent
 
 for sutf in /data/testflinger-agent/sut/*; do
@@ -16,10 +17,6 @@ for sutf in /data/testflinger-agent/sut/*; do
 		sleep .5
 	fi
 done
-
-for logf in /var/log/tf-agent/*; do
-	mv /var/log/tf-agent/$logf.conf
-
 
 echo
 echo "###########################"
