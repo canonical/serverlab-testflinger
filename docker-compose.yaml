@@ -51,7 +51,9 @@ services:
     environment:
       - PATH=/data/testflinger:$PATH
 
-    command: "gunicorn -b 0.0.0.0 --workers=5 --threads=5 testflinger:app"
+    command: "gunicorn --bind 0.0.0.0:8000 testflinger:app"
+
+    # command: "gunicorn -b 0.0.0.0 --workers=5 --threads=5 testflinger:app"
 
     # command: "gunicorn -b 0.0.0.0 -k=gevent --worker-connections=1000 -w=3 testflinger:app"
 

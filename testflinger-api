@@ -41,10 +41,16 @@ RUN git init \
   && git checkout -b master --track origin/master
 
 # Remove gunicorn from install scripts
-# RUN sed -i '22 s/^/#/' ./setup.py 
+# RUN sed -i '22 s/^/#/' ./setup.py
+
+# set kernel params for gunicorn
+# increase file descriptors
+RUN ulimit -n 2048
+# increase max socket backlog
+RUN sysctl -w net.core.somaxconn="2048"
 
 # install gunicorn threading deps
-RUN pip install gthread
+# RUN pip install gthread
 
 # run setup
 RUN ./setup.py install
