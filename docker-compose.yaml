@@ -35,7 +35,7 @@ services:
       dockerfile: testflinger-api
     init: true
     restart: unless-stopped
-    
+
     sysctls:
       net.core.somaxconn: 2048
 
