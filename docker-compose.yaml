@@ -33,10 +33,11 @@ services:
     build:
       context: .
       dockerfile: testflinger-api
-      sysctls:
-            - net.core.somaxconn=2048
     init: true
     restart: unless-stopped
+    
+    sysctls:
+      net.core.somaxconn: 2048
 
     networks:
       needham_ext:
