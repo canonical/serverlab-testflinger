@@ -54,7 +54,7 @@ services:
     command: [
       "gunicorn",
       "--worker-class gthread",
-      "--workers 4"
+      "--workers 4",
       "--threads 5",
       "--worker_connections 1000",
       "--bind 0.0.0.0:8000",
