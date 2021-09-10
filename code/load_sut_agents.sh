@@ -15,7 +15,7 @@ for sutf in *; do
 	if [ -f "$sutf" ]; then
 		echo "$sutf"
 		touch /var/log/tf-agent/${sutf%.*}
-		testflinger-agent -c $sutf > /var/log/tf-agent/${sutf%.*} 2>&1 &
+		testflinger-agent -c $sutf > /var/log/tf-agent/${sutf%.*}
 		sleep .5
 	fi
 done
