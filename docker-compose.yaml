@@ -54,10 +54,10 @@ services:
     command: [
       "gunicorn",
       "--bind 0.0.0.0:8000",
+      "testflinger:app",
       "--worker-class=gevent",
       "--worker-connections=1000",
-      "--workers=3",
-      "testflinger:app"
+      "--workers=3"
       ]
 
   agent:

@@ -41,10 +41,11 @@ RUN git init \
   && git checkout -b master --track origin/master
 
 # Remove gunicorn from install scripts
-RUN sed -i '22 s/^/#/' ./setup.py 
+# RUN sed -i '22 s/^/#/' ./setup.py 
 
 # install custom gunicorn
-RUN pip3 install gunicorn[gevent]
+# RUN pip3 install gunicorn[gevent]
+RUN pip install gevent
 
 # run setup
 RUN ./setup.py install
