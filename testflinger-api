@@ -24,13 +24,10 @@ RUN apt-get update \
 # clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# install for gunicorn gthread
-RUN pip3 install futures
-
 # link python3 bin
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-RUN useradd -ms /bin/bash ubuntu 
+RUN useradd -ms /bin/bash ubuntu
 
 # facilitate logging
 RUN mkdir -p /var/log/testflinger \
@@ -42,6 +39,12 @@ RUN git init \
   && git remote add origin https://git.launchpad.net/testflinger \
   && git fetch origin \
   && git checkout -b master --track origin/master
+
+# Remove gunicorn from install scripts
+RUN sed -i '22 s/^/#/' ./setup.py 
+
+# install custom gunicorn
+RUN pip3 install futures gunicorn[gthread]
 
 # run setup
 RUN ./setup.py install
