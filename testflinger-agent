@@ -126,8 +126,13 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents
 
+# copy entrypoint file 
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
+
+# copy load_agent service file
+COPY ./code/load_sut_agents.sh /etc/my_init.d/20_load_sut_agents.sh
+RUN chmod 755 /etc/my_init.d/20_load_sut_agents.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
