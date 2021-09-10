@@ -44,7 +44,7 @@ RUN git init \
 RUN sed -i '22 s/^/#/' ./setup.py 
 
 # install custom gunicorn
-RUN pip3 install futures gunicorn[gthread]
+RUN pip3 install gunicorn[gevent]
 
 # run setup
 RUN ./setup.py install
