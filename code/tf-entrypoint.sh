@@ -35,5 +35,8 @@ echo
 echo "###########################"
 echo
 
+# facilitate tf-agent logging
+mkdir /var/log/tf-agent
+
 # start init
 /sbin/my_init -- bash -l
