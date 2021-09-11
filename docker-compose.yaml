@@ -56,11 +56,11 @@ services:
 
     command: [
       "gunicorn",
-      "--bind 0.0.0.0",
-      "--timeout 240",
-      "--worker-class gevent",
-      "--worker-connections 100",
-      "--workers 3",
+      "-b=0.0.0.0",
+      "-t=240",
+      "-k=gevent",
+      "--worker-connections=100",
+      "-w=3",
       "testflinger:app"
     ]
 
