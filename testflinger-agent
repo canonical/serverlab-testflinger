@@ -130,9 +130,9 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
-# copy load_agent service file
-COPY ./code/load_sut_agents.sh /etc/my_init.d/20_load_sut_agents.sh
-RUN chmod 755 /etc/my_init.d/20_load_sut_agents.sh
+# copy tf-agent service files
+COPY ./code/tf-agent/* /etc/my_init.d/
+RUN chmod 755 /etc/my_init.d/20_*.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
