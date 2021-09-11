@@ -54,19 +54,13 @@ services:
     environment:
       - PATH=/data/testflinger:$PATH
 
-    # command: "gunicorn -b 0.0.0.0:8000 -t 600 --threads=10 testflinger:app"
-
-    # command: "gunicorn -b 0.0.0.0 --workers=5 --threads=5 testflinger:app"
-
-    # command: "gunicorn -b 0.0.0.0 -t 240 -k=gevent --worker-connections=1000 -w=3 testflinger:app"
-
     command: [
       "gunicorn",
-      "-b 0.0.0.0",
-      "-t 240",
-      "-k=gevent",
-      "--worker-connections=1000",
-      "-w=3",
+      "--bind 0.0.0.0",
+      "--timeout 240",
+      "--worker-class gevent",
+      "--worker-connections 100",
+      "--workers 3",
       "testflinger:app"
     ]
 
@@ -94,7 +88,7 @@ services:
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
-    command: "/opt/tf-entrypoint.sh"
+    command: ["/opt/tf-entrypoint.sh"]
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
@@ -125,7 +119,7 @@ services:
     environment:
       - PATH=/data/testflinger-cli:$PATH
 
-    command: "/opt/tf-entrypoint.sh"
+    command: ["/opt/tf-entrypoint.sh"]
 
   # logstash:
   #     depends_on:
