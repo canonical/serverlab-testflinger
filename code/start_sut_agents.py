@@ -2,6 +2,7 @@
 
 from os import path, listdir
 import subprocess
+# from pudb import set_trace; set_trace()
 
 conf_dir = path.join('/', 'data', 'testflinger-agent', 'sut')
 log_dir = path.join('/', 'var', 'log', 'sut-agent')
@@ -11,8 +12,8 @@ print('Starting SUT agent(s):')
 
 for sut_conf in listdir(conf_dir):
     sut = path.splitext(sut_conf)[0]
-    log_path = path.join(log_dir + sut)
-    conf_path = path.join(conf_dir + sut_conf)
+    log_path = path.join(log_dir, sut)
+    conf_path = path.join(conf_dir, sut_conf)
 
     try:
         with open(log_path, 'w') as _file:
@@ -24,10 +25,10 @@ for sut_conf in listdir(conf_dir):
                 start_new_session=True,
                 shell=True)
     except OSError:
-        print('Unable to start agent for: %s', sut)
+        print('  - Unable to start agent for: %s' % sut)
         continue
     else:
-        print('  * %s agent loaded', sut)
+        print('  * %s' % sut)
 
 
 # add argparse so you can call and load a specific sut
