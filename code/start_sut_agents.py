@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-import os
+from os import path, listdir
 import subprocess
-import path
 
 conf_dir = path.join('data', 'testflinger-agent', 'sut')
 log_dir = path.join('var', 'log', 'sut-agent')
@@ -10,7 +9,7 @@ log_dir = path.join('var', 'log', 'sut-agent')
 print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 print('Starting SUT agent(s):')
 
-for sut_conf in os.listdir(conf_dir):
+for sut_conf in listdir(conf_dir):
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir + sut)
     conf_path = path.join(conf_dir + sut_conf)
