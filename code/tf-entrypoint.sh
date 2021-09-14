@@ -35,8 +35,8 @@ echo
 echo "###########################"
 echo
 
-# facilitate tf-agent logging
-mkdir /var/log/tf-agent
+# facilitate sut tf-agent logging
+mkdir /var/log/sut-agent
 
 # start sut agents
 /usr/bin/python3 /opt/start_sut_agents.py
