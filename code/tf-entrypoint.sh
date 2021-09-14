@@ -31,9 +31,6 @@ echo "- User: testflinger"
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT
-echo
-echo "###########################"
-echo
 
 # facilitate sut tf-agent logging
 mkdir /var/log/sut-agent
@@ -43,3 +40,7 @@ mkdir /var/log/sut-agent
 
 # start init
 /sbin/my_init -- bash -l
+
+echo
+echo "###########################"
+echo

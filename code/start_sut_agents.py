@@ -3,8 +3,8 @@
 from os import path, listdir
 import subprocess
 
-conf_dir = path.join('data', 'testflinger-agent', 'sut')
-log_dir = path.join('var', 'log', 'sut-agent')
+conf_dir = path.join('/', 'data', 'testflinger-agent', 'sut')
+log_dir = path.join('/', 'var', 'log', 'sut-agent')
 
 print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 print('Starting SUT agent(s):')
