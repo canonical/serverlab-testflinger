@@ -38,5 +38,8 @@ echo
 # facilitate tf-agent logging
 mkdir /var/log/tf-agent
 
+# start sut agents
+/usr/bin/python3 /opt/start_sut_agents.py
+
 # start init
 /sbin/my_init -- bash -l
