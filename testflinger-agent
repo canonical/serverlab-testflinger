@@ -131,8 +131,12 @@ COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
 # copy tf-agent service files
-COPY ./code/tf-agent/* /etc/my_init.d/
-RUN chmod 755 /etc/my_init.d/20_*.sh
+# COPY ./code/tf-agent/* /etc/my_init.d/
+# RUN chmod 755 /etc/my_init.d/20_*.sh
+
+# copy tf-agent service files
+COPY ./code/start_tf_agents.py /opt/start_tf_agents.py
+RUN chmod 755 /opt/start_tf_agents.py
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
