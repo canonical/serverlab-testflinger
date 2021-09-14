@@ -136,7 +136,7 @@ RUN chmod 755 /opt/tf-entrypoint.sh
 
 # copy tf-agent service files
 COPY ./code/start_sut_agents.py /opt/start_sut_agents.py
-RUN chmod 755 /opt/start_tf_agents.py
+RUN chmod 755 /opt/start_sut_agents.py
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
