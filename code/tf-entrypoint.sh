@@ -39,7 +39,7 @@ chown 1000:1000 /var/log/sut-agent
 
 # start sut agents
 /usr/bin/python3 /opt/start_sut_agents.py
-
+sleep 2
 echo
 echo "###########################"
 echo
