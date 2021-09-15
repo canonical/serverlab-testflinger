@@ -35,7 +35,7 @@ echo
 
 # facilitate sut-agent logging
 mkdir /var/log/sut-agent
-chown 1001:1001 /var/log/sut-agent
+chown 1000:1000 /var/log/sut-agent
 
 # start sut agents
 /usr/bin/python3 /opt/start_sut_agents.py

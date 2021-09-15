@@ -26,15 +26,15 @@ for sut_conf in listdir(conf_dir):
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir, sut)
     conf_path = path.join(conf_dir, sut_conf)
-    # easier to read
+    # daemonize
     cmd = shlex.split(
-        'nohup testflinger-agent -c %s' % conf_path)
+        'setsid testflinger-agent -c %s' % conf_path)
 
     try:
         with open(log_path, 'w') as _file:
             agent = subprocess.Popen(
                 cmd,
-                preexec_fn=delegate(1001, 1001),  # run as testflinger
+                preexec_fn=delegate(1000, 1000),  # run as
                 shell=False,
                 start_new_session=True,
                 cwd=work_dir,
