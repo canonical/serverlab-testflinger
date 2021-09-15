@@ -33,7 +33,7 @@ echo "- User: testflinger"
                           --mport $MAAS_PORT
 echo
 
-# facilitate sut tf-agent logging
+# facilitate sut-agent logging
 mkdir /var/log/sut-agent
 
 # start sut agents
@@ -42,6 +42,7 @@ mkdir /var/log/sut-agent
 echo
 echo "###########################"
 echo
+echo "Starting init.d and /etc/my_init services..."
 
 # start init
 /sbin/my_init -- bash -l
