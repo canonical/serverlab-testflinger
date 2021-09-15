@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 "Load specified SUT agents."
 
-from os import path, listdir, setgid, setuid, setsid
+from os import path, listdir, setgid, setuid
 import subprocess
 import shlex
 # from pudb import set_trace; set_trace()
@@ -15,11 +15,8 @@ print('Starting SUT agent(s):')
 
 
 def delegate(user_uid, user_gid):
-    "Daemonize & execute as different user."
+    "Execute as different user."
     def preempt():
-        # daemonize
-        setsid()
-        # chuser
         setgid(user_gid)
         setuid(user_uid)
     return preempt
