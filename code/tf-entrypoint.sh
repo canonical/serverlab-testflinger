@@ -38,8 +38,8 @@ mkdir /var/log/sut-agent
 chown 1000:1000 /var/log/sut-agent
 
 # start sut agents
-/usr/bin/python3 /opt/start_sut_agents.py
-sleep 2
+sudo -u 1000 /usr/bin/python3 /opt/start_sut_agents.py
+
 echo
 echo "###########################"
 echo

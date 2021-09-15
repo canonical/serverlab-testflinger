@@ -28,7 +28,7 @@ for sut_conf in listdir(conf_dir):
     conf_path = path.join(conf_dir, sut_conf)
     # daemonize
     cmd = shlex.split(
-        'nohup testflinger-agent -c %s' % conf_path)
+        'setsid testflinger-agent -c %s' % conf_path)
 
     try:
         with open(log_path, 'w') as _file:
