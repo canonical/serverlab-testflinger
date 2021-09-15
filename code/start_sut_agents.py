@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"Load specified SUT agents."
 
 from os import path, listdir, setgid, setuid, setsid
 import subprocess
@@ -14,7 +15,7 @@ print('Starting SUT agent(s):')
 
 
 def delegate(user_uid, user_gid):
-    "Execute as different user."
+    "Daemonize & execute as different user."
     def preempt():
         # daemonize
         setsid()
@@ -30,13 +31,13 @@ for sut_conf in listdir(conf_dir):
     conf_path = path.join(conf_dir, sut_conf)
     # easier to read
     cmd = shlex.split(
-        'testflinger-agent -c %s' % conf_path)
+        'nohup testflinger-agent -c %s' % conf_path)
 
     try:
         with open(log_path, 'w') as _file:
             agent = subprocess.Popen(
                 cmd,
-                preexec_fn=delegate(1000, 1000),  # run as ubuntu
+                preexec_fn=delegate(1001, 1001),  # run as testflinger
                 shell=False,
                 start_new_session=True,
                 cwd=work_dir,
