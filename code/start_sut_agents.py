@@ -35,7 +35,7 @@ for sut_conf in listdir(conf_dir):
         with open(log_path, 'w') as _file:
             agent = subprocess.Popen(
                 cmd,
-                preexec_fn=delegate(1001, 1001),  # run as
+                preexec_fn=delegate(1000, 1000),  # run as
                 start_new_session=True,
                 universal_newlines=True,
                 encoding='utf-8',
