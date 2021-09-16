@@ -35,9 +35,10 @@ echo
 
 # facilitate sut-agent logging
 mkdir /var/log/sut-agent
+chown ubuntu:ubuntu /var/log/sut-agent
 
 # start sut agents
-/usr/bin/python3 /opt/start_sut_agents.py
+sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
 
 echo
 echo "###########################"
