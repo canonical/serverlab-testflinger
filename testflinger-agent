@@ -125,7 +125,8 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
-  && chown -R ubuntu:ubuntu /data/snappy-device-agents
+  && chown -R ubuntu:ubuntu /data/snappy-device-agents \
+  && chmod 775 /data/testflinger-agent
 
 # copy entrypoint file 
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
