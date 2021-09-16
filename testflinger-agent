@@ -46,7 +46,8 @@ RUN pip3 install requests_oauthlib
 
 # add ubuntu and testflinger users
 RUN useradd -ms /bin/bash ubuntu \
-  && useradd -ms /bin/bash testflinger
+  && useradd -ms /bin/bash testflinger \
+  && usermod -aG ubuntu testflinger
 
 # add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -143,4 +144,4 @@ RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
 RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
-# RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret 
+# RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
