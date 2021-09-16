@@ -59,7 +59,8 @@ services:
       "-b=0.0.0.0",
       "-t=0",
       "-k=gevent",
-      "--worker-connections=1000",
+      "-w=3",
+      "--worker-connections=300",
       "testflinger:app"
     ]
 

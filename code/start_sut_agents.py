@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+ #!/usr/bin/python3
 "Load specified SUT agents."
 
 from os import path, listdir, setgid, setuid
@@ -35,11 +35,10 @@ for sut_conf in listdir(conf_dir):
             agent = subprocess.Popen(
                 cmd,
                 preexec_fn=delegate(1000, 1000),  # run as
-                shell=False,
                 start_new_session=True,
-                cwd=work_dir,
                 universal_newlines=True,
                 encoding='utf-8',
+                cwd=work_dir,
                 stdout=_file,
                 stderr=subprocess.STDOUT)
     except OSError:
@@ -51,5 +50,8 @@ for sut_conf in listdir(conf_dir):
 
 # add argparse so you can call and load a specific sut or list
 # of suts. the default arg would be to iterate over entire dir
-# (or create seperate reload tool)
-# for day-to-day ops
+# (or create seperate reload tool) - for day-to-day ops
+#
+# add watchdog and/or heartbeat mechanism (simple == better)
+#
+# filter out sleep log messages
