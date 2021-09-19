@@ -33,12 +33,13 @@ echo "- User: testflinger"
                           --mport $MAAS_PORT
 echo
 
-# facilitate sut-agent logging
-mkdir /var/log/sut-agent
-chown ubuntu:ubuntu /var/log/sut-agent
-
-# start sut agents
-sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
+# start sut agents (tf-agent only)
+if test -f "/opt/start_sut_agents.py"; then
+    # facilitate sut-agent logging
+    mkdir /var/log/sut-agent
+    chown testflinger:ubuntu /var/log/sut-agent
+    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
+fi
 
 echo
 echo "###########################"
