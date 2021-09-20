@@ -35,7 +35,7 @@ echo
 
 # start sut agents (tf-agent only)
 if test -f "/opt/start_sut_agents.py"; then
-    sudo -u testflinger /usr/bin/python3 /opt/start_sut_agents.py
+    /usr/bin/python3 /opt/start_sut_agents.py
 fi
 
 echo

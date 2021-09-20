@@ -28,7 +28,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir):
         with open(log_path, 'w') as _file:
             _ = subprocess.Popen(  # pylint: disable=w1509
                 cmd,
-                preexec_fn=delegate(1001, 1001),  # run as
+                preexec_fn=delegate(1000, 1000),  # run as
                 start_new_session=True,
                 universal_newlines=True,
                 encoding='utf-8',
