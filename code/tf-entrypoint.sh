@@ -37,7 +37,7 @@ echo
 if test -f "/opt/start_sut_agents.py"; then
     # facilitate sut-agent logging
     mkdir /var/log/sut-agent
-    /usr/bin/python3 /opt/start_sut_agents.py
+    sudo -u testflinger /usr/bin/python3 /opt/start_sut_agents.py
 fi
 
 echo
