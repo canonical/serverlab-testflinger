@@ -3,3 +3,5 @@ ssh/
 
 #ignore secrets
 .secrets/
+
+code/nr_*

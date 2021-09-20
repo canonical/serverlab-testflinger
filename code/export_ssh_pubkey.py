@@ -9,7 +9,6 @@ from time import sleep
 from pathlib import Path
 from requests import Request, Session
 from requests_oauthlib import OAuth1
-# from pudb import set_trace; set_trace()
 
 
 def file_read(fpath):
