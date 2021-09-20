@@ -2,7 +2,7 @@
 
 "Load specified SUT agents."
 
-from os import path, listdir, setgid, setuid
+from os import path, listdir, setgid, setuid, chmod
 import subprocess
 import shlex
 
@@ -18,7 +18,8 @@ def delegate(user_uid, user_gid):
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir):
     "Load specified SUT agent."
     sut = path.splitext(sut_conf)[0]
-    log_path = path.join(log_dir, sut)
+    # modify perms for logging
+    log_path = chmod((path.join(log_dir, sut)), 0o666)
     conf_path = path.join(conf_dir, sut_conf)
     # daemonize
     cmd = shlex.split(
