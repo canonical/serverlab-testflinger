@@ -84,6 +84,10 @@ RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
 RUN mkdir -p /var/log/testflinger \
   && chmod 755 /var/log/testflinger
 
+# facilitate sut-agent logging
+RUN mkdir /var/log/sut-agent \
+  && chown testflinger:testflinger /var/log/sut-agent
+
 # clone tf-agent src in volume dir
 WORKDIR /data/testflinger-agent
 RUN git init \
