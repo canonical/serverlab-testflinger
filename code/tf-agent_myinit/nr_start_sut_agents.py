@@ -2,7 +2,7 @@
 
 "Load specified SUT agents."
 
-from os import setgid, setuid, path, listdir
+import os
 import subprocess
 import shlex
 
@@ -10,23 +10,25 @@ import shlex
 def delegate(user_uid, user_gid):
     "Execute as different user."
     def preempt():
-        setgid(user_gid)
-        setuid(user_uid)
+        os.setgid(user_gid)
+        os.setuid(user_uid)
     return preempt
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir):
     "Load specified SUT agent."
-    sut = path.splitext(sut_conf)[0]
-    log_path = path.join(log_dir, sut)
-    conf_path = path.join(conf_dir, sut_conf)
+    sut = os.path.splitext(sut_conf)[0]
+    log_path = os.path.join(log_dir, sut)
+    conf_path = os.path.join(conf_dir, sut_conf)
     # daemonize
     cmd = shlex.split(
         'setsid testflinger-agent -c %s' % conf_path)
 
     try:
-        with open(log_path, 'w') as logf:
-            _ = subprocess.Popen(  # pylint: disable=w1509
+        with open(os.open(
+                log_path, os.O_CREAT | os.O_WRONLY, 0o666), 'w') as logf:
+            # pylint: disable=w1509
+            _ = subprocess.Popen(
                 cmd,
                 preexec_fn=delegate(1000, 1000),  # run as
                 start_new_session=True,
@@ -43,14 +45,14 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir):
 
 def main():
     "Load specified SUT agents."
-    work_dir = path.join('/', 'data', 'testflinger-agent')
-    conf_dir = path.join(work_dir, 'sut')
-    log_dir = path.join('/', 'var', 'log', 'sut-agent')
+    work_dir = os.path.join('/', 'data', 'testflinger-agent')
+    conf_dir = os.path.join(work_dir, 'sut')
+    log_dir = os.path.join('/', 'var', 'log', 'sut-agent')
 
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print('Starting SUT agent(s):')
 
-    for sut_conf in listdir(conf_dir):
+    for sut_conf in os.listdir(conf_dir):
         load_sut_agent(sut_conf, work_dir, conf_dir, log_dir)
 
 
