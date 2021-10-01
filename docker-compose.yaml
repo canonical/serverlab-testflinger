@@ -78,6 +78,8 @@ services:
         ipv4_address: 10.245.128.11
       docker_int:
         ipv4_address: 10.172.10.11
+    expose:
+      - "19999"
     hostname: testflinger-agent
 
     volumes:

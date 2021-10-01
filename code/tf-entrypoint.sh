@@ -43,5 +43,8 @@ echo "###########################"
 echo
 echo "Starting init.d and /etc/my_init services..."
 
+# start netdata
+/usr/sbin/netdata
+
 # start init
 /sbin/my_init -- bash -l
