@@ -34,7 +34,10 @@ RUN apt-get update \
     python3-virtualenv \
     python3-requests \
     python3-click \
-    maas-cli
+    maas-cli \
+    netdata \
+    netdata-plugins-bash \
+    netdata-plugins-python
 
 # clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -147,6 +150,3 @@ RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
-
-# install netdata
-RUN "bash <(curl -Ss https://my-netdata.io/kickstart.sh) --disable-telemetry"
