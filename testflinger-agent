@@ -149,4 +149,4 @@ RUN echo "testflinger:${testflinger_scr}" | chpasswd
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
 
 # install netdata
-RUN bash <(curl -Ss https://my-netdata.io/kickstart.sh) --disable-telemetry
+RUN "bash <(curl -Ss https://my-netdata.io/kickstart.sh) --disable-telemetry"
