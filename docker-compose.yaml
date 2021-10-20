@@ -85,6 +85,8 @@ services:
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
+      - netdata_lib:/var/lib/netdata
+      - netdata_cache:/var/cache/netdata
 
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
@@ -165,4 +167,6 @@ volumes:
   agent_data: {}
   snappy_data: {}
   cli_data: {}
+  netdata_lib: {}
+  netdata_cache: {}
   # log_data: {}

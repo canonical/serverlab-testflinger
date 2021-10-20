@@ -1,0 +1,8 @@
+device_ip: 10.245.130.37
+node_id: b4qyqh
+node_name: buzzar
+maas_user: testflinger_a
+agent_name: buzzar
+env:
+    HEXR_DEVICE_SECURE_ID: 5kGheTQnsgQuBQnjKP2rPY
+    DEVICE_IP: 10.245.130.37
