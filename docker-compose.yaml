@@ -69,9 +69,13 @@ services:
     build:
       context: .
       dockerfile: testflinger-agent
+    privileged: true
     stdin_open: true
     tty: true
     restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
 
     networks:
       needham_ext:
