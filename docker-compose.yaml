@@ -11,7 +11,7 @@ services:
       docker_int:
         ipv4_address: 10.172.10.13
     expose:
-      - "6379"
+      - 6379
     hostname: testflinger-db
 
     volumes:
@@ -45,7 +45,7 @@ services:
       docker_int:
         ipv4_address: 10.172.10.10
     expose:
-      - "8000"
+      - 8000
     hostname: testflinger-api
 
     volumes:
@@ -69,12 +69,12 @@ services:
     build:
       context: .
       dockerfile: testflinger-agent
-    privileged: true
     stdin_open: true
     tty: true
     restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
     security_opt:
-      - seccomp:unconfined
       - apparmor:unconfined
 
     networks:
@@ -83,14 +83,18 @@ services:
       docker_int:
         ipv4_address: 10.172.10.11
     expose:
-      - "19999"
+      - 19999
     hostname: testflinger-agent
 
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
-      - netdata_lib:/var/lib/netdata
       - netdata_cache:/var/cache/netdata
+      - netdata_config:/etc/netdata
+      - netdata_lib:/var/lib/netdata
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
 
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
@@ -171,6 +175,7 @@ volumes:
   agent_data: {}
   snappy_data: {}
   cli_data: {}
-  netdata_lib: {}
   netdata_cache: {}
+  netdata_config: {}
+  netdata_lib: {}
   # log_data: {}
