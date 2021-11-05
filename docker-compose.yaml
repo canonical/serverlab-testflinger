@@ -89,6 +89,8 @@ services:
     volumes:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
+      - agent_log:/var/log/sut-agent
+      # netdata volumes
       - netdata_cache:/var/cache/netdata
       - netdata_config:/etc/netdata
       - netdata_lib:/var/lib/netdata
@@ -141,6 +143,8 @@ services:
   #     image: logstash
 
   #     networks:
+  #        needham_ext:
+  #          ipv4_address: 10.245.128.14
   #       docker_int:
   #         ipv4_address: 10.172.10.14
   #     expose:
@@ -151,6 +155,27 @@ services:
   #       - log_data:/var
 
   #     command: "logstash -f /logstash_dir/logstash.conf"
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+    depends_on:
+      - agent
+    restart: unless-stopped
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.15
+    expose:
+      - 9999
+    hostname: testflinger-dozzle
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: volume
+        source: agent_data
+        target: /logs/sut-agent
+        read_only: true
 
 networks:
   docker_int:
@@ -174,6 +199,7 @@ volumes:
   api_data: {}
   agent_data: {}
   snappy_data: {}
+  agent_log: {}
   cli_data: {}
   netdata_cache: {}
   netdata_config: {}
