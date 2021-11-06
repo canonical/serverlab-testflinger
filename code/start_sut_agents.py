@@ -7,7 +7,7 @@ import threading
 import subprocess
 import logging
 import shlex
-import sys
+# import sys
 # from pudb import set_trace
 
 
@@ -16,17 +16,18 @@ def read_output(pipe, sut, log_path, log_level):
     def config_logging():
         logger = logging.getLogger(sut)
         logger.setLevel(logging.DEBUG)
-        stream_formatter = logging.Formatter(
-            '>> %(name)s << \n   %(message)s')
+        # move to debug mode
+        # stream_formatter = logging.Formatter(
+        #     '>> %(name)s << \n   %(message)s')
         file_formatter = logging.Formatter(
             '%(message)s')
-        stream_handler = logging.StreamHandler(sys.stdout)
+        # stream_handler = logging.StreamHandler(sys.stdout)
         file_handler = logging.FileHandler(log_path, mode='w')
-        stream_handler.setLevel(log_level)
+        # stream_handler.setLevel(log_level)
         file_handler.setLevel(log_level)
-        stream_handler.setFormatter(stream_formatter)
+        # stream_handler.setFormatter(stream_formatter)
         file_handler.setFormatter(file_formatter)
-        logger.addHandler(stream_handler)
+        # logger.addHandler(stream_handler)
         logger.addHandler(file_handler)
 
         return logger
@@ -102,7 +103,6 @@ def main():
 
     # setup root logger
     root_logger = logging.getLogger()
-    # set root logging level
     root_logger.setLevel(logging.NOTSET)
 
     for sut_conf in listdir(conf_dir):

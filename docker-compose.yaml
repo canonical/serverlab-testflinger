@@ -199,7 +199,7 @@ services:
 
     environment:
       SERVER_NAME: testflinger-kibana
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
 
   # logstash:
   #     depends_on:
