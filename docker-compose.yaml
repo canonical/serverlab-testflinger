@@ -2,10 +2,10 @@ version: "3.9"
 
 services:
   db:
-    # use docker redis image
     image: redis:latest
     init: true
     restart: unless-stopped
+    container_name: testflinger-db
 
     networks:
       docker_int:
@@ -35,6 +35,7 @@ services:
       dockerfile: testflinger-api
     init: true
     restart: unless-stopped
+    container_name: testflinger-api
 
     sysctls:
       net.core.somaxconn: 2048
@@ -72,6 +73,8 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+    container_name: testflinger-agent
+
     cap_add:
       - SYS_PTRACE
     security_opt:
@@ -118,6 +121,7 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+    container_name: testflinger-cli
 
     networks:
       needham_ext:
@@ -133,6 +137,69 @@ services:
       - PATH=/data/testflinger-cli:$PATH
 
     command: ["/opt/tf-entrypoint.sh"]
+
+  elastics:
+    depends_on:
+      - cli
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    restart: unless-stopped
+    container_name: testflinger-elastics
+
+    cap_add: 
+      - IPC_LOCK
+    ulimits: 
+      memlock:
+        soft: -1 
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.14
+      docker_int:
+        ipv4_address: 10.172.10.14
+    expose:
+      - 9200
+    hostname: testflinger-elastics
+
+    volumes:
+      - elastics_data:/usr/share/elastics/data
+      - type: volume
+        source: agent_log
+        target: /var/sut-logs
+        read_only: true
+
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+
+  kibana:
+    depends_on:
+      - elastics
+    image: docker.elastic.co/kibana/kibana:7.12.0
+    restart: unless-stopped
+    container_name: testflinger-kibana
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.15
+      docker_int:
+        ipv4_address: 10.172.10.15
+    expose:
+      - 5601
+    hostname: testflinger-kibana
+
+    volumes:
+      - type: volume
+        source: agent_log
+        target: /var/sut-logs
+        read_only: true
+
+    environment:
+      SERVER_NAME: testflinger-kibana
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
 
   # logstash:
   #     depends_on:
@@ -155,45 +222,6 @@ services:
   #       - log_data:/var
 
   #     command: "logstash -f /logstash_dir/logstash.conf"
-
-
-  logarr:
-    image: monitorr/logarr:latest
-    volumes:
-    depends_on:
-      - agent
-    restart: unless-stopped
-
-    networks:
-      needham_ext:
-        ipv4_address: 10.245.128.15
-    expose:
-      - 80
-    hostname: testflinger-logarr
-
-    volumes:
-      - logarr_config:/config
-      - type: volume
-        source: agent_log
-        target: /var/log/logarrlogs
-        read_only: true
-
-  dozzle:
-    image: amir20/dozzle:latest
-    volumes:
-    depends_on:
-      - agent
-    restart: unless-stopped
-
-    networks:
-      needham_ext:
-        ipv4_address: 10.245.128.16
-    expose:
-      - 9999
-    hostname: testflinger-dozzle
-
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   docker_int:
@@ -222,5 +250,6 @@ volumes:
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
-  logarr_config: {}
+  elastics_data: {}
+  kibana_data: {}
   # log_data: {}
