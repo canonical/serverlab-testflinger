@@ -73,7 +73,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
             preexec_fn=delegate(1000, 1000),  # run as
-            start_new_session=True,
+            start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
             cwd=work_dir,

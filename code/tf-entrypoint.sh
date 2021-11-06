@@ -41,10 +41,12 @@ echo "Starting init.d and /etc/my_init services..."
 # start netdata
 /usr/sbin/netdata
 
-# start init
-/sbin/my_init -- bash -l
-
 # start sut agents (tf-agent only)
 if test -f "/opt/start_sut_agents.py"; then
-    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
+    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py &
 fi
+
+# start init
+echo
+echo "Starting my_initd..."
+/sbin/my_init -- bash -l
