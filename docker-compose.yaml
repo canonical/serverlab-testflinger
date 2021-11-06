@@ -141,7 +141,7 @@ services:
   elastics:
     depends_on:
       - cli
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
     restart: unless-stopped
     container_name: testflinger-elastics
 
@@ -178,7 +178,7 @@ services:
   kibana:
     depends_on:
       - elastics
-    image: docker.elastic.co/kibana/kibana:7.12.0
+    image: docker.elastic.co/kibana/kibana:7.9.2
     restart: unless-stopped
     container_name: testflinger-kibana
 
