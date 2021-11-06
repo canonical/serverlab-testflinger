@@ -20,8 +20,7 @@ def read_output(pipe, sut, log_path, log_level):
         # stdout output in debug mode
         stream_formatter = logging.Formatter(
             '>> %(name)s << \n   %(message)s')
-        file_formatter = logging.Formatter(
-            '%(message)s')
+        file_formatter = logging.Formatter('%(message)s')
         # init logging handlers
         stream_handler = logging.StreamHandler(sys.stdout)
         file_handler = logging.FileHandler(log_path, mode='w')
@@ -57,6 +56,7 @@ def delegate(user_uid, user_gid):
     def preempt():
         setgid(user_gid)
         setuid(user_uid)
+
     return preempt
 
 
