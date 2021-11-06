@@ -35,8 +35,15 @@ RUN apt-get update \
     python3-requests \
     python3-click \
     maas-cli \
+    uuid-dev \
+    zlib1g-dev \
+    libjson-c-dev \
+    gcc \
+    make \
+    automake \
     autotools-dev \
-    autoconf
+    autoconf \
+    pkg-config
 
 # clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
