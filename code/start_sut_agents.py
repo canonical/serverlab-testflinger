@@ -3,31 +3,36 @@
 """Load specified SUT agents."""
 
 from os import setgid, setuid, path, listdir
-import threading
 import subprocess
+import threading
+import argparse
 import logging
 import shlex
-# import sys
-# from pudb import set_trace
+import sys
+# from pudb import set_trace; set_trace()
 
 
 def read_output(pipe, sut, log_path, log_level):
     """Read stdout pipe."""
     def config_logging():
+        # init named logger
         logger = logging.getLogger(sut)
-        logger.setLevel(logging.DEBUG)
-        # move to debug mode
-        # stream_formatter = logging.Formatter(
-        #     '>> %(name)s << \n   %(message)s')
+        # stdout output in debug mode
+        stream_formatter = logging.Formatter(
+            '>> %(name)s << \n   %(message)s')
         file_formatter = logging.Formatter(
             '%(message)s')
-        # stream_handler = logging.StreamHandler(sys.stdout)
+        # init logging handlers
+        stream_handler = logging.StreamHandler(sys.stdout)
         file_handler = logging.FileHandler(log_path, mode='w')
-        # stream_handler.setLevel(log_level)
-        file_handler.setLevel(log_level)
-        # stream_handler.setFormatter(stream_formatter)
+        # set logging levels
+        stream_handler.setLevel(log_level)
+        file_handler.setLevel(logging.DEBUG)
+        # assign formatters
+        stream_handler.setFormatter(stream_formatter)
         file_handler.setFormatter(file_formatter)
-        # logger.addHandler(stream_handler)
+        # add handlers to logger
+        logger.addHandler(stream_handler)
         logger.addHandler(file_handler)
 
         return logger
@@ -37,9 +42,9 @@ def read_output(pipe, sut, log_path, log_level):
     # sigint = {'stop': False}
 
     while True:
-        logger.info(pipe.readline())
+        logger.debug(pipe.readline())
         # try:
-        #     logger.info(pipe.readline())
+        #     logger.debug(pipe.readline())
         # # except KeyboardInterrupt:
         #     break
         #     sigint['stop'] = True
@@ -90,16 +95,33 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         #     proc_thread.join()
 
 
+def parse_args():
+    """Ingest arguments"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '-D', '--debug',
+                        dest='log_level',
+                        action='store_const',
+                        const=logging.DEBUG,
+                        # default logging level
+                        default=logging.INFO,
+                        help='debug/verbose output')
+    args = parser.parse_args()
+
+    return args
+
+
 def main():
     """Load specified SUT agents."""
+    # base dir of tf-agent
     work_dir = path.join('/', 'data', 'testflinger-agent')
+    # config dir of sut confs
     conf_dir = path.join(work_dir, 'sut')
+    # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
-    log_level = logging.INFO  # set w/ argparse
+    log_level = parse_args().log_level
 
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print('Starting SUT agent(s):')
-    # set_trace()
 
     # setup root logger
     root_logger = logging.getLogger()
