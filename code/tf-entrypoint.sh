@@ -33,11 +33,6 @@ echo "- User: testflinger"
                           --mport $MAAS_PORT
 echo
 
-# start sut agents (tf-agent only)
-if test -f "/opt/start_sut_agents.py"; then
-    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
-fi
-
 echo
 echo "###########################"
 echo
@@ -48,3 +43,8 @@ echo "Starting init.d and /etc/my_init services..."
 
 # start init
 /sbin/my_init -- bash -l
+
+# start sut agents (tf-agent only)
+if test -f "/opt/start_sut_agents.py"; then
+    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
+fi
