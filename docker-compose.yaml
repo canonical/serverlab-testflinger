@@ -91,12 +91,12 @@ services:
       - snappy_data:/data/snappy-device-agents
       - agent_log:/var/log/sut-agent
       # netdata volumes
-      - netdata_cache:/var/cache/netdata
-      - netdata_config:/etc/netdata
-      - netdata_lib:/var/lib/netdata
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /etc/os-release:/host/etc/os-release:ro
+      # - netdata_cache:/var/cache/netdata
+      # - netdata_config:/etc/netdata
+      # - netdata_lib:/var/lib/netdata
+      # - /proc:/host/proc:ro
+      # - /sys:/host/sys:ro
+      # - /etc/os-release:/host/etc/os-release:ro
 
     environment:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
@@ -219,8 +219,8 @@ volumes:
   snappy_data: {}
   agent_log: {}
   cli_data: {}
-  netdata_cache: {}
-  netdata_config: {}
-  netdata_lib: {}
+  # netdata_cache: {}
+  # netdata_config: {}
+  # netdata_lib: {}
   logarr_config: {}
   # log_data: {}

@@ -34,16 +34,16 @@ RUN apt-get update \
     python3-virtualenv \
     python3-requests \
     python3-click \
-    maas-cli \
-    uuid-dev \
-    zlib1g-dev \
-    libjson-c-dev \
-    gcc \
-    make \
-    automake \
-    autotools-dev \
-    autoconf \
-    pkg-config
+    maas-cli
+    # uuid-dev \
+    # zlib1g-dev \
+    # libjson-c-dev \
+    # gcc \
+    # make \
+    # automake \
+    # autotools-dev \
+    # autoconf \
+    # pkg-config
 
 # clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -142,10 +142,10 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents \
   && chmod 775 /data/snappy-device-agents
 
-# netdata
-RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
-RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
-RUN chown -R root:root /var/log/netdata
+# # netdata
+# RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
+# RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
+# RUN chown -R root:root /var/log/netdata
 
 # copy entrypoint file 
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
