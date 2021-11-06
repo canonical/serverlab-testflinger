@@ -156,8 +156,9 @@ services:
 
   #     command: "logstash -f /logstash_dir/logstash.conf"
 
-  dozzle:
-    image: amir20/dozzle:latest
+
+  logarr:
+    image: monitorr/logarr:latest
     volumes:
     depends_on:
       - agent
@@ -167,15 +168,32 @@ services:
       needham_ext:
         ipv4_address: 10.245.128.15
     expose:
+      - 80
+    hostname: testflinger-logarr
+
+    volumes:
+      - logarr_config:/config
+      - type: volume
+        source: agent_log
+        target: /var/log/logarrlogs
+        read_only: true
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+    depends_on:
+      - agent
+    restart: unless-stopped
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.16
+    expose:
       - 9999
     hostname: testflinger-dozzle
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - type: volume
-        source: agent_data
-        target: /logs/sut-agent
-        read_only: true
 
 networks:
   docker_int:
@@ -204,4 +222,5 @@ volumes:
   netdata_cache: {}
   netdata_config: {}
   netdata_lib: {}
+  logarr_config: {}
   # log_data: {}
