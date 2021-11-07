@@ -121,9 +121,6 @@ def get_args():
                         dest='stop',
                         action='store_true',
                         help='stop all agents')
-    # parser.add_argument('-ra', '-RA', '--restart-agent',
-    #                     dest='agent_list',
-    #                     help='restart specified agent(s)')
     args = parser.parse_args()
 
     return args
