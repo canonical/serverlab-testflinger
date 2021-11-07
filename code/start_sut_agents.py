@@ -3,7 +3,7 @@
 """Load specified SUT agents."""
 
 from logging.handlers import RotatingFileHandler
-from os import setgid, setuid, path, listdir, fork
+from os import setgid, setuid, path, listdir
 import subprocess
 import threading
 import argparse
