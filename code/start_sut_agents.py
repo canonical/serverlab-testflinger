@@ -2,17 +2,20 @@
 
 """Load specified SUT agents."""
 
-from os import setgid, setuid, path, listdir
+from logging.handlers import RotatingFileHandler
+from os import setgid, setuid, path, listdir, fork
 import subprocess
 import threading
 import argparse
 import logging
 import shlex
 import sys
-# from pudb import set_trace; set_trace()
+import re
+import psutil
+# from pudb import set_trace
 
 
-def read_output(pipe, sut, log_path, log_level):
+def log_agent(pipe, sut, log_path, log_level):
     """Read stdout pipe."""
     def config_logging():
         # init named logger
@@ -20,10 +23,15 @@ def read_output(pipe, sut, log_path, log_level):
         # stdout output in debug mode
         stream_formatter = logging.Formatter(
             '>> %(name)s << \n   %(message)s')
-        file_formatter = logging.Formatter('%(message)s')
+        file_formatter = logging.Formatter(
+            '%(message)s')
         # init logging handlers
         stream_handler = logging.StreamHandler(sys.stdout)
-        file_handler = logging.FileHandler(log_path, mode='w')
+        file_handler = RotatingFileHandler(
+            log_path,
+            mode='w',
+            backupCount=2,
+            maxBytes=100000000)  # 100mb
         # set logging levels
         stream_handler.setLevel(log_level)
         file_handler.setLevel(logging.DEBUG)
@@ -83,7 +91,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         print('  - Unable to start agent for: %s' % sut)
     else:
         print('  * %s' % sut)
-        proc_thread = threading.Thread(target=read_output,
+        proc_thread = threading.Thread(target=log_agent,
                                        args=(proc.stdout,
                                              sut,
                                              log_path,
@@ -95,7 +103,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         #     proc_thread.join()
 
 
-def parse_args():
+def get_args():
     """Ingest arguments"""
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '-D', '--debug',
@@ -105,6 +113,17 @@ def parse_args():
                         # default logging level
                         default=logging.INFO,
                         help='debug/verbose output')
+    parser.add_argument('-r', '-R', '--restart',
+                        dest='reset',
+                        action='store_true',
+                        help='restart all agents')
+    parser.add_argument('-s', '-S', '--stop',
+                        dest='stop',
+                        action='store_true',
+                        help='stop all agents')
+    # parser.add_argument('-ra', '-RA', '--restart-agent',
+    #                     dest='agent_list',
+    #                     help='restart specified agent(s)')
     args = parser.parse_args()
 
     return args
@@ -112,23 +131,41 @@ def parse_args():
 
 def main():
     """Load specified SUT agents."""
+    user_args = get_args()
     # base dir of tf-agent
     work_dir = path.join('/', 'data', 'testflinger-agent')
     # config dir of sut confs
     conf_dir = path.join(work_dir, 'sut')
     # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
-    log_level = parse_args().log_level
-
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    print('Starting SUT agent(s):')
+    log_level = user_args.log_level
 
     # setup root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.NOTSET)
 
+    if user_args.reset or user_args.stop:
+        # kill running agents (ps pname truncated)
+        agent_procs = re.compile(
+            'testflinger-age|start_sut_age')
+        # set_trace()
+
+        for proc in psutil.process_iter(['name']):
+            if agent_procs.match(proc.info['name']):
+                proc.kill()
+
+        if user_args.stop:
+            sys.exit()
+
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('loading sut agent(s):')
+
     for sut_conf in listdir(conf_dir):
-        load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level)
+        load_sut_agent(sut_conf,
+                       work_dir,
+                       conf_dir,
+                       log_dir,
+                       log_level)
 
 
 if __name__ == '__main__':

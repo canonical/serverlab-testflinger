@@ -43,7 +43,8 @@ echo "Starting init.d and /etc/my_init services..."
 
 # start sut agents (tf-agent only)
 if test -f "/opt/start_sut_agents.py"; then
-    sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py &
+    # sudo -u ubuntu /usr/bin/python3 /opt/start_sut_agents.py
+    nohup /usr/bin/python3 /opt/start_sut_agents.py &
 fi
 
 # start init
