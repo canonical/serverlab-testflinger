@@ -29,7 +29,7 @@ def log_agent(pipe, sut, log_path, log_level):
         stream_handler = logging.StreamHandler(sys.stdout)
         file_handler = RotatingFileHandler(
             log_path,
-            mode='w',
+            mode='a',
             backupCount=2,
             maxBytes=100000000)  # 100mb
         # set logging levels
@@ -143,10 +143,10 @@ def main():
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
-        agent_procs = re.compile(
-            'testflinger-age|start_sut_age')
+        agent_procs = re.compile('testflinger-age|sudo')
         # set_trace()
 
+        # cat procs and kill named procs
         for proc in psutil.process_iter(['name']):
             if agent_procs.match(proc.info['name']):
                 proc.kill()
