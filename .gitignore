@@ -5,3 +5,4 @@ ssh/
 .secrets/
 
 code/nr_*
+.DS_Store

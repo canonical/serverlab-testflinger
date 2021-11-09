@@ -97,6 +97,9 @@ RUN mkdir -p /var/log/testflinger \
 RUN mkdir /var/log/sut-agent \
   && chown ubuntu:ubuntu /var/log/sut-agent
 
+# copy agent harness
+COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
+
 # clone tf-agent src in volume dir
 WORKDIR /data/testflinger-agent
 RUN git init \
