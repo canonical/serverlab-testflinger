@@ -97,9 +97,6 @@ RUN mkdir -p /var/log/testflinger \
 RUN mkdir /var/log/sut-agent \
   && chown ubuntu:ubuntu /var/log/sut-agent
 
-# copy agent harness
-COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
-
 # clone tf-agent src in volume dir
 WORKDIR /data/testflinger-agent
 RUN git init \
@@ -154,9 +151,15 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
-# copy tf-agent service files
+# copy tf-agent harness
 COPY ./code/start_sut_agents.py /opt/start_sut_agents.py
 RUN chmod 755 /opt/start_sut_agents.py
+
+# copy agent service file
+COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
+
+# copy netdata service file
+# COPY code/02_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
