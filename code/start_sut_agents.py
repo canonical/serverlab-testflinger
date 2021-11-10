@@ -37,7 +37,7 @@ def log_agent(pipe, sut, log_path, log_level):
             maxBytes=100000000)  # 100mb
         # set logging levels
         _stream_handler.setLevel(log_level)
-        _file_handler.setLevel(logging.DEBUG)
+        _file_handler.setLevel(logging.INFO)
         # assign formatters
         _stream_handler.setFormatter(stream_formatter)
         _file_handler.setFormatter(file_formatter)
@@ -52,7 +52,7 @@ def log_agent(pipe, sut, log_path, log_level):
     # sigint = {'stop': False}
 
     while True:
-        logger.debug(pipe.readline())
+        logger.info(pipe.readline())
         # try:
         #     logger.debug(pipe.readline())
         # # except KeyboardInterrupt:
@@ -98,7 +98,7 @@ def load_sut_agent(sut_conf,  # pylint: disable=r0913
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        root_logger.info('  * %s' % sut)
+        root_logger.debug('  * %s' % sut)
         proc_thread = threading.Thread(target=log_agent,
                                        args=(proc.stdout,
                                              sut,
@@ -117,9 +117,9 @@ def get_args():
     parser.add_argument('-d', '-D', '--debug',
                         dest='log_level',
                         action='store_const',
-                        const=logging.DEBUG,
+                        const=logging.INFO,
                         # default logging level
-                        default=logging.INFO,
+                        default=logging.WARNING,
                         help='debug/verbose output')
     parser.add_argument('-r', '-R', '--restart',
                         dest='reset',
@@ -148,7 +148,7 @@ def main():
 
     # setup root logger
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.NOTSET)
+    root_logger.setLevel(logging.DEBUG)
     root_formatter = logging.Formatter(
         '%(message)s')
     stream_handler = logging.StreamHandler(sys.stdout)
@@ -171,8 +171,8 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    root_logger.info('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    root_logger.info('loading sut agent(s):')
+    root_logger.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    root_logger.debug('loading sut agent(s):')
 
     for sut_conf in listdir(conf_dir):
         load_sut_agent(sut_conf,
