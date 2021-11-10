@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 
 """Load specified SUT agents."""
+# TODO:
+# integrate w/ k8s & use http healthcheck
+# create fn to recieve health check in new thread?
+
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
