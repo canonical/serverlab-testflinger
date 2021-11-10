@@ -22,7 +22,6 @@ import psutil
 def log_agent(pipe, sut, log_path, log_level):
     """Read stdout pipe."""
     def config_logging():
-        # init named logger
         logger = logging.getLogger(sut)
         # stdout output in debug mode
         stream_formatter = logging.Formatter(
@@ -30,21 +29,21 @@ def log_agent(pipe, sut, log_path, log_level):
         file_formatter = logging.Formatter(
             '%(message)s')
         # init logging handlers
-        stream_handler = logging.StreamHandler(sys.stdout)
-        file_handler = RotatingFileHandler(
+        _stream_handler = logging.StreamHandler(sys.stdout)
+        _file_handler = RotatingFileHandler(
             log_path,
             mode='a',
             backupCount=2,
             maxBytes=100000000)  # 100mb
         # set logging levels
-        stream_handler.setLevel(log_level)
-        file_handler.setLevel(logging.DEBUG)
+        _stream_handler.setLevel(log_level)
+        _file_handler.setLevel(logging.DEBUG)
         # assign formatters
-        stream_handler.setFormatter(stream_formatter)
-        file_handler.setFormatter(file_formatter)
+        _stream_handler.setFormatter(stream_formatter)
+        _file_handler.setFormatter(file_formatter)
         # add handlers to logger
-        logger.addHandler(stream_handler)
-        logger.addHandler(file_handler)
+        logger.addHandler(_stream_handler)
+        logger.addHandler(_file_handler)
 
         return logger
 
@@ -72,10 +71,15 @@ def delegate(user_uid, user_gid):
     return preempt
 
 
-def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
+def load_sut_agent(sut_conf,  # pylint: disable=r0913
+                   work_dir,
+                   conf_dir,
+                   log_dir,
+                   log_level,
+                   root_logger):
     """Load specified SUT agent."""
     sut = path.splitext(sut_conf)[0]
-    log_path = path.join(log_dir, sut)
+    _log_path = path.join(log_dir, sut)
     conf_path = path.join(conf_dir, sut_conf)
     # daemonize agent
     cmd = shlex.split(
@@ -94,11 +98,11 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        print('  * %s' % sut)
+        root_logger.info('  * %s' % sut)
         proc_thread = threading.Thread(target=log_agent,
                                        args=(proc.stdout,
                                              sut,
-                                             log_path,
+                                             _log_path,
                                              log_level))
         proc_thread.start()
         # sigint = proc_thread.start()
@@ -140,10 +144,19 @@ def main():
     # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
     log_level = user_args.log_level
+    log_path = path.join(log_dir, 'init_agents')
 
     # setup root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.NOTSET)
+    root_formatter = logging.Formatter(
+        '%(message)s')
+    stream_handler = logging.StreamHandler(sys.stdout)
+    file_handler = logging.FileHandler(log_path, mode='w')
+    stream_handler.setFormatter(root_formatter)
+    file_handler.setFormatter(root_formatter)
+    root_logger.addHandler(stream_handler)
+    root_logger.addHandler(file_handler)
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
@@ -158,15 +171,16 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    print('loading sut agent(s):')
+    root_logger.info('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    root_logger.info('loading sut agent(s):')
 
     for sut_conf in listdir(conf_dir):
         load_sut_agent(sut_conf,
                        work_dir,
                        conf_dir,
                        log_dir,
-                       log_level)
+                       log_level,
+                       root_logger)
 
 
 if __name__ == '__main__':
