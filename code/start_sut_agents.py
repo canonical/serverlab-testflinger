@@ -77,9 +77,9 @@ def load_sut_agent(sut_conf,
                    log_dir,
                    log_level):
     """Load specified SUT agent."""
+    conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
-    conf_path = path.join(conf_dir, sut_conf)
     # daemonize agent
     cmd = shlex.split(
         'setsid testflinger-agent -c %s' % conf_path)
