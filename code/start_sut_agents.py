@@ -62,15 +62,6 @@ def log_agent(pipe, sut, log_path, log_level):
     # return sigint
 
 
-def delegate(user_uid, user_gid):
-    """Execute as different user."""
-    def preempt():
-        setgid(user_gid)
-        setuid(user_uid)
-
-    return preempt
-
-
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
     sut = path.splitext(sut_conf)[0]
@@ -81,9 +72,8 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         'setsid testflinger-agent -c %s' % conf_path)
 
     try:
-        proc = subprocess.Popen(  # pylint: disable=w1509
+        proc = subprocess.Popen(
             cmd,
-            preexec_fn=delegate(1000, 1000),  # run as
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
