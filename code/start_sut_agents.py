@@ -151,7 +151,7 @@ def main():
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
     root_formatter = logging.Formatter(
-        '%(message)s --- %(asctime)s', "%H:%M:%S [%a %b %d]")
+        '%(message)s --- %(asctime)s', "[%H:%M:%S %a %b %d]")
     stream_handler = logging.StreamHandler(sys.stdout)
     file_handler = logging.FileHandler(
         path.join(log_dir, 'init_agents'), mode='w')
@@ -172,7 +172,7 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('========================================')
     print('loading sut agent(s):')
 
     for idx, sut_conf in enumerate(conf_list):
@@ -186,6 +186,7 @@ def main():
         if idx == (len(conf_list) - 1):  # last sut
             # stop root logging handlers
             root_logger.handlers.clear()
+            print('========================================')
 
 
 if __name__ == '__main__':
