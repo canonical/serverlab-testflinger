@@ -13,10 +13,11 @@ import threading
 import argparse
 import logging
 import shlex
+import time
 import sys
 import re
 import psutil
-# from pudb import set_trace
+# from pudb import set_trace; set_trace()
 
 
 def log_agent(pipe, sut, log_path, log_level):
@@ -51,6 +52,9 @@ def log_agent(pipe, sut, log_path, log_level):
     # break semaphore
     # sigint = {'stop': False}
 
+    # wait for root log handlers to clear
+    time.sleep(3)
+
     while True:
         logger.info(pipe.readline())
         # try:
@@ -71,11 +75,7 @@ def delegate(user_uid, user_gid):
     return preempt
 
 
-def load_sut_agent(sut_conf,
-                   work_dir,
-                   conf_dir,
-                   log_dir,
-                   log_level):
+def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
@@ -142,19 +142,19 @@ def main():
     work_dir = path.join('/', 'data', 'testflinger-agent')
     # config dir of sut confs
     conf_dir = path.join(work_dir, 'sut')
-    # conf_list = listdir(conf_dir)
+    conf_list = listdir(conf_dir)
     # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
     log_level = user_args.log_level
-    log_path = path.join(log_dir, 'init_agents')
 
     # setup root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
     root_formatter = logging.Formatter(
-        '%(message)s  -  %(asctime)s')
+        '%(message)s --- %(asctime)s', "%H:%M:%S [%a %b %d]")
     stream_handler = logging.StreamHandler(sys.stdout)
-    file_handler = logging.FileHandler(log_path, mode='w')
+    file_handler = logging.FileHandler(
+        path.join(log_dir, 'init_agents'), mode='w')
     stream_handler.setFormatter(root_formatter)
     file_handler.setFormatter(root_formatter)
     root_logger.addHandler(stream_handler)
@@ -162,8 +162,7 @@ def main():
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
-        agent_procs = re.compile('testflinger-age|sudo')
-        # set_trace()
+        agent_procs = re.compile('testflinger-age')
 
         # cat procs and kill named procs
         for proc in psutil.process_iter(['name']):
@@ -173,11 +172,10 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    root_logger.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    root_logger.debug('loading sut agent(s):')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('loading sut agent(s):')
 
-    # for idx, sut_conf in enumerate(conf_dir):
-    for sut_conf in enumerate(conf_dir):
+    for idx, sut_conf in enumerate(conf_list):
         sut = load_sut_agent(sut_conf,
                              work_dir,
                              conf_dir,
@@ -185,9 +183,9 @@ def main():
                              log_level)
         root_logger.debug('  * %s', sut)
 
-        # if idx == (len(conf_list) - 1):  # last sut
-        #     # end logging (root)
-        #     root_logger.handlers.clear()
+        if idx == (len(conf_list) - 1):  # last sut
+            # stop root logging handlers
+            root_logger.handlers.clear()
 
 
 if __name__ == '__main__':
