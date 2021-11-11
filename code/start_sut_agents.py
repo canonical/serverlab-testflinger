@@ -71,12 +71,7 @@ def delegate(user_uid, user_gid):
     return preempt
 
 
-def load_sut_agent(sut_conf,  # pylint: disable=r0913
-                   work_dir,
-                   conf_dir,
-                   log_dir,
-                   log_level,
-                   root_logger):
+def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
@@ -98,13 +93,15 @@ def load_sut_agent(sut_conf,  # pylint: disable=r0913
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        root_logger.debug('  * %s' % sut)
         proc_thread = threading.Thread(target=log_agent,
                                        args=(proc.stdout,
                                              sut,
                                              _log_path,
                                              log_level))
         proc_thread.start()
+
+        return sut
+
         # sigint = proc_thread.start()
 
         # if sigint:
@@ -140,7 +137,7 @@ def main():
     # base dir of tf-agent
     work_dir = path.join('/', 'data', 'testflinger-agent')
     # config dir of sut confs
-    conf_dir = path.join(work_dir, 'sut')
+    conf_dir = listdir(path.join(work_dir, 'sut'))
     # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
     log_level = user_args.log_level
@@ -150,7 +147,7 @@ def main():
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
     root_formatter = logging.Formatter(
-        '%(message)s')
+        '%(message)s  -  %(asctime)s')
     stream_handler = logging.StreamHandler(sys.stdout)
     file_handler = logging.FileHandler(log_path, mode='w')
     stream_handler.setFormatter(root_formatter)
@@ -174,13 +171,17 @@ def main():
     root_logger.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     root_logger.debug('loading sut agent(s):')
 
-    for sut_conf in listdir(conf_dir):
-        load_sut_agent(sut_conf,
-                       work_dir,
-                       conf_dir,
-                       log_dir,
-                       log_level,
-                       root_logger)
+    for idx, sut_conf in enumerate(conf_dir):
+        sut = load_sut_agent(sut_conf,
+                             work_dir,
+                             conf_dir,
+                             log_dir,
+                             log_level)
+        root_logger.debug('  * %s', sut)
+
+        if idx == (len(conf_dir) - 1):  # last sut
+            # end logging (root)
+            root_logger.handlers.clear()
 
 
 if __name__ == '__main__':
