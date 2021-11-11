@@ -141,7 +141,8 @@ def main():
     # base dir of tf-agent
     work_dir = path.join('/', 'data', 'testflinger-agent')
     # config dir of sut confs
-    conf_dir = listdir(path.join(work_dir, 'sut'))
+    conf_dir = path.join(work_dir, 'sut')
+    # conf_list = listdir(conf_dir)
     # logging config
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
     log_level = user_args.log_level
@@ -184,7 +185,7 @@ def main():
                              log_level)
         root_logger.debug('  * %s', sut)
 
-        # if idx == (len(conf_dir) - 1):  # last sut
+        # if idx == (len(conf_list) - 1):  # last sut
         #     # end logging (root)
         #     root_logger.handlers.clear()
 
