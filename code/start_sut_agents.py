@@ -62,7 +62,21 @@ def log_agent(pipe, sut, log_path, log_level):
     # return sigint
 
 
-def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
+def delegate(user_uid, user_gid):
+    """Execute as different user."""
+    def preempt():
+        setgid(user_gid)
+        setuid(user_uid)
+
+    return preempt
+
+
+def load_sut_agent(sut_conf,  # pylint: disable=r0913
+                   work_dir,
+                   conf_dir,
+                   log_dir,
+                   log_level,
+                   root_logger):
     """Load specified SUT agent."""
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
@@ -72,8 +86,9 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         'setsid testflinger-agent -c %s' % conf_path)
 
     try:
-        proc = subprocess.Popen(
+        proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
+            preexec_fn=delegate(1000, 1000),  # run as
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
@@ -161,7 +176,8 @@ def main():
     root_logger.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     root_logger.debug('loading sut agent(s):')
 
-    for idx, sut_conf in enumerate(conf_dir):
+    # for idx, sut_conf in enumerate(conf_dir):
+    for sut_conf in enumerate(conf_dir):
         sut = load_sut_agent(sut_conf,
                              work_dir,
                              conf_dir,
@@ -169,9 +185,9 @@ def main():
                              log_level)
         root_logger.debug('  * %s', sut)
 
-        if idx == (len(conf_dir) - 1):  # last sut
-            # end logging (root)
-            root_logger.handlers.clear()
+        # if idx == (len(conf_dir) - 1):  # last sut
+        #     # end logging (root)
+        #     root_logger.handlers.clear()
 
 
 if __name__ == '__main__':
