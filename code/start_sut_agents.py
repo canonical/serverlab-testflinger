@@ -71,12 +71,11 @@ def delegate(user_uid, user_gid):
     return preempt
 
 
-def load_sut_agent(sut_conf,  # pylint: disable=r0913
+def load_sut_agent(sut_conf,
                    work_dir,
                    conf_dir,
                    log_dir,
-                   log_level,
-                   root_logger):
+                   log_level):
     """Load specified SUT agent."""
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
