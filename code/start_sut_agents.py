@@ -17,6 +17,7 @@ import time
 import sys
 import re
 import psutil
+import setproctitle
 # from pudb import set_trace; set_trace()
 
 
@@ -66,12 +67,12 @@ def log_agent(pipe, sut, log_path, log_level):
     # return sigint
 
 
-def delegate(user_uid, user_gid):
+def delegate(user_uid, user_gid, sut):
     """Execute as different user."""
     def preempt():
         setgid(user_gid)
         setuid(user_uid)
-
+        setproctitle.setproctitle('%s agent' % sut)
     return preempt
 
 
@@ -87,7 +88,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     try:
         proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
-            preexec_fn=delegate(1000, 1000),  # run as
+            preexec_fn=delegate(1000, 1000, sut),  # run as
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
@@ -147,7 +148,10 @@ def main():
     log_dir = path.join('/', 'var', 'log', 'sut-agent')
     log_level = user_args.log_level
 
-    # setup root logger
+    # set main process name
+    setproctitle.setproctitle('agent_main')
+
+    # setup root (main) logger
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
     root_formatter = logging.Formatter(
@@ -162,7 +166,7 @@ def main():
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
-        agent_procs = re.compile('testflinger-age')
+        agent_procs = re.compile('agent_main|testflinger-age')
 
         # cat procs and kill named procs
         for proc in psutil.process_iter(['name']):
@@ -172,8 +176,8 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    print('========================================')
-    print('loading sut agent(s):')
+    print('\n=========================')
+    print('Loading SUT Agent(s):')
 
     for idx, sut_conf in enumerate(conf_list):
         sut = load_sut_agent(sut_conf,
@@ -186,7 +190,7 @@ def main():
         if idx == (len(conf_list) - 1):  # last sut
             # stop root logging handlers
             root_logger.handlers.clear()
-            print('========================================')
+            print('=====================\n')
 
 
 if __name__ == '__main__':
