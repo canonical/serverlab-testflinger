@@ -191,9 +191,6 @@ services:
       - 5601
     hostname: testflinger-kibana
 
-    volumes:
-      - agent_log:/var/sut-logs:ro
-
     environment:
       SERVER_NAME: testflinger-kibana
       ELASTICSEARCH_HOSTS: http://10.172.10.14:9200

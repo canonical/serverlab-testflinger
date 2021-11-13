@@ -1,0 +1,46 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+  - /var/sut-logs/
+  encoding: utf-8
+  # exclude_lines: ['^DBG']
+  # include_lines: ['^ERR', '^WARN']
+  scan_frequency: 10s
+
+- type: filestream
+  enabled: false
+  paths:
+  - /var/sut-logs/
+  encoding: utf-8
+  # exclude_lines: ['^DBG']
+  # include_lines: ['^ERR', '^WARN']
+  prospector.scanner.check_interval: 10s
+  prospector.scanner.include_files: ['/var/sut-logs/*']
+  prospector.scanner.exclude_files: ['/var/sut-logs/init_agent']
+
+- type: container
+  enabled: true
+  paths:
+    - "/var/lib/docker/containers/*/*.log"
+
+filebeat.modules:
+- module: elasticsearch
+  enabled: true
+  server:
+    enabled: true
+
+- module: redis
+  log:
+    enabled: true
+    var.paths: ["/var/log/redis/redis-server.log*"]
+
+  slowlog:
+    enabled: true
+    var.hosts: ["10.172.10.13:6379"]
+
+output.elasticsearch:
+  hosts: ["http://10.172.10.14:9200"]
+
+setup.kibana:
+  host: "http://10.172.10.15:5601"

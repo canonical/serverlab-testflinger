@@ -5,6 +5,7 @@
 # integrate w/ k8s & use http healthcheck
 # create fn to recieve health check in new thread?
 # use thread timer for heartbeat send
+# log heartbeat to dict/list and plot w/ elastics
 
 
 from logging.handlers import RotatingFileHandler
