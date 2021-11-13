@@ -20,7 +20,7 @@ import sys
 import re
 import psutil
 import setproctitle
-from pudb import set_trace
+# from pudb import set_trace
 
 
 def log_agent(pipe, sut, log_path, log_level):
@@ -179,7 +179,7 @@ def main():
 
     print('\n=========================')
     print('Loading SUT Agent(s):')
-    set_trace()
+    # set_trace()
 
     for idx, sut_conf in enumerate(conf_list):
         sut = load_sut_agent(sut_conf,
