@@ -191,9 +191,14 @@ services:
       - 5601
     hostname: testflinger-kibana
 
+    volumes:
+      - ./elk/kibana-entrypoint.sh:/opt/kibana-entrypoint.sh:ro
+
     environment:
       SERVER_NAME: testflinger-kibana
       ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
+
+    command: ["/opt/kibana-entrypoint.sh"]
 
   filebeat:
     depends_on:
@@ -207,11 +212,11 @@ services:
         ipv4_address: 10.245.128.16
       docker_int:
         ipv4_address: 10.172.10.16
+
     volumes:
-      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
-
 
 networks:
   docker_int:
