@@ -20,7 +20,7 @@ import sys
 import re
 import psutil
 import setproctitle
-# from pudb import set_trace; set_trace()
+from pudb import set_trace
 
 
 def log_agent(pipe, sut, log_path, log_level):
@@ -74,7 +74,6 @@ def delegate(user_uid, user_gid, sut):
     def preempt():
         setgid(user_gid)
         setuid(user_uid)
-        setproctitle.setproctitle('%s_agent' % sut)
     return preempt
 
 
@@ -168,7 +167,7 @@ def main():
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
-        agent_procs = re.compile('agent_main|_agent')
+        agent_procs = re.compile('agent_main|testflinger-age')
 
         # cat procs and kill named procs
         for proc in psutil.process_iter(['name']):
@@ -180,6 +179,7 @@ def main():
 
     print('\n=========================')
     print('Loading SUT Agent(s):')
+    set_trace()
 
     for idx, sut_conf in enumerate(conf_list):
         sut = load_sut_agent(sut_conf,
