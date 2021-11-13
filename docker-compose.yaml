@@ -138,6 +138,7 @@ services:
 
     command: ["/opt/tf-entrypoint.sh"]
 
+  # logging / monitoring
   elastics:
     depends_on:
       - cli
@@ -162,18 +163,17 @@ services:
         ipv4_address: 10.172.10.14
     expose:
       - 9200
+      - 9300
     hostname: testflinger-elastics
 
     volumes:
       - elastics_data:/usr/share/elastics/data
-      - type: volume
-        source: agent_log
-        target: /var/sut-logs
-        read_only: true
+      - agent_log:/var/sut-logs:ro
 
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
 
   kibana:
     depends_on:
@@ -192,36 +192,29 @@ services:
     hostname: testflinger-kibana
 
     volumes:
-      - type: volume
-        source: agent_log
-        target: /var/sut-logs
-        read_only: true
+      - agent_log:/var/sut-logs:ro
 
     environment:
       SERVER_NAME: testflinger-kibana
       ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
 
-  # logstash:
-  #     depends_on:
-  #       - cli
-  #     labels:
-  #       com.example.service: "logstash"
-  #       com.example.description: "For logging data"
-  #     image: logstash
+  filebeat:
+    depends_on:
+      - elastics
+    image: docker.elastic.co/beats/filebeat:7.9.2
+    command: filebeat -e -strict.perms=false
+    container_name: testflinger-kibana    
 
-  #     networks:
-  #        needham_ext:
-  #          ipv4_address: 10.245.128.14
-  #       docker_int:
-  #         ipv4_address: 10.172.10.14
-  #     expose:
-  #       - "5959"
-  #     hostname: testflinger-log
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.16
+      docker_int:
+        ipv4_address: 10.172.10.16
+    volumes:
+      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - agent_log:/var/sut-logs:ro
 
-  #     volumes:
-  #       - log_data:/var
-
-  #     command: "logstash -f /logstash_dir/logstash.conf"
 
 networks:
   docker_int:
@@ -252,4 +245,3 @@ volumes:
   # netdata_lib: {}
   elastics_data: {}
   kibana_data: {}
-  # log_data: {}

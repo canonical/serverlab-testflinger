@@ -4,6 +4,7 @@
 # TODO:
 # integrate w/ k8s & use http healthcheck
 # create fn to recieve health check in new thread?
+# use thread timer for heartbeat send
 
 
 from logging.handlers import RotatingFileHandler
@@ -72,7 +73,7 @@ def delegate(user_uid, user_gid, sut):
     def preempt():
         setgid(user_gid)
         setuid(user_uid)
-        setproctitle.setproctitle('%s agent' % sut)
+        setproctitle.setproctitle('%s_agent' % sut)
     return preempt
 
 
@@ -166,7 +167,7 @@ def main():
 
     if user_args.reset or user_args.stop:
         # kill running agents (ps pname truncated)
-        agent_procs = re.compile('agent_main|testflinger-age')
+        agent_procs = re.compile('agent_main|_agent')
 
         # cat procs and kill named procs
         for proc in psutil.process_iter(['name']):
