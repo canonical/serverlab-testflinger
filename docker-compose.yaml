@@ -177,8 +177,10 @@ services:
 
   kibana:
     depends_on:
-      - elastics
-    image: docker.elastic.co/kibana/kibana:7.9.2
+      - filebeat
+    build:
+      context: .
+      dockerfile: testflinger-kibana
     restart: unless-stopped
     container_name: testflinger-kibana
 
@@ -192,24 +194,18 @@ services:
     hostname: testflinger-kibana
 
     volumes:
-      - ./elk/kibana-entrypoint.sh:/opt/kibana-entrypoint.sh:ro
+      - kibana_data:/usr/share/kibana
 
     environment:
       SERVER_NAME: testflinger-kibana
       ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
 
-    command: [
-      "sh",
-      "-c",
-      "'./bin/kibana-plugin \
-      install \
-      https://github.com/sivasamyk/logtrail/releases/download/v0.1.31/logtrail-7.9.2-0.1.31.zip'"
-    ]
-
   filebeat:
     depends_on:
       - elastics
-    image: docker.elastic.co/beats/filebeat:7.9.2
+    build:
+      context: .
+      dockerfile: testflinger-filebeat
     restart: unless-stopped
     container_name: testflinger-filebeat
 
@@ -221,7 +217,6 @@ services:
     hostname: testflinger-filebeat
 
     volumes:
-      - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
 
