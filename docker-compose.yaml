@@ -217,8 +217,11 @@ services:
     hostname: testflinger-filebeat
 
     volumes:
+      - filebeat_data:/usr/share/filebeat
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
+
+    command: ["/usr/share/filebeat/bin/filebeat -e"]
 
 networks:
   docker_int:
@@ -249,3 +252,4 @@ volumes:
   # netdata_lib: {}
   elastics_data: {}
   kibana_data: {}
+  filebeat_data: {}
