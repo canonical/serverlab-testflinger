@@ -198,7 +198,13 @@ services:
       SERVER_NAME: testflinger-kibana
       ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
 
-    command: ["/opt/kibana-entrypoint.sh"]
+    command: [
+      "sh",
+      "-c",
+      "'./bin/kibana-plugin \
+      install \
+      https://github.com/sivasamyk/logtrail/releases/download/v0.1.31/logtrail-7.9.2-0.1.31.zip'"
+    ]
 
   filebeat:
     depends_on:
