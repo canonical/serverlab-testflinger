@@ -204,19 +204,22 @@ services:
     depends_on:
       - elastics
     image: docker.elastic.co/beats/filebeat:7.9.2
-    command: filebeat -e -strict.perms=false
-    container_name: testflinger-kibana    
+    restart: unless-stopped
+    container_name: testflinger-filebeat
 
     networks:
       needham_ext:
         ipv4_address: 10.245.128.16
       docker_int:
         ipv4_address: 10.172.10.16
+    hostname: testflinger-filebeat
 
     volumes:
       - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
+
+    command: ["filebeat -e -strict.perms=false"]
 
 networks:
   docker_int:
