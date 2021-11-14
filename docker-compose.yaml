@@ -219,8 +219,6 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
 
-    command: ["filebeat -e -strict.perms=false"]
-
 networks:
   docker_int:
     driver: bridge
