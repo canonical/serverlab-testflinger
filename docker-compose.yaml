@@ -221,7 +221,7 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/sut-logs:ro
 
-    command: ["/usr/share/filebeat/bin/filebeat -e"]
+    command: ["/usr/share/filebeat/filebeat -e"]
 
 networks:
   docker_int:
