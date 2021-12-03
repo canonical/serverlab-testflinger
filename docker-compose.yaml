@@ -268,4 +268,4 @@ volumes:
   # netdata_lib: {}
   elastics_data: {}
   kibana_data: {}
-  filebeat_data: {
+  filebeat_data: {}
