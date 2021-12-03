@@ -223,10 +223,19 @@ services:
       - agent_log:/var/log/sut-agent:ro
       - db_log:/var/log/redis:ro
 
+    environment:
+      - publish-all
+
+    entrypoint: [
+      "bash -c",
+      "'export PATH=$PATH:/usr/share/filebeat &&",
+      "/usr/local/bin/docker-entrypoint -e'"
+    ]
+
     command: [
-      "/usr/share/filebeat/filebeat setup",
+      "filebeat setup",
       "&&",
-      "/usr/share/filebeat/filebeat -e"
+      "filebeat -e"
     ]
 
 networks:
