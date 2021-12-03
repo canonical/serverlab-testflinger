@@ -8,5 +8,3 @@ RUN chown root:filebeat /etc/filebeat/filebeat.yml
 USER filebeat
 
 RUN filebeat modules enable system
-
-RUN filebeat setup

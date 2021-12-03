@@ -16,6 +16,7 @@ services:
 
     volumes:
       - db_data:/var/lib/redis
+      - db_log:/var/log/redis
 
     environment:
       - REDIS_REPLICATION_MODE=master
@@ -168,7 +169,7 @@ services:
 
     volumes:
       - elastics_data:/usr/share/elastics/data
-      - agent_log:/var/sut-logs:ro
+      - agent_log:/var/log/sut-agent:ro
 
     environment:
       - xpack.security.enabled=false
@@ -219,7 +220,8 @@ services:
     volumes:
       - filebeat_data:/usr/share/filebeat
       - /var/lib/docker:/var/lib/docker:ro
-      - agent_log:/var/sut-logs:ro
+      - agent_log:/var/log/sut-agent:ro
+      - db_log:/var/log/redis:ro
 
     command: ["filebeat setup && filebeat -e"]
 
