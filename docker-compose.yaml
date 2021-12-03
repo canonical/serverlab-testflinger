@@ -232,11 +232,11 @@ services:
     #   "/usr/local/bin/docker-entrypoint -e'"
     # ]
 
-    # command: [
-    #   "filebeat setup",
-    #   "&&",
-    #   "filebeat -e"
-    # ]
+    command: [
+      "filebeat setup",
+      "&&",
+      "filebeat -e"
+    ]
 
 networks:
   docker_int:
