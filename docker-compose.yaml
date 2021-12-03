@@ -223,7 +223,11 @@ services:
       - agent_log:/var/log/sut-agent:ro
       - db_log:/var/log/redis:ro
 
-    command: ["filebeat setup && filebeat -e"]
+    command: [
+      "/usr/share/filebeat/filebeat setup",
+      "&&",
+      "/usr/share/filebeat/filebeat -e"
+    ]
 
 networks:
   docker_int:
