@@ -244,6 +244,7 @@ networks:
 
 volumes:
   db_data: {}
+  db_log: {}
   api_data: {}
   agent_data: {}
   snappy_data: {}
