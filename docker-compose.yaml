@@ -229,8 +229,11 @@ services:
     environment:
       - publish-all
 
-    entrypoint: [
-      "/usr/bin/bash -c 'export PATH=$PATH:/usr/share/filebeat && /usr/local/bin/docker-entrypoint -e'"]
+    # entrypoint: [
+    #   "/usr/bin/bash -c",
+    #   "'export PATH=$PATH:/usr/share/filebeat &&",
+    #   "/usr/local/bin/docker-entrypoint -e'"
+    # ]
 
     # command: [
     #   "filebeat setup",
