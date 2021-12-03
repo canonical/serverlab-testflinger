@@ -4,8 +4,6 @@ COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
 
 USER root
 RUN chown root:filebeat /etc/filebeat/filebeat.yml
-RUN echo "10.172.10.14 elasticsearch" >> /etc/hosts
-RUN echo "10.172.10.15 kibana" >> /etc/hosts
 
 USER filebeat
 RUN filebeat modules enable system elasticsearch redis
