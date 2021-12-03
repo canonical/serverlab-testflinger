@@ -224,9 +224,9 @@ services:
       - db_log:/var/log/redis:ro
 
     command: [
-      "/usr/share/filebeat/filebeat setup",
+      "/usr/share/filebeat/bin/filebeat setup",
       "&&",
-      "/usr/share/filebeat/filebeat -e"
+      "/usr/share/filebeat/bin/filebeat -e"
     ]
 
 networks:
