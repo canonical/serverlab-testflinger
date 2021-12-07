@@ -1,0 +1,8 @@
+device_ip: 10.245.130.44
+node_id: 8yeh8a
+node_name: rozary
+maas_user: testflinger_a
+agent_name: rozary
+env:
+    HEXR_DEVICE_SECURE_ID: 2MVcdQUU6dJs3saNTW5CnR
+    DEVICE_IP: 10.245.130.44

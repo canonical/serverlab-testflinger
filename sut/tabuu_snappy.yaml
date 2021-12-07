@@ -1,0 +1,8 @@
+device_ip: 10.245.130.43
+node_id: y6mhws
+node_name: tabuu
+maas_user: testflinger_a
+agent_name: tabuu
+env:
+    HEXR_DEVICE_SECURE_ID: ACkcUsNimCoPYEDMAjY6nK
+    DEVICE_IP: 10.245.130.43

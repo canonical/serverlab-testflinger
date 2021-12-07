@@ -1,30 +1,30 @@
-path.home: ['/usr/share/filebeat']
+path.home: ["/usr/share/filebeat"]
 
 filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - '/var/log/sut-agent/'
+    - "/var/log/sut-agent/"
   encoding: utf-8
-  # exclude_lines: ['^DBG']
-  # include_lines: ['^ERR', '^WARN']
+  # exclude_lines: ["^DBG"]
+  # include_lines: ["^ERR", "^WARN"]
   scan_frequency: 5s
 
 - type: filestream
   enabled: false
   paths:
-    - '/var/log/sut-agent/'
+    - "/var/log/sut-agent/"
   encoding: utf-8
-  # exclude_lines: ['^DBG']
-  # include_lines: ['^ERR', '^WARN']
+  # exclude_lines: ["^DBG"]
+  # include_lines: ["^ERR", "^WARN"]
   prospector.scanner.check_interval: 5s
-  prospector.scanner.include_files: ['/var/log/sut-agent/*']
-  prospector.scanner.exclude_files: ['/var/log/sut-agent/init_agent']
+  prospector.scanner.include_files: ["/var/log/sut-agent/*"]
+  prospector.scanner.exclude_files: ["/var/log/sut-agent/init_agent"]
 
 - type: container
   enabled: true
   paths:
-    - '/var/lib/docker/containers/*/*.log'
+    - "/var/lib/docker/containers/*/*.log"
 
 filebeat.modules:
 - module: elasticsearch
@@ -35,19 +35,19 @@ filebeat.modules:
 - module: redis
   log:
     enabled: true
-    var.paths: ['/var/log/redis/redis-server.log*']
+    var.paths: ["/var/log/redis/redis-server.log*"]
 
   # slowlog:
   #   enabled: true
-  #   var.hosts: ['10.172.10.13:6379']
+  #   var.hosts: ["10.172.10.13:6379"]
 
 - module: system
   syslog:
     enabled: true
-    var.paths: ['/var/log/sut-agent/*']
+    var.paths: ["/var/log/sut-agent/*"]
 
 output.elasticsearch:
-  hosts: ['http://10.172.10.14:9200']
+  hosts: ["http://10.172.10.14:9200"]
 
 setup.kibana:
-  host: ['http://10.172.10.15:5601']
+  hosts: ["http://10.172.10.15:5601"]
