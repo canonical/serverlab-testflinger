@@ -1,4 +1,5 @@
 path.home: ["/usr/share/filebeat"]
+setup.kibana.host: "http://10.172.10.15:5601"
 
 filebeat.inputs:
 - type: log
@@ -48,6 +49,3 @@ filebeat.modules:
 
 output.elasticsearch:
   hosts: ["http://10.172.10.14:9200"]
-
-setup.kibana:
-  hosts: ["http://10.172.10.15:5601"]
