@@ -3,8 +3,8 @@ FROM prima/filebeat:6
 
 COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
 
-USER root
-RUN chown root:filebeat /etc/filebeat/filebeat.yml
+# USER root
+# RUN chown root:filebeat /etc/filebeat/filebeat.yml
 
 USER filebeat
-RUN filebeat modules enable system elasticsearch redis
+RUN filebeat modules enable system elasticsearch redis\
