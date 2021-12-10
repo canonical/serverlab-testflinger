@@ -56,7 +56,6 @@ filebeat.inputs:
   # include_lines: ["^ERR", "^WARN"]
   scan_frequency: 5s
 
-
 # ============================== Filebeat modules ==============================
 filebeat.modules:
 - module: elasticsearch
