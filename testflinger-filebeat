@@ -3,5 +3,6 @@ FROM prima/filebeat:6
 
 # COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
 COPY ./elk/filebeat.yml /filebeat.yml
+RUN chmod go-w /filebeat.yml
 
 RUN filebeat modules enable config system elasticsearch redis

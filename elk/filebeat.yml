@@ -57,18 +57,17 @@ filebeat.inputs:
   scan_frequency: 5s
 
 # ============================== Filebeat modules ==============================
+  # Glob pattern for configuration loading
+  filebeat.config.modules:
+    path: ${path.config}/modules.d/*.yml
+
+    # Set to true to enable config reloading
+    reload.enabled: false
+
+    # Period on which files under path should be checked for changes
+    #reload.period: 10s
 
 filebeat.modules:
-- module: config
-  # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
-
 - module: elasticsearch
   enabled: true
   server:
