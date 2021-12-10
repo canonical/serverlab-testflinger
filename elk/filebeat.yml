@@ -10,17 +10,6 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
-# Glob pattern for configuration loading
-filebeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
-
-
 # ============================== Filebeat inputs ===============================
 
 filebeat.inputs:
@@ -70,6 +59,11 @@ filebeat.inputs:
 
 # ============================== Filebeat modules ==============================
 filebeat.modules:
+- module: elasticsearch
+  enabled: true
+  server:
+    enabled: true
+
 - module: redis
   log:
     enabled: true
@@ -79,10 +73,10 @@ filebeat.modules:
   #   enabled: true
   #   var.hosts: ["10.172.10.13:6379"]
 
-# - module: system
-#   syslog:
-#     enabled: true
-#     var.paths: ["/var/log/sut-agent/*"]
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/var/log/sut-agent/*"]
 
 # ======================= Elasticsearch template setting =======================
 
