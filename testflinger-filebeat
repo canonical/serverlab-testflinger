@@ -6,3 +6,4 @@ COPY ./elk/filebeat.yml /filebeat.yml
 RUN chmod go-w /filebeat.yml
 
 RUN filebeat modules enable system elasticsearch redis
+RUN filebeat setup
