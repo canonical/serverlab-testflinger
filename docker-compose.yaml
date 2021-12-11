@@ -240,7 +240,7 @@ services:
     #   "/usr/local/bin/docker-entrypoint -e'"
     # ]
 
-    command: ["filebeat setup"]
+    # command: ["filebeat setup"]
 
 networks:
   docker_int:
