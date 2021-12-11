@@ -204,9 +204,10 @@ services:
   filebeat:
     depends_on:
       - kibana
-    build:
-      context: .
-      dockerfile: testflinger-filebeat
+    image: prima/filebeat:6
+    # build:
+    #   context: .
+    #   dockerfile: testflinger-filebeat
     restart: unless-stopped
     container_name: testflinger-filebeat
 
@@ -221,7 +222,8 @@ services:
       - "kibana:10.172.10.15"
 
     volumes:
-      # - filebeat_data:/
+      - ./elk/filebeat.yml:/filebeat.yml:ro
+      - ./elk/fields.yml:/fields.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/log/sut-agent:ro
       - db_log:/var/log/redis:ro
