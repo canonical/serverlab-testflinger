@@ -3,7 +3,7 @@ FROM prima/filebeat:6
 
 COPY ./elk/filebeat.yml /opt/filebeat.yml
 COPY ./elk/fields.yml /opt/fields.yml
-RUN chown 0:0 /opt/f*.yml
+RUN chown root:root /opt/f*.yml
 RUN chmod go-w /opt/f*.yml
 
 # RUN filebeat -c /opt/filebeat.yml modules enable system redis elasticsearch
