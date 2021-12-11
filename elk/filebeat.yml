@@ -157,10 +157,10 @@ output.elasticsearch:
   #password: "changeme"
 
 # ================================= Processors =================================
-processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
-  - add_docker_metadata: ~
+# processors:
+#   - add_host_metadata:
+#       when.not.contains.tags: forwarded
+#   - add_docker_metadata: ~
 
 # ================================== Logging ===================================
 
