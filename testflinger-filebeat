@@ -1,8 +1,9 @@
 # FROM docker.elastic.co/beats/filebeat:7.9.2
 FROM prima/filebeat:6
 
-# COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
 COPY ./elk/filebeat.yml /filebeat.yml
+COPY ./elk/fields.yml /fields.yml
 RUN chmod go-w /filebeat.yml
+RUN chmod go-w /fields.yml
 
-RUN filebeat setup
+RUN filebeat setup -e

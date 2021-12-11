@@ -10,21 +10,21 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
-filebeat.config.modules:
-  # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
+# filebeat.config.modules:
+#   # Glob pattern for configuration loading
+#   path: ${path.config}/modules.d/*.yml
 
-  # Set to true to enable config reloading
-  reload.enabled: false
+#   # Set to true to enable config reloading
+#   reload.enabled: false
 
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
+#   # Period on which files under path should be checked for changes
+#   #reload.period: 10s
   
-  prospectors:
-  - enabled: false
-    paths:
-    - /var/log/*.log
-    type: log
+#   prospectors:
+#   - enabled: false
+#     paths:
+#     - /var/log/*.log
+#     type: log
 
 # ============================== Filebeat inputs ===============================
 filebeat.inputs:
@@ -89,10 +89,10 @@ filebeat.modules:
 
 # ======================= Elasticsearch template setting =======================
 
-# setup.template.settings:
-#   index.number_of_shards: 1
-#   #index.codec: best_compression
-#   #_source.enabled: false
+setup.template.settings:
+  index.number_of_shards: 1
+  #index.codec: best_compression
+  #_source.enabled: false
 
 
 # ================================== General ===================================
@@ -157,12 +157,10 @@ output.elasticsearch:
   #password: "changeme"
 
 # ================================= Processors =================================
-# processors:
-#   - add_host_metadata:
-#       when.not.contains.tags: forwarded
-#   - add_cloud_metadata: ~
-#   - add_docker_metadata: ~
-#   - add_kubernetes_metadata: ~
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_docker_metadata: ~
 
 # ================================== Logging ===================================
 
