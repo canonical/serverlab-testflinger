@@ -221,7 +221,7 @@ services:
       - "kibana:10.172.10.15"
 
     volumes:
-      - filebeat_data:/usr/share/filebeat
+      - filebeat_data:/
       - /var/lib/docker:/var/lib/docker:ro
       - agent_log:/var/log/sut-agent:ro
       - db_log:/var/log/redis:ro
