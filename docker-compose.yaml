@@ -230,16 +230,17 @@ services:
       - publish-all
 
     # entrypoint: [
+    #   "filebeat setup &&",
+    #   "/usr/local/bin/docker-entrypoint -e'"
+    # ]
+
+    # entrypoint: [
     #   "/usr/bin/bash -c",
     #   "'export PATH=$PATH:/usr/share/filebeat &&",
     #   "/usr/local/bin/docker-entrypoint -e'"
     # ]
 
-    # command: [
-    #   "filebeat setup",
-    #   "&&",
-    #   "filebeat -e"
-    # ]
+    command: ["filebeat setup"]
 
 networks:
   docker_int:

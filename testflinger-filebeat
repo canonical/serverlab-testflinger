@@ -5,5 +5,3 @@ COPY ./elk/filebeat.yml /filebeat.yml
 COPY ./elk/fields.yml /fields.yml
 RUN chmod go-w /filebeat.yml
 RUN chmod go-w /fields.yml
-
-RUN filebeat setup -e
