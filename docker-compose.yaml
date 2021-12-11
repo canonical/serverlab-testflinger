@@ -137,7 +137,7 @@ services:
     environment:
       - PATH=/data/testflinger-cli:$PATH
 
-    command: ["/opt/tf-entrypoint.sh"]
+    # command: ["/opt/tf-entrypoint.sh"]
 
   # logging / monitoring
   elastics:

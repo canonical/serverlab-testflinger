@@ -10,45 +10,32 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
-# filebeat.config.modules:
-#   # Glob pattern for configuration loading
-#   path: ${path.config}/modules.d/*.yml
+path.home: /
 
-#   # Set to true to enable config reloading
-#   reload.enabled: false
+filebeat.config.inputs:
+  enabled: true
+  path: configs/*.yml
 
-#   # Period on which files under path should be checked for changes
-#   #reload.period: 10s
-  
-#   prospectors:
-#   - enabled: false
-#     paths:
-#     - /var/log/*.log
-#     type: log
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+
+  prospectors:
+  - enabled: true
+    paths:
+    - /var/log/*.log
+    type: log
 
 # ============================== Filebeat inputs ===============================
 filebeat.inputs:
-
 - type: filestream
-  enabled: false
+  enabled: true
   paths:
     - /var/log/sut-agent/
     - /var/log/*.log
   encoding: utf-8
 
-  # Exclude lines. A list of regular expressions to match. It drops the lines that are
-  # matching any regular expression from the list.
-  #exclude_lines: ['^DBG']
-
   prospector.scanner.check_interval: 5s
-
-  # Include lines. A list of regular expressions to match. It exports the lines that are
-  # matching any regular expression from the list.
-  #include_lines: ['^ERR', '^WARN']
   prospector.scanner.include_files: ["/var/log/sut-agent/*"]
-
-  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
-  # are matching any regular expression from the list. By default, no files are dropped.
   prospector.scanner.exclude_files: ["/var/log/sut-agent/init_agent"]
 
   # Optional additional fields. These fields can be freely picked
@@ -78,9 +65,9 @@ filebeat.modules:
     enabled: true
     var.paths: ["/var/log/redis/redis-server.log*"]
 
-  # slowlog:
-  #   enabled: true
-  #   var.hosts: ["10.172.10.13:6379"]
+  slowlog:
+    enabled: true
+    var.hosts: ["10.172.10.13:6379"]
 
 - module: system
   syslog:
@@ -127,7 +114,6 @@ setup.template.settings:
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
 setup.kibana:
-
   # Kibana Host
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
