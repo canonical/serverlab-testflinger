@@ -204,10 +204,10 @@ services:
   filebeat:
     depends_on:
       - kibana
-    image: prima/filebeat:6
-    # build:
-    #   context: .
-    #   dockerfile: testflinger-filebeat
+    # image: prima/filebeat:6
+    build:
+      context: .
+      dockerfile: testflinger-filebeat
     restart: unless-stopped
     container_name: testflinger-filebeat
 
