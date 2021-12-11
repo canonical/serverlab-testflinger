@@ -6,4 +6,4 @@ COPY ./elk/fields.yml /opt/fields.yml
 RUN chown 0:0 /opt/f*.yml
 RUN chmod go-w /opt/f*.yml
 
-RUN filebeat modules enable system redis elasticsearch
+RUN filebeat -c /opt/filebeat.yml modules enable system redis elasticsearch
