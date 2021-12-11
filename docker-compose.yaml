@@ -178,7 +178,7 @@ services:
 
   kibana:
     depends_on:
-      - filebeat
+      - elastics
     build:
       context: .
       dockerfile: testflinger-kibana
@@ -203,7 +203,7 @@ services:
 
   filebeat:
     depends_on:
-      - elastics
+      - kibana
     build:
       context: .
       dockerfile: testflinger-filebeat
