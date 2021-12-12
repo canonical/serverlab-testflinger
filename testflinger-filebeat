@@ -7,7 +7,7 @@ COPY ./elk/filebeat.yml /filebeat.yml
 # COPY ./elk/filebeat.yml /config/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
-RUN mkdir /module/system
+RUN mkdir -p /module/system
 ADD ./elk/filebeat_module/system /module/system
 
 RUN chown root /filebeat.yml \
