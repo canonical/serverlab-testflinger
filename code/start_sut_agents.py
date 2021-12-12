@@ -2,7 +2,8 @@
 
 """Load specified SUT agents."""
 # TODO:
-# integrate w/ k8s & use http healthcheck
+# integrate w/ k8s & use http healthcheck?
+# integrate smokeping (ping in/out), recieve from subproc?
 # create fn to recieve health check in new thread?
 # use thread timer for heartbeat send
 # log heartbeat to dict/list and plot w/ elastics
@@ -59,7 +60,7 @@ def log_agent(pipe, sut, log_path, log_level):
     time.sleep(3)
 
     while True:
-        logger.info(pipe.readline())
+        logger.info(pipe.readline().rstrip('\n'))
         # try:
         #     logger.debug(pipe.readline())
         # # except KeyboardInterrupt:
