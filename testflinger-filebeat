@@ -2,15 +2,15 @@
 FROM prima/filebeat:6
 
 COPY ./elk/filebeat.yml /filebeat.yml
-COPY ./elk/fields.yml /fields.yml
+# COPY ./elk/fields.yml /fields.yml
 # RUN mkdir /config
 # COPY ./elk/filebeat.yml /config/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
 RUN chown root /filebeat.yml \
-  && chown root /fields.yml \
+  # && chown root /fields.yml \
   && chmod go-w /filebeat.yml \
-  && chmod go-w /fields.yml
+  # && chmod go-w /fields.yml
 # RUN chown root /config/filebeat.yml \
 #   && chown root /config/fields.yml \
 #   && chmod go-w /config/filebeat.yml \

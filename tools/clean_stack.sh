@@ -10,6 +10,13 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 UBUNTU_SCR=ch4ng3m3
 TESTFLINGER_SCR=u24xeO6EKuWt
 
+docker stop $(docker ps -a -q)
+docker rm -vf $(docker ps -a -q)
+docker rmi -f $(docker images -a -q)
+docker volume rm -f $(docker volume ls -q)
+docker network prune -f
+docker builder prune -a -f
+
 docker-compose build \
   --build-arg ubuntu_scr=$UBUNTU_SCR \
   --build-arg testflinger_scr=$TESTFLINGER_SCR \
