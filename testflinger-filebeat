@@ -7,7 +7,7 @@ COPY ./elk/filebeat.yml /filebeat.yml
 # COPY ./elk/filebeat.yml /config/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
-RUN mkdir /module/elasticsearch \
+RUN mkdir -p /module/elasticsearch \
   && mkdir /module/redis \
   && mkdir /module/system
 ADD ./elk/filebeat_module/elasticsearch /module/elasticsearch
