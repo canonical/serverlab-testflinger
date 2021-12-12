@@ -60,4 +60,3 @@ setup.kibana:
 output.elasticsearch:
   # Array of hosts to connect to.
   hosts: ["10.172.10.14:9200"]
-1
