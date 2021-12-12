@@ -12,31 +12,22 @@ RUN apt-get update \
     gnupg \
     apt-transport-https
 
-RUN wget --no-check-certificate -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch \
-  | apt-key add -
-RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" \
-  | tee -a /etc/apt/sources.list.d/elastic-7.x.lis
+# RUN wget --no-check-certificate -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch \
+#   | apt-key add -
+# RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" \
+#   | tee -a /etc/apt/sources.list.d/elastic-7.x.lis
+# RUN apt-get update && apt-get -y install filebeat
 
-RUN apt-get update && apt-get -y install filebeat
+WORKDIR /opt
+curl -L -O \
+  https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-linux-x86_64.tar.gz
+tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz
 
-RUN rm /etc/filebeat/filebeat.yml
+WORKDIR /opt/filebeat-7.4.0-linux-x86_64
+RUN rm ./filebeat.yml
+COPY ./elk/filebeat.yml ./filebeat.yml
 
-# COPY ./elk/filebeat.yml /filebeat.yml
-# COPY ./elk/fields.yml /fields.yml
-# RUN mkdir /config
-COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
-# COPY ./elk/fields.yml /config/fields.yml
+RUN chown root ./filebeat.yml \
+  && chmod go-w ./filebeat.yml
 
-# RUN mkdir -p /module/system
-# ADD ./elk/filebeat_module/system /module/system
-
-# RUN chown root /filebeat.yml \
-#   # && chown root /fields.yml \
-#   # && chmod go-w /fields.yml \
-#   && chmod go-w /filebeat.yml
-RUN chown root /config/filebeat.yml \
-  # && chown root /config/fields.yml \
-  # && chmod go-w /config/fields.yml \
-  && chmod go-w /config/filebeat.yml
-
-# RUN filebeat -c /config/filebeat.yml modules enable system redis elasticsearch
+RUN ./filebeat modules enable system redis elasticsearch
