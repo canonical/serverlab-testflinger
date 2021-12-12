@@ -15,7 +15,7 @@ RUN apt-get update \
 RUN wget --no-check-certificate -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch \
   | apt-key add -
 RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" \
-  | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.lis
+  | tee -a /etc/apt/sources.list.d/elastic-7.x.lis
 
 RUN apt-get update && apt-get -y install filebeat
 
