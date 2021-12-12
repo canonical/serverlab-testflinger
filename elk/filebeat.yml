@@ -14,14 +14,15 @@ filebeat.inputs:
   #  level: debug
   #  review: 1
 
-# filebeat.config.modules:
-#   path: ${path.config}/modules.d/*.yml
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
 
-#   prospectors:
-#   - enabled: false
-#     paths:
-#     - /var/log/*.log
-#     type: log
+  prospectors:
+  - enabled: true
+    paths:
+    - /var/log/sut-agent/*
+    - /var/log/*.log
+    type: log
 
 filebeat.modules:
 - module: elasticsearch
