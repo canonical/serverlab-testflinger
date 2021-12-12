@@ -229,6 +229,7 @@ services:
 
     environment:
       - publish-all
+      - BEAT_STRICT_PERMS=false
 
     # entrypoint: [
     #   "filebeat setup &&",
