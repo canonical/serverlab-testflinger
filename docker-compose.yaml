@@ -231,9 +231,12 @@ services:
       - publish-all
       - BEAT_STRICT_PERMS=false
 
-    command: [
-      "/opt/filebeat/filebeat setup",
-      "&& /opt/filebeat/filebeat -e"
+    entrypoint: [
+      "/opt/filebeat/filebeat",
+      "setup",
+      "&&",
+      "/opt/filebeat/filebeat",
+      "-e"
     ]
 
     # entrypoint: [
