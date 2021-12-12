@@ -231,10 +231,10 @@ services:
       - publish-all
       - BEAT_STRICT_PERMS=false
 
-    # entrypoint: [
-    #   "filebeat setup &&",
-    #   "/usr/local/bin/docker-entrypoint -e'"
-    # ]
+    command: [
+      "./filebeat setup &&",
+      "./filebeat -e'"
+    ]
 
     # entrypoint: [
     #   "/usr/bin/bash -c",
