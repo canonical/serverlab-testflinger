@@ -24,11 +24,6 @@ filebeat.inputs:
 #     type: log
 
 filebeat.modules:
-- module: elasticsearch
-  enabled: true
-  server:
-    enabled: true
-
 - module: redis
   log:
     enabled: true
