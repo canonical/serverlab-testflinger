@@ -24,15 +24,6 @@ filebeat.inputs:
 #     type: log
 
 filebeat.modules:
-- module: redis
-  log:
-    enabled: true
-    var.paths: ["/var/log/redis/redis-server.log*"]
-
-  slowlog:
-    enabled: true
-    var.hosts: ["10.172.10.13:6379"]
-
 - module: system
   syslog:
     enabled: true
