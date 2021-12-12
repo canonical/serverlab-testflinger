@@ -232,8 +232,8 @@ services:
       - BEAT_STRICT_PERMS=false
 
     command: [
-      "./filebeat setup &&",
-      "./filebeat -e'"
+      "/opt/filebeat setup &&",
+      "/opt/filebeat -e'"
     ]
 
     # entrypoint: [
