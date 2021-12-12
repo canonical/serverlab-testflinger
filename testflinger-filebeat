@@ -1,12 +1,17 @@
 # FROM docker.elastic.co/beats/filebeat:7.9.2
 FROM prima/filebeat:6
 
-COPY ./elk/filebeat.yml /opt/filebeat.yml
-COPY ./elk/fields.yml /opt/fields.yml
+COPY ./elk/filebeat.yml /filebeat.yml
+COPY ./elk/fields.yml /fields.yml
+# RUN mkdir /config
+# COPY ./elk/filebeat.yml /config/filebeat.yml
+# COPY ./elk/fields.yml /config/fields.yml
 
-RUN chown root /opt/filebeat.yml \
-  && chown root /opt/fields.yml \
-  && chmod go-w /opt/filebeat.yml \
-  && chmod go-w /opt/fields.yml
+RUN chown root /config/filebeat.yml \
+  && chown root /config/fields.yml \
+  && chmod go-w /config/filebeat.yml \
+  && chmod go-w /config/fields.yml
 
-# RUN filebeat -c /opt/filebeat.yml modules enable system redis elasticsearch
+RUN cp /config/* /
+
+# RUN filebeat -c /config/filebeat.yml modules enable system redis elasticsearch
