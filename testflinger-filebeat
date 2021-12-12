@@ -9,6 +9,7 @@ RUN apt-get update \
     bash \
     bash-completion \
     net-tools \
+    curl \
     gnupg \
     apt-transport-https
 
