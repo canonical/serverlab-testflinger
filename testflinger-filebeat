@@ -7,6 +7,9 @@ COPY ./elk/filebeat.yml /filebeat.yml
 # COPY ./elk/filebeat.yml /config/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
+RUN mkdir /module
+COPY ./elk/filebeat_module/* /module/
+
 RUN chown root /filebeat.yml \
   # && chown root /fields.yml \
   && chmod go-w /filebeat.yml \

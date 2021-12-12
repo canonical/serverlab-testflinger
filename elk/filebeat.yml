@@ -1,5 +1,3 @@
-
-# ============================== Filebeat inputs ===============================
 filebeat.inputs:
 - type: filestream
   enabled: true
@@ -9,15 +7,13 @@ filebeat.inputs:
   encoding: utf-8
 
   prospector.scanner.include_files: ["/var/log/sut-agent/*"]
-  prospector.scanner.exclude_files: ["/var/log/sut-agent/init_agent"]
+  # prospector.scanner.exclude_files: ["/var/log/sut-agent/init_agent"]
   prospector.scanner.check_interval: 5s
-
 
   #fields:
   #  level: debug
   #  review: 1
 
-# ============================== Filebeat modules ==============================
 # filebeat.config.modules:
 #   path: ${path.config}/modules.d/*.yml
 
@@ -46,7 +42,6 @@ filebeat.modules:
   syslog:
     enabled: true
     var.paths: ["/var/log/sut-agent/*"]
-
 
 # setup.template.settings:
 #   index.number_of_shards: 1
