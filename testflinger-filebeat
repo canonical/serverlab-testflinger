@@ -14,9 +14,11 @@ RUN apt-get update \
 WORKDIR /opt
 RUN curl -L -O -k \
   https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-linux-x86_64.tar.gz
-RUN tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz
+RUN tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz \
+  && mv /opt/filebeat-7.4.0-linux-x86_64 /opt/filebeat
 
-WORKDIR /opt/filebeat-7.4.0-linux-x86_64
+WORKDIR /opt/filebeat
+RUN ln -s ./filebeat /usr/bin/filebeat
 RUN rm ./filebeat.yml
 COPY ./elk/filebeat.yml ./filebeat.yml
 
