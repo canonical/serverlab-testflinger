@@ -20,7 +20,7 @@ RUN apt-get update \
 # RUN apt-get update && apt-get -y install filebeat
 
 WORKDIR /opt
-RUN curl -L -O \
+RUN curl -L -O -k \
   https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-linux-x86_64.tar.gz
 RUN tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz
 
