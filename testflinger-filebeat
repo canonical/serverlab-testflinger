@@ -4,8 +4,8 @@ FROM prima/filebeat:6
 COPY ./elk/filebeat.yml /opt/filebeat.yml
 COPY ./elk/fields.yml /opt/fields.yml
 
-RUN chown root:root /opt/filebeat.yml \
-  && chown root:root /opt/fields.yml \
+RUN chown root /opt/filebeat.yml \
+  && chown root /opt/fields.yml \
   && chmod go-w /opt/filebeat.yml \
   && chmod go-w /opt/fields.yml
 
