@@ -7,11 +7,15 @@ COPY ./elk/fields.yml /fields.yml
 # COPY ./elk/filebeat.yml /config/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
-RUN chown root /config/filebeat.yml \
-  && chown root /config/fields.yml \
-  && chmod go-w /config/filebeat.yml \
-  && chmod go-w /config/fields.yml
+RUN chown root /filebeat.yml \
+  && chown root /fields.yml \
+  && chmod go-w /filebeat.yml \
+  && chmod go-w /fields.yml
+# RUN chown root /config/filebeat.yml \
+#   && chown root /config/fields.yml \
+#   && chmod go-w /config/filebeat.yml \
+#   && chmod go-w /config/fields.yml
 
-RUN cp /config/* /
+# RUN cp /config/* /
 
 # RUN filebeat -c /config/filebeat.yml modules enable system redis elasticsearch
