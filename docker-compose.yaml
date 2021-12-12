@@ -231,7 +231,10 @@ services:
       - publish-all
       - BEAT_STRICT_PERMS=false
 
-    command: ["filebeat setup && filebeat -e"]
+    command: [
+      "/opt/filebeat/filebeat setup",
+      "&& /opt/filebeat/filebeat -e"
+    ]
 
     # entrypoint: [
     #   "/usr/bin/bash -c",

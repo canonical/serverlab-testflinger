@@ -18,7 +18,7 @@ RUN tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz \
   && mv /opt/filebeat-7.4.0-linux-x86_64 /opt/filebeat
 
 WORKDIR /opt/filebeat
-RUN ln -s ./filebeat /usr/bin/filebeat
+# RUN ln -s ./filebeat /usr/bin/filebeat
 RUN rm ./filebeat.yml
 COPY ./elk/filebeat.yml ./filebeat.yml
 
