@@ -13,7 +13,9 @@ TESTFLINGER_SCR=u24xeO6EKuWt
 docker-compose build \
   --build-arg ubuntu_scr=$UBUNTU_SCR \
   --build-arg testflinger_scr=$TESTFLINGER_SCR \
-  --progress=tty 2>&1
+  --progress=tty \
+  --no-cache \
+  --force-rm 2>&1
 
 # start stack
 docker-compose up --detach 2>&1
