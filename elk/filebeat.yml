@@ -11,7 +11,7 @@
 # configuration file.
 
 path.home: /
-path.config: /opt/
+path.config: /config/
 
 # filebeat.config.inputs:
 #   enabled: true
