@@ -1,24 +1,40 @@
-# FROM docker.elastic.co/beats/filebeat:7.9.2
-FROM prima/filebeat:6
+FROM debian:buster
+# FROM prima/filebeat:6
 
-COPY ./elk/filebeat.yml /filebeat.yml
+# install deps & cleanup
+RUN apt-get update \
+  && apt-get install -y \
+    --no-install-recommends \
+    wget \
+    bash \
+    bash-completion \
+    net-tools \
+    apt-transport-https
+
+RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" \
+  | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.lis
+
+RUN apt-get update && apt-get -y install filebeat
+
+RUN rm /etc/filebeat/filebeat.yml
+
+# COPY ./elk/filebeat.yml /filebeat.yml
 # COPY ./elk/fields.yml /fields.yml
 # RUN mkdir /config
-# COPY ./elk/filebeat.yml /config/filebeat.yml
+COPY ./elk/filebeat.yml /etc/filebeat/filebeat.yml
 # COPY ./elk/fields.yml /config/fields.yml
 
-RUN mkdir -p /module/system
-ADD ./elk/filebeat_module/system /module/system
+# RUN mkdir -p /module/system
+# ADD ./elk/filebeat_module/system /module/system
 
-RUN chown root /filebeat.yml \
-  # && chown root /fields.yml \
-  # && chmod go-w /fields.yml \
-  && chmod go-w /filebeat.yml
-# RUN chown root /config/filebeat.yml \
-#   && chown root /config/fields.yml \
-#   && chmod go-w /config/filebeat.yml \
-#   && chmod go-w /config/fields.yml
-
-# RUN cp /config/* /
+# RUN chown root /filebeat.yml \
+#   # && chown root /fields.yml \
+#   # && chmod go-w /fields.yml \
+#   && chmod go-w /filebeat.yml
+RUN chown root /config/filebeat.yml \
+  # && chown root /config/fields.yml \
+  # && chmod go-w /config/fields.yml \
+  && chmod go-w /config/filebeat.yml
 
 # RUN filebeat -c /config/filebeat.yml modules enable system redis elasticsearch
