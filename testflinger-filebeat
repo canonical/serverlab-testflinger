@@ -9,6 +9,7 @@ RUN apt-get update \
     bash \
     bash-completion \
     net-tools \
+    gnupg \
     apt-transport-https
 
 RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
