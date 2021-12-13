@@ -29,4 +29,4 @@ COPY ./elk/filebeat.yml ./filebeat.yml
 RUN chown root ./filebeat.yml \
   && chmod go-w ./filebeat.yml
 
-RUN ./filebeat modules enable system redis elasticsearch
+# RUN ./filebeat modules enable system redis elasticsearch
