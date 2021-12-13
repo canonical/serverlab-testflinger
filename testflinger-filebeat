@@ -12,10 +12,14 @@ RUN apt-get update \
     apt-transport-https
 
 WORKDIR /opt
+# RUN curl -L -O -k \
+#   https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.9.2-amd64.deb
+# RUN dpkg -i filebeat-7.9.2-amd64.deb
+
 RUN curl -L -O -k \
-  https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-linux-x86_64.tar.gz
-RUN tar xzvf filebeat-7.4.0-linux-x86_64.tar.gz \
-  && mv /opt/filebeat-7.4.0-linux-x86_64 /opt/filebeat
+  https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.9.2-linux-x86_64.tar.gz
+RUN tar xzvf filebeat-7.9.2-linux-x86_64.tar.gz \
+  && mv /opt/filebeat-7.9.2-linux-x86_64 /opt/filebeat
 
 WORKDIR /opt/filebeat
 # RUN ln -s ./filebeat /usr/bin/filebeat
