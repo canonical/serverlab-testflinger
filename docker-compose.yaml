@@ -140,22 +140,12 @@ services:
     # command: ["/opt/tf-entrypoint.sh"]
 
   # logging / monitoring
-  elastics:
+  loki:
     depends_on:
       - cli
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    image: grafana/loki
     restart: unless-stopped
-    container_name: testflinger-elastics
-
-    cap_add: 
-      - IPC_LOCK
-    ulimits: 
-      memlock:
-        soft: -1 
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
+    container_name: testflinger-loki
 
     networks:
       needham_ext:
@@ -163,27 +153,19 @@ services:
       docker_int:
         ipv4_address: 10.172.10.14
     expose:
-      - 9200
-      - 9300
-    hostname: testflinger-elastics
+      - 3100
+    hostname: testflinger-loki
 
     volumes:
-      - elastics_data:/usr/share/elastics/data
-      - agent_log:/var/log/sut-agent:ro
+      - loki_data:/var
+      - agent_log:/remote_log/sut-agent:ro
 
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
-
-  kibana:
+  grafana:
     depends_on:
-      - elastics
-    build:
-      context: .
-      dockerfile: testflinger-kibana
+      - promtail
+    image: grafana/grafana
     restart: unless-stopped
-    container_name: testflinger-kibana
+    container_name: testflinger-grafana
 
     networks:
       needham_ext:
@@ -191,61 +173,31 @@ services:
       docker_int:
         ipv4_address: 10.172.10.15
     expose:
-      - 5601
-    hostname: testflinger-kibana
+      - 3000
+    hostname: testflinger-grafana
 
     volumes:
-      - kibana_data:/usr/share/kibana
+      - grafana_data:/var
 
-    environment:
-      SERVER_NAME: testflinger-kibana
-      ELASTICSEARCH_HOSTS: http://10.172.10.14:9200
-
-  filebeat:
+  promtail:
     depends_on:
-      - kibana
-    # image: prima/filebeat:6
-    build:
-      context: .
-      dockerfile: testflinger-filebeat
+      - loki
+    image: grafana/promtail
     restart: unless-stopped
-    container_name: testflinger-filebeat
+    container_name: testflinger-promtail
 
     networks:
       needham_ext:
         ipv4_address: 10.245.128.16
       docker_int:
         ipv4_address: 10.172.10.16
-    hostname: testflinger-filebeat
-    extra_hosts:
-      - "elasticsearch:10.172.10.14"
-      - "kibana:10.172.10.15"
+    expose:
+      - 9080
+    hostname: testflinger-promtail
 
     volumes:
-      - filebeat_data:/opt
-      - /var/lib/docker:/var/lib/docker:ro
-      - agent_log:/var/log/sut-agent:ro
-      - db_log:/var/log/redis:ro
-
-    environment:
-      - publish-all
-      - BEAT_STRICT_PERMS=false
-
-    entrypoint: [
-      "/opt/filebeat/filebeat",
-      "setup",
-      "&&",
-      "/opt/filebeat/filebeat",
-      "-e"
-    ]
-
-    # entrypoint: [
-    #   "/usr/bin/bash -c",
-    #   "'export PATH=$PATH:/usr/share/filebeat &&",
-    #   "/usr/local/bin/docker-entrypoint -e'"
-    # ]
-
-    # command: ["filebeat setup"]
+      - promtail_data:/var
+      - agent_log:/remote_log/sut-agent:ro
 
 networks:
   docker_int:
@@ -275,6 +227,6 @@ volumes:
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
-  elastics_data: {}
-  kibana_data: {}
-  filebeat_data: {}
+  loki_data: {}
+  grafana_data: {}
+  promtail_data: {}

@@ -52,6 +52,7 @@ def log_agent(pipe, sut, log_path, log_level):
 
         return logger
 
+    start_time = time.time()
     logger = config_logging()
     # break semaphore
     # sigint = {'stop': False}
@@ -60,7 +61,10 @@ def log_agent(pipe, sut, log_path, log_level):
     time.sleep(3)
 
     while True:
-        logger.info(pipe.readline().rstrip('\n'))
+        cur_dur = time.time() - start_time
+        line = pipe.readline().rstrip('\n')
+        logger.info('|+%.1fs|\n%s' % (cur_dur, line))
+
         # try:
         #     logger.debug(pipe.readline())
         # # except KeyboardInterrupt:
