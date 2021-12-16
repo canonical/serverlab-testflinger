@@ -157,6 +157,7 @@ services:
     hostname: testflinger-loki
 
     volumes:
+      - ./graf/loki.yml:/etc/loki/local-config.yaml
       - loki_data:/var
       - agent_log:/remote_log/sut-agent:ro
 
@@ -177,6 +178,7 @@ services:
     hostname: testflinger-grafana
 
     volumes:
+      # - ./graf/grafana.ini:/etc/grafana/grafana.ini
       - grafana_data:/var
 
   promtail:
@@ -196,8 +198,10 @@ services:
     hostname: testflinger-promtail
 
     volumes:
-      - promtail_data:/var
-      - agent_log:/remote_log/sut-agent:ro
+      - ./graf/promtail.yml:/etc/promtail/config.yml
+      - promtail_data:/etc
+      - agent_log:/var/log/sut-agent:ro
+      - /var/lib/docker:/var/log/docker:ro
 
 networks:
   docker_int:

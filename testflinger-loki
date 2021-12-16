@@ -1,0 +1,11 @@
+FROM debian:buster
+
+# install deps & cleanup
+RUN apt-get update \
+  && apt-get install -y \
+    --no-install-recommends \
+    curl \
+    bash \
+    bash-completion \
+    net-tools \
+    telnet

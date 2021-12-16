@@ -24,66 +24,75 @@ import setproctitle
 # from pudb import set_trace
 
 
-def log_agent(pipe, sut, log_path, log_level):
+class LogAgent(threading.Thread):
     """Read stdout pipe."""
-    def config_logging():
-        logger = logging.getLogger(sut)
+    def __init__(self, pipe, sut, log_path, log_level):
+        threading.Thread.__init__(self)
+        self.pipe = pipe
+        self.sut = sut
+        self.log_path = log_path
+        self.log_level = log_level
+        self.pipe_logger = self.config_pipe_logging()
+        self.start_time = time.time()
+        self.interval = 60  # secs
+        time.sleep(3)
+        self.loop_pipe()
+
+    def config_pipe_logging(self):
+        logger = logging.getLogger(self.sut)
         # stdout output in debug mode
         stream_formatter = logging.Formatter(
             '>> %(name)s << \n   %(message)s')
         file_formatter = logging.Formatter(
             '%(message)s')
+
         # init logging handlers
-        _stream_handler = logging.StreamHandler(sys.stdout)
-        _file_handler = RotatingFileHandler(
-            log_path,
+        stream_handler = logging.StreamHandler(sys.stdout)
+        file_handler = RotatingFileHandler(
+            self.log_path,
             mode='a',
             backupCount=2,
             maxBytes=100000000)  # 100mb
         # set logging levels
-        _stream_handler.setLevel(log_level)
-        _file_handler.setLevel(logging.INFO)
+        stream_handler.setLevel(self.log_level)
+        file_handler.setLevel(logging.INFO)
         # assign formatters
-        _stream_handler.setFormatter(stream_formatter)
-        _file_handler.setFormatter(file_formatter)
+        stream_handler.setFormatter(stream_formatter)
+        file_handler.setFormatter(file_formatter)
+
         # add handlers to logger
-        logger.addHandler(_stream_handler)
-        logger.addHandler(_file_handler)
+        logger.addHandler(stream_handler)
+        logger.addHandler(file_handler)
 
         return logger
 
-    start_time = time.time()
-    logger = config_logging()
-    # break semaphore
-    # sigint = {'stop': False}
+    def read_pipe(self):
+        while True:
+            line = self.pipe.readline().rstrip('\n')
+            yield line
 
-    # wait for root log handlers to clear
-    time.sleep(3)
+    def mqtt_ping(self):
+        print('[ * mqtt - %s * ]' % self.sut)
 
-    while True:
-        cur_dur = time.time() - start_time
-        line = pipe.readline().rstrip('\n')
-        logger.info('|+%.1fs|\n%s' % (cur_dur, line))
+    def loop_pipe(self):
+        for idx, line in enumerate(self.read_pipe()):
+            elapsed_time = time.time() - self.start_time
+            self.pipe_logger.info(
+                '%s\n  seq: %i | dur: +%.1fs' % (line, idx, elapsed_time))
 
-        # try:
-        #     logger.debug(pipe.readline())
-        # # except KeyboardInterrupt:
-        #     break
-        #     sigint['stop'] = True
-
-    # return sigint
-
-
-def delegate(user_uid, user_gid, sut):
-    """Execute as different user."""
-    def preempt():
-        setgid(user_gid)
-        setuid(user_uid)
-    return preempt
+            if idx and not idx % self.interval:
+                self.mqtt_ping()
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
+    def delegate(user_uid, user_gid):
+        """Execute as different user."""
+        def preempt():
+            setgid(user_gid)
+            setuid(user_uid)
+        return preempt
+
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
@@ -94,7 +103,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     try:
         proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
-            preexec_fn=delegate(1000, 1000, sut),  # run as
+            preexec_fn=delegate(1000, 1000),  # run as
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
@@ -104,7 +113,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        proc_thread = threading.Thread(target=log_agent,
+        proc_thread = threading.Thread(target=LogAgent,
                                        args=(proc.stdout,
                                              sut,
                                              _log_path,
@@ -119,6 +128,25 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         #     proc_thread.join()
 
 
+def config_root_logging(log_dir):
+    """Setup root (main) logger."""
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+    root_formatter = logging.Formatter(
+        '%(message)s --- %(asctime)s', "[%H:%M:%S %a %b %d]")
+
+    stream_handler = logging.StreamHandler(sys.stdout)
+    file_handler = logging.FileHandler(
+        path.join(log_dir, 'init_agents'), mode='w')
+    stream_handler.setFormatter(root_formatter)
+    file_handler.setFormatter(root_formatter)
+
+    root_logger.addHandler(stream_handler)
+    root_logger.addHandler(file_handler)
+
+    return root_logger
+
+
 def get_args():
     """Ingest arguments"""
     parser = argparse.ArgumentParser()
@@ -130,7 +158,7 @@ def get_args():
                         default=logging.WARNING,
                         help='debug/verbose output')
     parser.add_argument('-r', '-R', '--restart',
-                        dest='reset',
+                        dest='restart',
                         action='store_true',
                         help='restart all agents')
     parser.add_argument('-s', '-S', '--stop',
@@ -157,20 +185,9 @@ def main():
     # set main process name
     setproctitle.setproctitle('agent_main')
 
-    # setup root (main) logger
-    root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)
-    root_formatter = logging.Formatter(
-        '%(message)s --- %(asctime)s', "[%H:%M:%S %a %b %d]")
-    stream_handler = logging.StreamHandler(sys.stdout)
-    file_handler = logging.FileHandler(
-        path.join(log_dir, 'init_agents'), mode='w')
-    stream_handler.setFormatter(root_formatter)
-    file_handler.setFormatter(root_formatter)
-    root_logger.addHandler(stream_handler)
-    root_logger.addHandler(file_handler)
+    root_logger = config_root_logging(log_dir)
 
-    if user_args.reset or user_args.stop:
+    if user_args.restart or user_args.stop:
         # kill running agents (ps pname truncated)
         agent_procs = re.compile('agent_main|testflinger-age')
 

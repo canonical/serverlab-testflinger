@@ -1,0 +1,64 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+
+cache:
+  fifocache:
+    max_size_bytes: 8GB
+    # The expiry duration for the cache.
+    validity: 1h
+
+  memcached:
+    expiration: 1h
+    batch_size: 10
+    parallelism: 100
+
+  redis:
+    endpoint: 10.172.10.13:6379
+    expiration: 168h
+    db: 14
+    pool_size: 32
+    idle_timeout: 15m
+    max_connection_age: 1h
+
+queryrange:
+  results_cache:
+    cache:
+      redis:
+        endpoint: 10.172.10.13:6379
+        expiration: 168h
+        db: 15
+        pool_size: 32
+        idle_timeout: 15m
+        max_connection_age: 1h
+  cache_results: true
+
+ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 2
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+
+common:
+  path_prefix: /opt/loki
+  storage:
+    filesystem:
+      chunks_directory: /opt/loki/chunks
+      rules_directory: /opt/loki/rules
+  replication_factor: 1
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: inmemory
+
+local_storage_config:
+  directory: /opt/loki/data
+
+# ruler:
+#   alertmanager_url: http://localhost:9093
