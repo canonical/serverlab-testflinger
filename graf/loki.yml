@@ -3,7 +3,7 @@ auth_enabled: false
 server:
   http_listen_port: 3100
 
-cache:
+cache_config:
   fifocache:
     max_size_bytes: 8GB
     # The expiry duration for the cache.
@@ -22,7 +22,7 @@ cache:
     idle_timeout: 15m
     max_connection_age: 1h
 
-queryrange:
+queryrange_config:
   results_cache:
     cache:
       redis:
@@ -57,7 +57,7 @@ common:
     kvstore:
       store: inmemory
 
-local_storage_config:
+storage_config:
   directory: /opt/loki/data
 
 # ruler:
