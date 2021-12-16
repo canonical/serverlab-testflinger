@@ -34,7 +34,7 @@ class LogAgent(threading.Thread):
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
         self.start_time = time.time()
-        self.interval = 60  # secs
+        self.interval = 20  # lines
         time.sleep(3)
         self.loop_pipe()
 
