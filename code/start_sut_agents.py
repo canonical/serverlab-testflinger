@@ -5,9 +5,12 @@
 # integrate w/ k8s & use http healthcheck?
 # integrate smokeping (ping in/out), recieve from subproc?
 # create fn to recieve health check in new thread?
-# use thread timer for heartbeat send
-# log heartbeat to dict/list and plot w/ elastics
-
+# use thread timer for heartbeat send (in progress)
+# log heartbeat to dict/list and plot?
+# filter sleep messages?
+# add external api hook to restart a specific agent
+#   create method/fn to facilitate
+#   to prevent excessive master processes from spawning
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
@@ -21,7 +24,7 @@ import sys
 import re
 import psutil
 import setproctitle
-# from pudb import set_trace
+# from pudb import set_trace; set_trace()
 
 
 class LogAgent(threading.Thread):
@@ -34,8 +37,9 @@ class LogAgent(threading.Thread):
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
         self.start_time = time.time()
-        self.interval = 120  # lines
-        time.sleep(3)
+        # self.interval = 5  # lines
+        # wait for root loggers to clear
+        time.sleep(3)  # move to semaphore?
         self.loop_pipe()
 
     def config_pipe_logging(self):
@@ -71,22 +75,26 @@ class LogAgent(threading.Thread):
             line = self.pipe.readline().rstrip('\n')
             yield line
 
-    def mqtt_ping(self):
-        print('[ * mqtt - %s * ]' % self.sut)
+    # def thread_pong(self):
+    #     # temporary
+    #     # print('[ * %s pong * ]' % self.sut)
+    #     pass
 
     def loop_pipe(self):
         for idx, line in enumerate(self.read_pipe()):
-            elapsed_time = time.time() - self.start_time
-            self.pipe_logger.info(
-                '%s\n  seq: %i | dur: +%.1fs' % (line, idx, elapsed_time))
+            self.pipe_logger.info(line)
 
-            if idx and not idx % self.interval:
-                self.mqtt_ping()
+            # elapsed_time = time.time() - self.start_time
+            # self.pipe_logger.info(
+            #     '%s\n  seq: %i | dur: +%.1fs' % (line, idx, elapsed_time))
+
+            # if idx and not idx % self.interval:
+            #     self.thread_pong()
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
-    def delegate(user_uid, user_gid):
+    def delegate(user_gid, user_uid):
         """Execute as different user."""
         def preempt():
             setgid(user_gid)
@@ -103,7 +111,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     try:
         proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
-            preexec_fn=delegate(1000, 1000),  # run as
+            preexec_fn=delegate(1000, 1000),
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
@@ -113,19 +121,20 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        proc_thread = threading.Thread(target=LogAgent,
-                                       args=(proc.stdout,
-                                             sut,
-                                             _log_path,
-                                             log_level))
-        proc_thread.start()
+        log_thread = threading.Thread(target=LogAgent,
+                                      args=(proc.stdout,
+                                            sut,
+                                            _log_path,
+                                            log_level))
+        log_thread.start()
 
         return sut
 
-        # sigint = proc_thread.start()
 
-        # if sigint:
-        #     proc_thread.join()
+# def root_pong():
+#     # temporary
+#     # print('###########[ * root pong * ]##############')
+#     pass
 
 
 def config_root_logging(log_dir):
@@ -199,9 +208,11 @@ def main():
         if user_args.stop:
             sys.exit()
 
+    # timer = threading.Timer(10.0, root_pong)
+    # timer.start()
+
     print('\n=========================')
     print('Loading SUT Agent(s):')
-    # set_trace()
 
     for idx, sut_conf in enumerate(conf_list):
         sut = load_sut_agent(sut_conf,
@@ -213,8 +224,8 @@ def main():
 
         if idx == (len(conf_list) - 1):  # last sut
             # stop root logging handlers
-            root_logger.handlers.clear()
             print('=====================\n')
+            root_logger.handlers.clear()
 
 
 if __name__ == '__main__':
