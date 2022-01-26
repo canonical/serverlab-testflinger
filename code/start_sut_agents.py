@@ -16,6 +16,7 @@ from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
 import subprocess
 import threading
+import requests
 import argparse
 import logging
 import shlex
@@ -37,7 +38,7 @@ class LogAgent(threading.Thread):
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
         self.start_time = time.time()
-        # self.interval = 5  # lines
+        self.interval = 30  # lines
         # wait for root loggers to clear
         time.sleep(3)  # move to semaphore?
         self.loop_pipe()
@@ -75,21 +76,28 @@ class LogAgent(threading.Thread):
             line = self.pipe.readline().rstrip('\n')
             yield line
 
-    # def thread_pong(self):
-    #     # temporary
-    #     # print('[ * %s pong * ]' % self.sut)
-    #     pass
+    def thread_req(self):
+        url = 'https://certification.canonical.com/submissions'
+
+        try:
+            request = requests.get(url, timeout=2)
+        except requests.Timeout:
+            status = 'timeout'
+        else:
+            if request.ok:
+                status = 'ok'
+            else:
+                status = 'error'
+
+        return status
 
     def loop_pipe(self):
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
 
-            # elapsed_time = time.time() - self.start_time
-            # self.pipe_logger.info(
-            #     '%s\n  seq: %i | dur: +%.1fs' % (line, idx, elapsed_time))
-
-            # if idx and not idx % self.interval:
-            #     self.thread_pong()
+            if idx and not idx % self.interval:
+                request = self.thread_req()
+                self.pipe_logger.info(' [c3 %s]', request)
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
@@ -131,7 +139,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         return sut
 
 
-# def root_pong():
+# def root_req():
 #     # temporary
 #     # print('###########[ * root pong * ]##############')
 #     pass
@@ -208,7 +216,7 @@ def main():
         if user_args.stop:
             sys.exit()
 
-    # timer = threading.Timer(10.0, root_pong)
+    # timer = threading.Timer(10.0, root_req)
     # timer.start()
 
     print('\n=========================')
