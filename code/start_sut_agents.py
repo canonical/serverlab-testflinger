@@ -46,7 +46,7 @@ class LogAgent(Thread):
         self.pipe_logger = self.config_pipe_logging()
         self.start_time = time.time()
         self.timeout = 2  # max c3 reply seconds
-        interval = 180.0  # seconds
+        interval = 360.0  # seconds
         # timer for c3 status
         timer = RepeatTimer(interval, self.c3_request)
         # wait for root loggers to clear
