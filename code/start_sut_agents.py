@@ -14,8 +14,8 @@
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
+from threading import Thread, Timer
 import subprocess
-import threading
 import requests
 import argparse
 import logging
@@ -28,22 +28,34 @@ import setproctitle
 # from pudb import set_trace; set_trace()
 
 
-class LogAgent(threading.Thread):
+class RepeatTimer(Timer):
+    """Loop timer"""
+    def run(self):
+        while not self.finished.wait(self.interval):
+            self.function(*self.args, **self.kwargs)
+
+
+class LogAgent(Thread):
     """Read stdout pipe."""
     def __init__(self, pipe, sut, log_path, log_level):
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
         self.pipe = pipe
         self.sut = sut
         self.log_path = log_path
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
         self.start_time = time.time()
-        self.interval = 30  # lines
+        self.timeout = 2  # max c3 reply seconds
+        interval = 180.0  # seconds
+        # timer for c3 status
+        timer = RepeatTimer(interval, self.c3_request)
         # wait for root loggers to clear
         time.sleep(3)  # move to semaphore?
-        self.loop_pipe()
+        timer.start()
+        self.parse_pipe()
 
     def config_pipe_logging(self):
+        """Configure loggers."""
         logger = logging.getLogger(self.sut)
         # stdout output in debug mode
         stream_formatter = logging.Formatter(
@@ -60,7 +72,7 @@ class LogAgent(threading.Thread):
             maxBytes=100000000)  # 100mb
         # set logging levels
         stream_handler.setLevel(self.log_level)
-        file_handler.setLevel(logging.INFO)
+        file_handler.setLevel(logging.DEBUG)
         # assign formatters
         stream_handler.setFormatter(stream_formatter)
         file_handler.setFormatter(file_formatter)
@@ -71,16 +83,12 @@ class LogAgent(threading.Thread):
 
         return logger
 
-    def read_pipe(self):
-        while True:
-            line = self.pipe.readline().rstrip('\n')
-            yield line
-
-    def thread_req(self):
+    def c3_request(self):
+        """Non-blocking."""
         url = 'https://certification.canonical.com/submissions'
 
         try:
-            request = requests.get(url, timeout=2)
+            request = requests.get(url, timeout=self.timeout)
         except requests.Timeout:
             status = 'timeout'
         else:
@@ -89,15 +97,18 @@ class LogAgent(threading.Thread):
             else:
                 status = 'error'
 
-        return status
+        self.pipe_logger.debug(' [c3 %s]', status)
 
-    def loop_pipe(self):
+    def read_pipe(self):
+        """Memory management."""
+        while True:
+            line = self.pipe.readline().rstrip('\n')
+            yield line
+
+    def parse_pipe(self):
+        """Parse subprocess pipe"""
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
-
-            if idx and not idx % self.interval:
-                request = self.thread_req()
-                self.pipe_logger.info(' [c3 %s]', request)
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
@@ -129,20 +140,14 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     except OSError:
         print('  - Unable to start agent for: %s' % sut)
     else:
-        log_thread = threading.Thread(target=LogAgent,
-                                      args=(proc.stdout,
-                                            sut,
-                                            _log_path,
-                                            log_level))
+        log_thread = Thread(target=LogAgent,
+                            args=(proc.stdout,
+                                  sut,
+                                  _log_path,
+                                  log_level))
         log_thread.start()
 
         return sut
-
-
-# def root_req():
-#     # temporary
-#     # print('###########[ * root pong * ]##############')
-#     pass
 
 
 def config_root_logging(log_dir):
@@ -215,9 +220,6 @@ def main():
 
         if user_args.stop:
             sys.exit()
-
-    # timer = threading.Timer(10.0, root_req)
-    # timer.start()
 
     print('\n=========================')
     print('Loading SUT Agent(s):')
