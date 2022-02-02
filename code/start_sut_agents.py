@@ -49,12 +49,16 @@ class LogAgent(Thread):
         self.c3_url = (
             'https://certification.canonical.com/submissions')
         # timer interval
-        interval = 420.0  # seconds
-        timer = LoopTimer(
-            interval, self.c3_request)
+        req_interval = 420.0  # seconds
+        req_timer = LoopTimer(
+            req_interval, self.c3_request)
+        # status_interval = 60.0  # seconds
+        # status_timer = LoopTimer(
+        #     status_interval, self.tx_status)
         # wait for root loggers to clear
         time.sleep(3)
-        timer.start()
+        req_timer.start()
+        # status_timer.start()
         self.parse_pipe()
 
     def config_pipe_logging(self):
@@ -104,6 +108,9 @@ class LogAgent(Thread):
 
         self.pipe_logger.debug(
             '  [ C3 status: %s | resp_t: %.2f sec ]' % (status, resp_t))
+
+    # def tx_status(self):
+    #     pass
 
     def read_pipe(self):
         """Memory management."""
