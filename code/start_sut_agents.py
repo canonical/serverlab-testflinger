@@ -28,8 +28,8 @@ import setproctitle
 # from pudb import set_trace; set_trace()
 
 
-class RepeatTimer(Timer):
-    """Loop timer"""
+class LoopTimer(Timer):
+    """Repeat thread timer"""
     def run(self):
         while not self.finished.wait(self.interval):
             self.function(*self.args, **self.kwargs)
@@ -44,13 +44,16 @@ class LogAgent(Thread):
         self.log_path = log_path
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
-        self.start_time = time.time()
-        self.timeout = 2  # max c3 reply seconds
-        interval = 360.0  # seconds
-        # timer for c3 status
-        timer = RepeatTimer(interval, self.c3_request)
+        # max c3 reply time
+        self.c3_timeout = 2  # seconds
+        self.c3_url = (
+            'https://certification.canonical.com/submissions')
+        # timer interval
+        interval = 420.0  # seconds
+        timer = LoopTimer(
+            interval, self.c3_request)
         # wait for root loggers to clear
-        time.sleep(3)  # move to semaphore?
+        time.sleep(3)
         timer.start()
         self.parse_pipe()
 
@@ -84,20 +87,23 @@ class LogAgent(Thread):
         return logger
 
     def c3_request(self):
-        """Non-blocking."""
-        url = 'https://certification.canonical.com/submissions'
-
+        """Non-blocking HTTP calls."""
         try:
-            request = requests.get(url, timeout=self.timeout)
+            request = requests.get(
+                self.c3_url, timeout=self.c3_timeout)
         except requests.Timeout:
             status = 'timeout'
+            resp_t = self.c3_timeout
         else:
             if request.ok:
                 status = 'ok'
+                resp_t = request.elapsed.total_seconds()
             else:
                 status = 'error'
+                resp_t = 0.0
 
-        self.pipe_logger.debug(' [c3 %s]', status)
+        self.pipe_logger.debug(
+            '  [ C3 status: %s | resp_t: %.2f sec ]' % (status, resp_t))
 
     def read_pipe(self):
         """Memory management."""
@@ -120,17 +126,21 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
             setuid(user_uid)
         return preempt
 
+        # setproctitle.setproctitle('%s_agnt' % sut)
+
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     _log_path = path.join(log_dir, sut)
     # daemonize agent
     cmd = shlex.split(
         'setsid testflinger-agent -c %s' % conf_path)
+    exe_group = 1000  # executing group
+    exe_user = 1000  # executing user
 
     try:
         proc = subprocess.Popen(  # pylint: disable=w1509
             cmd,
-            preexec_fn=delegate(1000, 1000),
+            preexec_fn=delegate(exe_group, exe_user),
             start_new_session=True,  # fork
             universal_newlines=True,
             encoding='utf-8',
