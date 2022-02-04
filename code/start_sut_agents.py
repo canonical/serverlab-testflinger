@@ -15,6 +15,7 @@
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
 from threading import Thread, Timer
+import paho.mqtt.client as mqtt
 import subprocess
 import requests
 import argparse
@@ -31,6 +32,7 @@ import setproctitle
 class LoopTimer(Timer):
     """Repeat thread timer"""
     def run(self):
+        # insert loop
         while not self.finished.wait(self.interval):
             self.function(*self.args, **self.kwargs)
 
@@ -48,20 +50,12 @@ class LogAgent(Thread):
         self.c3_timeout = 2  # seconds
         self.c3_url = (
             'https://certification.canonical.com/submissions')
-        # timer interval
-        req_interval = 420.0  # seconds
-        req_timer = LoopTimer(
-            req_interval, self.request_c3)
-        # terminate thread when parent closed
-        req_timer.daemon = True
-        # status_interval = 60.0  # seconds
-        # status_timer = LoopTimer(
-        #     status_interval, self.send_status)
-        # status_timer.daemon = True
+        # mqtt start
+        self.client = mqtt.Client(sut)
+        self.client.connect('10.245.128.14')
         # wait for root loggers to clear
         time.sleep(3)
-        req_timer.start()
-        # status_timer.start()
+        self.start_aux_threads()
         self.parse_pipe()
 
     def config_pipe_logging(self):
@@ -93,27 +87,52 @@ class LogAgent(Thread):
 
         return logger
 
+    def start_aux_threads(self):
+        # mqtt status thread
+        def_topic = '%s/logger' % (self.sut)
+        def_message = 'ok'
+        mqtt_interval = 120.0  # seconds
+        mqtt_timer = LoopTimer(mqtt_interval,
+                               self.publish_message,
+                               [def_topic, def_message])
+        mqtt_timer.daemon = True
+
+        # c3 request thread
+        req_interval = 120.0  # seconds
+        req_timer = LoopTimer(req_interval,
+                              self.request_c3)
+        req_timer.daemon = True
+
+        req_timer.start()
+        mqtt_timer.start()
+
+    def publish_message(self, topic, message):
+        self.client.publish(topic, payload=message)
+
+        # m_packet = self.client.publish(topic, payload=message)
+        # m_packet.publish()
+
     def request_c3(self):
         """Non-blocking HTTP calls."""
         try:
             request = requests.get(
                 self.c3_url, timeout=self.c3_timeout)
         except requests.Timeout:
-            status = 'timeout'
-            resp_t = self.c3_timeout
+            status = ('timeout', self.c3_timeout)
         else:
             if request.ok:
-                status = 'ok'
-                resp_t = request.elapsed.total_seconds()
+                status = ('ok', request.elapsed.total_seconds())
             else:
-                status = 'error'
-                resp_t = 0.0
+                status = ('error', 0.0)
 
-        self.pipe_logger.debug(
-            '  [ C3 status: %s | resp_t: %.2f sec ]' % (status, resp_t))
-
-    # def send_status(self):
-    #     pass
+        topic = ('%s/c3' % self.sut)
+        message = '  [ C3 status: %s | resp_t: %.2f sec ]' % (status[0],
+                                                              status[1])
+        self.pipe_logger.debug(message)
+        try:
+            self.publish_message(topic, message)
+        except Exception:
+            pass
 
     def read_pipe(self):
         """Memory management."""
@@ -123,8 +142,14 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe"""
+        topic = ('%s/sp_pipe' % self.sut)
+
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
+            try:
+                self.publish_message(topic, line)
+            except Exception:
+                pass
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
