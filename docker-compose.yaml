@@ -157,7 +157,7 @@ services:
     hostname: testflinger-mqtt
 
     volumes:
-      - ./mqtt/config:/mosquitto/config/:ro 
+      - ./mqtt/config:/mosquitto/config/:rw
 
   # # logging / monitoring
   # loki:
