@@ -156,6 +156,9 @@ services:
       - 9001
     hostname: testflinger-mqtt
 
+    volumes:
+      - ./mqtt/config:/mqtt/config:ro 
+
   # # logging / monitoring
   # loki:
   #   depends_on:
