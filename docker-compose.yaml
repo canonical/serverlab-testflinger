@@ -28,9 +28,31 @@ services:
       "--maxmemory-policy allkeys-lfu"
     ]
 
-  api:
+  mqtt:
     depends_on:
       - db
+    build:
+      context: .
+      dockerfile: testflinger-mqtt
+    restart: unless-stopped
+    container_name: testflinger-mqtt
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.14
+      docker_int:
+        ipv4_address: 10.172.10.14
+    expose:
+      - 1883
+      - 9001
+    hostname: testflinger-mqtt
+
+    # volumes:
+    #   - ./mqtt/conf:/mosquitto/config
+
+  api:
+    depends_on:
+      - mqtt
     build:
       context: .
       dockerfile: testflinger-api
@@ -138,28 +160,6 @@ services:
       - PATH=/data/testflinger-cli:$PATH
 
     # command: ["/opt/tf-entrypoint.sh"]
-
-  mqtt:
-    depends_on:
-      - cli
-    build:
-      context: .
-      dockerfile: testflinger-mqtt
-    restart: unless-stopped
-    container_name: testflinger-mqtt
-
-    networks:
-      needham_ext:
-        ipv4_address: 10.245.128.14
-      docker_int:
-        ipv4_address: 10.172.10.14
-    expose:
-      - 1883
-      - 9001
-    hostname: testflinger-mqtt
-
-    # volumes:
-    #   - ./mqtt/conf:/mosquitto/config
 
   # # logging / monitoring
   # loki:
