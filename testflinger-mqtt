@@ -1,17 +1,3 @@
-FROM python:3.8-slim-buster
+FROM eclipse-mosquitto
 
-# install deps & cleanup
-RUN apt-get update \
-  && apt-get install -y \
-    --no-install-recommends \
-    curl \
-    bash \
-    bash-completion \
-    net-tools \
-    telnet \
-    git \
-    mosquitto
-
-RUN pip install paho-mqtt mqtt
-
-RUN git clone git@github.com:fabaff/mqtt-panel.git
+COPY ./mqtt/conf/mosquitto.conf /mosquitto/config/mosquitto.conf

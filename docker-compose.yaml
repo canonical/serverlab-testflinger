@@ -142,7 +142,9 @@ services:
   mqtt:
     depends_on:
       - cli
-    image: eclipse-mosquitto
+    build:
+      context: .
+      dockerfile: testflinger-mqtt
     restart: unless-stopped
     container_name: testflinger-mqtt
 
