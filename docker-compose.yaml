@@ -139,6 +139,23 @@ services:
 
     # command: ["/opt/tf-entrypoint.sh"]
 
+  mqtt:
+    depends_on:
+      - cli
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    container_name: testflinger-mqtt
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.14
+      docker_int:
+        ipv4_address: 10.172.10.14
+    expose:
+      - 1883
+      - 9001
+    hostname: testflinger-mqtt
+
   # # logging / monitoring
   # loki:
   #   depends_on:
@@ -149,9 +166,9 @@ services:
 
   #   networks:
   #     needham_ext:
-  #       ipv4_address: 10.245.128.14
+  #       ipv4_address: 10.245.128.15
   #     docker_int:
-  #       ipv4_address: 10.172.10.14
+  #       ipv4_address: 10.172.10.15
   #   expose:
   #     - 3100
   #   hostname: testflinger-loki
@@ -170,9 +187,9 @@ services:
 
   #   networks:
   #     needham_ext:
-  #       ipv4_address: 10.245.128.15
+  #       ipv4_address: 10.245.128.16
   #     docker_int:
-  #       ipv4_address: 10.172.10.15
+  #       ipv4_address: 10.172.10.16
   #   expose:
   #     - 3000
   #   hostname: testflinger-grafana
@@ -190,9 +207,9 @@ services:
 
   #   networks:
   #     needham_ext:
-  #       ipv4_address: 10.245.128.16
+  #       ipv4_address: 10.245.128.17
   #     docker_int:
-  #       ipv4_address: 10.172.10.16
+  #       ipv4_address: 10.172.10.17
   #   expose:
   #     - 9080
   #   hostname: testflinger-promtail

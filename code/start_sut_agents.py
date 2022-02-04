@@ -51,10 +51,13 @@ class LogAgent(Thread):
         # timer interval
         req_interval = 420.0  # seconds
         req_timer = LoopTimer(
-            req_interval, self.c3_request)
+            req_interval, self.request_c3)
+        # terminate thread when parent closed
+        req_timer.daemon = True
         # status_interval = 60.0  # seconds
         # status_timer = LoopTimer(
-        #     status_interval, self.tx_status)
+        #     status_interval, self.send_status)
+        # status_timer.daemon = True
         # wait for root loggers to clear
         time.sleep(3)
         req_timer.start()
@@ -90,7 +93,7 @@ class LogAgent(Thread):
 
         return logger
 
-    def c3_request(self):
+    def request_c3(self):
         """Non-blocking HTTP calls."""
         try:
             request = requests.get(
@@ -109,7 +112,7 @@ class LogAgent(Thread):
         self.pipe_logger.debug(
             '  [ C3 status: %s | resp_t: %.2f sec ]' % (status, resp_t))
 
-    # def tx_status(self):
+    # def send_status(self):
     #     pass
 
     def read_pipe(self):

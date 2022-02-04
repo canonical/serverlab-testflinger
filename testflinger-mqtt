@@ -1,0 +1,17 @@
+FROM python:3.8-slim-buster
+
+# install deps & cleanup
+RUN apt-get update \
+  && apt-get install -y \
+    --no-install-recommends \
+    curl \
+    bash \
+    bash-completion \
+    net-tools \
+    telnet \
+    git \
+    mosquitto
+
+RUN pip install paho-mqtt mqtt
+
+RUN git clone git@github.com:fabaff/mqtt-panel.git
