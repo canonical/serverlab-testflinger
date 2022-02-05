@@ -51,8 +51,10 @@ class LogAgent(Thread):
         self.c3_url = (
             'https://certification.canonical.com/submissions')
         # mqtt start
-        self.client = mqtt.Client(sut)
-        self.client.connect('10.245.128.14')
+        mqtt_broker = '10.245.128.14'
+        self.mqtt_client = mqtt.Client(sut)
+        self.mqtt_client.connect(mqtt_broker)
+        # self.mqtt_client.loop_start()
         # wait for root loggers to clear
         time.sleep(3)
         self.start_aux_threads()
@@ -88,14 +90,15 @@ class LogAgent(Thread):
         return logger
 
     def start_aux_threads(self):
+        """Aux threads."""
+        # mqtt ops thread
+        self.mqtt_client.loop_start()
+
         # mqtt status thread
-        def_topic = '%s/logger' % (self.sut)
-        def_message = 'ok'
-        mqtt_interval = 120.0  # seconds
-        mqtt_timer = LoopTimer(mqtt_interval,
-                               self.publish_message,
-                               [def_topic, def_message])
-        mqtt_timer.daemon = True
+        status_interval = 60.0  # seconds
+        status_timer = LoopTimer(status_interval,
+                                 self.publish_status)
+        status_timer.daemon = True
 
         # c3 request thread
         req_interval = 120.0  # seconds
@@ -104,13 +107,14 @@ class LogAgent(Thread):
         req_timer.daemon = True
 
         req_timer.start()
-        mqtt_timer.start()
+        status_timer.start()
 
-    def publish_message(self, topic, message):
-        self.client.publish(topic, payload=message)
+    def publish_status(self):
+        """Logger status thread."""
+        topic = '%s/agnt_log' % (self.sut)
+        message = 'Ok'
 
-        # m_packet = self.client.publish(topic, payload=message)
-        # m_packet.publish()
+        self.mqtt_client.publish(topic, payload=message)
 
     def request_c3(self):
         """Non-blocking HTTP calls."""
@@ -126,11 +130,13 @@ class LogAgent(Thread):
                 status = ('error', 0.0)
 
         topic = ('%s/c3' % self.sut)
-        message = '  [ C3 status: %s | resp_t: %.2f sec ]' % (status[0],
-                                                              status[1])
-        self.pipe_logger.debug(message)
+        message = 'status: %s | resp_t: %.2f sec' % (status[0],
+                                                     status[1])
+        self.pipe_logger.debug('  [ C3 %s ]', message)
         try:
-            self.publish_message(topic, message)
+            self.mqtt_client.publish(topic,
+                                     payload=message,
+                                     retain=True)
         except Exception:
             pass
 
@@ -141,13 +147,15 @@ class LogAgent(Thread):
             yield line
 
     def parse_pipe(self):
-        """Parse subprocess pipe"""
+        """Parse subprocess pipe. """
         topic = ('%s/sp_pipe' % self.sut)
 
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
             try:
-                self.publish_message(topic, line)
+                self.mqtt_client.publish(topic,
+                                         payload=line,
+                                         retain=True)
             except Exception:
                 pass
 
