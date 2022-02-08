@@ -135,8 +135,7 @@ class LogAgent(Thread):
         self.pipe_logger.debug('  [ C3 %s ]', message)
         try:
             self.mqtt_client.publish(topic,
-                                     payload=message,
-                                     retain=True)
+                                     payload=message)
         except Exception:
             pass
 
