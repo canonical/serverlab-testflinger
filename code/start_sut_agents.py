@@ -147,7 +147,7 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe. """
-        topic = ('%s/agent_output' % self.sut)
+        topic = ('%s/agnt_outpt' % self.sut)
 
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
