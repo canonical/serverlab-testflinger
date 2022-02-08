@@ -112,7 +112,7 @@ class LogAgent(Thread):
     def publish_status(self):
         """Logger status thread."""
         topic = '%s/agent' % (self.sut)
-        message = 'Ok'
+        message = 'ok'
 
         self.mqtt_client.publish(topic, payload=message)
 
