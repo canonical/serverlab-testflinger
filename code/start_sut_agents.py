@@ -129,7 +129,7 @@ class LogAgent(Thread):
             else:
                 status = ('error', 0.0)
 
-        topic = ('%s/c3' % self.sut)
+        topic = ('%s/c3_status' % self.sut)
         message = 'status: %s | resp_t: %.2f sec' % (status[0],
                                                      status[1])
         self.pipe_logger.debug('  [ C3 %s ]', message)
@@ -148,7 +148,7 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe. """
-        topic = ('%s/sp_pipe' % self.sut)
+        topic = ('%s/agent_output' % self.sut)
 
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
