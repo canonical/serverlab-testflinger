@@ -111,7 +111,7 @@ class LogAgent(Thread):
 
     def publish_status(self):
         """Logger status thread."""
-        topic = '%s/agnt_log' % (self.sut)
+        topic = '%s/agent' % (self.sut)
         message = 'Ok'
 
         self.mqtt_client.publish(topic, payload=message)
@@ -147,7 +147,7 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe. """
-        topic = ('%s/agnt_outpt' % self.sut)
+        topic = ('%s/output' % self.sut)
 
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
