@@ -1,16 +1,31 @@
 #!/usr/bin/python3
 
+# Copyright (C) 2022 Canonical Ltd.
+#
+# Authors
+#   Adrian Lane <adrian.lane@canonical.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 """Load specified SUT agents."""
+
 # TODO:
 # integrate w/ k8s & use http healthcheck?
-# integrate smokeping (ping in/out), recieve from subproc?
-# create fn to recieve health check in new thread?
-# use thread timer for heartbeat send (in progress)
-# log heartbeat to dict/list and plot?
-# filter sleep messages?
 # add external api hook to restart a specific agent
 #   create method/fn to facilitate
 #   to prevent excessive master processes from spawning
+# send test via mqtt?
+# restart agent via mqrr?
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
@@ -50,11 +65,10 @@ class LogAgent(Thread):
         self.c3_timeout = 2  # seconds
         self.c3_url = (
             'https://certification.canonical.com/submissions')
-        # mqtt start
+        # mqtt setup
         mqtt_broker = '10.245.128.14'
         self.mqtt_client = mqtt.Client(sut)
         self.mqtt_client.connect(mqtt_broker)
-        # self.mqtt_client.loop_start()
         # wait for root loggers to clear
         time.sleep(3)
         self.start_aux_threads()
@@ -119,8 +133,8 @@ class LogAgent(Thread):
     def request_c3(self):
         """Non-blocking HTTP calls."""
         try:
-            request = requests.get(
-                self.c3_url, timeout=self.c3_timeout)
+            request = requests.get(self.c3_url,
+                                   timeout=self.c3_timeout)
         except requests.Timeout:
             status = ('timeout', self.c3_timeout)
         else:
@@ -133,6 +147,7 @@ class LogAgent(Thread):
         message = 'status: %s | resp_t: %.2f sec' % (status[0],
                                                      status[1])
         self.pipe_logger.debug('  [ C3 %s ]', message)
+
         try:
             self.mqtt_client.publish(topic, payload=message)
         except Exception:
@@ -150,6 +165,7 @@ class LogAgent(Thread):
 
         for idx, line in enumerate(self.read_pipe()):
             self.pipe_logger.info(line)
+
             try:
                 self.mqtt_client.publish(topic,
                                          payload=line,

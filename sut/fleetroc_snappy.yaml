@@ -1,0 +1,8 @@
+device_ip: 10.245.130.10
+node_id: am44yr
+node_name: fleetroc
+maas_user: testflinger_a
+agent_name: fleetroc
+env:
+    HEXR_DEVICE_SECURE_ID: j2889PqRM2EmPN3SEjE8rP
+    DEVICE_IP: 10.245.130.10
