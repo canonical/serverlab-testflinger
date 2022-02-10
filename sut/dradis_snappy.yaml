@@ -1,8 +1,0 @@
-device_ip: 10.245.130.25
-node_id: hggyce
-node_name: dradis
-maas_user: testflinger_a
-agent_name: dradis
-env:
-    HEXR_DEVICE_SECURE_ID: 4kHzcPymy2p9W69uinV5QV
-    DEVICE_IP: 10.245.130.25
