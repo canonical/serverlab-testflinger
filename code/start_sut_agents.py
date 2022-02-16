@@ -21,11 +21,6 @@
 
 # TODO:
 # integrate w/ k8s & use http healthcheck?
-# add external api hook to restart a specific agent
-#   create method/fn to facilitate
-#   to prevent excessive master processes from spawning
-# send test via mqtt?
-# restart agent via mqrr?
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
@@ -46,6 +41,7 @@ import setproctitle
 
 class LoopTimer(Timer):
     """Repeat thread timer"""
+
     def run(self):
         # insert loop
         while not self.finished.wait(self.interval):
@@ -54,6 +50,7 @@ class LoopTimer(Timer):
 
 class LogAgent(Thread):
     """Read stdout pipe."""
+
     def __init__(self, pipe, sut, log_path, log_level):
         Thread.__init__(self)
         self.pipe = pipe
@@ -112,6 +109,7 @@ class LogAgent(Thread):
         status_interval = 60.0  # seconds
         status_timer = LoopTimer(status_interval,
                                  self.publish_status)
+        # terminate child thread on exit
         status_timer.daemon = True
 
         # c3 request thread
@@ -126,7 +124,9 @@ class LogAgent(Thread):
     def publish_status(self):
         """Logger status thread."""
         topic = '%s/agent' % (self.sut)
+        # add logic
         message = 'ok'
+        # add timeout for last seen line
 
         self.mqtt_client.publish(topic, payload=message)
 
@@ -161,17 +161,31 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe. """
-        topic = ('%s/output' % self.sut)
+        output_topic = ('%s/output' % self.sut)
+        submit_topic = ('%s/last_job' % self.sut)
+        submit_line = re.compile('Starting\\sjob')
 
-        for idx, line in enumerate(self.read_pipe()):
+        for line in self.read_pipe():
             self.pipe_logger.info(line)
 
-            try:
-                self.mqtt_client.publish(topic,
-                                         payload=line,
-                                         retain=True)
-            except Exception:
-                pass
+            # parse for mqtt
+            job_match = submit_line.search(line)
+            if job_match:
+                # only publish job id
+                line = line[-36:-1]
+                try:
+                    self.mqtt_client.publish(submit_topic,
+                                             payload=line,
+                                             retain=True)
+                except Exception:
+                    pass
+            else:
+                try:
+                    self.mqtt_client.publish(output_topic,
+                                             payload=line,
+                                             retain=True)
+                except Exception:
+                    pass
 
 
 def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
@@ -183,11 +197,9 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
             setuid(user_uid)
         return preempt
 
-        # setproctitle.setproctitle('%s_agnt' % sut)
-
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
-    _log_path = path.join(log_dir, sut)
+    log_path = path.join(log_dir, sut)
     # daemonize agent
     cmd = shlex.split(
         'setsid testflinger-agent -c %s' % conf_path)
@@ -210,7 +222,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
         log_thread = Thread(target=LogAgent,
                             args=(proc.stdout,
                                   sut,
-                                  _log_path,
+                                  log_path,
                                   log_level))
         log_thread.start()
 

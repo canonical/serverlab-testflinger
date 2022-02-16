@@ -1,0 +1,6 @@
+job_queue: sut
+provision_data:
+  distro: release
+test_data:
+  test_cmds: |-
+    cmd
