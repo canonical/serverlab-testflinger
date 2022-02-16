@@ -181,7 +181,7 @@ def main():
     conf_dir = path.join(work_dir, 'sut')
     conf_list = listdir(conf_dir)
     # logging config
-    log_dir = path.join('/', 'var', 'log', 'submit_agent')
+    log_dir = path.join('/', 'var', 'log', 'submit-agent')
 
     # set main process name
     setproctitle.setproctitle('submit_main')
