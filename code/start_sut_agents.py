@@ -172,7 +172,7 @@ class LogAgent(Thread):
             job_match = submit_line.search(line)
             if job_match:
                 # only publish job id
-                line = line[-36:-1]
+                line = line[-36:]
                 try:
                     self.mqtt_client.publish(submit_topic,
                                              payload=line,
