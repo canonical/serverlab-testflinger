@@ -63,12 +63,17 @@ class LogAgent(Thread):
         self.c3_url = (
             'https://certification.canonical.com/submissions')
         # mqtt setup
-        mqtt_broker = '10.245.128.14'
+        self.mqtt_broker = '10.245.128.14'
+        self.status_topic = '%s/agent' % sut
+        self.c3_topic = '%s/c3' % sut
+        self.output_topic = '%s/output' % sut
+        self.submit_topic = '%s/last_job' % sut
         self.mqtt_client = mqtt.Client(sut)
-        self.mqtt_client.connect(mqtt_broker)
-        # wait for root loggers to clear
-        time.sleep(3)
+        self.init_mqtt()
+        # aux ops
         self.start_aux_threads()
+        # # wait for root loggers to clear
+        time.sleep(3)
         self.parse_pipe()
 
     def config_pipe_logging(self):
@@ -100,6 +105,30 @@ class LogAgent(Thread):
 
         return logger
 
+    def init_mqtt(self):
+        """Setup and connect MQTT."""
+        def on_connect(*args):
+            _message = 'online'
+            for idx, _topic in enumerate(topics):
+                if idx:
+                    time.sleep(.3)
+                    _message = '...'
+
+                self.mqtt_client.publish(_topic,
+                                         payload=_message)
+
+        # non-retained topics
+        topics = (self.status_topic, self.c3_topic)
+
+        # set last will and testament
+        message = 'offline'
+        self.mqtt_client.will_set(self.status_topic,
+                                  payload=message,
+                                  retain=True)
+
+        self.mqtt_client.on_connect = on_connect
+        self.mqtt_client.connect(self.mqtt_broker)
+
     def start_aux_threads(self):
         """Aux threads."""
         # mqtt ops thread
@@ -113,7 +142,7 @@ class LogAgent(Thread):
         status_timer.daemon = True
 
         # c3 request thread
-        req_interval = 120.0  # seconds
+        req_interval = 60.0  # seconds
         req_timer = LoopTimer(req_interval,
                               self.request_c3)
         req_timer.daemon = True
@@ -122,13 +151,13 @@ class LogAgent(Thread):
         status_timer.start()
 
     def publish_status(self):
-        """Logger status thread."""
-        topic = '%s/agent' % (self.sut)
+        """Agent status thread."""
         # add logic
         message = 'ok'
         # add timeout for last seen line
 
-        self.mqtt_client.publish(topic, payload=message)
+        self.mqtt_client.publish(self.status_topic,
+                                 payload=message)
 
     def request_c3(self):
         """Non-blocking HTTP calls."""
@@ -143,13 +172,13 @@ class LogAgent(Thread):
             else:
                 status = ('error', 0.0)
 
-        topic = ('%s/c3' % self.sut)
         message = 'status: %s | resp_t: %.2f sec' % (status[0],
                                                      status[1])
         self.pipe_logger.debug('  [ C3 %s ]', message)
 
         try:
-            self.mqtt_client.publish(topic, payload=message)
+            self.mqtt_client.publish(self.c3_topic,
+                                     payload=message)
         except Exception:
             pass
 
@@ -161,8 +190,6 @@ class LogAgent(Thread):
 
     def parse_pipe(self):
         """Parse subprocess pipe. """
-        output_topic = ('%s/output' % self.sut)
-        submit_topic = ('%s/last_job' % self.sut)
         submit_line = re.compile('Starting\\sjob')
 
         for line in self.read_pipe():
@@ -174,14 +201,14 @@ class LogAgent(Thread):
                 # only publish job id
                 line = line[-36:]
                 try:
-                    self.mqtt_client.publish(submit_topic,
+                    self.mqtt_client.publish(self.submit_topic,
                                              payload=line,
                                              retain=True)
                 except Exception:
                     pass
             else:
                 try:
-                    self.mqtt_client.publish(output_topic,
+                    self.mqtt_client.publish(self.output_topic,
                                              payload=line,
                                              retain=True)
                 except Exception:

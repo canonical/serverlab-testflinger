@@ -59,12 +59,28 @@ class SubmitAgent(Thread):
         # testflinger deploy release
         self.release = 'focal'
         # mqtt setup
-        self.topic = "%s/submit" % self.sut
         self.mqtt_broker = '10.245.128.14'
+        self.status_topic = "%s/submit_status" % self.sut
+        self.submit_topic = "%s/submit" % self.sut
         self.mqtt_client = mqtt.Client('%s_submit' % self.sut)
-        self.mqtt_client.connect(self.mqtt_broker)
+        self.init_mqtt()
         self.start_aux_threads()
         self.subscribe_agent()
+
+    def init_mqtt(self):
+        """Setup and connect MQTT."""
+        def on_connect(*args):
+            self.mqtt_client.publish(self.status_topic,
+                                     payload='online')
+
+        # set last will and testament
+        message = 'offline'
+        self.mqtt_client.will_set(self.status_topic,
+                                  payload=message,
+                                  retain=True)
+
+        self.mqtt_client.on_connect = on_connect
+        self.mqtt_client.connect(self.mqtt_broker)
 
     def start_aux_threads(self):
         """Aux threads."""
@@ -81,18 +97,17 @@ class SubmitAgent(Thread):
 
     def publish_status(self):
         """Logger status thread."""
-        topic = '%s/submit_status' % self.sut
         # add logic
         message = 'publish cmd to %s/submit' % self.sut
-        # add timeout for last seen line
 
-        self.mqtt_client.publish(topic, payload=message)
+        self.mqtt_client.publish(self.status_topic,
+                                 payload=message)
 
     def subscribe_agent(self):
         keepalive = 60  # seconds
 
         subscribe.callback(self.submit_test,
-                           self.topic,
+                           self.submit_topic,
                            qos=0,
                            userdata=None,
                            hostname=self.mqtt_broker,
@@ -219,4 +234,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-re
