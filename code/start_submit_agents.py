@@ -127,6 +127,7 @@ class SubmitAgent(Thread):
         code['test_data']['test_cmds'] = test_cmd
 
         with open(self.conf_path, 'w') as file:
+            # overwrite
             file.seek(0)
             yaml.dump(code, file)
             file.truncate()
@@ -144,6 +145,7 @@ class SubmitAgent(Thread):
             _ = subprocess.Popen(cmd,
                                  universal_newlines=True,
                                  encoding='utf-8',
+                                 shell=True,
                                  cwd=self.work_dir)
         except OSError:
             print('  - Unable to start agent for: %s' % self.sut)

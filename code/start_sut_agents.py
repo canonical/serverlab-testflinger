@@ -152,9 +152,9 @@ class LogAgent(Thread):
 
     def publish_status(self):
         """Agent status thread."""
-        # add logic
+        # add logic, conditions
         message = 'ok'
-        # add timeout for last seen line
+        # (maybe) add timeout for last seen line
 
         self.mqtt_client.publish(self.status_topic,
                                  payload=message)
