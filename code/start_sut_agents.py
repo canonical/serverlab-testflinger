@@ -227,9 +227,11 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir, sut)
-    # daemonize agent
     cmd = shlex.split(
-        'setsid testflinger-agent -c %s' % conf_path)
+        'testflinger-agent -c %s' % conf_path)
+    # exec for killing and restart agent (tbd)
+    # cmd = shlex.split(
+    #     'exec testflinger-agent -c %s' % conf_path)
     exe_group = 1000  # executing group
     exe_user = 1000  # executing user
 
@@ -239,6 +241,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
             preexec_fn=delegate(exe_group, exe_user),
             start_new_session=True,  # fork
             universal_newlines=True,
+            shell=True,
             encoding='utf-8',
             cwd=work_dir,
             stdout=subprocess.PIPE,
