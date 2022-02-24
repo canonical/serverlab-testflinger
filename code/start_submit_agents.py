@@ -136,7 +136,7 @@ class SubmitAgent(Thread):
         test_cmd = (message.payload).decode('UTF-8')
         self.update_yaml(test_cmd)
 
-        cmd = shlex.split('setsid testflinger-cli \
+        cmd = shlex.split('testflinger-cli \
                           --server http://%s:8000 \
                           submit %s' % (self.api_server,
                                         self.conf_path))

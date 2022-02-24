@@ -30,7 +30,7 @@ import subprocess
 import requests
 import argparse
 import logging
-import shlex
+# import shlex
 import time
 import sys
 import re
@@ -227,11 +227,12 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir, sut)
-    cmd = shlex.split(
-        'testflinger-agent -c %s' % conf_path)
-    # exec for killing and restart agent (tbd)
     # cmd = shlex.split(
-    #     'exec testflinger-agent -c %s' % conf_path)
+    #     'setsid testflinger-agent -c %s' % conf_path)
+    # # exec for killing and restart agent (tbd)
+    # cmd = 'exec testflinger-agent -c %s' % conf_path
+    # use string for shell=True
+    cmd = 'testflinger-agent -c %s' % conf_path
     exe_group = 1000  # executing group
     exe_user = 1000  # executing user
 
