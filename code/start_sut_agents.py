@@ -335,7 +335,7 @@ def main():
             # also need to stop child threads (w/o daemon=true)
 
         if user_args.stop:
-            sys.exit() 
+            sys.exit()
 
     print('\n=========================')
     print('Loading SUT Agent(s):')
