@@ -20,6 +20,7 @@
 """Load specified SUT agents."""
 
 # TODO:
+# restart agent via mqtt?
 # integrate w/ k8s & use http healthcheck?
 
 from logging.handlers import RotatingFileHandler
@@ -198,13 +199,13 @@ class LogAgent(Thread):
             # parse for mqtt
             job_match = submit_line.search(line)
             if job_match:
-                # only publish job id
+                # only publish job id, consume msg
                 line = line[-36:]
                 try:
                     self.mqtt_client.publish(self.submit_topic,
                                              payload=line,
                                              retain=True)
-                except Exception:
+                except Exception:  # specify
                     pass
             else:
                 try:
@@ -219,6 +220,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     """Load specified SUT agent."""
     def delegate(user_gid, user_uid):
         """Execute as different user."""
+        # may be redundant (tbd)
         def preempt():
             setgid(user_gid)
             setuid(user_uid)
@@ -227,9 +229,8 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir, sut)
-    # cmd = shlex.split(
-    #     'setsid testflinger-agent -c %s' % conf_path)
-    # # exec for killing and restart agent (tbd)
+    # exec for killing and restart agent (tbd)
+    # add semaphore to stop logging loop (restart agent)
     # cmd = 'exec testflinger-agent -c %s' % conf_path
     # use string for shell=True
     cmd = 'testflinger-agent -c %s' % conf_path
@@ -241,8 +242,9 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
             cmd,
             preexec_fn=delegate(exe_group, exe_user),
             start_new_session=True,  # fork
-            universal_newlines=True,
             shell=True,
+            executable='/bin/bash',
+            text=True,
             encoding='utf-8',
             cwd=work_dir,
             stdout=subprocess.PIPE,
@@ -319,6 +321,7 @@ def main():
 
     root_logger = config_root_logging(log_dir)
 
+    # move to callbacks during execution? (tbd)
     if user_args.restart or user_args.stop:
         # kill running agents (ps pname truncated)
         agent_procs = re.compile('agent_main|testflinger-age')
@@ -327,9 +330,12 @@ def main():
         for proc in psutil.process_iter(['name']):
             if agent_procs.match(proc.info['name']):
                 proc.kill()
+            # prevent multiple main() in env
+            sys.exit()
+            # also need to stop child threads (w/o daemon=true)
 
         if user_args.stop:
-            sys.exit()
+            sys.exit() 
 
     print('\n=========================')
     print('Loading SUT Agent(s):')
