@@ -73,7 +73,7 @@ class LogAgent(Thread):
         self.init_mqtt()
         # aux ops
         self.start_aux_threads()
-        # # wait for root loggers to clear
+        # wait for root loggers to clear
         time.sleep(3)
         self.parse_pipe()
 
