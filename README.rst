@@ -192,7 +192,7 @@ Edit ./code/testflinger.conf (ref *):
 Modify/Create SUT files:
 ------------------------
 * Update any testflinger-agent *.conf files with the api server IP::
-	server_address: http://10.245.128.10:8000
+	server_address: http://10.245.128.10:8000 (use actual api ip)
 
 * Make sure the snappy-device-agents yaml files are appended with _snappy if you want the deployment to automatically transfer them from the sut directory to the containers. You can alternatively create the config files inside the container post-deployment.
 

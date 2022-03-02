@@ -21,7 +21,7 @@
 
 # TODO:
 # restart agent via mqtt?
-# integrate w/ k8s & use http healthcheck?
+# HTTP/REST healthcheck (k8s, etc)?
 
 from logging.handlers import RotatingFileHandler
 from os import setgid, setuid, path, listdir
@@ -31,7 +31,6 @@ import subprocess
 import requests
 import argparse
 import logging
-# import shlex
 import time
 import sys
 import re
