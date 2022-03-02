@@ -19,7 +19,9 @@
 
 """Load specified SUT agents."""
 
-# TODO:
+# Note:
+# restarting container provides fast agent reset
+# Todo:
 # restart agent via mqtt?
 # HTTP/REST healthcheck (k8s, etc)?
 
@@ -179,7 +181,7 @@ class LogAgent(Thread):
         try:
             self.mqtt_client.publish(self.c3_topic,
                                      payload=message)
-        except Exception:
+        except Exception:  # specify
             pass
 
     def read_pipe(self):
@@ -211,7 +213,7 @@ class LogAgent(Thread):
                     self.mqtt_client.publish(self.output_topic,
                                              payload=line,
                                              retain=True)
-                except Exception:
+                except Exception:   # specify
                     pass
 
 
@@ -236,7 +238,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     exe_user = 1000  # executing user
 
     try:
-        proc = subprocess.Popen(  # pylint: disable=w1509
+        proc = subprocess.Popen(
             cmd,
             preexec_fn=delegate(exe_group, exe_user),
             start_new_session=True,  # fork
@@ -319,8 +321,8 @@ def main():
 
     root_logger = config_root_logging(log_dir)
 
-    # move to callbacks during execution? (tbd)
     if user_args.restart or user_args.stop:
+        # move to callbacks during execution? (tbd)
         # kill running agents (ps pname truncated)
         agent_procs = re.compile('agent_main|testflinger-age')
 
@@ -330,7 +332,7 @@ def main():
                 proc.kill()
             # prevent multiple main() in env
             sys.exit()
-            # also need to stop child threads (w/o daemon=true)
+            # stop child threads (daemon=true?)
 
         if user_args.stop:
             sys.exit()
