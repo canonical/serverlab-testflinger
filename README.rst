@@ -1,7 +1,7 @@
-#####
+###########################################
 Testflinger-Docker
 	Basic info, deployment and other notes.
-#####
+###########################################
 
 
 Docker Containers
@@ -75,6 +75,21 @@ Project notes and files of interest
 		deploy_stack.sh : complete, clean deployment of stack
 		reroll.sh : completely destroy stack, pull Git and redeploy
 		orb_nuke.sh : completely destroy stack and all associated files and data
+
+
+MQTT notes and useage (to be updated)
+===================================
+*Grab a MQTT client, MQTT Explorer recommended.
+	This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
+
+* Point the client MQTT broker, as done in Needham (most parameters apply to any environment):
+	• Protocol: mqtt://
+	• Host: 10.245.128.14
+	• Port: 1883
+	• Leave username and password blank.
+	• Keep 'validate certificate' and 'encryption' unchecked
+
+A web-based MQTT client running within the lab, as a part of larger monitoring is the next natural step here (so a client isn't necessary).
 
 
 Deploying Stack
@@ -182,6 +197,7 @@ Modify/Create SUT files:
 
 * Make sure the snappy-device-agents yaml files are appended with _snappy if you want the deployment to automatically transfer them from the sut directory to the containers. You can alternatively create the config files inside the container post-deployment.
 
+
 Deploy Compose Stack.
 =====================
 * Execute the deploy-stack script to start deployment::
@@ -206,8 +222,7 @@ Once the deployment is complete, no other steps should be required to start exec
 
 
 References (incomplete):
-===========
-
+========================
 Docker Compose Specification:
 https://github.com/compose-spec/compose-spec/blob/master/spec.md
 
