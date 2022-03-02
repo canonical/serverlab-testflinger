@@ -36,7 +36,7 @@ import sys
 
 
 class LoopTimer(Timer):
-    """Repeat thread timer"""
+    """Repeat thread timer."""
 
     def run(self):
         # insert loop
@@ -104,6 +104,8 @@ class SubmitAgent(Thread):
                                  payload=message)
 
     def subscribe_agent(self):
+        """MQTT subscribe on message."""
+        # add on_message fn
         keepalive = 60  # seconds
 
         subscribe.callback(self.submit_test,
@@ -114,6 +116,7 @@ class SubmitAgent(Thread):
                            keepalive=keepalive)
 
     def update_yaml(self, test_cmd):
+        """Update sut yaml."""
         ref_file = '.reference.yaml'
         ref_path = path.join(self.conf_dir, ref_file)
         yaml = YAML()
@@ -133,6 +136,7 @@ class SubmitAgent(Thread):
             file.truncate()
 
     def submit_test(self, client, userdata, message):
+        """Callback method."""
         test_cmd = (message.payload).decode('UTF-8')
         self.update_yaml(test_cmd)
 

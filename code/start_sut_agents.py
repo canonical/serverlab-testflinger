@@ -42,7 +42,7 @@ import setproctitle
 
 
 class LoopTimer(Timer):
-    """Repeat thread timer"""
+    """Repeat thread timer."""
 
     def run(self):
         # insert loop
@@ -158,8 +158,11 @@ class LogAgent(Thread):
         message = 'ok'
         # (maybe) add timeout for last seen line
 
-        self.mqtt_client.publish(self.status_topic,
-                                 payload=message)
+        try:
+            self.mqtt_client.publish(self.status_topic,
+                                     payload=message)
+        except Exception:  # specify
+            pass
 
     def request_c3(self):
         """Non-blocking HTTP calls."""

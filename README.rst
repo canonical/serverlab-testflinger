@@ -10,6 +10,7 @@ All container dockerfiles are located in the project root.
 testflinger-agent
 -----------------
 Standard testflinger agent build, using Docker.
+    Includes snappy device agents.
     Runs a heavily customized image.
 
 testflinger-cli

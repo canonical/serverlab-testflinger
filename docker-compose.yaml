@@ -98,10 +98,11 @@ services:
     restart: unless-stopped
     container_name: testflinger-agent
 
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
+  # # for netdata
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   security_opt:
+  #     - apparmor:unconfined
 
     networks:
       needham_ext:
