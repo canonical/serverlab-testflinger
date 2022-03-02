@@ -189,6 +189,3 @@ volumes:
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
-  loki_data: {}
-  grafana_data: {}
-  promtail_data: {}
