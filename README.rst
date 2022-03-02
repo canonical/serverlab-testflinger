@@ -1,8 +1,7 @@
-###########################################
+******************
 Testflinger-Docker
 	Basic info, deployment and other notes.
-###########################################
-
+*******************************************
 
 Docker Containers
 =================
@@ -78,7 +77,7 @@ Project notes and files of interest
 
 
 MQTT notes and useage (to be updated)
-===================================
+=====================================
 *Grab a MQTT client, MQTT Explorer recommended.
 	This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
 
@@ -93,7 +92,7 @@ A web-based MQTT client running within the lab, as a part of larger monitoring i
 
 
 Deploying Stack
-=================
+===============
 
 Deploy and configure Docker host
 --------------------------------
@@ -144,11 +143,11 @@ After host is deployed, setup prerequisites:
 	git clone https://github.com/hum4n0id/testflinger-docker
 
 
-Customize source and config files for environment
-=================================================
+Customize source and config files for environment:
+--------------------------------------------------
 All work is done in the Git cloned Docker root dir (testflinger-docker/).
 
-Update relevant files are to match local environment.
+Update relevant files are to match local environment:
 -----------------------------------------------------
 Files that need to be updated:
 * Required updates::
@@ -164,13 +163,13 @@ Files that need to be updated:
 
 * After this step, run ./tools/parse_tf_files.sh
 
-Edit docker-compose.yaml file to match environment.
+Edit docker-compose.yaml file to match environment:
 ---------------------------------------------------
 * Change the parent network parameters to match the environment. Keeping the default bridge parameters will work in any standard environment.
 
 * Likewise, update container IPs to match said networks.
 
-Edit the testflinger entrypoint file (tf-entrypoint).
+Edit the testflinger entrypoint file (tf-entrypoint):
 -----------------------------------------------------
 File location: ./code/tf-entrypoint.sh (ref*).
 This shell script is exec’d upon container boot/start.
@@ -185,7 +184,7 @@ This shell script is exec’d upon container boot/start.
 	MAAS_PORT=5240
 	MAAS_API_KEY=’<api_key>’
 
-Edit ./code/testflinger.conf (ref *).
+Edit ./code/testflinger.conf (ref *):
 -------------------------------------
 * Update the REDIS_HOST field to the db container ip address::
 	REDIS_HOST = '10.172.10.13'
@@ -198,7 +197,7 @@ Modify/Create SUT files:
 * Make sure the snappy-device-agents yaml files are appended with _snappy if you want the deployment to automatically transfer them from the sut directory to the containers. You can alternatively create the config files inside the container post-deployment.
 
 
-Deploy Compose Stack.
+Deploy Compose Stack:
 =====================
 * Execute the deploy-stack script to start deployment::
 	bash ./tools/deploy-stack.sh
