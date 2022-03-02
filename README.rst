@@ -96,7 +96,7 @@ Deploying Stack
 
 Deploy and configure Docker host
 --------------------------------
-Deploy 20.04+ host via MAAS.
+Deploy 18.04+ host via MAAS.
 After host is deployed, setup prerequisites:
 
 * Update system::

@@ -228,8 +228,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
     conf_path = path.join(conf_dir, sut_conf)
     sut = path.splitext(sut_conf)[0]
     log_path = path.join(log_dir, sut)
-    # exec for killing and restart agent (tbd)
-    # add semaphore to stop logging loop (restart agent)
+    # exec for stopping and restart agent (tbd)
     # cmd = 'exec testflinger-agent -c %s' % conf_path
     # use string for shell=True
     cmd = 'testflinger-agent -c %s' % conf_path
@@ -241,7 +240,7 @@ def load_sut_agent(sut_conf, work_dir, conf_dir, log_dir, log_level):
             cmd,
             preexec_fn=delegate(exe_group, exe_user),
             start_new_session=True,  # fork
-            shell=True,
+            shell=True,  # testing
             executable='/bin/bash',
             text=True,
             encoding='utf-8',
