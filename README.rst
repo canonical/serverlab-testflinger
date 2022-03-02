@@ -27,7 +27,7 @@ Redis database container.
 
 testflinger-mqtt
 ----------------
-MQTT broker for environment.
+Stack MQTT broker.
 
 
 Project notes and files of interest
