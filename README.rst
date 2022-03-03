@@ -10,13 +10,13 @@ All container dockerfiles are located in the project root.
 testflinger-agent
 -----------------
 Standard testflinger agent build, using Docker.
-    Includes snappy device agents.
-    Runs a heavily customized image.
+    • Includes snappy device agents.
+    • Runs a heavily customized image.
 
 testflinger-cli
 ---------------
 Standard testflinger cli build, using Docker.
-    Runs a heavily customized image.
+    • Runs a heavily customized image.
 
 testflinger-api
 ---------------
@@ -34,40 +34,42 @@ Stack MQTT broker.
 Project notes and files of interest
 ===================================
 * ./code/start_sut_agents
-    Runs on testflinger-agent.
-    Starts all agents, and performs logging.
-    Transmits agent output to stack MQTT broker.
-    Logs agent output /var/log/sut-agent within testflinger-agent.
-    Developer notes and aspirations within source file.
+    • Runs on testflinger-agent.
+    • Starts all agents, and performs logging.
+    • Transmits agent output to stack MQTT broker.
+    • Logs agent output /var/log/sut-agent within testflinger-agent.
+    • Developer notes and aspirations within source file.
 
     Published MQTT topics::
     	agent : agent/logger status
     	c3 : current status of REST comms from agent to C3
     	output: current agent output
     	submit_status : when active, lists topic to publish test cmd
-    	submit : last published job (as seen on the recieving end) 
+    	submit : last published job (as seen on the recieving end)
+        job
 
 * ./code/start_submit_agents
-    Run on testflinger-cli.
-    Starts lightweight sut agents, similar to start_sut_agents.
-    These agents listen for test submissions via MQTT, will then start the appropriate job.
+    • Runs on testflinger-cli.
+    • Starts lightweight sut agents, similar to start_sut_agents.
+    • The "submit_status" topic will list instructions if the submit agent is ready.
+    • These agents listen for test submissions via MQTT, will then start the appropriate job. See MQTT notes below for useage.
 
 * ./code/01_run_sut_agents
-    Starts sut agents on testflinger-agent boot.
+    • Starts sut agents on testflinger-agent boot.
 
 * ./code/01_run_submit_agents
-    Starts submit agents on testflinger-cli boot.
+    • Starts submit agents on testflinger-cli boot.
 
 * ./code/export_ssh_pubkey.py
-    Pushes ssh keys to specified stack MAAS host for maas-cli api.
-    Runs on container boot, will not push key if it already exists.
+    • Pushes ssh keys to specified stack MAAS host for maas-cli api.
+    • Runs on container boot, will not push key if it already exists.
 
 * ./reference.yaml
-    Reference device agent file to facilitate job pushing via MQTT.
+    • Reference device agent file to facilitate job pushing via MQTT.
 
 * ./tf-entrypoint
-    Runs on testflinger-agent and testflinger-cli.
-    Starts appropriate microservices, see below for more info.
+    • Runs on testflinger-agent and testflinger-cli.
+    • Starts appropriate microservices, see below for more info.
 
 * ./tools/*
     Contains convenience scripts for streamlined Docker ops
@@ -80,7 +82,7 @@ Project notes and files of interest
 MQTT notes and useage
 =====================
 *Grab a MQTT client, MQTT Explorer recommended.
-    This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
+    • This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
 
 * Point the client MQTT broker, as in Needham (stack broker settings):
     • Protocol: mqtt://
@@ -89,7 +91,18 @@ MQTT notes and useage
     • Leave username and password blank.
     • Keep 'validate certificate' and 'encryption' unchecked
 
-A web-based MQTT client running within the lab, as a part of larger monitoring is the next natural step here (so a client isn't necessary).
+* To submit a test via MQTT, publish to <sut>/submit.
+    • The "submit_status" topic indicates if the submit agent is ready.
+    • If using MQTT explorer (or similar clients):
+        • Use the "publish" field and use <sut>/submit as the topic. 
+        • Raw text mode suggested, but other modes should work.
+    • Publish the test cmd identical to the field sut snappy yaml file::
+        ssh -o StrictHostKeyChecking=no \
+        ubuntu@$DEVICE_IP \
+        /usr/bin/test-network
+    Note: when using MQTT explorer, breaking up long lines as above is recommended.
+
+A web-based MQTT client running within the lab, as a part of larger monitoring (or automation/CI) is the next natural step here (so a client isn't necessary).
 
 
 Deploying Stack
@@ -176,8 +189,8 @@ File location: ./code/tf-entrypoint.sh (ref*).
 This shell script is exec’d upon container boot/start.
 
 * Update the top-level variables to match your environment:
-    * TF_MAAS_ACT is the MAAS Testflinger account (create one if it doesn’t exist).
-    * MAAS API key is located in the MAAS dashboard for the testflinger  account’s settings (create one if it doesn’t exist).
+    • TF_MAAS_ACT is the MAAS Testflinger account (create one if it doesn’t exist).
+    • MAAS API key is located in the MAAS dashboard for the testflinger  account’s settings (create one if it doesn’t exist).
 
 * Add them to the file as follows::
     TF_MAAS_ACT=testflinger_a
