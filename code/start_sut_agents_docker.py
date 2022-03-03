@@ -54,7 +54,7 @@ class LogAgent(Thread):
     """Read stdout pipe."""
 
     def __init__(self, pipe, sut, log_path, log_level):
-        Thread.__init__(self)
+        super().__init__(self)
         self.pipe = pipe
         self.sut = sut
         self.log_path = log_path
@@ -335,7 +335,7 @@ def main():
                 proc.kill()
             # prevent multiple main() in env
             sys.exit()
-            # stop child threads (daemon=true or join()?)
+            # stop child threads (daemon=true or join())
 
         if user_args.stop:
             sys.exit()
