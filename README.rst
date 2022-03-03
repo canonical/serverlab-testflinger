@@ -81,7 +81,7 @@ Project notes and files of interest
 
 * Currently, sut agents are running in subprocess instances, with a child logging thread.
 
-* Under consideration; moving to Docker containers for agents, via Docker api and/or discrete containers via compose. This may allow increased functionality with isolated disk access and the like. These would expand the existing docker stack. It shouldn't be too difficult to integrate the existing logging/mqtt/etc instrumentation into something that executes within these sut agent containers (and/or running python in the container entrypoint file).
+* Under development (assesment); moving to Docker containers for agents, via Docker api (and/or discrete containers via compose). This may allow increased functionality with isolated disk access and the like. These would expand the existing docker stack. It shouldn't be too difficult to integrate the existing logging/mqtt/etc instrumentation into something that executes within these sut agent containers (and/or running python in the container entrypoint file).
 
 
 MQTT notes and useage
