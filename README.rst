@@ -96,7 +96,7 @@ MQTT notes and useage
     • If using MQTT explorer (or similar clients):
         • Use the "publish" field and use <sut>/submit as the topic. 
         • Raw text mode suggested, but other modes should work.
-    • Publish the test cmd as in the same field in the sut snappy yaml file::
+    • Publish the test cmd as in the same field in the sut tf-cli yaml file::
         ssh -o StrictHostKeyChecking=no \
         ubuntu@$DEVICE_IP \
         checkbox-cli launcher /usr/bin/test-functional-20.04 \
