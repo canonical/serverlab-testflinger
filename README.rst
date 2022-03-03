@@ -43,10 +43,10 @@ Project notes and files of interest
     Published MQTT topics::
     	agent : agent/logger status
     	c3 : current status of REST comms from agent to C3
-    	output: current agent output
+    	output: current agent output (broker retained)
     	submit_status : when active, lists topic to publish test cmd
     	submit : last published job (as seen on the recieving end)
-        job
+        last_job : last job seen by the sut agent (broker retained)
 
 * ./code/start_submit_agents
     • Runs on testflinger-cli.
@@ -99,7 +99,8 @@ MQTT notes and useage
     • Publish the test cmd as in the same field in the sut snappy yaml file::
         ssh -o StrictHostKeyChecking=no \
         ubuntu@$DEVICE_IP \
-        /usr/bin/test-network
+        checkbox-cli launcher /usr/bin/test-network \
+        -m "MQTT testing"
     Note: when using MQTT explorer, breaking up long lines as above is recommended.
 
 A web-based MQTT client running within the lab, as a part of larger monitoring (or automation/CI) is the next natural step here (so a client isn't necessary).
