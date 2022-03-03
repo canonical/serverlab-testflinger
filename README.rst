@@ -10,7 +10,7 @@ All container dockerfiles are located in the project root.
 testflinger-agent
 -----------------
 Standard testflinger agent build, using Docker.
-    • Includes snappy device agents.
+    • Includes snappy device agent.
     • Runs a heavily customized image.
 
 testflinger-cli
@@ -45,7 +45,6 @@ Project notes and files of interest
     	c3 : current status of REST comms from agent to C3
     	output: current agent output (broker retained)
     	submit_status : when active, lists topic to publish test cmd
-    	submit : last published job (as seen on the recieving end)
         last_job : last job seen by the sut agent (broker retained)
 
 * ./code/start_submit_agents
