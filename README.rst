@@ -74,8 +74,9 @@ Project notes and files of interest
     • Contains convenience scripts for streamlined Docker ops.
     • Most used scripts::
     	 deploy_stack.sh : complete, clean deployment of stack
-    	 reroll.sh : completely destroy stack, pull Git and redeploy
-    	 orb_nuke.sh : completely destroy stack and all associated files and data
+         orb_nuke.sh : completely destroy stack and all associated files and data
+    	 reroll.sh : completely destroy stack, git pull and redeploy
+                     (git repo optional)
 
 
 MQTT notes and useage
@@ -98,11 +99,14 @@ MQTT notes and useage
     • Publish the test cmd as in the same field in the sut snappy yaml file::
         ssh -o StrictHostKeyChecking=no \
         ubuntu@$DEVICE_IP \
-        checkbox-cli launcher /usr/bin/test-network \
+        checkbox-cli launcher /usr/bin/test-functional-20.04 \
         -m \"MQTT testing\"
     Note: when using MQTT explorer, breaking up long lines as above is recommended.
 
 * A web based MQTT client running within the lab, as a part of larger monitoring/ automation/CI is the next natural step here.
+
+* As a suppliment to MQTT, one could integrate REST calls via CoAP. Called inline in the same fashion as MQTT publish. A 'testflinger-rest' container could be a CoAP server (if necessary).
+
 
 
 Deploying Stack
@@ -192,7 +196,7 @@ This shell script is exec’d upon container boot/start.
     • TF_MAAS_ACT is the MAAS Testflinger account (create one if it doesn’t exist).
     • MAAS API key is located in the MAAS dashboard for the testflinger  account’s settings (create one if it doesn’t exist).
 
-* Add them to the file as follows::
+* Add them to the file as follows (w/ real values)::
     TF_MAAS_ACT=testflinger_a
     MAAS_SERVER=10.245.128.4
     MAAS_PORT=5240
@@ -244,3 +248,10 @@ https://docs.docker.com/engine/reference/builder/
 
 Phusion Baseimage:
 https://github.com/phusion/baseimage-docker
+
+MQTT Eclipse Mosquitto:
+https://github.com/eclipse/mosquitto
+https://hub.docker.com/_/eclipse-mosquitto/
+
+CoAP Protocol:
+https://coap.technology
