@@ -72,11 +72,11 @@ Project notes and files of interest
     • Starts appropriate microservices, see below for more info.
 
 * ./tools/*
-    Contains convenience scripts for streamlined Docker ops
-    Most used scripts::
-    	deploy_stack.sh : complete, clean deployment of stack
-    	reroll.sh : completely destroy stack, pull Git and redeploy
-    	orb_nuke.sh : completely destroy stack and all associated files and data
+    • Contains convenience scripts for streamlined Docker ops.
+    • Most used scripts::
+    	 deploy_stack.sh : complete, clean deployment of stack
+    	 reroll.sh : completely destroy stack, pull Git and redeploy
+    	 orb_nuke.sh : completely destroy stack and all associated files and data
 
 
 MQTT notes and useage
@@ -96,7 +96,7 @@ MQTT notes and useage
     • If using MQTT explorer (or similar clients):
         • Use the "publish" field and use <sut>/submit as the topic. 
         • Raw text mode suggested, but other modes should work.
-    • Publish the test cmd identical to the field sut snappy yaml file::
+    • Publish the test cmd as in the same field in the sut snappy yaml file::
         ssh -o StrictHostKeyChecking=no \
         ubuntu@$DEVICE_IP \
         /usr/bin/test-network
