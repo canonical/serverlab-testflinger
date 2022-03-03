@@ -79,6 +79,8 @@ Project notes and files of interest
     	 reroll.sh : completely destroy stack, git pull and redeploy
                      (git repo optional)
 
+* Currently, sut agents are running in subprocess instances, with a child logging thread. Another design, if more functionality is required, would be to create another (or expand the existing) docker stack comprised of sut agents (or similar). It wouldn't be too difficult to integrate the logging instrumentation into something that executes within these sut agent containers.
+
 
 MQTT notes and useage
 =====================
