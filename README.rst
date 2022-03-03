@@ -39,8 +39,7 @@ Project notes and files of interest
     • Transmits agent output to stack MQTT broker.
     • Logs agent output /var/log/sut-agent within testflinger-agent.
     • Developer notes and aspirations within source file.
-
-    Published MQTT topics::
+    • Published MQTT topics::
     	agent : agent/logger status
     	c3 : current status of REST comms from agent to C3
     	output: current agent output (broker retained)
