@@ -51,6 +51,8 @@ Project notes and files of interest
     • Starts lightweight sut agents, similar to start_sut_agents.
     • The "submit_status" topic will list instructions if the submit agent is ready.
     • These agents listen for test submissions via MQTT, will then start the appropriate job. See MQTT notes below for useage.
+    • Subscribed MQTT topics::
+        submit : listen for mqtt test_cmd message, initiate job.
 
 * ./code/01_run_sut_agents
     • Starts sut agents on testflinger-agent boot.
