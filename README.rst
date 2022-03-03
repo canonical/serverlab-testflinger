@@ -80,7 +80,7 @@ Project notes and files of interest
 
 MQTT notes and useage
 =====================
-*Grab a MQTT client, MQTT Explorer recommended.
+* Grab a MQTT client, MQTT Explorer recommended.
     • This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
 
 * Point the client MQTT broker, as in Needham (stack broker settings):
@@ -102,7 +102,7 @@ MQTT notes and useage
         -m \"MQTT testing\"
     Note: when using MQTT explorer, breaking up long lines as above is recommended.
 
-A web-based MQTT client running within the lab, as a part of larger monitoring (or automation/CI) is the next natural step here (so a client isn't necessary).
+* A web based MQTT client running within the lab, as a part of larger monitoring/ automation/CI is the next natural step here.
 
 
 Deploying Stack
