@@ -95,14 +95,9 @@ services:
       dockerfile: testflinger-agent
     stdin_open: true
     tty: true
+    privileged: true
     restart: unless-stopped
     container_name: testflinger-agent
-
-  # # for netdata
-  #   cap_add:
-  #     - SYS_PTRACE
-  #   security_opt:
-  #     - apparmor:unconfined
 
     networks:
       needham_ext:
@@ -117,7 +112,6 @@ services:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
       - agent_log:/var/log/sut-agent
-      - /var/run/docker.sock:/var/run/docker.sock
       # netdata volumes
       # - netdata_cache:/var/cache/netdata
       # - netdata_config:/etc/netdata
@@ -130,6 +124,12 @@ services:
       - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
     command: ["/opt/tf-entrypoint.sh"]
+
+    # # for netdata
+    #   cap_add:
+    #     - SYS_PTRACE
+    #   security_opt:
+    #     - apparmor:unconfined
 
     # healthcheck:
     #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
