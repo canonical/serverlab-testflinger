@@ -99,7 +99,7 @@ MQTT notes and useage
         ssh -o StrictHostKeyChecking=no \
         ubuntu@$DEVICE_IP \
         checkbox-cli launcher /usr/bin/test-network \
-        -m "MQTT testing"
+        -m \"MQTT testing\"
     Note: when using MQTT explorer, breaking up long lines as above is recommended.
 
 A web-based MQTT client running within the lab, as a part of larger monitoring (or automation/CI) is the next natural step here (so a client isn't necessary).
