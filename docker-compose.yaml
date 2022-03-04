@@ -160,6 +160,9 @@ services:
 
     environment:
       - PATH=/data/testflinger-cli:$PATH
+    
+    cap_add:
+      - NET_ADMIN
 
     # command: ["/opt/tf-entrypoint.sh"]
 
