@@ -11,9 +11,10 @@ import sys
 class InitAgent:
 
     def __init__(
-            self, client, sut, agnt_net, net_name, img_name, agnt_ip):
+            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip):
         self.client = client
-        self.sut = sut
+        self.sut_conf = sut_conf
+        self.sut = path.splitext(sut_conf)[0]
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
@@ -36,9 +37,26 @@ class InitAgent:
 
     def create_container(self, net_config):
         # common parameters
+        src_conf_path = '/home/ubuntu/sut/%s' % self.sut_conf
+        dst_conf_path = '/conf/%s' % self.sut_conf
+        src_log_path = '/var/log/sut-agent/%s.log' % self.sut
+        dst_log_path = '/var/log/%s.log' % self.sut
         host_config = self.client.api.create_host_config(
             privileged=True,
             init=True,
+            mounts=[
+                docker.types.Mount(type='bind',
+                                   target=self.dsock,
+                                   source=self.dsock,
+                                   read_only=False),
+                docker.types.Mount(type='bind',
+                                   target=dst_conf_path,
+                                   source=src_conf_path,
+                                   read_only=True),
+                docker.types.Mount(type='bind',
+                                   target=dst_log_path,
+                                   source=src_log_path,
+                                   read_only=False)],
             restart_policy={'Name': 'always'})
 
         try:
@@ -50,15 +68,11 @@ class InitAgent:
                 networking_config=net_config,
                 # entrypoint=[self.entrypoint],
                 command=[self.command],
-                volumes=[
-                    '%s:%s' % (self.dsock, self.dsock)],
-                # volumes=['%s:%s' % self.dsock,
-                #          self.log_dir:'log/sut'],
                 domainname='maas',
                 detach=True,
                 tty=True)
         except docker.errors.APIError:
-            print('  ## error creating container!')
+            print(' # error creating container!')
             pass
 
         return cntnr
@@ -176,7 +190,7 @@ def main():
 
         try:
             _ = InitAgent(client,
-                          sut,
+                          sut_conf,
                           agnt_net,
                           net_name,
                           img_name,
