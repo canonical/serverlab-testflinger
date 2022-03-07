@@ -11,13 +11,13 @@ import sys
 class InitAgent:
 
     def __init__(
-            self, client, sut, agnt_net, net_name, agnt_ip):
+            self, client, sut, agnt_net, net_name, img_name, agnt_ip):
         self.client = client
         self.sut = sut
         self.agnt_net = agnt_net
         self.net_name = net_name
+        self.img_name = img_name
         self.agnt_ip = '10.172.15.%i' % agnt_ip
-        self.image = 'agnt_img:latest'
         self.command = 'bash'
         # self.entrypoint = path.join(
         #     '/', 'opt', 'agnt_entrypt.py')
@@ -43,7 +43,7 @@ class InitAgent:
 
         try:
             cntnr = self.client.api.create_container(
-                self.image,
+                self.img_name,
                 name=self.sut,
                 hostname=self.sut,
                 host_config=host_config,
@@ -102,7 +102,6 @@ def build_cntnr_img(client, img_name, dockf_path):
     def stream_build():
         for line in client.api.build(path=dockf_path,
                                      tag='agnt_img',
-                                     # dockerfile='',
                                      nocache=True,
                                      rm=True,
                                      decode=True):
@@ -120,7 +119,7 @@ def build_cntnr_img(client, img_name, dockf_path):
         sys.exit()
     else:
         print()
-        print('[Validating agent image:]')
+        print('[Validating agent image]')
         try:
             client.images.get(img_name)
         except docker.errors.ImageNotFound:
@@ -144,15 +143,18 @@ def main():
     conf_list = listdir(conf_dir)
 
     # docker init
+    dockf_path = path.join(
+        '/', 'home', 'ubuntu')
     client = docker.DockerClient(
         base_url='unix://var/run/docker.sock', timeout=10)
 
-    # validate image
-    img_name = 'test'
+    # validate/(build) image
+    img_name = 'agnt_img'
     try:
         client.images.get(img_name)
     except docker.errors.ImageNotFound:
-        build_cntnr_img(client, img_name, work_dir)
+        # build image if not present
+        build_cntnr_img(client, img_name, dockf_path)
 
     # setup network
     net_name = 'agent_net'
@@ -174,6 +176,7 @@ def main():
                           sut,
                           agnt_net,
                           net_name,
+                          img_name,
                           idx)
         except Exception as error:
             print(
