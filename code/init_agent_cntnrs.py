@@ -70,14 +70,12 @@ class InitAgent:
             net_config = self.create_net_config()
             cntnr = self.create_container(net_config)
 
-        # logs = cntnr.logs(stream=True)
-
         # start container
         try:
             self.client.api.start(container=cntnr.get('Id'))
         except docker.errors.APIError as error:
             print(
-                '  - Unable to start agent for: %s' % self.sut)
+                ' # unable to start agent for: %s' % self.sut)
             print('    e: %s' % error)
             print('  -----------------------')
         else:
@@ -134,6 +132,11 @@ def create_cntnr_vol():
     pass
 
 
+def recreate_cntnrs():
+    # add arg to force recreation of containers
+    pass
+
+
 def main():
     # base dir of tf-agent
     work_dir = path.join(
@@ -180,15 +183,13 @@ def main():
                           idx)
         except Exception as error:
             print(
-                ' # Unable to start agent for: %s' % sut)
+                ' # unable to start agent for: %s' % sut)
             print('  e: %s' % error)
             print(' -----------------------')
 
         if idx == (len(conf_list) + 1):  # last sut
             # stop root logging handlers
             print('==============================')
-
-# add arg to force recreation of containers
 
 
 if __name__ == '__main__':
