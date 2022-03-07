@@ -117,8 +117,8 @@ def build_cntnr_img(client, img_name, dockf_path):
                                      nocache=True,
                                      rm=True,
                                      decode=True):
-
             line = str(line.get('stream')).rstrip('\n')
+
             if line != 'None':
                 print('%s' % line)
 
@@ -127,7 +127,7 @@ def build_cntnr_img(client, img_name, dockf_path):
     try:
         stream_build()
     except docker.errors.BuildError:
-        print(' ## unable to build agent image!')
+        print(' # unable to build agent image!')
         sys.exit()
     else:
         print()
@@ -135,7 +135,7 @@ def build_cntnr_img(client, img_name, dockf_path):
         try:
             client.images.get(img_name)
         except docker.errors.ImageNotFound:
-            print(' ## agent image not found!')
+            print(' # agent image not found!')
             sys.exit()
         else:  # just in case
             print(' * agent image present')
