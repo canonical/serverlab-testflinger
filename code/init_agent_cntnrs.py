@@ -2,7 +2,8 @@
 
 # add healthcheck (low level api)
 
-from os import path, listdir
+from pathlib import Path, PurePath
+from os import listdir
 import docker
 import sys
 # from pudb import set_trace; set_trace()
@@ -14,16 +15,16 @@ class InitAgent:
             self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip):
         self.client = client
         self.sut_conf = sut_conf
-        self.sut = path.splitext(sut_conf)[0]
+        self.sut = PurePath(sut_conf).stem
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
         self.agnt_ip = '10.172.15.%i' % agnt_ip
         self.command = 'bash'
-        # self.entrypoint = path.join(
+        # self.entrypoint = PurePath(
         #     '/', 'opt', 'agnt_entrypt.py')
         self.dsock = '/var/run/docker.sock'
-        # self.log_dir = path.join(
+        # self.log_dir = PurePath(
         #     '/', 'data', 'testflinger-agent')
         self.init_agent_cntnr()
 
@@ -36,11 +37,12 @@ class InitAgent:
         return net_config
 
     def create_container(self, net_config):
-        # common parameters
+        # refactor with pathlib?
         src_conf_path = '/home/ubuntu/sut/%s' % self.sut_conf
         dst_conf_path = '/conf/%s' % self.sut_conf
         src_log_path = '/var/log/sut-agent/%s.log' % self.sut
         dst_log_path = '/var/log/%s.log' % self.sut
+        # common parameters
         host_config = self.client.api.create_host_config(
             privileged=True,
             init=True,
@@ -153,15 +155,15 @@ def recreate_cntnrs():
 
 def main():
     # base dir of tf-agent
-    work_dir = path.join(
-        '/', 'home', 'ubuntu')
+    work_dir = PurePath('/', 'home', 'ubuntu')
+    log_dir = PurePath('/', 'var', 'log', 'sut-agent')
     # config dir of sut confs
-    conf_dir = path.join(work_dir, 'sut')
+    conf_dir = PurePath(work_dir, 'sut')
+    # conf_list = list(Path(conf_dir).iterdir())
     conf_list = listdir(conf_dir)
 
     # docker init
-    dockf_path = path.join(
-        '/', 'home', 'ubuntu')
+    dockf_path = PurePath('/', 'home', 'ubuntu')
     client = docker.DockerClient(
         base_url='unix://var/run/docker.sock', timeout=10)
 
@@ -183,10 +185,14 @@ def main():
     print('\n==============================')
     print('[Loading agent containers]')
 
+    # iterate over agent conf dir to init agent cntnrs
     for idx, sut_conf in enumerate(conf_list):
         # agnt ip offset
         idx = idx + 2
-        sut = path.splitext(sut_conf)[0]
+        sut = PurePath(sut_conf).stem
+        # touch log file
+        log_f = PurePath(log_dir, sut).with_suffix('.log')
+        Path(log_f).touch()
 
         try:
             _ = InitAgent(client,
