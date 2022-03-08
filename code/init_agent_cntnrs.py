@@ -3,7 +3,7 @@
 # add healthcheck (low level api)
 
 from pathlib import Path, PurePath
-from os import listdir
+from os import listdir, path
 import docker
 import sys
 # from pudb import set_trace; set_trace()
@@ -24,8 +24,6 @@ class InitAgent:
         # self.entrypoint = PurePath(
         #     '/', 'opt', 'agnt_entrypt.py')
         self.dsock = '/var/run/docker.sock'
-        # self.log_dir = PurePath(
-        #     '/', 'data', 'testflinger-agent')
         self.init_agent_cntnr()
 
     def create_net_config(self):
@@ -115,7 +113,7 @@ def init_network(client, net_name):
 def build_cntnr_img(client, img_name, dockf_path):
     def stream_build():
         for line in client.api.build(path=dockf_path,
-                                     tag='agnt_img',
+                                     tag='agnt_img:latest',
                                      nocache=True,
                                      rm=True,
                                      decode=True):
@@ -163,7 +161,8 @@ def main():
     conf_list = listdir(conf_dir)
 
     # docker init
-    dockf_path = PurePath('/', 'home', 'ubuntu')
+    # dockf_path = PurePath('/', 'home', 'ubuntu')
+    dockf_path = path.join('/', 'home', 'ubuntu')
     client = docker.DockerClient(
         base_url='unix://var/run/docker.sock', timeout=10)
 
