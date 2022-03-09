@@ -61,9 +61,9 @@ class LogAgent(Thread):
         self.log_level = log_level
         self.pipe_logger = self.config_pipe_logging()
         # max c3 reply time
-        self.c3_timeout = 600  # seconds
+        self.c3_timeout = 2  # seconds
         self.c3_url = (
-            'https://certification.canonical.com')
+            'https://certification.canonical.com/submissions')
         # mqtt setup
         self.mqtt_broker = '10.245.128.14'
         self.status_topic = '%s/agent' % sut

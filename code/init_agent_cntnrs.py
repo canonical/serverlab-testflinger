@@ -20,7 +20,8 @@ class InitAgent:
         self.net_name = net_name
         self.img_name = img_name
         # self.agnt_ip = '10.245.130.%i' % agnt_ip
-        self.agnt_ip = '10.172.15.%i' % agnt_ip
+        # self.agnt_ip = '10.172.15.%i' % agnt_ip
+        self.agnt_ip = '172.20.0.%i' % agnt_ip
         self.command = 'bash'
         # self.entrypoint = PurePath(
         #     '/', 'opt', 'agnt_entrypt.py')
@@ -44,7 +45,7 @@ class InitAgent:
         # common parameters
         host_config = self.client.api.create_host_config(
             privileged=True,
-            init=True,
+            # init=True,
             mounts=[
                 docker.types.Mount(type='bind',
                                    target=self.dsock,
@@ -99,8 +100,9 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.172.15.0/24',
-        gateway='10.172.15.1')
+        # subnet='10.172.15.0/24',
+        # gateway='10.172.15.1')
+        subnet='172.20.0.0/24')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
