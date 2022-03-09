@@ -33,7 +33,7 @@ class InitAgent:
         return net_config
 
     def create_container(self, net_config):
-        # refactor with pathlib?
+        # refactor with pathlib
         dsock = '/var/run/docker.sock'
         # init
         init_file = '01_start_agent.sh'
@@ -52,11 +52,10 @@ class InitAgent:
         src_centrypt_path = '/data/docker/%s' % cntnr_entrypt
         dst_centrypt_path = '/opt/%s' % cntnr_entrypt
         # agnt conf
-        src_conf_path = '/home/ubuntu/sut/%s' % self.sut_conf
+        src_conf_path = '/data/testflinger-agent/sut/%s' % self.sut_conf
         dst_conf_path = '/data/testflinger-agent/sut/%s' % self.sut_conf
         # agnt snappy
-        # src_snpy_path = '/data/snappy-device-agents/sut/%s' % self.sut_snpy
-        src_snpy_path = '/home/ubuntu/snap/%s' % self.sut_snpy
+        src_snpy_path = '/data/snappy-device-agents/sut/%s' % self.sut_snpy
         dst_snpy_path = '/data/snappy-device-agents/sut/%s' % self.sut_snpy
         # log
         src_log_path = '/var/log/sut-agent/%s.log' % self.sut
@@ -200,11 +199,10 @@ def recreate_cntnrs():
 
 
 def main():
-    # base dir of tf-agent
-    work_dir = PurePath('/', 'home', 'ubuntu')
-    log_dir = PurePath('/', 'var', 'log', 'sut-agent')
     # config dir of sut confs
-    conf_dir = PurePath(work_dir, 'sut')
+    conf_dir = PurePath(
+        '/', 'data', 'testflinger-agent', 'sut')
+    log_dir = PurePath('/', 'var', 'log', 'sut-agent')
     # conf_list = list(Path(conf_dir).iterdir())
     conf_list = listdir(conf_dir)  # for enumerate
 

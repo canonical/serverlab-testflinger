@@ -31,11 +31,9 @@ echo "- User: ubuntu"
                           --mport $MAAS_PORT
 echo
 
-echo
 echo "###########################"
 echo
 echo "Starting init.d and /etc/my_init services..."
-
 # start init
 echo
 echo "Starting my_initd..."
