@@ -343,7 +343,7 @@ def main():
     print('\n=========================')
     print('Loading SUT Agent(s):')
 
-    for idx, sut_conf in enumerate(conf_list):
+    for sut_conf in conf_list:
         sut = load_sut_agent(sut_conf,
                              work_dir,
                              conf_dir,
@@ -351,10 +351,9 @@ def main():
                              log_level)
         root_logger.debug('  * %s', sut)
 
-        if idx == (len(conf_list) - 1):  # last sut
-            # stop root logging handlers
-            print('=====================\n')
-            root_logger.handlers.clear()
+    # stop root logging handlers
+    print('=====================\n')
+    root_logger.handlers.clear()
 
 
 if __name__ == '__main__':

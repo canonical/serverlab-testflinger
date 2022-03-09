@@ -45,7 +45,7 @@ class InitAgent:
         # common parameters
         host_config = self.client.api.create_host_config(
             privileged=True,
-            # init=True,
+            init=True,
             mounts=[
                 docker.types.Mount(type='bind',
                                    target=self.dsock,
@@ -209,8 +209,7 @@ def main():
             print('  e: %s' % error)
             print(' -----------------------')
 
-        if idx == (len(conf_list) + 1):  # last sut
-            print('==============================')
+    print('==============================')
 
 
 if __name__ == '__main__':

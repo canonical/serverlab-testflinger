@@ -245,7 +245,6 @@ def main():
     """Load specified SUT agents."""
     # config dir of sut confs
     conf_dir = Path('/', 'conf')
-    # logging config
     log_dir = PurePath('/', 'var', 'log')
     # move to cntnr name?
     hostname = platform.node()
