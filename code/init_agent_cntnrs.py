@@ -38,7 +38,7 @@ class InitAgent:
         # init
         init_file = '01_start_agent.sh'
         src_init_path = '/data/docker/%s' % init_file
-        dst_init_path = '/opt/%s' % init_file
+        dst_init_path = '/etc/my_init.d/%s' % init_file
         # ssh export
         essh_file = 'export_ssh_pubkey.py'
         src_essh_path = '/data/docker/%s' % essh_file
