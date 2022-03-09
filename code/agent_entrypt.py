@@ -244,7 +244,7 @@ def load_sut_agent(conf_path, log_dir):
 def main():
     """Load specified SUT agents."""
     # config dir of sut confs
-    conf_dir = Path('/', 'conf')
+    conf_dir = Path('/', 'data', 'testflinger-agent', 'sut')
     log_dir = PurePath('/', 'var', 'log')
     # move to cntnr name?
     hostname = platform.node()
