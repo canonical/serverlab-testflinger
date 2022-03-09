@@ -19,6 +19,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
+        # self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.agnt_ip = '10.172.15.%i' % agnt_ip
         self.command = 'bash'
         # self.entrypoint = PurePath(
@@ -113,7 +114,7 @@ def init_network(client, net_name):
 def build_cntnr_img(client, img_name, dockf_path):
     def stream_build():
         for line in client.api.build(path=dockf_path,
-                                     tag='agnt_img:latest',
+                                     tag=img_name,
                                      nocache=True,
                                      rm=True,
                                      decode=True):
@@ -167,7 +168,7 @@ def main():
         base_url='unix://var/run/docker.sock', timeout=10)
 
     # validate/(build) image
-    img_name = 'agnt_img'
+    img_name = 'agnt_img:latest'
     try:
         client.images.get(img_name)
     except docker.errors.ImageNotFound:
@@ -181,13 +182,13 @@ def main():
     except docker.errors.NotFound:
         agnt_net = init_network(client, net_name)
 
-    print('\n==============================')
+    print('==============================')
     print('[Loading agent containers]')
 
     # iterate over agent conf dir to init agent cntnrs
     for idx, sut_conf in enumerate(conf_list):
         # agnt ip offset
-        idx = idx + 2
+        idx = idx + 2  # first ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
@@ -207,7 +208,6 @@ def main():
             print(' -----------------------')
 
         if idx == (len(conf_list) + 1):  # last sut
-            # stop root logging handlers
             print('==============================')
 
 

@@ -24,17 +24,17 @@
 
 from logging.handlers import RotatingFileHandler
 from threading import Thread, Timer
-from pathlib import PurePath
-from os import listdir, uname
+from pathlib import PurePath, Path
 import paho.mqtt.client as mqtt
 import subprocess
+import platform
 import requests
 import logging
-import shelx
+import shlex
 import time
 import sys
 import re
-# from pudb import set_trace; set_trace()
+# from pudb import set_trace
 
 
 class LoopTimer(Timer):
@@ -55,9 +55,8 @@ class LogAgent(Thread):
         self.pipe = pipe
         self.sut = sut
         self.log_path = log_path
-        self.pipe_logger = self.config_pipe_logging()
         # max c3 reply time
-        self.c3_timeout = 2  # seconds
+        self.c3_timeout = 300  # seconds
         self.c3_url = (
             'https://certification.canonical.com/submissions')
         # mqtt setup
@@ -67,41 +66,35 @@ class LogAgent(Thread):
         self.output_topic = '%s/output' % sut
         self.submit_topic = '%s/last_job' % sut
         self.mqtt_client = mqtt.Client(sut)
+        # init logging
+        self.config_pipe_logging()
+        # setup mqtt
         self.init_mqtt()
-        # aux ops
+        # init aux ops
         self.start_aux_threads()
-        # wait for root loggers to clear
-        time.sleep(3)
+        # start logging
         self.parse_pipe()
 
     def config_pipe_logging(self):
         """Configure loggers."""
-        logger = logging.getLogger(self.sut)
-        # stdout output in debug mode
-        stream_formatter = logging.Formatter(
-            '>> %(name)s << \n   %(message)s')
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(logging.INFO)
         file_formatter = logging.Formatter(
             '%(message)s')
-
-        # init logging handlers
-        stream_handler = logging.StreamHandler(sys.stdout)
         file_handler = RotatingFileHandler(
             self.log_path,
             mode='a',
             backupCount=2,
             maxBytes=100000000)  # 100mb
-        # set logging levels
-        stream_handler.setLevel(logging.WARNING)
-        file_handler.setLevel(logging.DEBUG)
-        # assign formatters
-        stream_handler.setFormatter(stream_formatter)
         file_handler.setFormatter(file_formatter)
-
-        # add handlers to logger
-        logger.addHandler(stream_handler)
+        file_handler.setLevel(logging.DEBUG)
+        # setup base/root logger
+        logger = logging.getLogger()
+        # set root logging level
+        logger.setLevel(logging.NOTSET)
+        # add handlers for out, err
+        logger.addHandler(stdout_handler)
         logger.addHandler(file_handler)
-
-        return logger
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
@@ -176,7 +169,7 @@ class LogAgent(Thread):
 
         message = 'status: %s | resp_t: %.2f sec' % (status[0],
                                                      status[1])
-        self.pipe_logger.debug('  [ C3 %s ]', message)
+        logging.debug('[ C3 %s ]', message)
 
         try:
             self.mqtt_client.publish(self.c3_topic,
@@ -195,7 +188,7 @@ class LogAgent(Thread):
         submit_line = re.compile('Starting\\sjob')
 
         for line in self.read_pipe():
-            self.pipe_logger.info(line)
+            logging.info(line)
 
             # parse for mqtt
             job_match = submit_line.search(line)
@@ -217,15 +210,14 @@ class LogAgent(Thread):
                     pass
 
 
-def load_sut_agent(sut_conf, conf_dir, log_dir):
+def load_sut_agent(conf_path, log_dir):
     """Load specified SUT agent."""
-    conf_path = PurePath(conf_dir, sut_conf)
-    sut = PurePath(sut_conf).stem
-    log_path = PurePath(
+    sut = PurePath(conf_path).stem
+    log_path = Path(
         log_dir, sut).with_suffix('.log')
     # use string for shell=True
     # cmd = 'testflinger-agent -c %s' % conf_path
-    cmd = shelx.split(
+    cmd = shlex.split(
         'testflinger-agent -c %s' % conf_path)
 
     try:
@@ -238,7 +230,7 @@ def load_sut_agent(sut_conf, conf_dir, log_dir):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
     except OSError:
-        print('  - unable to start %s agent!' % sut)
+        print('# unable to start %s agent!' % sut)
     else:
         log_thread = Thread(target=LogAgent,
                             args=(proc.stdout,
@@ -252,19 +244,20 @@ def load_sut_agent(sut_conf, conf_dir, log_dir):
 def main():
     """Load specified SUT agents."""
     # config dir of sut confs
-    conf_dir = PurePath('/', 'conf')
-    conf_list = listdir(conf_dir)
+    conf_dir = Path('/', 'conf')
     # logging config
     log_dir = PurePath('/', 'var', 'log')
     # move to cntnr name?
-    hostname = uname().getnodename
+    hostname = platform.node()
+    conf_path = PurePath(
+        conf_dir, hostname).with_suffix('.conf')
 
-    for sut_conf in conf_list:
-        if (sut_conf.startswith(
-                hostname) and sut_conf.endswith('.conf')):
-            load_sut_agent(sut_conf,
-                           conf_dir,
-                           log_dir)
+    for file in conf_dir.iterdir():
+        if file == conf_path:
+            load_sut_agent(conf_path, log_dir)
+            break
+    else:
+        print('# agent conf file not found!')
 
 
 if __name__ == '__main__':
