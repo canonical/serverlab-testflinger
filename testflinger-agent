@@ -147,19 +147,27 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 # RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
 # RUN chown -R root:root /var/log/netdata
 
-# copy entrypoint file 
+# copy entrypoint file
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
-# copy tf-agent harness
-COPY ./code/start_sut_agents.py /opt/start_sut_agents.py
-RUN chmod 755 /opt/start_sut_agents.py
+# copy cntnr rscrcs
+RUN mkdir /data/docker
+COPY ./code/init_agent_cntnrs.py /data/docker/init_agent_cntnrs.py
+COPY ./code/agent_entrypt.py
+COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
+COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
+COPY ./code/start_dockerd.sh /opt/start_dockerd.sh
+COPY ./testflinger-agent_cntnr /data/docker/Dockerfile
+RUN chmod 755 /data/docker/init_agent_cntnrs.py \
+  /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
+  /opt/start_dockerd.sh
 
-# copy agent service file
-COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
-
-# copy agent service file
-COPY code/02_netdata.sh /etc/my_init.d/02_netdata.sh
+# copy agent service files
+COPY code/01_run_dockerd.sh /etc/my_init.d/01_run_dockerd.sh
+COPY code/02_run_sut_agents.sh /etc/my_init.d/02_run_sut_agents.sh
+RUN chmod 755 /etc/my_init.d/*
+# COPY code/03_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd

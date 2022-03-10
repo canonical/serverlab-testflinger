@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 
+# TODO
 # add healthcheck (low level api)
+# add args to init specific conf file
+# add
 
 from pathlib import Path, PurePath
-from os import listdir, path
+from os import listdir
 import docker
+import time
 import sys
 # from pudb import set_trace; set_trace()
 
@@ -33,37 +37,49 @@ class InitAgent:
         return net_config
 
     def create_container(self, net_config):
-        # refactor with pathlib
-        dsock = '/var/run/docker.sock'
+        # paths
+        dsock = PurePath(
+            '/', 'var', 'run', 'docker').with_suffix('.sock')
         # init
-        init_file = '01_start_agent.sh'
-        src_init_path = '/data/docker/%s' % init_file
-        dst_init_path = '/etc/my_init.d/%s' % init_file
+        init_file = '01_start_agent'  # .sh
+        src_init_path = PurePath(
+            '/', 'data', 'docker', init_file).with_suffix('.sh')
+        dst_init_path = PurePath(
+            '/', 'etc', 'my_init.d', init_file).with_suffix('.sh')
         # ssh export
-        essh_file = 'export_ssh_pubkey.py'
-        src_essh_path = '/data/docker/%s' % essh_file
-        dst_essh_path = '/opt/%s' % essh_file
+        essh_file = 'agnt_export_ssh_pubkey'  # .py
+        src_essh_path = PurePath(
+            '/', 'data', 'docker', essh_file).with_suffix('.py')
+        dst_essh_path = PurePath(
+            '/', 'opt', essh_file).with_suffix('.py')
         # entrypoints
-        command = ['/opt/cntnr_entrypt.sh']
-        agnt_entrypt = 'agent_entrypt.py'
-        cntnr_entrypt = 'cntnr_entrypt.sh'
-        src_aetrypt_path = '/data/docker/%s' % agnt_entrypt
-        dst_aentrypt_path = '/opt/%s' % agnt_entrypt
-        src_centrypt_path = '/data/docker/%s' % cntnr_entrypt
-        dst_centrypt_path = '/opt/%s' % cntnr_entrypt
+        cmd_path = PurePath(
+            '/', 'opt', 'cntnr_entrypt').with_suffix('.sh')
+        command = [cmd_path]
+        src_aetrypt_path = PurePath(
+            '/', 'data', 'docker', 'agent_entrypt').with_suffix('.py')
+        dst_aentrypt_path = PurePath(
+            '/', 'opt', 'agent_entrypt').with_suffix('.py')
+        src_centrypt_path = PurePath(
+            '/', 'data', 'docker', 'cntnr_entrypt').with_suffix('.sh')
+        dst_centrypt_path = PurePath(
+            '/', 'opt', 'cntnr_entrypt').with_suffix('.py')
         # agnt conf
-        src_conf_path = '/data/testflinger-agent/sut/%s' % self.sut_conf
-        dst_conf_path = '/data/testflinger-agent/sut/%s' % self.sut_conf
+        conf_path = PurePath(
+            '/', 'data', 'testflinger-agent', 'sut', self.sut_conf)
         # agnt snappy
-        src_snpy_path = '/data/snappy-device-agents/sut/%s' % self.sut_snpy
-        dst_snpy_path = '/data/snappy-device-agents/sut/%s' % self.sut_snpy
+        snpy_path = PurePath(
+            '/', 'data', 'snappy-device-agents', 'sut', self.sut_snpy)
         # log
-        src_log_path = '/var/log/sut-agent/%s.log' % self.sut
-        dst_log_path = '/var/log/%s.log' % self.sut
+        src_log_path = PurePath(
+            '/', 'var', 'log', 'sut-agent', self.sut).with_suffix('.log')
+        dst_log_path = PurePath(
+            '/', 'var', 'log', self.sut).with_suffix('.log')
+        # end paths
         # common parameters
         host_config = self.client.api.create_host_config(
+            restart_policy={'Name': 'always'},
             privileged=True,
-            init=True,
             mounts=[
                 # docker socket
                 docker.types.Mount(type='bind',
@@ -92,21 +108,19 @@ class InitAgent:
                                    read_only=True),
                 # agnt conf
                 docker.types.Mount(type='bind',
-                                   target=dst_conf_path,
-                                   source=src_conf_path,
+                                   target=conf_path,
+                                   source=conf_path,
                                    read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
-                                   target=dst_snpy_path,
-                                   source=src_snpy_path,
+                                   target=snpy_path,
+                                   source=snpy_path,
                                    read_only=True),
                 # log
                 docker.types.Mount(type='bind',
                                    target=dst_log_path,
                                    source=src_log_path,
-                                   read_only=False)],
-
-            restart_policy={'Name': 'always'})
+                                   read_only=False)])
 
         # try:
         cntnr = self.client.api.create_container(
@@ -131,6 +145,8 @@ class InitAgent:
         except docker.errors.NotFound:
             net_config = self.create_net_config()
             cntnr = self.create_container(net_config)
+            # throttle calls
+            time.sleep(1)
 
         # start container
         try:
@@ -207,10 +223,10 @@ def main():
     conf_list = listdir(conf_dir)  # for enumerate
 
     # docker init
-    # dockf_path = PurePath('/', 'home', 'ubuntu')
-    dockf_path = path.join('/', 'home', 'ubuntu')
+    dockf_path = PurePath('/', 'data', 'docker')
+    # dockf_path = path.join('/', 'data', 'docker')
     client = docker.DockerClient(
-        base_url='unix://var/run/docker.sock', timeout=10)
+        base_url='unix://var/run/docker.sock', timeout=30)
 
     # validate/(build) image
     img_name = 'agnt_img:latest'

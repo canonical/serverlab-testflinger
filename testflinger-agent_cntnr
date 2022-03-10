@@ -49,24 +49,20 @@ RUN useradd -ms /bin/bash ubuntu
 # add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# prepare ssh key ops
-COPY .ssh/authorized_keys /tmp/authorized_keys
-COPY ./code/export_ssh_pubkey.py /opt/export_ssh_pubkey.py
-
 # gen ssh keys, update pubkey, import auth_keys
 USER ubuntu
 # generate ssh key and insert real hostname into pubkey
 RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/ubuntu/.ssh/id_rsa.pub
 # import auth_keys
-RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
+# RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
 
 # root must be last
 USER root
 RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
   && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /root/.ssh/id_rsa.pub
-RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
-  && rm -f /tmp/authorized_keys
+# RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
+#   && rm -f /tmp/authorized_keys
 
 # facilitate logging
 RUN mkdir -p /var/log/testflinger \
@@ -79,23 +75,12 @@ RUN git init \
   && git fetch origin \
   && git checkout -b master --track origin/master
 
-# copy tf-agent config files
-COPY ./code/testflinger-agent.conf /data/testflinger-agent
-
-# copy tf-agent sut files
-RUN mkdir ./sut/
-COPY ./sut/agent/* /data/testflinger-agent/sut/
-
 # clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
 RUN git init \
   && git remote add origin https://git.launchpad.net/snappy-device-agents \
   && git fetch origin \
   && git checkout -b master --track origin/master
-
-# copy snappy-agent sut files
-RUN mkdir ./sut/
-COPY ./sut/snappy/* /data/snappy-device-agents/sut/
 
 # run tf-agent setup
 # USER ubuntu
@@ -121,16 +106,6 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 # RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
 # RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
 # RUN chown -R root:root /var/log/netdata
-
-# # copy entrypoint file 
-# COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
-# RUN chmod 755 /opt/tf-entrypoint.sh
-
-# # copy agent service file
-# COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
-
-# # copy agent service file
-# COPY code/02_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:ch4ng3m3" | chpasswd

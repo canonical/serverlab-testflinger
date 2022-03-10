@@ -35,10 +35,6 @@ echo
 
 echo
 echo "###########################"
-echo "Starting Docker daemon"
-/usr/bin/docker &
-echo
-echo "###########################"
 echo
 echo "Starting init.d and /etc/my_init services..."
 
