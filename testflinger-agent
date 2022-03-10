@@ -154,7 +154,7 @@ RUN chmod 755 /opt/tf-entrypoint.sh
 # copy cntnr rscrcs
 RUN mkdir /data/docker
 COPY ./code/init_agent_cntnrs.py /data/docker/init_agent_cntnrs.py
-COPY ./code/agent_entrypt.py
+COPY ./code/agent_entrypt.py /data/docker/agent_entrypt.py
 COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
 COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
 COPY ./code/start_dockerd.sh /opt/start_dockerd.sh
