@@ -19,7 +19,7 @@ chown ubuntu:ubuntu /home/ubuntu/.maascli.db
 echo
 echo "Exporting ssh pubkeys..."
 echo "- User: root"
-/opt/agnt_export_ssh_pubkey.py --path /root/ \
+/opt/export_ssh_pubkey_agnt.py --path /root/ \
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT

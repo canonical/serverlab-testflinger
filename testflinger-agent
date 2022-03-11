@@ -177,7 +177,8 @@ COPY ./code/daemon.json  /etc/docker/daemon.json
 COPY ./code/01_start_agent.sh /data/docker/01_start_agent.sh
 RUN chmod 755 /opt/init_agent_cntnrs.py \
   /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
-  /opt/start_dckrd.sh /data/docker/agent_entrypt.py
+  /opt/start_dckrd.sh /data/docker/agent_entrypt.py \
+  /data/docker/01_start_agent.sh
 
 # docker setup
 RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
