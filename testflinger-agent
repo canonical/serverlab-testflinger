@@ -84,10 +84,10 @@ RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
 # import auth_keys
 RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
 
-USER testflinger
-RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
-  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/testflinger/.ssh/id_rsa.pub
-RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
+# USER testflinger
+# RUN ssh-keygen -t rsa -N '' -f /home/testflinger/.ssh/id_rsa \
+#   && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/testflinger/.ssh/id_rsa.pub
+# RUN cat /tmp/authorized_keys >> /home/testflinger/.ssh/authorized_keys
 
 # root must be last
 USER root
@@ -185,6 +185,7 @@ RUN touch /var/run/docker.sock && chmod 666 /var/run/docker.sock
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
+# RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
