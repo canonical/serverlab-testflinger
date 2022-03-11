@@ -147,7 +147,7 @@ class InitAgent:
 
         # start container
         try:
-            self.client.api.start(container=cntnr.get('Id'))
+            self.client.api.start(container=cntnr.id)
         except docker.errors.APIError as error:
             print(
                 ' # unable to start agent for: %s' % self.sut)
@@ -177,7 +177,8 @@ def build_cntnr_img(client, img_name, dockf_dir):
                                      nocache=True,
                                      rm=True,
                                      decode=True):
-            line = fspath(line.get('stream')).rstrip('\n')
+            line = fspath(
+                line.get('stream')).rstrip('\n')
 
             if line != 'None':
                 print('%s' % line)

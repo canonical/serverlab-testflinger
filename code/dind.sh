@@ -7,7 +7,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 sudo apt update
 apt-cache policy docker-ce
-sudo apt install docker-ce
+sudo apt install docker-ce=5:20.10.2~3-0~ubuntu-focal
 # sudo apt install docker-ce python3-docker python3-dockerpty
 sudo usermod -aG docker ${USER}
 # logout / login
@@ -22,7 +22,7 @@ sudo vim /etc/docker/daemon.json
     "storage-driver": "vfs",
     "dns": ["10.1.10.3", "10.245.128.4"]
 }
-sudo pkill -f dockerd && sudo dockerd
+pkill -f dockerd && dockerd
 --------------------------------------------------------
 mkdir ~/portainer
 docker pull portainer/portainer

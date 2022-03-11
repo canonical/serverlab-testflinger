@@ -133,7 +133,7 @@ class LogAgent(Thread):
         status_timer.daemon = True
 
         # c3 request thread
-        req_interval = 60.0  # seconds
+        req_interval = 600.0  # seconds
         req_timer = LoopTimer(req_interval,
                               self.request_c3)
         req_timer.daemon = True

@@ -12,11 +12,19 @@ ARG testflinger_scr
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
+# add docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
 # install deps & cleanup
 RUN apt-get update \
+  && apt-cache policy docker-ce \
   && apt-get install -y \
     --no-install-recommends \
+    ca-certificates \
+    gpg \
+    lsb-release \
+    docker-ce \
     bash \
     bash-completion \
     sudo \
@@ -53,10 +61,9 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip3 install requests_oauthlib psutil setproctitle paho-mqtt docker
 
-# add ubuntu and testflinger users
+# add ubuntu user
 RUN useradd -ms /bin/bash ubuntu \
-  && useradd -ms /bin/bash testflinger \
-  && usermod -aG testflinger ubuntu
+  && usermod -aG docker ubuntu
 
 # add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -151,23 +158,30 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
+# copy agent service files
+COPY ./code/01_run_dckrd.sh /etc/my_init.d/01_run_dckrd.sh
+COPY ./code/02_run_sut_agents.sh /etc/my_init.d/02_run_sut_agents.sh
+COPY ./code/03_run_portainer.sh /etc/my_init.d/03_run_portainer.sh
+RUN ./chmod 755 /etc/my_init.d/*
+# COPY code/04_netdata.sh /etc/my_init.d/02_netdata.sh
+
 # copy cntnr rscrcs
-RUN mkdir /data/docker
+RUN mkdir /data/docker && mkidr /
 COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./code/agent_entrypt.py /data/docker/agent_entrypt.py
 COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
 COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
-COPY ./code/start_dockerd.sh /opt/start_dockerd.sh
+COPY ./code/start_dckrd.sh /opt/start_dckrd.sh
 COPY ./testflinger-agent_cntnr /data/docker/Dockerfile
+COPY ./code/daemon.json  /etc/docker/daemon.json
 RUN chmod 755 /data/docker/init_agent_cntnrs.py \
   /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
   /opt/start_dockerd.sh /opt/agent_entrypt.py
 
-# copy agent service files
-COPY code/01_run_dockerd.sh /etc/my_init.d/01_run_dockerd.sh
-COPY code/02_run_sut_agents.sh /etc/my_init.d/02_run_sut_agents.sh
-RUN chmod 755 /etc/my_init.d/*
-# COPY code/03_netdata.sh /etc/my_init.d/02_netdata.sh
+# docker setup
+RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+RUN touch /var/run/docker.sock && chmod 666 /var/run/docker.sock
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
