@@ -177,7 +177,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
                                      nocache=True,
                                      rm=True,
                                      decode=True):
-            line = fspath(
+            line = str(
                 line.get('stream')).rstrip('\n')
 
             if line != 'None':
