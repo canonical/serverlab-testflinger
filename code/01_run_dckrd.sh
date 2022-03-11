@@ -8,6 +8,7 @@ env KILL_PROCESS_TIMEOUT=300
 env KILL_ALL_PROCESSES_TIMEOUT=300
 
 if ! pgrep containerd
+then
     if ! pgrep dockerd
     then
         FILE=/var/run/docker.pid
@@ -17,8 +18,8 @@ if ! pgrep containerd
             rm $FILE
     fi
 
-then
-    /opt/start_dckrd.sh &
+    /usr/bin/dockerd --icc=true --log-level=info 2>&1 &
+    # /opt/start_dckrd.sh &
 else
     echo '* dockerd running...'
 fi
