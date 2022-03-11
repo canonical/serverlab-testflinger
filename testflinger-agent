@@ -159,7 +159,7 @@ COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
 RUN chmod 755 /opt/tf-entrypoint.sh
 
 # copy agent service files
-COPY ./code/01_run_dockerd.sh /etc/my_init.d/01_run_dockerd.sh
+COPY ./code/01_run_dckrd.sh /etc/my_init.d/01_run_dckrd.sh
 COPY ./code/02_run_sut_agents.sh /etc/my_init.d/02_run_sut_agents.sh
 COPY ./code/03_run_portainer.sh /etc/my_init.d/03_run_portainer.sh
 RUN ./chmod 755 /etc/my_init.d/*
@@ -171,7 +171,7 @@ COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./code/agent_entrypt.py /data/docker/agent_entrypt.py
 COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
 COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
-COPY ./code/start_dockerd.sh /opt/start_dockerd.sh
+COPY ./code/start_dckrd.sh /opt/start_dckrd.sh
 COPY ./testflinger-agent_cntnr /data/docker/Dockerfile
 COPY ./code/daemon.json  /etc/docker/daemon.json
 RUN chmod 755 /data/docker/init_agent_cntnrs.py \
