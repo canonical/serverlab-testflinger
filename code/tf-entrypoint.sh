@@ -14,9 +14,9 @@ echo "Logging into maas server..."
 
 echo "Replicating maas-cli db..."
 cp /root/.maascli.db /home/ubuntu/
-cp /root/.maascli.db /home/testflinger/
+# cp /root/.maascli.db /home/testflinger/
 chown ubuntu:ubuntu /home/ubuntu/.maascli.db
-chown testflinger:testflinger /home/testflinger/.maascli.db
+# chown testflinger:testflinger /home/testflinger/.maascli.db
 
 echo
 echo "Exporting ssh pubkeys..."
@@ -25,13 +25,13 @@ echo "- User: ubuntu"
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT
-echo
-echo "- User: testflinger"
-/opt/export_ssh_pubkey.py --path /home/testflinger/ \
-                          --mapi $MAAS_API_KEY \
-                          --mhost $MAAS_HOST \
-                          --mport $MAAS_PORT
-echo
+# echo
+# echo "- User: testflinger"
+# /opt/export_ssh_pubkey.py --path /home/testflinger/ \
+#                           --mapi $MAAS_API_KEY \
+#                           --mhost $MAAS_HOST \
+#                           --mport $MAAS_PORT
+# echo
 
 echo
 echo "###########################"
