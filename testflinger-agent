@@ -174,6 +174,7 @@ COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
 COPY ./code/start_dckrd.sh /opt/start_dckrd.sh
 COPY ./testflinger-agent_cntnr /data/docker/Dockerfile
 COPY ./code/daemon.json  /etc/docker/daemon.json
+COPY ./code/01_start_agent.sh /data/docker/01_start_agent.sh
 RUN chmod 755 /opt/init_agent_cntnrs.py \
   /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
   /opt/start_dckrd.sh /data/docker/agent_entrypt.py
