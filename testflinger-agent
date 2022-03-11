@@ -185,7 +185,6 @@ RUN touch /var/run/docker.sock && chmod 666 /var/run/docker.sock
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
-RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
