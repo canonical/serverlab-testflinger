@@ -6,7 +6,7 @@
 # add
 
 from pathlib import Path, PurePath
-from os import listdir
+from os import listdir, path, fspath
 import docker
 import time
 import sys
@@ -47,15 +47,12 @@ class InitAgent:
         dst_init_path = PurePath(
             '/', 'etc', 'my_init.d', init_file).with_suffix('.sh')
         # ssh export
-        essh_file = 'agnt_export_ssh_pubkey'  # .py
+        essh_file = 'export_ssh_pubkey_agnt'  # .py
         src_essh_path = PurePath(
             '/', 'data', 'docker', essh_file).with_suffix('.py')
         dst_essh_path = PurePath(
             '/', 'opt', essh_file).with_suffix('.py')
         # entrypoints
-        cmd_path = PurePath(
-            '/', 'opt', 'cntnr_entrypt').with_suffix('.sh')
-        command = [cmd_path]
         src_aetrypt_path = PurePath(
             '/', 'data', 'docker', 'agent_entrypt').with_suffix('.py')
         dst_aentrypt_path = PurePath(
@@ -63,7 +60,7 @@ class InitAgent:
         src_centrypt_path = PurePath(
             '/', 'data', 'docker', 'cntnr_entrypt').with_suffix('.sh')
         dst_centrypt_path = PurePath(
-            '/', 'opt', 'cntnr_entrypt').with_suffix('.py')
+            '/', 'opt', 'cntnr_entrypt').with_suffix('.sh')
         # agnt conf
         conf_path = PurePath(
             '/', 'data', 'testflinger-agent', 'sut', self.sut_conf)
@@ -83,43 +80,43 @@ class InitAgent:
             mounts=[
                 # docker socket
                 docker.types.Mount(type='bind',
-                                   target=dsock,
-                                   source=dsock,
+                                   target=fspath(dsock),
+                                   source=fspath(dsock),
                                    read_only=False),
                 # init
                 docker.types.Mount(type='bind',
-                                   target=dst_init_path,
-                                   source=src_init_path,
+                                   target=fspath(dst_init_path),
+                                   source=fspath(src_init_path),
                                    read_only=True),
                 # ssh export
                 docker.types.Mount(type='bind',
-                                   target=dst_essh_path,
-                                   source=src_essh_path,
+                                   target=fspath(dst_essh_path),
+                                   source=fspath(src_essh_path),
                                    read_only=True),
                 # agent entrypoint
                 docker.types.Mount(type='bind',
-                                   target=dst_aentrypt_path,
-                                   source=src_aetrypt_path,
+                                   target=fspath(dst_aentrypt_path),
+                                   source=fspath(src_aetrypt_path),
                                    read_only=True),
                 # cntnr entrypoint
                 docker.types.Mount(type='bind',
-                                   target=dst_centrypt_path,
-                                   source=src_centrypt_path,
+                                   target=fspath(dst_centrypt_path),
+                                   source=fspath(src_centrypt_path),
                                    read_only=True),
                 # agnt conf
                 docker.types.Mount(type='bind',
-                                   target=conf_path,
-                                   source=conf_path,
+                                   target=fspath(conf_path),
+                                   source=fspath(conf_path),
                                    read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
-                                   target=snpy_path,
-                                   source=snpy_path,
+                                   target=fspath(snpy_path),
+                                   source=fspath(snpy_path),
                                    read_only=True),
                 # log
                 docker.types.Mount(type='bind',
-                                   target=dst_log_path,
-                                   source=src_log_path,
+                                   target=fspath(dst_log_path),
+                                   source=fspath(src_log_path),
                                    read_only=False)])
 
         # try:
@@ -129,7 +126,7 @@ class InitAgent:
             hostname=self.sut,
             host_config=host_config,
             networking_config=net_config,
-            command=command,
+            command=[fspath(dst_centrypt_path)],
             domainname='maas',
             detach=True,
             tty=True)
@@ -173,14 +170,14 @@ def init_network(client, net_name):
     return agnt_net
 
 
-def build_cntnr_img(client, img_name, dockf_path):
+def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
-        for line in client.api.build(path=dockf_path,
+        for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
                                      rm=True,
                                      decode=True):
-            line = str(line.get('stream')).rstrip('\n')
+            line = fspath(line.get('stream')).rstrip('\n')
 
             if line != 'None':
                 print('%s' % line)
@@ -223,8 +220,8 @@ def main():
     conf_list = listdir(conf_dir)  # for enumerate
 
     # docker init
-    dockf_path = PurePath('/', 'data', 'docker')
-    # dockf_path = path.join('/', 'data', 'docker')
+    # need to use os.path
+    dockf_dir = path.join('/', 'data', 'docker')
     client = docker.DockerClient(
         base_url='unix://var/run/docker.sock', timeout=30)
 
@@ -234,7 +231,7 @@ def main():
         client.images.get(img_name)
     except docker.errors.ImageNotFound:
         # build image if not present
-        build_cntnr_img(client, img_name, dockf_path)
+        build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
     net_name = 'agent_net'

@@ -51,7 +51,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # link python3 bin
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-RUN pip3 install requests_oauthlib psutil setproctitle paho-mqtt
+RUN pip3 install requests_oauthlib psutil setproctitle paho-mqtt docker
 
 # add ubuntu and testflinger users
 RUN useradd -ms /bin/bash ubuntu \
@@ -153,7 +153,7 @@ RUN chmod 755 /opt/tf-entrypoint.sh
 
 # copy cntnr rscrcs
 RUN mkdir /data/docker
-COPY ./code/init_agent_cntnrs.py /data/docker/init_agent_cntnrs.py
+COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./code/agent_entrypt.py /data/docker/agent_entrypt.py
 COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
 COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
@@ -161,7 +161,7 @@ COPY ./code/start_dockerd.sh /opt/start_dockerd.sh
 COPY ./testflinger-agent_cntnr /data/docker/Dockerfile
 RUN chmod 755 /data/docker/init_agent_cntnrs.py \
   /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
-  /opt/start_dockerd.sh
+  /opt/start_dockerd.sh /opt/agent_entrypt.py
 
 # copy agent service files
 COPY code/01_run_dockerd.sh /etc/my_init.d/01_run_dockerd.sh
