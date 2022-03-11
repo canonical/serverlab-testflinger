@@ -20,6 +20,8 @@ then
 
     /usr/bin/dockerd --icc=true --log-level=info 2>&1 &
     # /opt/start_dckrd.sh &
+    # wait for api to load
+    sleep 3
 else
     echo '* dockerd running...'
 fi
