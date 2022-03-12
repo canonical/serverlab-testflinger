@@ -107,9 +107,9 @@ services:
     hostname: tf-agent
 
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:rw
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
+      - docker_data:/data/docker
       - agent_log:/var/log/sut-agent
       # netdata volumes
       # - netdata_cache:/var/cache/netdata
@@ -202,6 +202,7 @@ volumes:
   api_data: {}
   agent_data: {}
   snappy_data: {}
+  docker_data: {}
   agent_log: {}
   cli_data: {}
   portainer_data: {}
