@@ -142,9 +142,9 @@ class InitAgent:
         except docker.errors.NotFound:
             net_config = self.create_net_config()
             cntnr = self.create_container(net_config)
+            # throttle calls
+            time.sleep(1)
 
-        # throttle calls
-        time.sleep(1)
         # start container
         try:
             self.client.api.start(container=cntnr.get('Id'))
