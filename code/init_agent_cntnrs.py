@@ -144,7 +144,7 @@ class InitAgent:
             cntnr = self.create_container(net_config)
 
         # throttle calls
-        time.sleep(3)
+        time.sleep(1)
         # start container
         try:
             self.client.api.start(container=cntnr.get('Id'))
