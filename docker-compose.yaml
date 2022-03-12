@@ -3,16 +3,15 @@ version: "3.9"
 services:
   db:
     image: redis:latest
-    init: true
     restart: unless-stopped
-    container_name: testflinger-db
+    container_name: tf-db
 
     networks:
       docker_int:
         ipv4_address: 10.172.10.13
     expose:
       - 6379
-    hostname: testflinger-db
+    hostname: tf-db
 
     volumes:
       - db_data:/var/lib/redis
@@ -33,9 +32,9 @@ services:
       - db
     build:
       context: .
-      dockerfile: testflinger-mqtt
+      dockerfile: tf-mqtt
     restart: unless-stopped
-    container_name: testflinger-mqtt
+    container_name: tf-mqtt
 
     networks:
       needham_ext:
@@ -45,7 +44,7 @@ services:
     expose:
       - 1883
       - 9001
-    hostname: testflinger-mqtt
+    hostname: tf-mqtt
 
     # volumes:
     #   - ./mqtt/conf:/mosquitto/config
@@ -55,10 +54,9 @@ services:
       - mqtt
     build:
       context: .
-      dockerfile: testflinger-api
-    init: true
+      dockerfile: tf-api
     restart: unless-stopped
-    container_name: testflinger-api
+    container_name: tf-api
 
     sysctls:
       net.core.somaxconn: 2048
@@ -70,7 +68,7 @@ services:
         ipv4_address: 10.172.10.10
     expose:
       - 8000
-    hostname: testflinger-api
+    hostname: tf-api
 
     volumes:
       - api_data:/data/testflinger
@@ -92,12 +90,12 @@ services:
       - api
     build:
       context: .
-      dockerfile: testflinger-agent
+      dockerfile: tf-agent
     stdin_open: true
     tty: true
     privileged: true
     restart: unless-stopped
-    container_name: testflinger-agent
+    container_name: tf-agent
 
     networks:
       needham_ext:
@@ -106,10 +104,10 @@ services:
         ipv4_address: 10.172.10.11
     expose:
       - 19999
-    hostname: testflinger-agent
+    hostname: tf-agent
 
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:rw
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
       - agent_log:/var/log/sut-agent
@@ -143,18 +141,18 @@ services:
       - agent
     build:
       context: .
-      dockerfile: testflinger-cli
+      dockerfile: tf-cli
     stdin_open: true
     tty: true
     restart: unless-stopped
-    container_name: testflinger-cli
+    container_name: tf-cli
 
     networks:
       needham_ext:
         ipv4_address: 10.245.128.12
       docker_int:
         ipv4_address: 10.172.10.12
-    hostname: testflinger-cli
+    hostname: tf-cli
 
     volumes:
       - cli_data:/data/testflinger-cli
@@ -162,7 +160,24 @@ services:
     environment:
       - PATH=/data/testflinger-cli:$PATH
 
-    # command: ["/opt/tf-entrypoint.sh"]
+  portainer:
+    image: portainer/portainer-ce:2.9.3
+    restart: unless-stopped
+    container_name: tf-portainer
+
+    networks:
+      needham_ext:
+        ipv4_address: 10.245.128.15
+      docker_int:
+        ipv4_address: 10.172.10.15
+    expose:
+      - 8000
+      - 9443
+    hostname: tf-portainer
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
 networks:
   docker_int:
@@ -189,6 +204,7 @@ volumes:
   snappy_data: {}
   agent_log: {}
   cli_data: {}
+  portainer_data: {}
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
