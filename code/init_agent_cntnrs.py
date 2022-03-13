@@ -6,7 +6,7 @@
 # add
 
 from pathlib import Path, PurePath
-from os import listdir, path, fspath
+from os import listdir, path, fspath, environ
 import docker
 import time
 import sys
@@ -26,6 +26,8 @@ class InitAgent:
         self.net_name = net_name
         self.img_name = img_name
         self.agnt_ip = '172.20.0.%i' % agnt_ip
+        # passthru env var from compose
+        self.dhost_path = environ.get('HOST_DIR')
         self.init_agent_cntnr()
 
     def create_net_config(self):
@@ -38,40 +40,74 @@ class InitAgent:
 
     def create_container(self, net_config):
         # paths
-        dsock = PurePath(
-            '/', 'var', 'run', 'docker').with_suffix('.sock')
+        dsock = PurePath('/',
+                         'var',
+                         'run',
+                         'docker').with_suffix('.sock')
         # init
         init_file = '01_start_agent'  # .sh
-        src_init_path = PurePath(
-            '/', 'code', init_file).with_suffix('.sh')
-        dst_init_path = PurePath(
-            '/', 'etc', 'my_init.d', init_file).with_suffix('.sh')
+        src_init_path = PurePath('/',
+                                 self.dhost_path,
+                                 'code',
+                                 init_file).with_suffix('.sh')
+        dst_init_path = PurePath('/',
+                                 'etc',
+                                 'my_init.d',
+                                 init_file).with_suffix('.sh')
         # ssh export
         essh_file = 'export_ssh_pubkey_agnt'  # .py
-        src_essh_path = PurePath(
-            '/', 'code', essh_file).with_suffix('.py')
-        dst_essh_path = PurePath(
-            '/', 'opt', essh_file).with_suffix('.py')
+        src_essh_path = PurePath('/',
+                                 self.dhost_path,
+                                 'code',
+                                 essh_file).with_suffix('.py')
+        dst_essh_path = PurePath('/',
+                                 'opt',
+                                 essh_file).with_suffix('.py')
         # entrypoints
-        src_aetrypt_path = PurePath(
-            '/', 'code', 'agent_entrypt').with_suffix('.py')
-        dst_aentrypt_path = PurePath(
-            '/', 'opt', 'agent_entrypt').with_suffix('.py')
-        src_centrypt_path = PurePath(
-            '/', 'code', 'cntnr_entrypt').with_suffix('.sh')
-        dst_centrypt_path = PurePath(
-            '/', 'opt', 'cntnr_entrypt').with_suffix('.sh')
+        src_aetrypt_path = PurePath('/',
+                                    self.dhost_path,
+                                    'code',
+                                    'agent_entrypt').with_suffix('.py')
+        dst_aentrypt_path = PurePath('/',
+                                     'opt',
+                                     'agent_entrypt').with_suffix('.py')
+        src_centrypt_path = PurePath('/',
+                                     self.dhost_path,
+                                     'code',
+                                     'cntnr_entrypt').with_suffix('.sh')
+        dst_centrypt_path = PurePath('/',
+                                     'opt',
+                                     'cntnr_entrypt').with_suffix('.sh')
         # agnt conf
-        conf_path = PurePath(
-            '/', 'sut', self.sut_conf)
+        src_conf_path = PurePath('/',
+                                 self.dhost_path,
+                                 'sut',
+                                 'agent',
+                                 self.sut_conf)
+        dst_conf_path = PurePath('/',
+                                 'data',
+                                 'testflinger-agent',
+                                 'sut',
+                                 self.sut_conf)
         # agnt snappy
-        snpy_path = PurePath(
-            '/', 'data', 'snappy-device-agents', 'sut', self.sut_snpy)
+        src_csnpy_path = PurePath('/',
+                                  self.dhost_path,
+                                  'sut',
+                                  'snappy',
+                                  self.sut_snpy)
+        dst_snpy_path = PurePath('/',
+                                 'data',
+                                 'snappy-device-agents',
+                                 'sut',
+                                 self.sut_snpy)
         # log
-        src_log_path = PurePath(
-            '/', 'log', self.sut).with_suffix('.log')
-        dst_log_path = PurePath(
-            '/', 'var', 'log', self.sut).with_suffix('.log')
+        src_log_path = PurePath('/',
+                                'log',
+                                self.sut).with_suffix('.log')
+        dst_log_path = PurePath('/',
+                                'var',
+                                'log',
+                                self.sut).with_suffix('.log')
         # end paths
         # common parameters
         host_config = self.client.api.create_host_config(
@@ -81,37 +117,37 @@ class InitAgent:
                 # docker socket
                 docker.types.Mount(type='bind',
                                    target=fspath(dsock),
-                                   source='.%s' % fspath(dsock),
+                                   source=fspath(dsock),
                                    read_only=False),
                 # init
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
-                                   source='.%s' % fspath(src_init_path),
+                                   source=fspath(src_init_path),
                                    read_only=True),
                 # ssh export
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_essh_path),
-                                   source='.%s' % fspath(src_essh_path),
+                                   source=fspath(src_essh_path),
                                    read_only=True),
                 # agent entrypoint
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_aentrypt_path),
-                                   source='.%s' % fspath(src_aetrypt_path),
+                                   source=fspath(src_aetrypt_path),
                                    read_only=True),
                 # cntnr entrypoint
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_centrypt_path),
-                                   source='.%s' % fspath(src_centrypt_path),
+                                   source=fspath(src_centrypt_path),
                                    read_only=True),
                 # agnt conf
                 docker.types.Mount(type='bind',
-                                   target=fspath(conf_path),
-                                   source='.%s' % fspath(conf_path),
+                                   target=fspath(dst_conf_path),
+                                   source=fspath(src_conf_path),
                                    read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
-                                   target=fspath(snpy_path),
-                                   source='.%s' % fspath(snpy_path),
+                                   target=fspath(dst_snpy_path),
+                                   source=fspath(src_csnpy_path),
                                    read_only=True),
                 # log
                 docker.types.Mount(type='bind',

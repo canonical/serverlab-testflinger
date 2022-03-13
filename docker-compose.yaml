@@ -96,6 +96,8 @@ services:
     privileged: true
     restart: unless-stopped
     container_name: tf-agent
+    environment:
+      - HOST_DIR=$PWD
 
     networks:
       needham_ext:
