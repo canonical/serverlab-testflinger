@@ -43,33 +43,33 @@ class InitAgent:
         # init
         init_file = '01_start_agent'  # .sh
         src_init_path = PurePath(
-            '/', 'data', 'docker', init_file).with_suffix('.sh')
+            '/', 'code', init_file).with_suffix('.sh')
         dst_init_path = PurePath(
             '/', 'etc', 'my_init.d', init_file).with_suffix('.sh')
         # ssh export
         essh_file = 'export_ssh_pubkey_agnt'  # .py
         src_essh_path = PurePath(
-            '/', 'data', 'docker', essh_file).with_suffix('.py')
+            '/', 'code', essh_file).with_suffix('.py')
         dst_essh_path = PurePath(
             '/', 'opt', essh_file).with_suffix('.py')
         # entrypoints
         src_aetrypt_path = PurePath(
-            '/', 'data', 'docker', 'agent_entrypt').with_suffix('.py')
+            '/', 'code', 'agent_entrypt').with_suffix('.py')
         dst_aentrypt_path = PurePath(
             '/', 'opt', 'agent_entrypt').with_suffix('.py')
         src_centrypt_path = PurePath(
-            '/', 'data', 'docker', 'cntnr_entrypt').with_suffix('.sh')
+            '/', 'code', 'cntnr_entrypt').with_suffix('.sh')
         dst_centrypt_path = PurePath(
             '/', 'opt', 'cntnr_entrypt').with_suffix('.sh')
         # agnt conf
         conf_path = PurePath(
-            '/', 'data', 'testflinger-agent', 'sut', self.sut_conf)
+            '/', 'sut', self.sut_conf)
         # agnt snappy
         snpy_path = PurePath(
             '/', 'data', 'snappy-device-agents', 'sut', self.sut_snpy)
         # log
         src_log_path = PurePath(
-            '/', 'var', 'log', 'sut-agent', self.sut).with_suffix('.log')
+            '/', 'log', self.sut).with_suffix('.log')
         dst_log_path = PurePath(
             '/', 'var', 'log', self.sut).with_suffix('.log')
         # end paths
@@ -81,37 +81,37 @@ class InitAgent:
                 # docker socket
                 docker.types.Mount(type='bind',
                                    target=fspath(dsock),
-                                   source=fspath(dsock),
+                                   source='.%s' % fspath(dsock),
                                    read_only=False),
                 # init
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
-                                   source=fspath(src_init_path),
+                                   source='.%s' % fspath(src_init_path),
                                    read_only=True),
                 # ssh export
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_essh_path),
-                                   source=fspath(src_essh_path),
+                                   source='.%s' % fspath(src_essh_path),
                                    read_only=True),
                 # agent entrypoint
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_aentrypt_path),
-                                   source=fspath(src_aetrypt_path),
+                                   source='.%s' % fspath(src_aetrypt_path),
                                    read_only=True),
                 # cntnr entrypoint
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_centrypt_path),
-                                   source=fspath(src_centrypt_path),
+                                   source='.%s' % fspath(src_centrypt_path),
                                    read_only=True),
                 # agnt conf
                 docker.types.Mount(type='bind',
                                    target=fspath(conf_path),
-                                   source=fspath(conf_path),
+                                   source='.%s' % fspath(conf_path),
                                    read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
                                    target=fspath(snpy_path),
-                                   source=fspath(snpy_path),
+                                   source='.%s' % fspath(snpy_path),
                                    read_only=True),
                 # log
                 docker.types.Mount(type='bind',
