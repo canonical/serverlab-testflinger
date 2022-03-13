@@ -97,8 +97,8 @@ services:
     restart: unless-stopped
     container_name: tf-agent
     environment:
-      - HOSTDIR=$PWD
       - HOSTPTH=.
+      - HOSTDIR="$PWD"
 
     networks:
       needham_ext:
