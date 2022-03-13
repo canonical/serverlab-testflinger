@@ -27,7 +27,7 @@ class InitAgent:
         self.img_name = img_name
         self.agnt_ip = '172.20.0.%i' % agnt_ip
         # passthru env var from compose
-        self.dhost_path = environ.get('HOST_DIR')
+        self.dhost_path = environ.get('HOSTDIR')
         self.init_agent_cntnr()
 
     def create_net_config(self):
