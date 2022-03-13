@@ -3,7 +3,7 @@
 # TODO
 # add healthcheck (low level api)
 # add args to init specific conf file
-# add
+# change agnt net to use var
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
@@ -25,10 +25,10 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '172.20.0.%i' % agnt_ip
+        self.agnt_ip = '10.172.10.%i' % agnt_ip
         # passthru env var from dockerfile
         self.dhost_path = PurePath(
-            fspath(environ.get('HOSTDIR')))
+            str(environ.get('HOSTDIR')))
         self.init_agent_cntnr()
 
     def create_net_config(self):
@@ -178,7 +178,7 @@ class InitAgent:
 
         # start container
         try:
-            self.client.api.start(container=cntnr.get('Id'))
+            self.client.api.start(container=cntnr.id)
         except docker.errors.APIError as error:
             print(
                 ' # unable to start agent for: %s' % self.sut)
@@ -190,7 +190,7 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='172.20.0.0/24')
+        subnet='10.172.10.0/24')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
@@ -282,7 +282,7 @@ def main():
             pass
 
         # agnt ip offset
-        idx = idx + 2  # first ip
+        idx = idx + 20  # first ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
