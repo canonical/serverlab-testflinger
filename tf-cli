@@ -8,7 +8,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-cli:$PATH
 
 ARG ubuntu_scr
-ARG testflinger_scr
+# ARG testflinger_scr
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
@@ -45,8 +45,8 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN pip3 install requests_oauthlib paho-mqtt psutil setproctitle ruamel.yaml
 
 # add ubuntu and testflinger users
-RUN useradd -ms /bin/bash ubuntu \
-  && useradd -ms /bin/bash testflinger
+RUN useradd -ms /bin/bash ubuntu
+  # && useradd -ms /bin/bash testflinger
 
 # add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -122,7 +122,7 @@ COPY code/reference.yaml /data/testflinger-cli/sut/.reference.yaml
 # set user passwords (temp pw)
 USER root
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
-RUN echo "testflinger:${testflinger_scr}" | chpasswd
+# RUN echo "testflinger:${testflinger_scr}" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret

@@ -13,7 +13,6 @@ UBUNTU_SCR=ch4ng3m3
 
 docker-compose build \
   --build-arg ubuntu_scr=$UBUNTU_SCR \
-  # --build-arg testflinger_scr=$TESTFLINGER_SCR \
   --build-arg host_dir=$PWD \
   --progress=tty 2>&1
 
