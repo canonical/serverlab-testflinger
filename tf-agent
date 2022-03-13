@@ -6,7 +6,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
-ENV HOST_DIR $PWD
+# ENV HOST_DIR .
 
 ARG ubuntu_scr
 ARG testflinger_scr
