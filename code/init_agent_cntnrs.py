@@ -26,8 +26,9 @@ class InitAgent:
         self.net_name = net_name
         self.img_name = img_name
         self.agnt_ip = '172.20.0.%i' % agnt_ip
-        # passthru env var from compose
-        self.dhost_path = environ.get('HOSTDIR')
+        # passthru env var from dockerfile
+        self.dhost_path = PurePath(
+            fspath(environ.get('HOSTDIR')))
         self.init_agent_cntnr()
 
     def create_net_config(self):
@@ -46,8 +47,7 @@ class InitAgent:
                          'docker').with_suffix('.sock')
         # init
         init_file = '01_start_agent'  # .sh
-        src_init_path = PurePath('/',
-                                 self.dhost_path,
+        src_init_path = PurePath(self.dhost_path,
                                  'code',
                                  init_file).with_suffix('.sh')
         dst_init_path = PurePath('/',
@@ -56,31 +56,27 @@ class InitAgent:
                                  init_file).with_suffix('.sh')
         # ssh export
         essh_file = 'export_ssh_pubkey_agnt'  # .py
-        src_essh_path = PurePath('/',
-                                 self.dhost_path,
+        src_essh_path = PurePath(self.dhost_path,
                                  'code',
                                  essh_file).with_suffix('.py')
         dst_essh_path = PurePath('/',
                                  'opt',
                                  essh_file).with_suffix('.py')
         # entrypoints
-        src_aetrypt_path = PurePath('/',
-                                    self.dhost_path,
+        src_aetrypt_path = PurePath(self.dhost_path,
                                     'code',
                                     'agent_entrypt').with_suffix('.py')
         dst_aentrypt_path = PurePath('/',
                                      'opt',
                                      'agent_entrypt').with_suffix('.py')
-        src_centrypt_path = PurePath('/',
-                                     self.dhost_path,
+        src_centrypt_path = PurePath(self.dhost_path,
                                      'code',
                                      'cntnr_entrypt').with_suffix('.sh')
         dst_centrypt_path = PurePath('/',
                                      'opt',
                                      'cntnr_entrypt').with_suffix('.sh')
         # agnt conf
-        src_conf_path = PurePath('/',
-                                 self.dhost_path,
+        src_conf_path = PurePath(self.dhost_path,
                                  'sut',
                                  'agent',
                                  self.sut_conf)
@@ -90,18 +86,17 @@ class InitAgent:
                                  'sut',
                                  self.sut_conf)
         # agnt snappy
-        src_csnpy_path = PurePath('/',
-                                  self.dhost_path,
-                                  'sut',
-                                  'snappy',
-                                  self.sut_snpy)
+        src_snpy_path = PurePath(self.dhost_path,
+                                 'sut',
+                                 'snappy',
+                                 self.sut_snpy)
         dst_snpy_path = PurePath('/',
                                  'data',
                                  'snappy-device-agents',
                                  'sut',
                                  self.sut_snpy)
         # log
-        src_log_path = PurePath('/',
+        src_log_path = PurePath(self.dhost_path,
                                 'log',
                                 self.sut).with_suffix('.log')
         dst_log_path = PurePath('/',
@@ -147,7 +142,7 @@ class InitAgent:
                 # agent snappy
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_snpy_path),
-                                   source=fspath(src_csnpy_path),
+                                   source=fspath(src_snpy_path),
                                    read_only=True),
                 # log
                 docker.types.Mount(type='bind',
