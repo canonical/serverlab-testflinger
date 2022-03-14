@@ -26,7 +26,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '10.245.128.%i' % agnt_ip
+        self.agnt_ip = '10.245.130.%i' % agnt_ip
         # passthru env var from dockerfile
         self.dhost_path = PurePath(
             str(environ.get('HOSTDIR')))
@@ -195,7 +195,7 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.245.128.0/24')
+        subnet='10.245.128.0/22')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
