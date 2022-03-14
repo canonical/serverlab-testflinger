@@ -169,6 +169,18 @@ class InitAgent:
         return cntnr
 
     def init_agent_cntnr(self):
+        # start container
+        def start_cntnr(cntnr_id):
+            try:
+                self.client.api.start(container=cntnr_id)
+            except docker.errors.APIError as error:
+                print(
+                    ' # unable to start agent for: %s' % self.sut)
+                print('    e: %s' % error)
+                print('  -----------------------')
+            else:
+                print('  * %s' % self.sut)
+
         try:
             cntnr = self.client.containers.get(self.sut)
         except docker.errors.NotFound:
@@ -176,17 +188,9 @@ class InitAgent:
             cntnr = self.create_container(net_config)
             # throttle calls
             time.sleep(1)
-
-        # start container
-        try:
-            self.client.api.start(container=cntnr.id)
-        except docker.errors.APIError as error:
-            print(
-                ' # unable to start agent for: %s' % self.sut)
-            print('    e: %s' % error)
-            print('  -----------------------')
+            start_cntnr(cntnr.get('Id'))
         else:
-            print('  * %s' % self.sut)
+            start_cntnr(cntnr.id)
 
 
 def init_network(client, net_name):
