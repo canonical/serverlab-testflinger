@@ -216,9 +216,9 @@ def load_sut_agent(conf_path, log_dir):
     log_path = Path(
         log_dir, sut).with_suffix('.log')
     # use string for shell=True
-    # cmd = 'testflinger-agent -c %s' % conf_path
-    cmd = shlex.split(
-        'testflinger-agent -c %s' % conf_path)
+    cmd = 'testflinger-agent -c %s' % conf_path
+    # cmd = shlex.split(
+    #     'testflinger-agent -c %s' % conf_path)
 
     try:
         proc = subprocess.Popen(

@@ -75,6 +75,9 @@ RUN git init \
   && git fetch origin \
   && git checkout -b master --track origin/master
 
+# copy tf-agent config files
+COPY ./code/testflinger-agent.conf /data/testflinger-agent/testflinger-agent.conf
+
 # clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
 RUN git init \
