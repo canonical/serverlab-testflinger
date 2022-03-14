@@ -4,6 +4,7 @@
 # add healthcheck (low level api)
 # add args to init specific conf file
 # change agnt net to use var
+# import host net name
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
@@ -266,7 +267,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'agent_net'
+    net_name = 'testflinger-docker_docker_int'
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
