@@ -42,10 +42,10 @@ class InitAgent:
 
     def create_container(self, net_config):
         # paths
-        dsock = PurePath('/',
-                         'var',
-                         'run',
-                         'docker').with_suffix('.sock')
+        # dsock = PurePath('/',
+        #                  'var',
+        #                  'run',
+        #                  'docker').with_suffix('.sock')
         # init
         init_file = '01_start_agent'  # .sh
         src_init_path = PurePath(self.dhost_path,
@@ -111,10 +111,10 @@ class InitAgent:
             privileged=True,
             mounts=[
                 # docker socket
-                docker.types.Mount(type='bind',
-                                   target=fspath(dsock),
-                                   source=fspath(dsock),
-                                   read_only=False),
+                # docker.types.Mount(type='bind',
+                #                    target=fspath(dsock),
+                #                    source=fspath(dsock),
+                #                    read_only=False),
                 # init
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
@@ -139,7 +139,7 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_conf_path),
                                    source=fspath(src_conf_path),
-                                   read_only=True),
+                                   read_only=False),
                 # agent snappy
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_snpy_path),

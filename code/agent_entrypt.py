@@ -223,8 +223,8 @@ def load_sut_agent(conf_path, log_dir):
     try:
         proc = subprocess.Popen(
             cmd,
-            # shell=True,  # testing
-            # executable='/bin/bash',
+            shell=True,  # testing
+            executable='/bin/bash',
             text=True,
             encoding='utf-8',
             stdout=subprocess.PIPE,

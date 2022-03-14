@@ -168,12 +168,13 @@ RUN chmod 755 /etc/my_init.d/*
 RUN mkdir /data/docker
 COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./tf-agent_cntnr /data/docker/Dockerfile
+COPY ./code/daemon.json /etc/docker/daemon.json
 RUN chmod 755 /opt/init_agent_cntnrs.py
 
 # docker setup
-RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
-RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-# RUN touch /var/run/docker.sock && chmod 666 /var/run/docker.sock
+# RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
+# RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+RUN touch /var/run/docker.sock && chmod 666 /var/run/docker.sock
 RUN docker login -u alanec -p 32aafe13-c040-4a93-a0e2-848f5468b4c1
 
 # set user passwords (temp pw)
