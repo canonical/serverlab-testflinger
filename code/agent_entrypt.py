@@ -216,15 +216,16 @@ def load_sut_agent(conf_path, log_dir):
     log_path = Path(
         log_dir, sut).with_suffix('.log')
     # use string for shell=True
-    cmd = 'testflinger-agent -c %s' % conf_path
-    # cmd = shlex.split(
-    #     'testflinger-agent -c %s' % conf_path)
+    # cmd = 'testflinger-agent -c %s' % conf_path
+    cmd = shlex.split(
+        'PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 \
+        testflinger-agent -c %s' % conf_path)
 
     try:
         proc = subprocess.Popen(
             cmd,
-            shell=True,  # testing
-            executable='/bin/bash',
+            # shell=True,  # testing
+            # executable='/bin/bash',
             text=True,
             encoding='utf-8',
             stdout=subprocess.PIPE,
