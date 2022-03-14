@@ -163,6 +163,8 @@ services:
       - PATH=/data/testflinger-cli:$PATH
 
   portainer:
+    depends_on:
+      - agent
     image: portainer/portainer-ce:2.9.3
     restart: unless-stopped
     container_name: tf-portainer
