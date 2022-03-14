@@ -164,21 +164,6 @@ COPY ./code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
 RUN chmod 755 /etc/my_init.d/*
 # COPY code/04_netdata.sh /etc/my_init.d/02_netdata.sh
 
-# copy cntnr rscrcs
-RUN mkdir /data/docker
-COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
-COPY ./code/agent_entrypt.py /data/docker/agent_entrypt.py
-COPY ./code/export_ssh_pubkey_agnt.py /data/docker/export_ssh_pubkey_agnt.py
-COPY ./code/cntnr_entrypt.sh /data/docker/cntnr_entrypt.sh
-COPY ./code/start_dckrd.sh /opt/start_dckrd.sh
-COPY ./tf-agent_cntnr /data/docker/Dockerfile
-COPY ./code/daemon.json  /etc/docker/daemon.json
-COPY ./code/01_start_agent.sh /data/docker/01_start_agent.sh
-RUN chmod 755 /opt/init_agent_cntnrs.py \
-  /data/docker/export_ssh_pubkey_agnt.py /data/docker/cntnr_entrypt.sh \
-  /opt/start_dckrd.sh /data/docker/agent_entrypt.py \
-  /data/docker/01_start_agent.sh
-
 # docker setup
 RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
 RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy

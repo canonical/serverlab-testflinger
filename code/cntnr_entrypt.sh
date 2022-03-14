@@ -25,7 +25,7 @@ echo "- User: root"
                           --mport $MAAS_PORT
 echo
 echo "- User: ubuntu"
-/opt/agnt_export_ssh_pubkey.py --path /home/ubuntu/ \
+/opt/export_ssh_pubkey_agnt.py --path /home/ubuntu/ \
                           --mapi $MAAS_API_KEY \
                           --mhost $MAAS_HOST \
                           --mport $MAAS_PORT
