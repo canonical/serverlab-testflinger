@@ -105,6 +105,7 @@ services:
     expose:
       - 19999
     hostname: tf-agent
+    network_mode: "host"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
