@@ -7,6 +7,8 @@ services:
     container_name: tf-db
 
     networks:
+      needham_ext:
+        ipv4_address: 10.172.10.14
       docker_int:
         ipv4_address: 10.172.10.13
     expose:

@@ -76,6 +76,15 @@ class InitAgent:
         dst_centrypt_path = PurePath('/',
                                      'opt',
                                      'cntnr_entrypt').with_suffix('.sh')
+        # agnt server
+        srv_conf = 'testflinger-agent'  # .conf
+        src_sconf_path = PurePath(self.dhost_path,
+                                  'code',
+                                  srv_conf).with_suffix('.conf')
+        dst_sconf_path = PurePath('/',
+                                  'data',
+                                  'testflinger-agent',
+                                  srv_conf).with_suffix('.conf')
         # agnt conf
         src_conf_path = PurePath(self.dhost_path,
                                  'sut',
@@ -145,6 +154,12 @@ class InitAgent:
                                    target=fspath(dst_snpy_path),
                                    source=fspath(src_snpy_path),
                                    read_only=True),
+                # agent server
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_sconf_path),
+                                   source=fspath(src_sconf_path),
+                                   read_only=True),
+
                 # log
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_log_path),
@@ -271,7 +286,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'testflinger-docker_needham_ext'
+    net_name = 'testflinger-docker_needham_int'
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
