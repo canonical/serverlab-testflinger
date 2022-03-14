@@ -218,8 +218,7 @@ def load_sut_agent(conf_path, log_dir):
     # use string for shell=True
     # cmd = 'testflinger-agent -c %s' % conf_path
     cmd = shlex.split(
-        'PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 \
-        testflinger-agent -c %s' % conf_path)
+        'testflinger-agent -c %s' % conf_path)
 
     try:
         proc = subprocess.Popen(
