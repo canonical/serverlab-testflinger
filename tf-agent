@@ -165,7 +165,7 @@ RUN chmod 755 /etc/my_init.d/*
 # COPY code/04_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # copy cntnr rscrcs
-mkdir /data/docker
+RUN mkdir /data/docker
 COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./tf-agent_cntnr /data/docker/Dockerfile
 RUN chmod 755 /opt/init_agent_cntnrs.py
