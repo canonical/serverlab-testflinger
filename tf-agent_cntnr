@@ -75,6 +75,9 @@ RUN git init \
   && git fetch origin \
   && git checkout -b master --track origin/master
 
+# copy tf-agent config files
+COPY ./code/testflinger-agent.conf /data/testflinger-agent
+
 # clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
 RUN git init \
@@ -106,6 +109,16 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
 # RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
 # RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
 # RUN chown -R root:root /var/log/netdata
+
+# # copy entrypoint file 
+# COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
+# RUN chmod 755 /opt/tf-entrypoint.sh
+
+# # copy agent service file
+# COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
+
+# # copy agent service file
+# COPY code/02_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:ch4ng3m3" | chpasswd
