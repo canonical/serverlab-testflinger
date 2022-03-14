@@ -107,6 +107,7 @@ services:
     hostname: tf-agent
 
     volumes:
+      # for agents (docker in docker)
       - /var/run/docker.sock:/var/run/docker.sock
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents

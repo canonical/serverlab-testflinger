@@ -26,7 +26,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '10.172.10.%i' % agnt_ip
+        self.agnt_ip = '10.245.128.%i' % agnt_ip
         # passthru env var from dockerfile
         self.dhost_path = PurePath(
             str(environ.get('HOSTDIR')))
@@ -195,7 +195,7 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.172.10.0/24')
+        subnet='10.245.128.0/24')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
@@ -271,7 +271,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'testflinger-docker_docker_int'
+    net_name = 'testflinger-docker_needham_ext'
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
@@ -287,7 +287,7 @@ def main():
             pass
 
         # agnt ip offset
-        idx = idx + 20  # first ip
+        idx = idx + 126  # first ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
