@@ -105,7 +105,6 @@ services:
     expose:
       - 19999
     hostname: tf-agent
-    network_mode: "host"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -183,7 +182,7 @@ services:
 
 networks:
   docker_int:
-    driver: bridge
+    driver: macvlan
     driver_opts:
         parent: docker0
     ipam:
