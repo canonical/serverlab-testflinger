@@ -19,9 +19,6 @@
 
 """Load specified SUT agents."""
 
-# Todo:
-# restart agent via mqtt?
-
 from logging.handlers import RotatingFileHandler
 from threading import Thread, Timer
 from pathlib import PurePath, Path

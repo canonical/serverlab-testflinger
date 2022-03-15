@@ -7,9 +7,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
 
-# ARG ubuntu_scr
-# ARG testflinger_scr
-
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
 
@@ -101,21 +98,6 @@ RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chmod 775 /data/testflinger-agent \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents \
   && chmod 775 /data/snappy-device-agents
-
-# # netdata
-# RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
-# RUN ./netdata/netdata-installer.sh --dont-start-it --disable-telemetry
-# RUN chown -R root:root /var/log/netdata
-
-# # copy entrypoint file 
-# COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
-# RUN chmod 755 /opt/tf-entrypoint.sh
-
-# # copy agent service file
-# COPY code/01_run_sut_agents.sh /etc/my_init.d/01_run_sut_agents.sh
-
-# # copy agent service file
-# COPY code/02_netdata.sh /etc/my_init.d/02_netdata.sh
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:ch4ng3m3" | chpasswd
