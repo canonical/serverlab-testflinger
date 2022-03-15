@@ -148,7 +148,7 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_conf_path),
                                    source=fspath(src_conf_path),
-                                   read_only=False),
+                                   read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_snpy_path),
@@ -286,7 +286,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'needham_int'
+    net_name = 'testflinger-docker_needham_int'
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
