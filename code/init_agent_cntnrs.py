@@ -28,6 +28,7 @@ class InitAgent:
         self.img_name = img_name
         self.agnt_ip = '10.245.130.%i' % agnt_ip
         # passthru env var from dockerfile
+        # add test for var
         self.dhost_path = PurePath(
             str(environ.get('HOSTDIR')))
         self.init_agent_cntnr()
@@ -47,44 +48,47 @@ class InitAgent:
         #                  'run',
         #                  'docker').with_suffix('.sock')
         # init
-        init_file = '01_start_agent'  # .sh
+        init_file = ('01_start_agent').with_suffix('.sh')
         src_init_path = PurePath(self.dhost_path,
                                  'code',
-                                 init_file).with_suffix('.sh')
+                                 init_file)
         dst_init_path = PurePath('/',
                                  'etc',
                                  'my_init.d',
-                                 init_file).with_suffix('.sh')
+                                 init_file)
         # ssh export
-        essh_file = 'export_ssh_pubkey_agnt'  # .py
+        essh_file = ('export_ssh_pubkey_agnt').with_suffix('.py')
         src_essh_path = PurePath(self.dhost_path,
                                  'code',
-                                 essh_file).with_suffix('.py')
+                                 essh_file)
         dst_essh_path = PurePath('/',
                                  'opt',
-                                 essh_file).with_suffix('.py')
-        # entrypoints
-        src_aetrypt_path = PurePath(self.dhost_path,
-                                    'code',
-                                    'agent_entrypt').with_suffix('.py')
+                                 essh_file)
+        # agent entrypoint
+        aentrypt_file = ('agent_entrypt').with_suffix('.py')
+        src_aentrypt_path = PurePath(self.dhost_path,
+                                     'code',
+                                     aentrypt_file)
         dst_aentrypt_path = PurePath('/',
                                      'opt',
-                                     'agent_entrypt').with_suffix('.py')
+                                     aentrypt_file)
+        # container entrypoint
+        centrypt_file = ('cntnr_entrypt').with_suffix('.sh')
         src_centrypt_path = PurePath(self.dhost_path,
                                      'code',
-                                     'cntnr_entrypt').with_suffix('.sh')
+                                     centrypt_file)
         dst_centrypt_path = PurePath('/',
                                      'opt',
-                                     'cntnr_entrypt').with_suffix('.sh')
+                                     centrypt_file)
         # agnt server
-        srv_conf = 'testflinger-agent'  # .conf
+        srv_conf = ('testflinger-agent').with_suffix('.conf')
         src_sconf_path = PurePath(self.dhost_path,
                                   'code',
-                                  srv_conf).with_suffix('.conf')
+                                  srv_conf)
         dst_sconf_path = PurePath('/',
                                   'data',
                                   'testflinger-agent',
-                                  srv_conf).with_suffix('.conf')
+                                  srv_conf)
         # agnt conf
         src_conf_path = PurePath(self.dhost_path,
                                  'sut',
@@ -117,7 +121,7 @@ class InitAgent:
         # common parameters
         host_config = self.client.api.create_host_config(
             restart_policy={'Name': 'always'},
-            privileged=True,
+            # privileged=True,
             mounts=[
                 # docker socket
                 # docker.types.Mount(type='bind',
@@ -137,7 +141,7 @@ class InitAgent:
                 # agent entrypoint
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_aentrypt_path),
-                                   source=fspath(src_aetrypt_path),
+                                   source=fspath(src_aentrypt_path),
                                    read_only=True),
                 # cntnr entrypoint
                 docker.types.Mount(type='bind',
@@ -164,7 +168,8 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_log_path),
                                    source=fspath(src_log_path),
-                                   read_only=False)])
+                                   read_only=False)
+            ])
 
         # try:
         cntnr = self.client.api.create_container(
@@ -232,7 +237,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
                 line.get('stream')).rstrip('\n')
 
             if line != 'None':
-                print('%s' % line)
+                print(line)
 
     print('==============================')
     print('[Building agent cntnr image]\n')
