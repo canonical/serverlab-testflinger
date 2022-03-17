@@ -48,7 +48,8 @@ class InitAgent:
         #                  'run',
         #                  'docker').with_suffix('.sock')
         # init
-        init_file = ('01_start_agent').with_suffix('.sh')
+        init_file = PurePath(
+            '01_start_agent').with_suffix('.sh')
         src_init_path = PurePath(self.dhost_path,
                                  'code',
                                  init_file)
@@ -57,7 +58,8 @@ class InitAgent:
                                  'my_init.d',
                                  init_file)
         # ssh export
-        essh_file = ('export_ssh_pubkey_agnt').with_suffix('.py')
+        essh_file = PurePath(
+            'export_ssh_pubkey_agnt').with_suffix('.py')
         src_essh_path = PurePath(self.dhost_path,
                                  'code',
                                  essh_file)
@@ -65,7 +67,8 @@ class InitAgent:
                                  'opt',
                                  essh_file)
         # agent entrypoint
-        aentrypt_file = ('agent_entrypt').with_suffix('.py')
+        aentrypt_file = PurePath(
+            'agent_entrypt').with_suffix('.py')
         src_aentrypt_path = PurePath(self.dhost_path,
                                      'code',
                                      aentrypt_file)
@@ -73,7 +76,8 @@ class InitAgent:
                                      'opt',
                                      aentrypt_file)
         # container entrypoint
-        centrypt_file = ('cntnr_entrypt').with_suffix('.sh')
+        centrypt_file = PurePath(
+            'cntnr_entrypt').with_suffix('.sh')
         src_centrypt_path = PurePath(self.dhost_path,
                                      'code',
                                      centrypt_file)
@@ -81,7 +85,8 @@ class InitAgent:
                                      'opt',
                                      centrypt_file)
         # agnt server
-        srv_conf = ('testflinger-agent').with_suffix('.conf')
+        srv_conf = PurePath(
+            'testflinger-agent').with_suffix('.conf')
         src_sconf_path = PurePath(self.dhost_path,
                                   'code',
                                   srv_conf)
