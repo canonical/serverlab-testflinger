@@ -27,10 +27,6 @@ class InitAgent:
         self.net_name = net_name
         self.img_name = img_name
         self.agnt_ip = '10.245.130.%i' % agnt_ip
-        # passthru env var from dockerfile
-        # add test for var
-        self.dhost_path = PurePath(
-            str(environ.get('HOSTDIR')))
         self.init_agent_cntnr()
 
     def create_net_config(self):
@@ -42,15 +38,19 @@ class InitAgent:
         return net_config
 
     def create_container(self, net_config):
-        # paths
-        # dsock = PurePath('/',
-        #                  'var',
-        #                  'run',
-        #                  'docker').with_suffix('.sock')
+        # docker root
+        try:
+            dhost_path = PurePath(  # passthru env var from dckrfile
+                str(environ.get('HOSTDIR')))
+        except EnvironmentError:
+            print('Environment var HOSTDIR undefined!')
+            sys.exit()
+
+        # paths (relative to host docker root)
         # init
         init_file = PurePath(
             '01_start_agent').with_suffix('.sh')
-        src_init_path = PurePath(self.dhost_path,
+        src_init_path = PurePath(dhost_path,
                                  'code',
                                  init_file)
         dst_init_path = PurePath('/',
@@ -60,7 +60,7 @@ class InitAgent:
         # ssh export
         essh_file = PurePath(
             'export_ssh_pubkey_agnt').with_suffix('.py')
-        src_essh_path = PurePath(self.dhost_path,
+        src_essh_path = PurePath(dhost_path,
                                  'code',
                                  essh_file)
         dst_essh_path = PurePath('/',
@@ -69,7 +69,7 @@ class InitAgent:
         # agent entrypoint
         aentrypt_file = PurePath(
             'agent_entrypt').with_suffix('.py')
-        src_aentrypt_path = PurePath(self.dhost_path,
+        src_aentrypt_path = PurePath(dhost_path,
                                      'code',
                                      aentrypt_file)
         dst_aentrypt_path = PurePath('/',
@@ -78,34 +78,14 @@ class InitAgent:
         # container entrypoint
         centrypt_file = PurePath(
             'cntnr_entrypt').with_suffix('.sh')
-        src_centrypt_path = PurePath(self.dhost_path,
+        src_centrypt_path = PurePath(dhost_path,
                                      'code',
                                      centrypt_file)
         dst_centrypt_path = PurePath('/',
                                      'opt',
                                      centrypt_file)
-        # agnt server
-        srv_conf = PurePath(
-            'testflinger-agent').with_suffix('.conf')
-        src_sconf_path = PurePath(self.dhost_path,
-                                  'code',
-                                  srv_conf)
-        dst_sconf_path = PurePath('/',
-                                  'data',
-                                  'testflinger-agent',
-                                  srv_conf)
-        # agnt conf
-        src_conf_path = PurePath(self.dhost_path,
-                                 'sut',
-                                 'agent',
-                                 self.sut_conf)
-        dst_conf_path = PurePath('/',
-                                 'data',
-                                 'testflinger-agent',
-                                 'sut',
-                                 self.sut_conf)
         # agnt snappy
-        src_snpy_path = PurePath(self.dhost_path,
+        src_snpy_path = PurePath(dhost_path,
                                  'sut',
                                  'snappy',
                                  self.sut_snpy)
@@ -114,8 +94,28 @@ class InitAgent:
                                  'snappy-device-agents',
                                  'sut',
                                  self.sut_snpy)
+        # agnt server
+        srv_conf = PurePath(
+            'testflinger-agent').with_suffix('.conf')
+        src_sconf_path = PurePath(dhost_path,
+                                  'code',
+                                  srv_conf)
+        dst_sconf_path = PurePath('/',
+                                  'data',
+                                  'testflinger-agent',
+                                  srv_conf)
+        # agnt conf
+        src_conf_path = PurePath(dhost_path,
+                                 'sut',
+                                 'agent',
+                                 self.sut_conf)
+        dst_conf_path = PurePath('/',
+                                 'data',
+                                 'testflinger-agent',
+                                 'sut',
+                                 self.sut_conf)
         # log
-        src_log_path = PurePath(self.dhost_path,
+        src_log_path = PurePath(dhost_path,
                                 'log',
                                 self.sut).with_suffix('.log')
         dst_log_path = PurePath('/',
@@ -128,11 +128,7 @@ class InitAgent:
             restart_policy={'Name': 'always'},
             # privileged=True,
             mounts=[
-                # docker socket
-                # docker.types.Mount(type='bind',
-                #                    target=fspath(dsock),
-                #                    source=fspath(dsock),
-                #                    read_only=False),
+                # shared mounts
                 # init
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
@@ -153,11 +149,6 @@ class InitAgent:
                                    target=fspath(dst_centrypt_path),
                                    source=fspath(src_centrypt_path),
                                    read_only=True),
-                # agnt conf
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_conf_path),
-                                   source=fspath(src_conf_path),
-                                   read_only=True),
                 # agent snappy
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_snpy_path),
@@ -168,7 +159,12 @@ class InitAgent:
                                    target=fspath(dst_sconf_path),
                                    source=fspath(src_sconf_path),
                                    read_only=True),
-
+                # unique mounts
+                # agnt conf
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_conf_path),
+                                   source=fspath(src_conf_path),
+                                   read_only=False),
                 # log
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_log_path),
@@ -285,7 +281,7 @@ def main():
     # need to use os.path
     dockf_dir = path.join('/', 'data', 'docker')
     client = docker.DockerClient(
-        base_url='unix://var/run/docker.sock', timeout=30)
+        base_url='unix://var/run/docker.sock', timeout=15)
 
     # validate/(build) image
     img_name = 'agnt_img:latest'
@@ -297,6 +293,7 @@ def main():
 
     # setup network
     net_name = 'testflinger-docker_needham_int'
+    first_ip = 126  # x.x.x.first_ip
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
@@ -312,7 +309,7 @@ def main():
             pass
 
         # agnt ip offset
-        idx = idx + 126  # first ip
+        idx = idx + first_ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
