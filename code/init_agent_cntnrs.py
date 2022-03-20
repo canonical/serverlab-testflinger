@@ -188,22 +188,22 @@ class InitAgent:
                                    read_only=False)
             ])
 
-        # define healthcheck
-        healthchk = docker.types.healthcheck(
-            test=['CMD', 'python3', dst_hlthchk_path],
-            interval=1000000 * 20 * 1000,  # 20 sec
-            timeout=1000000 * 21 * 1000,  # 21 sec
-            retries=3,
-            start_period=1000000 * 20 * 1000  # 60 sec
-        )
-
-        return (host_config, healthchk, dst_centrypt_path)
+        return (host_config, dst_centrypt_path, dst_hlthchk_path)
 
     def create_container(self):
         # prelim config
         net_config = self.create_net_config()
         # common parameters
-        host_config, healthchk, cmd = self.create_host_config()
+        host_config, cmd_path, hlthc_path = self.create_host_config()
+
+        # define healthcheck
+        healthchk = docker.types.healthcheck(
+            test=['CMD', 'python3', hlthc_path],
+            interval=1000000 * 20 * 1000,  # 20 sec
+            timeout=1000000 * 21 * 1000,  # 21 sec
+            retries=3,
+            start_period=1000000 * 20 * 1000  # 60 sec
+        )
 
         # try:
         cntnr = self.client.api.create_container(
@@ -212,7 +212,7 @@ class InitAgent:
             hostname=self.sut,
             host_config=host_config,
             networking_config=net_config,
-            command=[fspath(cmd)],
+            command=[fspath(cmd_path)],
             healthcheck=healthchk,
             domainname='maas',
             detach=True,
