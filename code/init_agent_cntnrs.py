@@ -198,7 +198,7 @@ class InitAgent:
 
         # define healthcheck
         healthchk = docker.types.Healthcheck(
-            test=['CMD', 'python3', hlthc_path],
+            test=['CMD', 'python3', fspath(hlthc_path)],
             interval=(1000000 * 20 * 1000),  # 20 sec
             timeout=(1000000 * 21 * 1000),  # 21 sec
             retries=3,
