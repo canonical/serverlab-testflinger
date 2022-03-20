@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 
-# TODO
+# Todo
 # add healthcheck (low level api)
 # add args to init specific conf file
 # change agnt net to use var
 # import host net name
+
+# Notes
+# use mounts for scale
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
@@ -37,7 +40,7 @@ class InitAgent:
 
         return net_config
 
-    def create_container(self, net_config):
+    def create_host_config(self):
         # docker root
         try:
             dhost_path = PurePath(  # passthru env var from dckrfile
@@ -104,6 +107,15 @@ class InitAgent:
                                   'data',
                                   'testflinger-agent',
                                   srv_conf)
+        # healthcheck
+        hlthchk_file = PurePath(
+            'agent_healthcheck').with_suffix('.py')
+        src_hlthchk_path = PurePath(dhost_path,
+                                    'code',
+                                    hlthchk_file)
+        dst_hlthchk_path = PurePath('/',
+                                    'opt',
+                                    hlthchk_file)
         # agnt conf
         src_conf_path = PurePath(dhost_path,
                                  'sut',
@@ -123,7 +135,6 @@ class InitAgent:
                                 'log',
                                 self.sut).with_suffix('.log')
         # end paths
-        # common parameters
         host_config = self.client.api.create_host_config(
             restart_policy={'Name': 'always'},
             # privileged=True,
@@ -159,6 +170,11 @@ class InitAgent:
                                    target=fspath(dst_sconf_path),
                                    source=fspath(src_sconf_path),
                                    read_only=True),
+                # healthcheck
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_hlthchk_path),
+                                   source=fspath(src_hlthchk_path),
+                                   read_only=False),
                 # unique mounts
                 # agnt conf
                 docker.types.Mount(type='bind',
@@ -172,6 +188,23 @@ class InitAgent:
                                    read_only=False)
             ])
 
+        # define healthcheck
+        healthchk = docker.types.healthcheck(
+            test=['CMD', 'python3', dst_hlthchk_path],
+            interval=1000000 * 20 * 1000,  # 20 sec
+            timeout=1000000 * 21 * 1000,  # 21 sec
+            retries=3,
+            start_period=1000000 * 20 * 1000  # 60 sec
+        )
+
+        return (host_config, healthchk, dst_centrypt_path)
+
+    def create_container(self):
+        # prelim config
+        net_config = self.create_net_config()
+        # common parameters
+        host_config, healthchk, cmd = self.create_host_config()
+
         # try:
         cntnr = self.client.api.create_container(
             self.img_name,
@@ -179,7 +212,8 @@ class InitAgent:
             hostname=self.sut,
             host_config=host_config,
             networking_config=net_config,
-            command=[fspath(dst_centrypt_path)],
+            command=[fspath(cmd)],
+            healthcheck=healthchk,
             domainname='maas',
             detach=True,
             tty=True)
@@ -205,8 +239,7 @@ class InitAgent:
         try:
             cntnr = self.client.containers.get(self.sut)
         except docker.errors.NotFound:
-            net_config = self.create_net_config()
-            cntnr = self.create_container(net_config)
+            cntnr = self.create_container()
             # throttle calls
             time.sleep(1)
             start_cntnr(cntnr.get('Id'))
@@ -309,7 +342,7 @@ def main():
             pass
 
         # agnt ip offset
-        idx = idx + first_ip
+        ip_n = idx + first_ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
@@ -321,7 +354,7 @@ def main():
                       agnt_net,
                       net_name,
                       img_name,
-                      idx)
+                      ip_n)
         # except Exception as error:
         #     print(
         #         ' # unable to start agent for: %s' % sut)

@@ -48,6 +48,7 @@ class LogAgent(Thread):
 
     def __init__(self, pipe, sut, log_path):
         Thread.__init__(self)
+        # terminate child thread on exit
         self.daemon = True
         self.pipe = pipe
         self.sut = sut
@@ -123,10 +124,9 @@ class LogAgent(Thread):
         self.mqtt_client.loop_start()
 
         # mqtt status thread
-        status_interval = 60.0  # seconds
+        status_interval = 20.0  # seconds
         status_timer = LoopTimer(status_interval,
                                  self.publish_status)
-        # terminate child thread on exit
         status_timer.daemon = True
 
         # c3 request thread
@@ -142,8 +142,6 @@ class LogAgent(Thread):
         """Agent status thread."""
         # add logic, conditions
         message = 'ok'
-        # (maybe) add timeout for last seen line
-        # add ip addr publish
 
         try:
             self.mqtt_client.publish(self.status_topic,
