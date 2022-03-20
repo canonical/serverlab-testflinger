@@ -142,10 +142,12 @@ class LogAgent(Thread):
         """Agent status thread."""
         # add logic, conditions
         message = 'ok'
+        # log to file
 
         try:
             self.mqtt_client.publish(self.status_topic,
-                                     payload=message)
+                                     payload=message,
+                                     retain=True)
         except Exception:  # specify
             pass
 
