@@ -20,13 +20,15 @@
 """Load specified SUT agents."""
 
 from logging.handlers import RotatingFileHandler
-from threading import Thread, Timer
+from threading import Thread, Timer, Event
 from pathlib import PurePath, Path
 import paho.mqtt.client as mqtt
 import subprocess
 import platform
 import requests
 import logging
+import signal
+import atexit
 import shlex
 import time
 import sys
@@ -46,14 +48,18 @@ class LoopTimer(Timer):
 class LogAgent(Thread):
     """Read stdout pipe."""
 
-    def __init__(self, pipe, sut, log_path):
+    def __init__(self, pipe, sut, log_path, exit_event):
         Thread.__init__(self)
-        # terminate child thread on exit
+        # thread ops
         self.daemon = True
+        self.status_timer = None
+        self.req_timer = None
+        self.exit_event = exit_event
+        # logging ops
         self.pipe = pipe
         self.sut = sut
         self.log_path = log_path
-        # max c3 reply time
+        # c3 setup
         self.c3_timeout = 300  # seconds
         self.c3_url = (
             'https://certification.canonical.com/submissions')
@@ -125,18 +131,24 @@ class LogAgent(Thread):
 
         # mqtt status thread
         status_interval = 20.0  # seconds
-        status_timer = LoopTimer(status_interval,
-                                 self.publish_status)
-        status_timer.daemon = True
+        self.status_timer = LoopTimer(status_interval,
+                                      self.publish_status)
+        self.status_timer.daemon = True
 
         # c3 request thread
         req_interval = 600.0  # seconds
-        req_timer = LoopTimer(req_interval,
-                              self.request_c3)
-        req_timer.daemon = True
+        self.req_timer = LoopTimer(req_interval,
+                                   self.request_c3)
+        self.req_timer.daemon = True
 
-        req_timer.start()
-        status_timer.start()
+        self.req_timer.start()
+        self.status_timer.start()
+
+    def cleanup_tasks(self):
+        self.status_timer.cancel()
+        self.req_timer.cancel()
+
+        self.mqtt_client.loop_stop()
 
     def publish_status(self):
         """Agent status thread."""
@@ -206,14 +218,34 @@ class LogAgent(Thread):
                 except Exception:  # soft failure
                     pass
 
+            if self.exit_event.is_set():
+                break
+
+        self.cleanup_tasks()
+
 
 def load_sut_agent(conf_path, log_dir):
     """Load specified SUT agent."""
+    def handle_exit(*args):
+        print('\nTerminating agent...')
+        exit_event.set()
+
+        try:
+            proc.terminate()
+        finally:
+            proc.kill()
+
+    def define_signals():
+        # provide process cleanup on terminate
+        atexit.register(handle_exit)
+        signal.signal(signal.SIGTERM, handle_exit)
+        signal.signal(signal.SIGINT, handle_exit)
+
     sut = PurePath(conf_path).stem
     log_path = Path(
         log_dir, sut).with_suffix('.log')
     # use string for shell=True
-    # cmd = 'testflinger-agent -c %s' % conf_path
+    # cmd = 'exec testflinger-agent -c %s' % conf_path
     cmd = shlex.split(
         'testflinger-agent -c %s' % conf_path)
 
@@ -229,10 +261,14 @@ def load_sut_agent(conf_path, log_dir):
     except OSError:
         print('# unable to start %s agent!' % sut)
     else:
+        exit_event = Event()
+        define_signals()
+
         log_thread = Thread(target=LogAgent,
                             args=(proc.stdout,
                                   sut,
-                                  log_path))
+                                  log_path,
+                                  exit_event))
         log_thread.start()
 
         return sut
