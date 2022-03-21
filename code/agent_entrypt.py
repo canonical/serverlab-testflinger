@@ -159,8 +159,8 @@ class LogAgent(Thread):
 
         try:
             self.mqtt_client.publish(self.status_topic,
-                                     payload=message,
-                                     retain=True)
+                                     payload=message)
+                                     # retain=True)
         except Exception:  # soft failure
             pass
 
