@@ -132,7 +132,7 @@ class LogAgent(Thread):
 
         # mqtt status thread
         # related to healthchk intvl
-        status_interval = 20.0  # seconds
+        status_interval = 30.0  # seconds
         self.status_timer = LoopTimer(status_interval,
                                       self.publish_status)
         self.status_timer.daemon = True
@@ -156,16 +156,16 @@ class LogAgent(Thread):
         """Agent status thread."""
         # add logic, conditions
         message = 'ok'
-        # log to file
 
         try:
             self.mqtt_client.publish(self.status_topic,
-                                     payload=message)
-        except Exception:  # specify
+                                     payload=message,
+                                     retain=True)
+        except Exception:  # soft failure
             pass
 
     def request_c3(self):
-        """Non-blocking HTTP calls."""
+        """Non-blocking HTTP call."""
         try:
             request = requests.get(self.c3_url,
                                    timeout=self.c3_timeout)
