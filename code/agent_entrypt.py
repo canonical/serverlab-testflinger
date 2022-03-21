@@ -132,7 +132,7 @@ class LogAgent(Thread):
 
         # mqtt status thread
         # related to healthchk intvl
-        status_interval = 30.0  # seconds
+        status_interval = 20.0  # seconds
         self.status_timer = LoopTimer(status_interval,
                                       self.publish_status)
         self.status_timer.daemon = True
