@@ -130,7 +130,7 @@ class LogAgent(Thread):
         self.mqtt_client.loop_start()
 
         # mqtt status thread
-        status_interval = 20.0  # seconds
+        status_interval = 5.0  # seconds
         self.status_timer = LoopTimer(status_interval,
                                       self.publish_status)
         self.status_timer.daemon = True
@@ -158,8 +158,8 @@ class LogAgent(Thread):
 
         try:
             self.mqtt_client.publish(self.status_topic,
-                                     payload=message,
-                                     retain=True)
+                                     payload=message)
+                                     # retain=True)
         except Exception:  # specify
             pass
 
