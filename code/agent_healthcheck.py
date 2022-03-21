@@ -8,12 +8,13 @@ import sys
 
 def check_status(client, userdata, message):
     message = (message.payload).decode('UTF-8')
-    if 'offline' in message:
-        # report unhealthy
-        sys.exit(1)
 
-    # report healthy
-    sys.exit(0)
+    if 'online' or 'ok' in message:
+        # report healthy
+        sys.exit(0)
+
+    # report unhealthy
+    sys.exit(1)
 
 
 def main():

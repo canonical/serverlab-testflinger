@@ -103,6 +103,7 @@ class LogAgent(Thread):
     def init_mqtt(self):
         """Setup and connect MQTT."""
         def on_connect(*args):
+            # del args  # args unused
             _message = 'online'
             for idx, _topic in enumerate(topics):
                 if idx:
@@ -130,7 +131,8 @@ class LogAgent(Thread):
         self.mqtt_client.loop_start()
 
         # mqtt status thread
-        status_interval = 5.0  # seconds
+        # related to healthchk intvl
+        status_interval = 20.0  # seconds
         self.status_timer = LoopTimer(status_interval,
                                       self.publish_status)
         self.status_timer.daemon = True
@@ -147,7 +149,7 @@ class LogAgent(Thread):
     def cleanup_tasks(self):
         self.status_timer.cancel()
         self.req_timer.cancel()
-
+        # close mqtt client
         self.mqtt_client.loop_stop()
 
     def publish_status(self):
@@ -159,7 +161,6 @@ class LogAgent(Thread):
         try:
             self.mqtt_client.publish(self.status_topic,
                                      payload=message)
-                                     # retain=True)
         except Exception:  # specify
             pass
 
@@ -227,6 +228,7 @@ class LogAgent(Thread):
 def load_sut_agent(conf_path, log_dir):
     """Load specified SUT agent."""
     def handle_exit(*args):
+        # del args  # args unused
         print('\nTerminating agent...')
         exit_event.set()
 
