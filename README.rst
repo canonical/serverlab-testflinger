@@ -7,46 +7,89 @@ Docker Containers
 =================
 All container dockerfiles are located in the project root.
 
-testflinger-agent
+tf-agent
 -----------------
-Standard testflinger agent build, using Docker.
-    • Includes snappy device agent.
-    • Runs a heavily customized image.
+Creates, starts and coordinated SUT agent containers. 
+    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+    • Runs nested Docker to enable containers to be created and spun up via the Docker API at tf-agent startup.
+        • Performs agent creation and management.
+    • On first startup, will create agent image and create each agent container.
+    • Uses the Docker daemon from the base Docker host (passes thru /var/run/docker.socket).
 
-testflinger-cli
+[_sut_agent_]
+----------------
+Discrete container for each SUT agent. Runs testflinger-agent.
+    • One container per sut agent.
+    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+    • Includes snappy device agent.
+    • Runs custom threaded subprocess pipe instrumentation (agent_entrypoint).
+        • Logging to stdout, file and MQTT
+        • Runs a healthcheck script to facilitate Docker healthchecks via MQTT. 
+
+tf-cli
 ---------------
 Standard testflinger cli build, using Docker.
-    • Runs a heavily customized image.
+    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
 
-testflinger-api
+tf-api
 ---------------
 Gunicorn, with gevent.
 
-testflinger-db
+tf-db
 --------------
 Redis database container.
 
-testflinger-mqtt
+tf-mqtt
 ----------------
 Stack MQTT broker.
 
+tf-portainer
+----------------
+Portainer container for managing the stack and related agents.
+    • Needham Portainer details below.
 
-Project notes and files of interest
+
+Files of interest and project notes
 ===================================
-* ./code/start_sut_agents
-    • Runs on testflinger-agent.
-    • Starts all agents, and performs logging.
+* ./code/init_agent_cntnrs.py
+    • Utilizes the Python Docker SDK to enable containers to be created 
+    and spun up via the Dockerd API at tf-agent startup.
+    • Creates all sut container properties and attributes.
+        • Image creation (streams build.
+        • Network and network config.
+        • Host config with defined mounts for all files.
+            • Mounts are used for consistent scaling across many containers.
+        • Agent healthcheck (using MQTT).
+    • Containers instantiated via Iterating over the sut conf dir in the
+    project root.
+        • Agent container image is created if it doesn't exist.
+        • Agent containers are created if they do not exist.
+
+* ./code/agent_entrypoint.py
+    • Loaded at agent container startup.
+    • Runs custom threaded subprocess pipe instrumentation.
+          • Logging to stdout, file and MQTT.
     • Transmits agent output to stack MQTT broker.
-    • Logs agent output /var/log/sut-agent within testflinger-agent.
-    • Developer notes and aspirations within source file.
+    • Runs agent_healthcheck.py (as below).
     • Published MQTT topics::
-    	agent : agent/logger status
-    	c3 : current status of REST comms from agent to C3
-    	output: current agent output (broker retained)
-    	submit_status : when active, lists topic to publish test cmd
+        agent : agent/logger status
+        c3 : current status of REST comms from agent to C3
+        output: current agent output (broker retained)
+        submit_status : when active, lists topic to publish test cmd
         last_job : last job seen by the sut agent (broker retained)
 
-* ./code/start_submit_agents
+* ./code/agent_healthcheck.py
+    • Uses a simple MQTT subscribe poll on the <sut>/agent topic.
+        • This is the current agent status.
+        • This is a looping timer thread that runs parallel to agent logging
+        • If agent_entrypoint hangs or terminates/crashes, the container health 
+        will report as unhealthy.
+    • Runs at a set interval as defined within init_agent_cntnrs
+        • This is directly relative to the agent status timer period.
+        • Status timer period should overlap with healthcheck interval
+        and timeout.  
+
+* ./code/start_submit_agents.py
     • Runs on testflinger-cli.
     • Starts lightweight sut agents, similar to start_sut_agents.
     • The "submit_status" topic will list instructions if the submit agent is ready.
@@ -54,8 +97,8 @@ Project notes and files of interest
     • Subscribed MQTT topics::
         submit : listen for mqtt test_cmd message, initiate job.
 
-* ./code/01_run_sut_agents
-    • Starts sut agents on testflinger-agent boot.
+* ./code/01_run_sut_agents.sh
+    • Starts init_agent_cntrs via init on tf-agent.
 
 * ./code/01_run_submit_agents
     • Starts submit agents on testflinger-cli boot.
@@ -79,10 +122,33 @@ Project notes and files of interest
     	 reroll.sh : completely destroy stack, git pull and redeploy
                      (git repo optional)
 
-* Currently, sut agents are running in subprocess instances, with a child logging thread.
+* ./code/start_sut_agents (depreciated)
+    • Runs on testflinger-agent.
+    • Starts all agents, and performs logging.
+    • Transmits agent output to stack MQTT broker.
+    • Logs agent output /var/log/sut-agent within testflinger-agent.
+    • Developer notes and aspirations within source file.
+    • Published MQTT topics::
+        agent : agent/logger status
+        c3 : current status of REST comms from agent to C3
+        output: current agent output (broker retained)
+        submit_status : when active, lists topic to publish test cmd
+        last_job : last job seen by the sut agent (broker retained)
 
-* Under development (assesment); moving to Docker containers for agents, via Docker api (and/or discrete containers via compose). This may allow increased functionality with isolated disk access and the like. These would expand the existing docker stack. It shouldn't be too difficult to integrate the existing logging/mqtt/etc instrumentation into something that executes within these sut agent containers (and/or running python in the container entrypoint file).
+Portainer notes
+=====================
+This setup yields an HTML5 web interface with realtime log viewing, console and shell access along with start/restart/stop for all containers. This interface checks nearly all of the boxes for container and agent specific management and information.
 
+* Portainer access and config, as in Needham:
+    • Access via http/s
+        • https://10.245.128.15 (Needham)
+        • Login with admin (request temp PW).
+            • Will move to LDAP in the future.
+    • Allows for centralized:
+        • Start/stop/restarting of containers.
+        • Accessing of console, logs (sut output) and shell.
+    • Also reports container healthchecks.
+        • Facilitated via agent_entrypoint and agent_healthcheck.
 
 MQTT notes and useage
 =====================
@@ -113,14 +179,16 @@ MQTT notes and useage
 * As a suppliment to MQTT, one could integrate REST calls via CoAP. Called inline in the same fashion as MQTT publish. A 'testflinger-rest' container could be a CoAP server (if necessary).
 
 
-
 Deploying Stack
 ===============
+Utilizes single-shot deployment after installing some pre-reqs on the host system.
+    • Will create and start all containers using Docker Compose (for base) followed by the API (for agents).
 
 Deploy and configure Docker host
 --------------------------------
 Deploy 18.04+ host via MAAS.
 After host is deployed, setup prerequisites:
+    • Much of these steps will be moved to a conveince bash script.
 
 * Update system::
     sudo apt update
