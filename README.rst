@@ -11,12 +11,14 @@ tf-agent
 -----------------
 Creates, starts and coordinated SUT agent containers. 
     • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
-    • Runs nested Docker to enable containers to be created and spun up via the Docker API at tf-agent startup.
+    • Runs nested Docker to enable containers to be created and spun up via the 
+     Docker API at tf-agent startup.
         • Performs agent creation and management.
     • On first startup, will create agent image and create each agent container.
-    • Uses the Docker daemon from the base Docker host (passes thru /var/run/docker.socket).
+    • Uses the Docker daemon from the base Docker host (passes thru /var/run/
+     docker.sock).
 
-[_sut_agent_]
+(sut_)
 ----------------
 Discrete container for each SUT agent. Runs testflinger-agent.
     • One container per sut agent.
@@ -51,21 +53,21 @@ Portainer container for managing the stack and related agents.
 
 Files of interest and project notes
 ===================================
-* ./code/init_agent_cntnrs.py
-    • Utilizes the Python Docker SDK to enable containers to be created 
-    and spun up via the Dockerd API at tf-agent startup.
+* ./code/init_agent_cntnrs
+    • Utilizes the Python Docker sdk to enable containers to be created 
+     and spun up via the dockerd api at tf-agent startup.
     • Creates all sut container properties and attributes.
-        • Image creation (streams build.
+        • Image creation (streams build).
         • Network and network config.
         • Host config with defined mounts for all files.
             • Mounts are used for consistent scaling across many containers.
         • Agent healthcheck (using MQTT).
     • Containers instantiated via Iterating over the sut conf dir in the
-    project root.
+     project root.
         • Agent container image is created if it doesn't exist.
         • Agent containers are created if they do not exist.
 
-* ./code/agent_entrypoint.py
+* ./code/agent_entrypoint
     • Loaded at agent container startup.
     • Runs custom threaded subprocess pipe instrumentation.
           • Logging to stdout, file and MQTT.
@@ -78,32 +80,47 @@ Files of interest and project notes
         submit_status : when active, lists topic to publish test cmd
         last_job : last job seen by the sut agent (broker retained)
 
-* ./code/agent_healthcheck.py
+* ./code/agent_healthcheck
     • Uses a simple MQTT subscribe poll on the <sut>/agent topic.
         • This is the current agent status.
         • This is a looping timer thread that runs parallel to agent logging
         • If agent_entrypoint hangs or terminates/crashes, the container health 
-        will report as unhealthy.
+         will report as unhealthy.
     • Runs at a set interval as defined within init_agent_cntnrs
         • This is directly relative to the agent status timer period.
         • Status timer period should overlap with healthcheck interval
-        and timeout.  
+         and timeout.
+    • Notes on the agent status reporting for the healthcheck:
+        • Relies on the fact that the logging thread is the parent
+         of the status thread.
+            • Status child thread sets daemon=True, so if/when the parent
+             thread fails, the child will follow suit and 'ok' messages
+             will no longer be sent.
+        • Testing frequency of lines of output is problematic b/c output varies
+         in cadence depending on the agent function being performed.
+            • Likewise with monitoring log file growth.
+            • Using a looping thread timer allows for a 
+        • Healthcheck parameters in init_agent_cntnrs detail:
+            • timeout should be => than status timer tperiod (or)
+            • retries should be increased if timeout donesn't cover
+             status timer tperiod.
 
-* ./code/start_submit_agents.py
+* ./code/start_submit_agents
     • Runs on testflinger-cli.
     • Starts lightweight sut agents, similar to start_sut_agents.
     • The "submit_status" topic will list instructions if the submit agent is ready.
-    • These agents listen for test submissions via MQTT, will then start the appropriate job. See MQTT notes below for useage.
+    • These agents listen for test submissions via MQTT, will then start
+     the appropriate job. See MQTT notes below for useage.
     • Subscribed MQTT topics::
         submit : listen for mqtt test_cmd message, initiate job.
 
-* ./code/01_run_sut_agents.sh
+* ./code/01_run_sut_agents
     • Starts init_agent_cntrs via init on tf-agent.
 
 * ./code/01_run_submit_agents
     • Starts submit agents on testflinger-cli boot.
 
-* ./code/export_ssh_pubkey.py
+* ./code/export_ssh_pubkey (and export_ssh_pubkey_agnt)
     • Pushes ssh keys to specified stack MAAS host for maas-cli api.
     • Runs on container boot, will not push key if it already exists.
 
@@ -111,7 +128,10 @@ Files of interest and project notes
     • Reference device agent file to facilitate job pushing via MQTT.
 
 * ./tf-entrypoint
-    • Runs on testflinger-agent and testflinger-cli.
+    • Runs on testflinger-agent.
+    • Exports ssh keys and starts init
+
+* ./container-entrypoint
     • Starts appropriate microservices, see below for more info.
 
 * ./tools/*
@@ -153,7 +173,8 @@ This setup yields an HTML5 web interface with realtime log viewing, console and 
 MQTT notes and useage
 =====================
 * Grab a MQTT client, MQTT Explorer recommended.
-    • This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
+    • This provides an excellent top-level view of all MQTT clients and topics within
+     the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
 
 * Point the client MQTT broker, as in Needham (stack broker settings):
     • Protocol: mqtt://
@@ -319,12 +340,15 @@ https://github.com/compose-spec/compose-spec/blob/master/spec.md
 Docker Build Ref (Dockerfile):
 https://docs.docker.com/engine/reference/builder/
 
+Docker Python SDK:
+https://docker-py.readthedocs.io/en/stable/#
+
 Phusion Baseimage:
 https://github.com/phusion/baseimage-docker
+
+Portainer:
+https://www.portainer.io
 
 MQTT Eclipse Mosquitto:
 https://github.com/eclipse/mosquitto
 https://hub.docker.com/_/eclipse-mosquitto/
-
-CoAP Protocol:
-https://coap.technology
