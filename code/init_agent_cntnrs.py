@@ -274,7 +274,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
                 print(line)
 
     print('==============================')
-    print('[Building agent cntnr image]\n')
+    print('[ building agent cntnr image ]\n')
     try:
         stream_build()
     except docker.errors.BuildError:
@@ -282,7 +282,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
         sys.exit()
     else:
         print()
-        print('[Validating agent image]')
+        print('[ validating agent image ]')
         try:
             client.images.get(img_name)
         except docker.errors.ImageNotFound:
@@ -333,7 +333,7 @@ def main():
         agnt_net = init_network(client, net_name)
 
     print('==============================')
-    print('[Loading agent containers]')
+    print('[ loading agent containers ]')
 
     # iterate over agent conf dir to init agent cntnrs
     for idx, sut_conf in enumerate(conf_list):

@@ -28,7 +28,6 @@ import platform
 import requests
 import logging
 import signal
-import atexit
 import shlex
 import time
 import sys
@@ -81,29 +80,38 @@ class LogAgent(Thread):
 
     def config_pipe_logging(self):
         """Configure loggers."""
+        # def overwrite_rotator(source, dest):
+        def overwrite_rotator(*args):
+            # ignore dest log file
+            log_f = args[0]
+            # zero out log file
+            with open(log_f, 'w') as file:
+                file.seek(0)
+                file.truncate()
+
         stdout_handler = logging.StreamHandler(sys.stdout)
         stdout_handler.setLevel(logging.INFO)
         file_formatter = logging.Formatter(
             '%(message)s')
         file_handler = RotatingFileHandler(
             self.log_path,
-            mode='a',
-            backupCount=2,
-            maxBytes=100000000)  # 100mb
+            backupCount=1,
+            maxBytes=300000000)  # 300mb
         file_handler.setFormatter(file_formatter)
         file_handler.setLevel(logging.DEBUG)
-        # setup base/root logger
+        # use custom file rotator
+        file_handler.rotator = overwrite_rotator
+        # setup base logger
         logger = logging.getLogger()
-        # set root logging level
         logger.setLevel(logging.NOTSET)
-        # add handlers for out, err
+        # add handlers for stream, file
         logger.addHandler(stdout_handler)
         logger.addHandler(file_handler)
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
         def on_connect(*args):
-            # del args  # args unused
+            del args  # args unused
             _message = 'online'
             for idx, _topic in enumerate(topics):
                 if idx:
@@ -227,8 +235,8 @@ class LogAgent(Thread):
 def load_sut_agent(conf_path, log_dir):
     """Load specified SUT agent."""
     def handle_exit(*args):
-        # del args  # args unused
-        print('\nTerminating agent...')
+        del args  # args unused
+        print('\n\n[ terminating agent ]')
         exit_event.set()
 
         try:
@@ -238,9 +246,10 @@ def load_sut_agent(conf_path, log_dir):
 
     def define_signals():
         # provide process cleanup on terminate
-        atexit.register(handle_exit)
         signal.signal(signal.SIGTERM, handle_exit)
+        signal.signal(signal.SIGQUIT, handle_exit)
         signal.signal(signal.SIGINT, handle_exit)
+        signal.signal(signal.SIGHUP, handle_exit)
 
     sut = PurePath(conf_path).stem
     log_path = Path(
