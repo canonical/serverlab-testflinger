@@ -80,7 +80,6 @@ class LogAgent(Thread):
 
     def config_pipe_logging(self):
         """Configure loggers."""
-        # def overwrite_rotator(source, dest):
         def overwrite_rotator(*args):
             # ignore dest log file
             log_f = args[0]
@@ -289,7 +288,6 @@ def main():
     # config dir of sut confs
     conf_dir = Path('/', 'data', 'testflinger-agent', 'sut')
     log_dir = PurePath('/', 'var', 'log')
-    # move to cntnr name?
     hostname = platform.node()
     conf_path = PurePath(
         conf_dir, hostname).with_suffix('.conf')

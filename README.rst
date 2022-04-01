@@ -18,7 +18,7 @@ Creates, starts and coordinated SUT agent containers.
     • Uses the Docker daemon from the base Docker host (passes thru /var/run/
      docker.sock).
 
-(sut_)
+<sut_name_>
 ----------------
 Discrete container for each SUT agent. Runs testflinger-agent.
     • One container per sut agent.
@@ -62,7 +62,7 @@ Files of interest and project notes
         • Host config with defined mounts for all files.
             • Mounts are used for consistent scaling across many containers.
         • Agent healthcheck (using MQTT).
-    • Containers instantiated via Iterating over the sut conf dir in the
+    • Containers instantiated via iterating over the sut conf dir in the
      project root.
         • Agent container image is created if it doesn't exist.
         • Agent containers are created if they do not exist.
@@ -82,8 +82,8 @@ Files of interest and project notes
 
 * ./code/agent_healthcheck
     • Uses a simple MQTT subscribe poll on the <sut>/agent topic.
-        • This is the current agent status.
-        • This is a looping timer thread that runs parallel to agent logging
+        • Agent status is a looping timer thread that runs parallel to
+         agent logging.
         • If agent_entrypoint hangs or terminates/crashes, the container health 
          will report as unhealthy.
     • Runs at a set interval as defined within init_agent_cntnrs
@@ -154,6 +154,88 @@ Files of interest and project notes
         output: current agent output (broker retained)
         submit_status : when active, lists topic to publish test cmd
         last_job : last job seen by the sut agent (broker retained)
+
+
+Stack Operations
+================
+* Starting and stopping the entire stack (including SUT agents):
+    • Log into the Docker host and execute (as appropriate):
+        docker-compose start
+        docker-compose restart
+        docker-compose stop
+    • Alernatively, reboot the Docker host.
+        • Stack will stop cleanly on shutdown and start on boot.
+
+* Starting and stopping SUT agents and/or individual stack containers:
+    • Log into the Docker host OR tf-agent (for SUT agents) and execute:
+        • Starting/Restarting/Stopping from shell::
+            docker start <container name>
+            docker restart <container name>
+            docker stop <container name>
+        • Starting/Restarting/Stopping from Portainer works as well.
+            • Done via GUI; refer to Portainer notes below.
+
+* Checking container logs:
+    • On the shell of the Docker host::
+        docker logs <container name>
+        docker-compose logs (for contiguous view of stack container logs)
+    • In Portainer (in the containers context):
+        • Click on the '<page icon>' (leftmost icon) under 'Quick actions.'
+        OR
+        • Click on the container name and select '<page icon> Logs.'
+
+* Entering a container's console/shell:
+    • On the shell of Docker host::
+        docker exec -it <container name> bash
+    • In Portainer (in the containers context):
+        • Click on the '>_' icon under quick actions.
+        OR
+        • Click on the container name and select '>_ Console.'
+
+* Changing/updating an agent's config:
+    • Enter the agent container's console (either method as above):
+        • Agent conf file path is::
+            /data/testflinger-agent/sut/<sut_name>.conf
+        • Edit the file, save and restart the agent container (as above).
+            • Conf file will reload on restart.
+
+* Adding an agent container:
+    • On the Docker host, in the path::
+        /opt/testflinger-docker/sut
+    • Create (or copy existing and change) the following
+     files within this dir:
+        • Agent SUT conf::
+         <sut_name>.conf
+        • Agent SUT yaml::
+         <sut_name>.yaml
+        • Agent snappy yaml::
+         <sut_name>_snappy.yaml
+        • It is recommended to copy another sut's agent files and...
+            • '<sut_name>.conf'
+                • Replace all instances of the sut name.
+            • '<sut_name>.yaml'
+                • Replace the single instance of the sut name. 
+            • '<sut_name>_snappy.yaml'
+                • Replace each instance of:
+                    • device_ip
+                    • node_id
+                    • node_name
+                    • agent_name
+                    • secure_id
+    • Next, run the following command to sort these files into the relative
+     subdirs to load in the appropriate stack containers
+     RUN FROM DOCKER ROOT (/opt/testflinger-docker)::
+         ./tools/parse_tf_files.sh
+    • Finally:
+        • Restart the 'tf-agent' and 'tf-cli' containers.
+            • This will create the container(s) using the sut name(s) (tf-agent)
+            • Abdon statrup. 
+
+* Handling a healthcheck event:
+    SUT agent containers are exclusively running healthcheck functions.
+        • If the healthy flag changes to unhealthy, simply restart the flagged container.
+        • The current healthcheck process uses MQTT to publish from within the LogAgent
+
 
 Portainer notes
 =====================
@@ -273,8 +355,6 @@ Files that need to be updated:
 * Optional updates (uses default parameters)::
     ./tools/deploy_stack.sh
 
-* After this step, run ./tools/parse_tf_files.sh
-
 Edit docker-compose.yaml file to match environment:
 ---------------------------------------------------
 * Change the parent network parameters to match the environment. Keeping the default bridge parameters will work in any standard environment.
@@ -307,6 +387,11 @@ Modify/Create SUT files:
     server_address: http://10.245.128.10:8000 (use actual api ip)
 
 * Make sure the snappy-device-agents yaml files are appended with _snappy if you want the deployment to automatically transfer them from the sut directory to the containers. You can alternatively create the config files inside the container post-deployment.
+
+Populate SUT conf dirs for deployment (required):
+-------------------------------------------------
+* Run::
+     ./tools/parse_tf_files.sh
 
 
 Deploy Compose Stack:
