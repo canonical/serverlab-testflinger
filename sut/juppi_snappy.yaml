@@ -1,0 +1,8 @@
+device_ip: 10.245.130.56
+node_id: 7ar4g6
+node_name: juppi
+maas_user: testflinger_a
+agent_name: juppi
+env:
+    HEXR_DEVICE_SECURE_ID: 56qNSjF3mVkNja469w8jEd
+    DEVICE_IP: 10.245.130.56

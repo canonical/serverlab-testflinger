@@ -1,0 +1,8 @@
+device_ip: 10.245.130.59
+node_id: m7m7r8
+node_name: cappy
+maas_user: testflinger_a
+agent_name: cappy
+env:
+    HEXR_DEVICE_SECURE_ID: Urvp9vmfPXRUR9vpPiMdSc
+    DEVICE_IP: 10.245.130.59

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.58
+node_id: fcmq3a
+node_name: kongfu
+maas_user: testflinger_a
+agent_name: kongfu
+env:
+    HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
+    DEVICE_IP: 10.245.130.58

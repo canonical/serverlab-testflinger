@@ -1,0 +1,8 @@
+device_ip: 10.245.130.51
+node_id: pywmpt
+node_name: hinopio
+maas_user: testflinger_a
+agent_name: hinopio
+env:
+    HEXR_DEVICE_SECURE_ID: wb86hpPniePkJS9unK2i8T
+    DEVICE_IP: 10.245.130.51

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.55
+node_id: bp73gg
+node_name: hardhat
+maas_user: testflinger_a
+agent_name: hardhat
+env:
+    HEXR_DEVICE_SECURE_ID: XiT23fjMT2huh2LnFifKZA
+    DEVICE_IP: 10.245.130.55

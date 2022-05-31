@@ -1,0 +1,8 @@
+device_ip: 10.245.130.59
+node_id: 8td7f3
+node_name: mouser
+maas_user: testflinger_a
+agent_name: mouser
+env:
+    HEXR_DEVICE_SECURE_ID: 6o5Zupba9ppSB8LL3BRycZ
+    DEVICE_IP: 10.245.130.59

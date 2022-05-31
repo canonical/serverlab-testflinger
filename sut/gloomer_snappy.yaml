@@ -1,0 +1,8 @@
+device_ip: 10.245.130.54
+node_id: 7yf7a8
+node_name: gloomer
+maas_user: testflinger_a
+agent_name: gloomer
+env:
+    HEXR_DEVICE_SECURE_ID: 5HpvCcPMQw3qQeDKiddVCC
+    DEVICE_IP: 10.245.130.54

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.59
+node_id: y4dyts
+node_name: manta
+maas_user: testflinger_a
+agent_name: manta
+env:
+    HEXR_DEVICE_SECURE_ID: tAPKRvoQRy48hVDwxMJxKC
+    DEVICE_IP: 10.245.130.59

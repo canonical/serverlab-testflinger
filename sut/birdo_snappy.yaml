@@ -1,0 +1,8 @@
+device_ip: 10.245.130.50
+node_id: ndm3s6
+node_name: birdo
+maas_user: testflinger_a
+agent_name: birdo
+env:
+    HEXR_DEVICE_SECURE_ID: AgRZZycCv37CuFTMXjvpJT
+    DEVICE_IP: 10.245.130.50

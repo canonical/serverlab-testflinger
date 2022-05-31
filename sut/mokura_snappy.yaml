@@ -1,8 +1,8 @@
 device_ip: 10.245.130.41
 node_id: yxrean
-node_name: makoura
+node_name: mokura
 maas_user: testflinger_a
-agent_name: makoura
+agent_name: mokura
 env:
     HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
     DEVICE_IP: 10.245.130.41
