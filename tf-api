@@ -37,7 +37,7 @@ RUN mkdir -p /var/log/testflinger \
 # clone src in volume dir
 WORKDIR /data/testflinger
 RUN git init \
-  && git remote add origin https://git.launchpad.net/testflinger \
+  && git remote add origin https://github.com/canonical/testflinger \
   && git fetch origin \
   && git checkout -b master --track origin/master
 

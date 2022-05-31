@@ -108,7 +108,7 @@ RUN mkdir /var/log/sut-agent \
 # clone tf-agent src in volume dir
 WORKDIR /data/testflinger-agent
 RUN git init \
-  && git remote add origin https://git.launchpad.net/testflinger-agent \
+  && git remote add origin https://github.com/canonical/testflinger-agent \
   && git fetch origin \
   && git checkout -b master --track origin/master
 
