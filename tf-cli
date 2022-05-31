@@ -85,7 +85,7 @@ RUN mkdir /var/log/submit-agent \
 # clone src in volume dir
 WORKDIR /data/testflinger-cli
 RUN git init \
-  && git remote add origin https://github.com/canonical/testflinger-cli \
+  && git remote add origin https://github.com/canonical/testflinger-cli.git \
   && git fetch origin \
   && git checkout -b master --track origin/master
 
