@@ -110,7 +110,7 @@ WORKDIR /data/testflinger-agent
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger-agent.git \
   && git fetch origin \
-  && git checkout -b master --track origin/master
+  && git checkout -b main --track origin/main
 
 # copy tf-agent config files
 COPY ./code/testflinger-agent.conf /data/testflinger-agent
@@ -122,9 +122,9 @@ COPY ./sut/agent/* /data/testflinger-agent/sut/
 # clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
 RUN git init \
-  && git remote add origin https://git.launchpad.net/snappy-device-agents \
+  && git remote add origin https://github.com/canonical/snappy-device-agents.git \
   && git fetch origin \
-  && git checkout -b master --track origin/master
+  && git checkout -b main --track origin/main
 
 # copy snappy-agent sut files
 RUN mkdir ./sut/

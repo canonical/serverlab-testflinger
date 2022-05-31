@@ -39,7 +39,7 @@ WORKDIR /data/testflinger
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
-  && git checkout -b master --track origin/master
+  && git checkout -b main --track origin/main
 
 # Remove gunicorn from install scripts
 # RUN sed -i '22 s/^/#/' ./setup.py

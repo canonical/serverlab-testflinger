@@ -87,7 +87,7 @@ WORKDIR /data/testflinger-cli
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger-cli.git \
   && git fetch origin \
-  && git checkout -b master --track origin/master
+  && git checkout -b main --track origin/main
 
 # copy sut files
 RUN mkdir /data/testflinger-cli/sut/
