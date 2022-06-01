@@ -57,7 +57,7 @@ cp $SNAPPY_F $SNAPPY_DIR
 CLI_F=./sut/!(*snappy*).y*ml
 CLI_DIR=./sut/cli
 if ! test -d $CLI_DIR; then
-	echo "> creating snappy-agent directory"
+	echo "> creating cli directory"
 	mkdir $CLI_DIR
 fi
 echo "> copying agent cli files"
