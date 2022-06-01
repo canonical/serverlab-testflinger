@@ -241,7 +241,7 @@ class InitAgent:
         except docker.errors.NotFound:
             cntnr = self.create_container()
             # throttle calls
-            time.sleep(1)
+            time.sleep(3)
             start_cntnr(cntnr.get('Id'))
         else:
             start_cntnr(cntnr.id)
