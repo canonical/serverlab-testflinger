@@ -169,7 +169,7 @@ services:
       - cli
     image: portainer/portainer-ce:2.9.3
     restart: unless-stopped
-    container_name: portainer
+    container_name: nh-portainer
 
     networks:
       needham_int:
@@ -179,7 +179,7 @@ services:
     expose:
       - 8000
       - 9443
-    hostname: portainer
+    hostname: nh-portainer
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -190,7 +190,7 @@ services:
       - cli
     image: jenkins/jenkins:lts
     restart: unless-stopped
-    container_name: jenkins
+    container_name: nh-jenkins
     privileged: true
 
     networks:
@@ -201,7 +201,7 @@ services:
     expose:
       - 8080
       - 50000
-    hostname: jenkins
+    hostname: nh-jenkins
 
     volumes:
       - jenkins_data:/var/jenkins_home
