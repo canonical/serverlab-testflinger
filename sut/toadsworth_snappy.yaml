@@ -1,0 +1,8 @@
+device_ip: 10.245.130.67
+node_id: cbbhky
+node_name: toadsworth
+maas_user: testflinger_a
+agent_name: toadsworth
+env:
+    HEXR_DEVICE_SECURE_ID: gYGHh36Y2w3wtQ3CeqN4Jh
+    DEVICE_IP: 10.245.130.67
