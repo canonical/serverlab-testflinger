@@ -166,10 +166,10 @@ services:
 
   portainer:
     depends_on:
-      - agent
+      - cli
     image: portainer/portainer-ce:2.9.3
     restart: unless-stopped
-    container_name: tf-portainer
+    container_name: portainer
 
     networks:
       needham_int:
@@ -179,11 +179,33 @@ services:
     expose:
       - 8000
       - 9443
-    hostname: tf-portainer
+    hostname: portainer
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  jenkins:
+    depends_on:
+      - cli
+    image: jenkins/jenkins:lts
+    restart: unless-stopped
+    container_name: jenkins
+    privileged: true
+
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.16
+      # docker_int:
+      #   ipv4_address: 10.172.10.16
+    expose:
+      - 8080
+      - 50000
+    hostname: jenkins
+
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   # docker_int:
@@ -213,6 +235,7 @@ volumes:
   agent_log: {}
   cli_data: {}
   portainer_data: {}
+  jenkins_data: {}
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
