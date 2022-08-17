@@ -239,7 +239,6 @@ class InitAgent:
         try:
             cntnr = self.client.containers.get(self.sut)
         except docker.errors.NotFound:
-            time.sleep(2)
             cntnr = self.create_container()
             # throttle calls
             time.sleep(3)
