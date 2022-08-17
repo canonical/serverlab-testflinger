@@ -8,10 +8,10 @@ import sys
 
 def check_status(message, agnt_cond, outpt_cond, ok):
     if any(cond in message for cond in agnt_cond):
-        ok = ok + 1
+        ok = True
 
     if any(cond in message for cond in outpt_cond):
-        ok = ok - 1
+        ok = False
 
     return ok
 
@@ -28,8 +28,7 @@ def main():
     # (positive) conditions for agent topic
     agnt_cond = ('online', 'ok')
     # (negative) conditions for output topic
-    outpt_cond = ('TESTFLINGER-DEVICE-OFFLINE')
-    # conditions = (*agent_cond, *output_cond)
+    outpt_cond = ('TESTFLINGER-DEVICE-OFFLINE',)
 
     agnt_msg = subscribe.simple(agnt_topic,
                                 hostname=mqtt_broker,
@@ -42,10 +41,10 @@ def main():
                                  keepalive=keepalive)
 
     messages = (agnt_msg, outpt_msg)
-    ok = 0
+    ok = False
 
     for message in messages:
-        check_status(
+        ok = check_status(
             (message.payload).decode('UTF-8'), agnt_cond, outpt_cond, ok)
 
     if ok:
