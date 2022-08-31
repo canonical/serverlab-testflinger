@@ -46,6 +46,14 @@ RUN useradd -ms /bin/bash ubuntu
 # add to sudoers
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# add SSH access
+RUN rm -f /etc/service/sshd/down \
+  && /etc/my_init.d/00_regen_ssh_host_keys.sh > /dev/null 2>&1
+
+# prepare ssh key ops
+COPY ./ssh/authorized_keys /tmp/authorized_keys
+COPY ./code/export_ssh_pubkey.py /opt/export_ssh_pubkey.py
+
 # gen ssh keys, update pubkey, import auth_keys
 USER ubuntu
 # generate ssh key and insert real hostname into pubkey
