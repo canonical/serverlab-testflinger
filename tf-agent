@@ -168,7 +168,7 @@ RUN chmod 755 /etc/my_init.d/*
 RUN mkdir /data/docker
 COPY ./code/init_agent_cntnrs.py /opt/init_agent_cntnrs.py
 COPY ./tf-agent_cntnr /data/docker/Dockerfile
-COPY ./ssh/authorized_keys /data/authorized_keys
+COPY ./ssh/authorized_keys /data/docker/authorized_keys
 
 # docker auth
 RUN docker login -u alanec -p 32aafe13-c040-4a93-a0e2-848f5468b4c1
