@@ -177,7 +177,6 @@ services:
       # docker_int:
       #   ipv4_address: 10.172.10.15
     expose:
-      - 8000
       - 9443
     hostname: nh-portainer
 
@@ -191,7 +190,6 @@ services:
     image: jenkins/jenkins:lts
     restart: unless-stopped
     container_name: nh-jenkins
-    privileged: true
 
     networks:
       needham_int:
