@@ -40,12 +40,13 @@ RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
   && git checkout -b main --track origin/main
+  && git checkout c1a1d6ab6de04dca3fcfd8fac3db962f0c35272e
 
 # Remove gunicorn from install scripts
 # RUN sed -i '22 s/^/#/' ./setup.py
 
 # install gunicorn threading deps
-RUN pip install gevent packaging flask
+RUN pip install gevent packaging
 
 # run setup
 RUN ./setup.py install
