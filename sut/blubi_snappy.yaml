@@ -1,0 +1,8 @@
+device_ip: 10.245.130.68
+node_id: kk3pfr
+node_name: blubi
+maas_user: testflinger_a
+agent_name: blubi
+env:
+    HEXR_DEVICE_SECURE_ID: hz6sDsz3JuQfnbRGKyNFY8
+    DEVICE_IP: 10.245.130.68
