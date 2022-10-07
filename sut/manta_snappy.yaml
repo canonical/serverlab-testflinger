@@ -1,4 +1,4 @@
-device_ip: 10.245.130.59
+device_ip: 10.245.130.64
 node_id: y4dyts
 node_name: manta
 maas_user: testflinger_a

@@ -1,4 +1,4 @@
-job_queue: manta
+job_queue: cloaker
 provision_data:
   distro: focal
 test_data:

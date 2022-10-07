@@ -332,8 +332,6 @@ After host is deployed, setup prerequisites:
     docker-compose --version
 
 * Pull repo from Launchpad or Github::
-    git clone https://git.launchpad.net/~alanec/+git/testflinger-docker
-    (or)
     git clone https://github.com/hum4n0id/testflinger-docker
 
 

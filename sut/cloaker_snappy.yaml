@@ -1,0 +1,8 @@
+device_ip: 10.245.130.63
+node_id: sggdpd
+node_name: cloaker
+maas_user: testflinger_a
+agent_name: cloaker
+env:
+    HEXR_DEVICE_SECURE_ID: 2xQsJUuCdb3Pmj4XDFfEvc
+    DEVICE_IP: 10.245.130.63

@@ -5,7 +5,7 @@ ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
+ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agents:$PATH
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
@@ -31,6 +31,7 @@ RUN apt-get update \
     python3-virtualenv \
     python3-requests \
     python3-click \
+    openjdk-11-jre \
     maas-cli
 
 # clean up APT
@@ -40,11 +41,13 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN pip3 install requests_oauthlib paho-mqtt
 
-# add ubuntu user
-RUN useradd -ms /bin/bash ubuntu
+# add users
+RUN useradd -ms /bin/bash ubuntu \
+  && useradd -ms /bin/bash jenkins
 
 # add to sudoers
-RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+  && echo 'jenkins ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # add SSH access
 RUN rm -f /etc/service/sshd/down \
@@ -57,14 +60,21 @@ COPY ./authorized_keys /tmp/authorized_keys
 USER ubuntu
 # generate ssh key and insert real hostname into pubkey
 RUN ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/id_rsa \
-  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /home/ubuntu/.ssh/id_rsa.pub
+  && sed -i 's|@buildkitsandbox|@testflinger-agent-cntnr|gI' /home/ubuntu/.ssh/id_rsa.pub
 # import auth_keys
 RUN cat /tmp/authorized_keys >> /home/ubuntu/.ssh/authorized_keys
+
+USER jenkins
+# generate ssh key and insert real hostname into pubkey
+RUN ssh-keygen -t rsa -N '' -f /home/jenkins/.ssh/id_rsa \
+  && sed -i 's|@buildkitsandbox|@testflinger-agent-cntnr|gI' /home/jenkins/.ssh/id_rsa.pub
+# import auth_keys
+RUN cat /tmp/authorized_keys >> /home/jenkins/.ssh/authorized_keys
 
 # root must be last
 USER root
 RUN ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa \
-  && sed -i 's|@buildkitsandbox|@testflinger-agent|gI' /root/.ssh/id_rsa.pub
+  && sed -i 's|@buildkitsandbox|@testflinger-agent-cntnr|gI' /root/.ssh/id_rsa.pub
 RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
   && rm -f /tmp/authorized_keys
 
@@ -72,25 +82,34 @@ RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
 RUN mkdir -p /var/log/testflinger \
   && chmod 755 /var/log/testflinger
 
-# clone tf-agent src in volume dir
 WORKDIR /data/testflinger-agent
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger-agent.git \
   && git fetch origin \
   && git checkout -b main --track origin/main
 
-# clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
 RUN git init \
   && git remote add origin https://github.com/canonical/snappy-device-agents.git \
   && git fetch origin \
   && git checkout -b main --track origin/main
 
+# install tf-cli standalone (no file mapping required)
+WORKDIR /data/
+RUN git clone https://github.com/canonical/testflinger-cli.git
+
 # run tf-agent setup
-# USER ubuntu
 WORKDIR /data/testflinger-agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
   && python3 setup.py install
+
+#run tf-cli setup
+WORKDIR /data/testflinger-cli
+RUN echo && echo "Running testflinger-cli setup:" \
+  && virtualenv -p python3 env \
+  && . env/bin/activate \
+  && python3 setup.py install \
+  && deactivate
 
 #run snappy-agent setup
 WORKDIR /data/testflinger-agent
@@ -103,11 +122,14 @@ RUN echo && echo "Running snappy-device-agents setup:" \
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chmod 775 /data/testflinger-agent \
+  && chown -R ubuntu:ubuntu /data/testflinger-cli \
+  && chmod 775 /data/testflinger-cli \
   && chown -R ubuntu:ubuntu /data/snappy-device-agents \
   && chmod 775 /data/snappy-device-agents
 
 # set user passwords (temp pw)
-RUN echo "ubuntu:ch4ng3m3" | chpasswd
+RUN echo "ubuntu:ch4ng3m3" | chpasswd \
+  && echo "jenkins:ch4ng3m3" | chpasswd
 
 # set user passwords (secure method)
 # RUN --mount=type=secret,id=tf_secret,required=true chpasswd < /run/secrets/tf_secret
