@@ -209,14 +209,16 @@ services:
       - api
     # restart api server periodically
     image: docker
+    restart: unless-stopped
+    hostname: nh-watchdog
+
     volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
     command: [
       "/bin/sh",
       "-c",
-      "while true; do sleep 86400; docker restart tf-api; done"
+      "while true; do sleep 86400; docker restart tf-api; echo 'api restart' && done"
     ]
-    restart: unless-stopped
 
 networks:
   # docker_int:
