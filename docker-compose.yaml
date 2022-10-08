@@ -204,21 +204,22 @@ services:
     volumes:
       - jenkins_data:/var/jenkins_home
 
-  # watchdog:
-  #   depends_on:
-  #     - api
-  #   # restart api server periodically
-  #   image: docker
-  #   restart: unless-stopped
-  #   hostname: nh-watchdog
+  watchdog:
+    depends_on:
+      - api
+    image: docker
+    restart: unless-stopped
+    container_name: nh-watchdog
 
-  #   volumes: 
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   command: [
-  #     "/bin/sh",
-  #     "-c",
-  #     "while true; do sleep 86400; docker restart tf-api; echo 'api restart' && done"
-  #   ]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: [
+      "/bin/sh",
+      "-c",
+      "while true; do sleep 86400; \
+      docker restart tf-api; \
+      echo 'restarting tf-api' && done"]
 
 networks:
   # docker_int:

@@ -6,6 +6,8 @@ def testCMD =
     'ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP \
     /usr/bin/checkbox-cli run com.canonical.certification::usb'
 
+// def testCMDFile = 
+
 def yamlFile = 
     """
     job_queue: ${sutAgent}
@@ -41,10 +43,14 @@ pipeline {
                         echo 'job.yaml exists; overwriting'
                         sh 'rm /home/jenkins/job.yaml'
                     }
-                writeFile file: '/home/jenkins/job.yaml', text: yamlFile
+
+                    writeFile file: '/home/jenkins/job.yaml', text: yamlFile
+                    echo readFile('/home/jenkins/job.yaml')
+                    }
                 }
             }
         }
+
         stage('execute job') {
             steps {
                 script {
@@ -56,6 +62,7 @@ pipeline {
                 }
             }
         }
+
         stage('poll job output'){
             steps {
                 script {
@@ -63,6 +70,7 @@ pipeline {
                 }
             }
         }
+
         stage('parse job results'){
             steps {
                 script {
@@ -72,7 +80,7 @@ pipeline {
 
                     echo "Job exit status: ${testStatus}"
 
-                    if (testStatus){
+                    if (testStatus) {
                         error('Job FAILED!')
                     } else {
                         echo 'Job PASSED!'
