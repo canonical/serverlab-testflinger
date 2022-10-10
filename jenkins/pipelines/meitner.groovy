@@ -63,7 +63,7 @@ pipeline {
             }
         }
 
-        stage('poll job output'){
+        stage('poll job output') {
             steps {
                 script {
                     sh "${cmdPrefix} poll ${jobID}"
@@ -71,7 +71,7 @@ pipeline {
             }
         }
 
-        stage('parse job results'){
+        stage('parse job results') {
             steps {
                 script {
                     testStatus = sh(
