@@ -218,7 +218,7 @@ services:
       "/bin/sh",
       "-c",
       "while true; \
-      do sleep 86000; \
+      do sleep 86400; \
       echo 'Restarting tf-api @' `date`; \
       docker restart tf-api; \
       echo; \
