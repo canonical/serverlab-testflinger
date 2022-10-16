@@ -103,15 +103,19 @@ WORKDIR /data/testflinger-agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
   && python3 setup.py install
 
-#run tf-cli setup
+# run tf-cli setup
 WORKDIR /data/testflinger-cli
 RUN echo && echo "Running testflinger-cli setup:" \
   && python3 setup.py install
 
-#run snappy-agent setup
+# run snappy-agent setup
 WORKDIR /data/snappy-device-agents
 RUN echo && echo "Running snappy-device-agents setup:" \
   && python3 setup.py install
+
+# copy sru tests
+COPY ./code/sru/sru_01.sh /opt/sru_01.sh
+RUN chmod +x /opt/sru_01.sh
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \

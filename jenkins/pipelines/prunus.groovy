@@ -2,20 +2,26 @@ def sutAgent = 'prunus'
 
 def release = 'focal'
 
+def globalTimeout = 172800
+
+def outputTimeout = 172800
+
 def testCMD = 
     'ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP \
     /usr/bin/checkbox-cli run com.canonical.certification::usb'
 
-// def testCMDFile = 
+def testCMDFile = '/opt/sru_01.sh'
 
 def yamlFile = 
     """
     job_queue: ${sutAgent}
+    global_timeout: ${globalTimeout}
+    output_timeout: ${outputTimeout}
     provision_data:
       distro: ${release}
     test_data:
       test_cmds: |-
-        ${testCMD}
+        ${testCMDFile}
     """
 
 def cmdPrefix = 
@@ -46,7 +52,6 @@ pipeline {
 
                     writeFile file: '/home/jenkins/job.yaml', text: yamlFile
                     echo readFile('/home/jenkins/job.yaml')
-                    }
                 }
             }
         }

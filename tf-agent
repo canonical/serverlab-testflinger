@@ -141,14 +141,6 @@ WORKDIR /data/snappy-device-agents
 RUN echo && echo "Running snappy-device-agents setup:" \
   && python3 setup.py install
 
-# #run snappy-agent setup
-# WORKDIR /data/snappy-device-agents
-# RUN echo && echo "Running snappy-device-agents setup:" \
-#   && virtualenv -p python3 env \
-#   && . env/bin/activate \
-#   && python3 setup.py install \
-#   && deactivate
-
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chmod 775 /data/testflinger-agent \
