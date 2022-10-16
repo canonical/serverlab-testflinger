@@ -113,10 +113,6 @@ WORKDIR /data/snappy-device-agents
 RUN echo && echo "Running snappy-device-agents setup:" \
   && python3 setup.py install
 
-# copy sru tests
-COPY ./code/sru/sru_01.sh /opt/sru_01.sh
-RUN chmod +x /opt/sru_01.sh
-
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
   && chmod 775 /data/testflinger-agent \

@@ -116,6 +116,16 @@ class InitAgent:
         dst_hlthchk_path = PurePath('/',
                                     'opt',
                                     hlthchk_file)
+        # sru tests
+        sru_file = PurePath(
+            'sru_01').with_suffix('.sh')
+        src_sru_path = PurePath(dhost_path,
+                                'code',
+                                'sru',
+                                sru_file)
+        dst_sru_path = PurePath('/',
+                                'opt',
+                                sru_file)
         # agnt conf
         src_conf_path = PurePath(dhost_path,
                                  'sut',
@@ -174,7 +184,12 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_hlthchk_path),
                                    source=fspath(src_hlthchk_path),
-                                   read_only=False),
+                                   read_only=True),
+                # sru tests
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_sru_path),
+                                   source=fspath(src_sru_path),
+                                   read_only=True),
                 # unique mounts
                 # agnt conf
                 docker.types.Mount(type='bind',
