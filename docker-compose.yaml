@@ -123,8 +123,8 @@ services:
       # - /sys:/host/sys:ro
       # - /etc/os-release:/host/etc/os-release:ro
 
-    environment:
-      - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
+    # environment:
+    #   - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
     command: ["/opt/tf-entrypoint.sh"]
 
@@ -133,12 +133,6 @@ services:
     #     - SYS_PTRACE
     #   security_opt:
     #     - apparmor:unconfined
-
-    # healthcheck:
-    #   test: ["CMD", "ubuntu", "ping", "-h", "127.0.0.1", "--silent"]
-    #   interval: 3s
-    #   retries: 5
-    #   start_period: 30s
 
   cli:
     depends_on:
@@ -209,19 +203,22 @@ services:
       - api
     image: docker
     restart: unless-stopped
-    container_name: nh-restarter
+    container_name: tf-restarter
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+    # periodic execution (UTC 06:00)
     command: [
       "/bin/sh",
       "-c",
       "while true; \
-      do sleep 86400; \
-      echo 'Restarting tf-api @' `date`; \
-      docker restart tf-api; \
-      echo; \
+      do if [ `date +'%H'` -eq 6 ];
+          then echo 'restarting tf-api @' `date`;
+          docker restart tf-api;
+          echo;
+          sleep 3600;
+      fi; \
       done"]
 
 networks:

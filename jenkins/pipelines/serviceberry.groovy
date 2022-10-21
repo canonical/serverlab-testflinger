@@ -10,7 +10,9 @@ def testCMD =
     'ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP \
     /usr/bin/checkbox-cli run com.canonical.certification::usb'
 
-def testCMDFile = '/opt/sru_01.sh'
+def testCMDFileSRU = '/opt/sru_01.sh'
+
+def testCMDFileEGX = '/opt/egx_01.sh'
 
 def yamlFile = 
     """
@@ -21,7 +23,7 @@ def yamlFile =
       distro: ${release}
     test_data:
       test_cmds: |-
-        ${testCMDFile}
+        ${testCMDFileSRU}
     """
 
 def cmdPrefix = 

@@ -57,10 +57,10 @@ _run_retry() {
     done
 }
 # Install dependencies in the host environment
-echo "Installing necessary dependencies in the agent container..."
-echo Using Stable PPA
-sudo apt-get -qq update
-sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y python-cheetah checkbox-ng
+# echo "Installing necessary dependencies in the agent container..."
+# echo Using Stable PPA
+# sudo apt-get -qq update
+# sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y python-cheetah checkbox-ng
 
 
 # May not be necessary, but doesn't hurt to wait just in case it's
