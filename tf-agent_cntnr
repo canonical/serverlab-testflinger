@@ -8,7 +8,8 @@ ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agents:$PATH
 
 # add maas-cli PPA
-RUN apt-add-repository ppa:maas/2.9 -y
+RUN apt-add-repository ppa:maas/2.9 -y \
+  && add-apt-repository ppa:checkbox-dev/ppa -y
 
 # install deps & cleanup
 RUN apt-get update \
@@ -32,7 +33,9 @@ RUN apt-get update \
     python3-requests \
     python3-click \
     openjdk-11-jre \
-    maas-cli
+    maas-cli \
+    python-cheetah \
+    checkbox-ng
 
 # clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

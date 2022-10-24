@@ -56,12 +56,6 @@ _run_retry() {
         RC="$?"
     done
 }
-# Install dependencies in the host environment
-# echo "Installing necessary dependencies in the agent container..."
-# echo Using Stable PPA
-# sudo apt-get -qq update
-# sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y python-cheetah checkbox-ng
-
 
 # May not be necessary, but doesn't hurt to wait just in case it's
 # an old, slow server
@@ -104,7 +98,7 @@ local_submission = yes
 TEST_TARGET_IPERF = 10.1.16.10,10.1.16.15,10.1.16.20,10.1.11.230,10.1.11.235,10.1.11.231,10.1.11.236,10.245.128.3
 
 [test plan]
-unit = com.canonical.certification::server-regression
+unit = com.canonical.certification:certification-server
 forced = yes
 
 [test selection]
@@ -138,9 +132,9 @@ if [ "$(cat custom.launcher |wc -l)" -gt "1" ]; then
     _put custom.launcher launcher
 fi
 
-#Get kernel version for description and final output
+# Get kernel version for description and final output
 UNAME_KERNEL_VER=$(_run 'uname -r')
-KERNEL_VER=$(_run "dpkg -l |grep -m1 $UNAME_KERNEL_VER|awk '{print $3}'")
+KERNEL_VER=$(_run "dpkg -l |grep -m1 $UNAME_KERNEL_VER|awk '{print \$3}'")
 echo "Current Kernel Version: $KERNEL_VER"
 
 # Merge the launcher we downloaded with checkbox.conf
@@ -171,24 +165,41 @@ EGX_RESULTS_PATH=`_run "find /opt/NGC.Ready/result.*.gz"`
 if [ ! -z $EGX_RESULTS_PATH ]; then
     echo "Found $EGX_RESULTS_PATH, saving it now"
     EGX_RES_FILE=`basename $EGX_RESULTS_PATH`
-    _get $EGX_RESULTS_PATH /home/ubuntu/
-    find /home/ubuntu/ -name $EGX_RES_FILE -exec mv {} artifacts/ ';'
+    _get $EGX_RESULTS_PATH /root/
+    EGX_FIND=`find /root -name $EGX_RES_FILE`
+    mv $EGX_FIND ./artifacts/
+    # find /home/ubuntu/ -name $EGX_RES_FILE -exec mv {} artifacts/ ';'
+    # (find /home/ubuntu/ -name $EGX_RES_FILE > ./artifacts/$EGX_RES_FILE);
 fi
 
 # Get the rest of the artifacts
 cp launcher artifacts
-find /home/ubuntu/ -name 'submission_*.junit.xml' -exec mv {} artifacts/junit.xml;
-find /home/ubuntu/ -name 'submission_*.html' -exec mv {} artifacts/submission.html;
-find /home/ubuntu/ -name 'submission_*.xlsx' -exec mv {} artifacts/submission.xlsx;
-find /home/ubuntu/ -name 'submission_*.tar.xz' -exec mv {} artifacts/submission.tar.xz;
-tar -xf artifacts/submission.tar.xz submission.json
-mv submission.json artifacts
+mv /root/.local/share/checkbox-ng/* ./artifacts
+tar -xf ./artifacts/*.tar.xz
 
-#fix EFI boot order issue (workaround)
+# JUNIT=`find /root/ -name 'submission_*.junit.xml'`
+# SUBHTML=`find /root/ -name 'submission_*.html'`
+# SUBTAR=`find /root -name 'submission_*.tar.xz'`
+# SUBXLS=`find /root -name 'submission_*.xlsx'`
+# mv $JUNIT ./artifacts/junit.xml
+# mv $SUBHTML ./artifacts/submission.html
+# mv $SUBTAR ./artifacts/submission.tar.xz
+# mv $SUBXLS ./artifacts/submission.xlsx
+# # find /home/ubuntu/ -name 'submission_*.junit.xml' -exec mv {} artifacts/junit.xml \;
+# # find /home/ubuntu/ -name 'submission_*.html' -exec mv {} artifacts/submission.html \;
+# # find /home/ubuntu/ -name 'submission_*.xlsx' -exec mv {} artifacts/submission.xlsx \;
+# # find /home/ubuntu/ -name 'submission_*.tar.xz' -exec mv {} artifacts/submission.tar.xz \;
+# # find /home/ubuntu/ -name 'submission_*.junit.xml' > ./artifacts/junit.xml;
+# # find /home/ubuntu/ -name 'submission_*.html' > ./artifacts/submission.html;
+# # find /home/ubuntu/ -name 'submission_*.xlsx' > ./artifacts/submission.xlsx;
+# # find /home/ubuntu/ -name 'submission_*.tar.xz' > ./artifacts/submission.tar.xz;
+# tar -xf ./artifacts/submission.tar.xz
+
+# fix EFI boot order issue (workaround)
 ROOT_DISK=$( _run grep "/boot/efi" /proc/mounts |cut -d ' ' -f 1|grep -o '.*[^0-9]' )
 echo "Zeroing Disk $ROOT_DISK"
 _run sudo sgdisk -Z $ROOT_DISK
 
 #Power down system so we know it is complete
-echo "Powerding down the SUT now..."
+echo "Powering down the SUT now..."
 _run sudo poweroff

@@ -1,0 +1,14 @@
+url: https://10.245.128.16:8080/jenkins
+name: $HOSTNAME
+description: swarm node
+deleteExistingClients: true
+keepDisconnectedClients: true
+executors: 1
+labels:
+  - $HOSTNAME
+webSocket: true
+environmentVariables:
+  ENV_1: 1234
+  ENV_2: swarm-client
+username: jenkins
+passwordEnvVariable: ch4ng3m3
