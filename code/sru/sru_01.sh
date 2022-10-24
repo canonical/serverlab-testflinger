@@ -98,7 +98,7 @@ local_submission = yes
 TEST_TARGET_IPERF = 10.1.16.10,10.1.16.15,10.1.16.20,10.1.11.230,10.1.11.235,10.1.11.231,10.1.11.236,10.245.128.3
 
 [test plan]
-unit = com.canonical.certification:certification-server
+unit = com.canonical.certification::server-regression
 forced = yes
 
 [test selection]
@@ -132,7 +132,7 @@ if [ "$(cat custom.launcher |wc -l)" -gt "1" ]; then
     _put custom.launcher launcher
 fi
 
-# Get kernel version for description and final output
+#Get kernel version for description and final output
 UNAME_KERNEL_VER=$(_run 'uname -r')
 KERNEL_VER=$(_run "dpkg -l |grep -m1 $UNAME_KERNEL_VER|awk '{print \$3}'")
 echo "Current Kernel Version: $KERNEL_VER"
