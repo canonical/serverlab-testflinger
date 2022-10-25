@@ -1,4 +1,4 @@
-def sutAgent = 'moltres'
+def sutAgent = 'prunes'
 
 def release = 'focal'
 
