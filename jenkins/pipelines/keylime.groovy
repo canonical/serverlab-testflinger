@@ -14,6 +14,12 @@ def testCMDFileSRU = '/opt/sru_01.sh'
 
 def testCMDFileEGX = '/opt/egx_01.sh'
 
+def apiServer = '10.245.128.10'
+
+def apiPort = '8000'
+
+def yamlFilePath = '/home/jenkins/job.yaml'
+
 def yamlFile = 
     """
     job_queue: ${sutAgent}
@@ -26,11 +32,11 @@ def yamlFile =
         ${testCMDFileSRU}
     """
 
-def cmdPrefix = 
-    'testflinger-cli --server http://10.245.128.10:8000'
+def cmdPrefix =
+    "testflinger-cli --server http://${apiServer}:${apiPort}"
 
-def testExec = 
-    "${cmdPrefix} submit -q /home/jenkins/job.yaml"
+def testExec =
+    "${cmdPrefix} submit -q ${yamlFilePath}"
 
 def retCode =
     "awk '{if(/test_status/) print \$2}' | tail -1"
@@ -47,14 +53,14 @@ pipeline {
         stage('write config') {
             steps {
                 script {
-                    if (fileExists('/home/jenkins/job.yaml')) {
-                        echo 'job.yaml exists; overwriting'
-                        sh 'rm /home/jenkins/job.yaml'
+                    if (fileExists("${yamlFilePath}")) {
+                        echo "${yamlFilePath} exists; overwriting"
+                        sh "rm ${yamlFilePath}"
                     }
 
-                    writeFile file: '/home/jenkins/job.yaml', text: yamlFile
+                    writeFile file: "${yamlFilePath}", text: yamlFile
                     echo 'current config:'
-                    echo readFile('/home/jenkins/job.yaml')
+                    echo readFile("${yamlFilePath}")
                 }
             }
         }
