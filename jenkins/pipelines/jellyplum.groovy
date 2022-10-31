@@ -38,18 +38,24 @@ def cmdPrefix =
 def testExec =
     "${cmdPrefix} submit -q ${yamlFilePath}"
 
-def retCode =
-    "awk '{if(/test_status/) print \$2}' | tail -1"
+def agentLog = "/var/log/${sutAgent}.log"
 
-// pass vars between stages
+def successPhrase = 'https:'
+
 def jobID
-
-def testStatus
 
 pipeline {
     agent { label sutAgent }
 
     stages {
+        stage('zero logs') {
+            steps {
+                script {
+                    sh "truncate -s 0 ${agentLog}"
+                }
+            }
+        }
+
         stage('write config') {
             steps {
                 script {
@@ -85,19 +91,51 @@ pipeline {
             }
         }
 
-        stage('parse job results') {
+        stage('parse test result') {
             steps {
                 script {
-                    testStatus = sh(
-                        script: "${cmdPrefix} results ${jobID} | ${retCode}",
+                    def testStatus = sh(
+                        script: "${cmdPrefix} results ${jobID} | \
+                                awk '{if(/test_status/) print \$2}' | \
+                                tail -1",
                         returnStdout: true).trim().toInteger()
 
                     echo "Job exit status: ${testStatus}"
 
                     if (testStatus) {
-                        error('Job FAILED!')
+                        catchError(
+                            buildResult: 'SUCCESS',
+                            stageResult: 'FAILURE',
+                            message: 'Test FAILED!')
                     } else {
-                        echo 'Job PASSED!'
+                        echo 'Test PASSED!'
+                    }
+                }
+            }
+        }
+
+        stage('parse job completion status') {
+            steps {
+                script {
+                    def jobStatus = sh(
+                        script: """
+                                if grep -q ${successPhrase} ${agentLog}; then 
+                                    echo 0
+                                else 
+                                    echo 1
+                                fi"
+                                """,
+                        returnStdout: true).trim
+
+                    def jobLink = sh(
+                        script: "cat ${agentLog} | \
+                                awk '{if(/${successPhrase}/) print \$0}'",
+                        returnStdout: true).trim
+
+                    if (jobStatus) {
+                        error('Job INCOMPLETE!')
+                    } else {
+                        echo "Job COMPLETE: ${jobLink}"
                     }
                 }
             }
