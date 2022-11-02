@@ -26,6 +26,7 @@ import paho.mqtt.client as mqtt
 import subprocess
 import platform
 import requests
+import urllib3
 import logging
 import signal
 import shlex
@@ -108,6 +109,7 @@ class LogAgent(Thread):
         logger.addHandler(file_handler)
         # disable verbose requests logging
         logging.getLogger('requests').setLevel(logging.CRITICAL)
+        logging.getLogger('urllib3').setlevel(logging.CRITICAL)
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
