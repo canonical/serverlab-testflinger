@@ -38,18 +38,24 @@ def cmdPrefix =
 def testExec =
     "${cmdPrefix} submit -q ${yamlFilePath}"
 
-def retCode =
-    "awk '{if(/test_status/) print \$2}' | tail -1"
+def agentLog = "/var/log/${sutAgent}.log"
 
-// pass vars between stages
+def compltRegex = 'https|submissions.status'
+
 def jobID
-
-def testStatus
 
 pipeline {
     agent { label sutAgent }
 
     stages {
+        stage('zero logs') {
+            steps {
+                script {
+                    sh "truncate -s 0 ${agentLog}"
+                }
+            }
+        }
+
         stage('write config') {
             steps {
                 script {
@@ -85,19 +91,42 @@ pipeline {
             }
         }
 
-        stage('parse job results') {
+        stage('test result') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        def testStatus = sh(
+                            script: "${cmdPrefix} results ${jobID} | \
+                                    awk '{if(/test_status/) print \$2}' | \
+                                    tail -1",
+                            returnStdout: true).trim().toInteger()
+
+                        echo "Job exit status: ${testStatus}"
+
+                        if (testStatus) {
+                            error 'Test (global) FAILED!'
+                        } else {
+                            echo 'Test (global) PASSED!'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('job completion') {
             steps {
                 script {
-                    testStatus = sh(
-                        script: "${cmdPrefix} results ${jobID} | ${retCode}",
-                        returnStdout: true).trim().toInteger()
+                    try {
+                        def compltField = sh(
+                            script: "grep -E '${compltRegex}' ${agentLog}",
+                            returnStdout: true).trim()
 
-                    echo "Job exit status: ${testStatus}"
-
-                    if (testStatus) {
-                        error('Job FAILED!')
-                    } else {
-                        echo 'Job PASSED!'
+                        // throw prior to echo
+                        echo "Job COMPLETE: ${compltField}"
+                    } catch (Exception) {
+                        echo 'Completion phrase not found!'
+                        error 'Job INCOMPLETE!'
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }

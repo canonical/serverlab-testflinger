@@ -40,7 +40,7 @@ def testExec =
 
 def agentLog = "/var/log/${sutAgent}.log"
 
-def successPhrase = 'https:'
+def compltRegex = 'https|submissions.status'
 
 def jobID
 
@@ -91,51 +91,42 @@ pipeline {
             }
         }
 
-        stage('parse test result') {
+        stage('test result') {
             steps {
-                script {
-                    def testStatus = sh(
-                        script: "${cmdPrefix} results ${jobID} | \
-                                awk '{if(/test_status/) print \$2}' | \
-                                tail -1",
-                        returnStdout: true).trim().toInteger()
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        def testStatus = sh(
+                            script: "${cmdPrefix} results ${jobID} | \
+                                    awk '{if(/test_status/) print \$2}' | \
+                                    tail -1",
+                            returnStdout: true).trim().toInteger()
 
-                    echo "Job exit status: ${testStatus}"
+                        echo "Job exit status: ${testStatus}"
 
-                    if (testStatus) {
-                        catchError(
-                            buildResult: 'SUCCESS',
-                            stageResult: 'FAILURE',
-                            message: 'Test FAILED!')
-                    } else {
-                        echo 'Test PASSED!'
+                        if (testStatus) {
+                            error 'Test (global) FAILED!'
+                        } else {
+                            echo 'Test (global) PASSED!'
+                        }
                     }
                 }
             }
         }
 
-        stage('parse job completion status') {
+        stage('job completion') {
             steps {
                 script {
-                    def jobStatus = sh(
-                        script: """
-                                if grep -q ${successPhrase} ${agentLog}; then 
-                                    echo 0
-                                else 
-                                    echo 1
-                                fi"
-                                """,
-                        returnStdout: true).trim
+                    try {
+                        def compltField = sh(
+                            script: "grep -E '${compltRegex}' ${agentLog}",
+                            returnStdout: true).trim()
 
-                    def jobLink = sh(
-                        script: "cat ${agentLog} | \
-                                awk '{if(/${successPhrase}/) print \$0}'",
-                        returnStdout: true).trim
-
-                    if (jobStatus) {
-                        error('Job INCOMPLETE!')
-                    } else {
-                        echo "Job COMPLETE: ${jobLink}"
+                        // throw prior to echo
+                        echo "Job COMPLETE: ${compltField}"
+                    } catch (Exception) {
+                        echo 'Completion phrase not found!'
+                        error 'Job INCOMPLETE!'
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }

@@ -106,6 +106,9 @@ class LogAgent(Thread):
         # add handlers for stream, file
         logger.addHandler(stdout_handler)
         logger.addHandler(file_handler)
+        # disable verbose requests logging
+        logging.getLogger('requests').setLevel(logging.CRITICAL)
+        logging.getLogger('urllib3').setlevel(logging.CRITICAL)
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
@@ -183,8 +186,8 @@ class LogAgent(Thread):
             else:
                 status = ('error', 0.0)
 
-        message = 'status: %s | resp_t: %.2f sec' % (status[0],
-                                                     status[1])
+        message = 'state: %s | resp_t: %.2f sec' % (status[0],
+                                                    status[1])
         logging.debug('[ C3 %s ]', message)
 
         try:
