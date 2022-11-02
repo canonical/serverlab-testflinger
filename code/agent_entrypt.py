@@ -107,7 +107,7 @@ class LogAgent(Thread):
         logger.addHandler(stdout_handler)
         logger.addHandler(file_handler)
         # disable verbose requests logging
-        logging.getLogger('requests').setLevel(logging.NOTSET)
+        logging.getLogger('urllib3').propagate = False
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
