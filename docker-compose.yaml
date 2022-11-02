@@ -197,6 +197,8 @@ services:
 
     volumes:
       - jenkins_data:/var/jenkins_home
+      - ./jenkins/backups:/data/backups
+      - ./jenkins/pipelines:/opt/pipelines
 
   restarter:
     depends_on:
