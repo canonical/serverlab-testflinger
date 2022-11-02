@@ -26,7 +26,6 @@ import paho.mqtt.client as mqtt
 import subprocess
 import platform
 import requests
-import urllib3
 import logging
 import signal
 import shlex
@@ -62,7 +61,7 @@ class LogAgent(Thread):
         # c3 setup
         self.c3_timeout = 300  # seconds
         self.c3_url = (
-            'https://certification.canonical.com/submissions')
+            'https://certification.canonical.com/')
         # mqtt setup
         self.mqtt_broker = '10.245.128.14'
         self.status_topic = '%s/agent' % sut
@@ -108,8 +107,7 @@ class LogAgent(Thread):
         logger.addHandler(stdout_handler)
         logger.addHandler(file_handler)
         # disable verbose requests logging
-        logging.getLogger('requests').setLevel(logging.CRITICAL)
-        logging.getLogger('urllib3').setlevel(logging.CRITICAL)
+        logging.getLogger('requests').setLevel(logging.NOTSET)
 
     def init_mqtt(self):
         """Setup and connect MQTT."""
