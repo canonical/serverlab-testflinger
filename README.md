@@ -2,11 +2,11 @@
 Testflinger-Docker Basic info, deployment and other notes.
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
-# Docker Containers
+## Docker Containers
 
 All container dockerfiles are located in the project root.
 
-## tf-agent
+### tf-agent
 
 Creates, starts and coordinated SUT agent containers. • Runs a
 customized Phusion/Baseimage (Docker optimized Ubuntu) image. • Runs
@@ -16,7 +16,7 @@ management. • On first startup, will create agent image and create each
 agent container. • Uses the Docker daemon from the base Docker host
 (passes thru /var/run/ docker.sock).
 
-## <sut_name_>
+### <sut_name_>
 
 Discrete container for each SUT agent. Runs testflinger-agent. • One
 container per sut agent. • Runs a customized Phusion/Baseimage (Docker
@@ -25,29 +25,29 @@ threaded subprocess pipe instrumentation (agent_entrypoint). • Logging
 to stdout, file and MQTT • Runs a healthcheck script to facilitate
 Docker healthchecks via MQTT.
 
-## tf-cli
+### tf-cli
 
 Standard testflinger cli build, using Docker. • Runs a customized
 Phusion/Baseimage (Docker optimized Ubuntu) image.
 
-## tf-api
+### tf-api
 
 Gunicorn, with gevent.
 
-## tf-db
+### tf-db
 
 Redis database container.
 
-## tf-mqtt
+### tf-mqtt
 
 Stack MQTT broker.
 
-## tf-portainer
+### tf-portainer
 
 Portainer container for managing the stack and related agents. • Needham
 Portainer details below.
 
-# Files of interest and project notes
+## Files of interest and project notes
 
 -   ./code/init_agent_cntnrs • Utilizes the Python Docker sdk to enable
     containers to be created and spun up via the dockerd api at tf-agent
@@ -131,7 +131,7 @@ Portainer details below.
     publish test cmd last_job : last job seen by the sut agent (broker
     retained)
 
-# Stack Operations
+## Stack Operations
 
 -   Starting and stopping the entire stack (including SUT agents): • Log
     into the Docker host and execute (as appropriate): docker-compose
@@ -184,7 +184,7 @@ Portainer details below.
     unhealthy, simply restart the flagged container. • The current
     healthcheck process uses MQTT to publish from within the LogAgent
 
-# Portainer notes
+## Portainer notes
 
 This setup yields an HTML5 web interface with realtime log viewing,
 console and shell access along with start/restart/stop for all
@@ -198,7 +198,7 @@ and agent specific management and information.
     (sut output) and shell. • Also reports container healthchecks. •
     Facilitated via agent_entrypoint and agent_healthcheck.
 
-# MQTT notes and useage
+## MQTT notes and useage
 
 -   Grab a MQTT client, MQTT Explorer recommended. • This provides an
     excellent top-level view of all MQTT clients and topics within the
@@ -229,13 +229,13 @@ and agent specific management and information.
     Called inline in the same fashion as MQTT publish. A
     ‘testflinger-rest’ container could be a CoAP server (if necessary).
 
-# Deploying Stack
+## Deploying Stack
 
 Utilizes single-shot deployment after installing some pre-reqs on the
 host system. • Will create and start all containers using Docker Compose
 (for base) followed by the API (for agents).
 
-## Deploy and configure Docker host
+### Deploy and configure Docker host
 
 Deploy 18.04+ host via MAAS. After host is deployed, setup
 prerequisites: • Much of these steps will be moved to a conveince bash
@@ -277,12 +277,12 @@ script.
 -   Pull repo from Launchpad or Github:: git clone
     https://github.com/hum4n0id/testflinger-docker
 
-## Customize source and config files for environment:
+### Customize source and config files for environment:
 
 All work is done in the Git cloned Docker root dir
 (testflinger-docker/).
 
-## Update relevant files are to match local environment:
+### Update relevant files are to match local environment:
 
 Files that need to be updated: \* Required updates::
 ./docker-compose.yaml ./code/tf-entrypoint.sh ./code/testflinger.conf
@@ -292,7 +292,7 @@ Files that need to be updated: \* Required updates::
 
 -   Optional updates (uses default parameters):: ./tools/deploy_stack.sh
 
-## Edit docker-compose.yaml file to match environment:
+### Edit docker-compose.yaml file to match environment:
 
 -   Change the parent network parameters to match the environment.
     Keeping the default bridge parameters will work in any standard
@@ -300,7 +300,7 @@ Files that need to be updated: \* Required updates::
 
 -   Likewise, update container IPs to match said networks.
 
-## Edit the testflinger entrypoint file (tf-entrypoint):
+### Edit the testflinger entrypoint file (tf-entrypoint):
 
 File location: ./code/tf-entrypoint.sh (ref\*). This shell script is
 exec’d upon container boot/start.
@@ -314,12 +314,12 @@ exec’d upon container boot/start.
     TF_MAAS_ACT=testflinger_a MAAS_SERVER=10.245.128.4 MAAS_PORT=5240
     MAAS_API_KEY=’<api_key>’
 
-## Edit ./code/testflinger.conf (ref \*):
+### Edit ./code/testflinger.conf (ref \*):
 
 -   Update the REDIS_HOST field to the db container ip address::
     REDIS_HOST = ‘10.172.10.13’
 
-## Modify/Create SUT files:
+### Modify/Create SUT files:
 
 -   Update any testflinger-agent \*.conf files with the api server IP::
     server_address: http://10.245.128.10:8000 (use actual api ip)
@@ -329,11 +329,11 @@ exec’d upon container boot/start.
     from the sut directory to the containers. You can alternatively
     create the config files inside the container post-deployment.
 
-## Populate SUT conf dirs for deployment (required):
+### Populate SUT conf dirs for deployment (required):
 
 -   Run:: ./tools/parse_tf_files.sh
 
-# Deploy Compose Stack:
+## Deploy Compose Stack:
 
 -   Execute the deploy-stack script to start deployment:: bash
     ./tools/deploy-stack.sh
@@ -344,7 +344,7 @@ exec’d upon container boot/start.
 -   The rest of the deployment should be handled by the Docker code
     included in the source directory.
 
-## Validate Deployment:
+### Validate Deployment:
 
 When successfully deployed and running, you can check the output of the
 stack.
@@ -357,7 +357,7 @@ Once the deployment is complete, no other steps should be required to
 start executing Testflinger tests on SUTs outside of ensuring the
 appropriate configuration files are in the agent and cli containers.
 
-# References (incomplete):
+## References (incomplete):
 
 Docker Compose Specification:
 https://github.com/compose-spec/compose-spec/blob/master/spec.md
