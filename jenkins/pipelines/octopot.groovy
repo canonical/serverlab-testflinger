@@ -1,4 +1,4 @@
-def sutAgent = 'jellyplum'
+def sutAgent = 'octopot'
 
 def release = 'focal'
 
@@ -37,7 +37,7 @@ def cmdPrefix =
 
 def testExec =
     "${cmdPrefix} submit -q ${yamlFilePath}"
-
+x
 def agentLog = "/var/log/${sutAgent}.log"
 
 def compltRegex = 'submissions.status'

@@ -1,0 +1,145 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1254.v3f64639b_11dd">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2803.v1a_f77ffcc773">
+    <script>def sutAgent = &apos;gurley&apos;
+
+def release = &apos;focal&apos;
+
+def globalTimeout = 172800
+
+def outputTimeout = 172800
+
+def testCMD =
+    &apos;ssh -o StrictHostKey Checking=no ubuntu@$DEVICE_IP \
+    /usr/bin/checkbox-cli run com.canonical.certification::usb&apos;
+
+def testCMDFileSRU = &apos;/opt/sru_01.sh&apos;
+
+def testCMDFileEGX = &apos;/opt/egx_01.sh&apos;
+
+def apiServer = &apos;10.245.128.10&apos;
+
+def apiPort = &apos;8000&apos;
+
+def yamlFilePath = &apos;/home/jenkins/job.yaml&apos;
+
+def yamlFile =
+    &quot;&quot;&quot;
+    job_queue: ${sutAgent}
+    global_timeout: ${globalTimeout}
+    output_timeout: ${outputTimeout}
+    provision_data:
+      distro: ${release}
+    test_data:
+      test_cmds: |-
+        ${testCMDFileSRU}
+    &quot;&quot;&quot;
+
+def cmdPrefix =
+    &quot;testflinger-cli --server http://${apiServer}:${apiPort}&quot;
+
+def testExec =
+    &quot;${cmdPrefix} submit -q ${yamlFilePath}&quot;
+
+def agentLog = &quot;/var/log/${sutAgent}.log&quot;
+
+def compltRegex = &apos;https|submissions.status&apos;
+
+def jobID
+
+pipeline {
+    agent { label sutAgent }
+
+    stages {
+        stage(&apos;zero logs&apos;) {
+            steps {
+                script {
+                    sh &quot;truncate -s 0 ${agentLog}&quot;
+                }
+            }
+        }
+
+        stage(&apos;write config&apos;) {
+            steps {
+                script {
+                    if (fileExists(&quot;${yamlFilePath}&quot;)) {
+                        echo &quot;${yamlFilePath} exists; overwriting&quot;
+                        sh &quot;rm ${yamlFilePath}&quot;
+                    }
+
+                    writeFile file: &quot;${yamlFilePath}&quot;, text: yamlFile
+                    echo &apos;current config:&apos;
+                    echo readFile(&quot;${yamlFilePath}&quot;)
+                }
+            }
+        }
+
+        stage(&apos;execute job&apos;) {
+            steps {
+                script {
+                    jobID = sh(
+                        script: testExec,
+                        returnStdout: true).trim()
+
+                    echo &quot;Job ID: ${jobID}&quot;
+                }
+            }
+        }
+
+        stage(&apos;poll job output&apos;) {
+            steps {
+                script {
+                    sh &quot;${cmdPrefix} poll ${jobID}&quot;
+                }
+            }
+        }
+
+        stage(&apos;test result&apos;) {
+            steps {
+                catchError(buildResult: &apos;SUCCESS&apos;, stageResult: &apos;FAILURE&apos;) {
+                    script {
+                        def testStatus = sh(
+                            script: &quot;${cmdPrefix} results ${jobID} | \
+                                    awk &apos;{if(/test_status/) print \$2}&apos; | \
+                                    tail -1&quot;,
+                            returnStdout: true).trim().toInteger()
+
+                        echo &quot;Job exit status: ${testStatus}&quot;
+
+                        if (testStatus) {
+                            error &apos;Test (global) FAILED!&apos;
+                        } else {
+                            echo &apos;Test (global) PASSED!&apos;
+                        }
+                    }
+                }
+            }
+        }
+
+        stage(&apos;job completion&apos;) {
+            steps {
+                script {
+                    try {
+                        def compltField = sh(
+                            script: &quot;grep -E &apos;${compltRegex}&apos; ${agentLog}&quot;,
+                            returnStdout: true).trim()
+
+                        // throw prior to echo
+                        echo &quot;Job COMPLETE: ${compltField}&quot;
+                    } catch (Exception) {
+                        echo &apos;Completion phrase not found!&apos;
+                        error &apos;Job INCOMPLETE!&apos;
+                        currentBuild.result = &apos;FAILURE&apos;
+                    }
+                }
+            }
+        }
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>

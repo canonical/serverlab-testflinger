@@ -1,4 +1,4 @@
-def sutAgent = 'jellyplum'
+def sutAgent = 'salout'
 
 def release = 'focal'
 
@@ -40,7 +40,7 @@ def testExec =
 
 def agentLog = "/var/log/${sutAgent}.log"
 
-def compltRegex = 'submissions.status'
+def compltRegex = 'https|submissions'
 
 def jobID
 

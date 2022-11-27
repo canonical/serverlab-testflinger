@@ -1,4 +1,4 @@
-def sutAgent = 'jellyplum'
+def sutAgent = 'hinopio'
 
 def release = 'focal'
 
