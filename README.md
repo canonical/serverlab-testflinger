@@ -261,41 +261,41 @@ Deploy 18.04+ host via MAAS. After host is deployed, setup
 prerequisites: • Much of these steps will be moved to a conveince bash
 script.
 
--   Update system:: sudo apt update
+-   Update system::
+        sudo apt update
 
--   Install Docker package dependencies:: sudo apt install
-    apt-transport-https ca-certificates curl wget
-    software-properties-common git
+-   Install Docker package dependencies::
+        sudo apt install apt-transport-https ca-certificates curl wget software-properties-common git
 
--   Install Docker GPG key:: curl -fsSL
-    https://download.docker.com/linux/ubuntu/gpg \| sudo apt-key add -
+-   Install Docker GPG key::
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg \| sudo apt-key add -
 
--   Add Docker repo to APT sources:: sudo add-apt-repository “deb
-    \[arch=amd64\] https://download.docker.com/linux/ubuntu focal
-    stable” sudo apt update apt-cache policy docker-ce
+-   Add Docker repo to APT sources::
+        sudo add-apt-repository “deb\[arch=amd64\] https://download.docker.com/linux/ubuntu focal stable” sudo apt update apt-cache policy docker-ce
 
--   Install Docker:: sudo apt install docker-ce sudo systemctl start
-    docker
+-   Install Docker::
+        sudo apt install docker-ce sudo systemctl start docker
 
--   Add user to Docker group to exec Docker commands without sudo:: sudo
-    usermod -aG docker ${USER} su - ${USER} (or logout and log back in)
+-   Add user to Docker group to exec Docker commands without sudo::
+        sudo usermod -aG docker ${USER} su - ${USER} (or logout and log back in)
 
--   Verify user in appropriate group:: id -nG \| grep docker
+-   Verify user in appropriate group::
+        id -nG \| grep docker
 
 -   Find target Docker Compose version (use 1.29.2+)::
-    https://github.com/docker/compose/releases
+        https://github.com/docker/compose/releases
 
--   Download and install Docker Compose:: sudo curl -L
-    “https://github.com/docker/compose/releases/download/1.29.2/docker-compose-(*u**n**a**m**e*−*s*)−(uname
-    -m)” -o /usr/local/bin/docker-compose
+-   Download and install Docker Compose::
+        sudo curl -L “https://github.com/docker/compose/releases/download/1.29.2/docker-compose-(*u**n**a**m**e*−*s*)−(uname -m)” -o /usr/local/bin/docker-compose
 
--   Make executable:: sudo chmod +x /usr/local/bin/docker-compose
+-   Make executable::
+        sudo chmod +x /usr/local/bin/docker-compose
 
--   Verify Docker Compose installation & version:: docker-compose
-    –version
+-   Verify Docker Compose installation & version::
+        docker-compose –version
 
--   Pull repo from Launchpad or Github:: git clone
-    https://github.com/hum4n0id/testflinger-docker
+-   Pull repo from Launchpad or Github::
+        git clone https://github.com/hum4n0id/testflinger-docker
 
 ### Customize source and config files for environment:
 
