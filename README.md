@@ -1,6 +1,8 @@
+## Architecture
 
-Testflinger-Docker Basic info, deployment and other notes.
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+This is a microservices architecture to run Canonical's Testflinger service. 
+The core stack is comprised of the the below containers. Agents are facilitated by the 'tf-agent' container, which is running pass through Docker in Docker. Healthchecks run on each agent container and report through an MQTT broker. This MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish.
+(this secion in prgoress)
 
 ## Docker Containers
 
@@ -8,22 +10,21 @@ All container dockerfiles are located in the project root.
 
 ### tf-agent
 
-Creates, starts and coordinated SUT agent containers. • Runs a
-customized Phusion/Baseimage (Docker optimized Ubuntu) image. • Runs
-nested Docker to enable containers to be created and spun up via the
-Docker API at tf-agent startup. • Performs agent creation and
-management. • On first startup, will create agent image and create each
-agent container. • Uses the Docker daemon from the base Docker host
-(passes thru /var/run/ docker.sock).
+Creates, starts and coordinated SUT agent containers.
+- Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+- Runs nested Docker to enable containers to be created and spun up via the
+Docker API at tf-agent startup.
+- Performs agent creation and
+management. 
+- On first startup, will create agent image and create each agent container. Uses the Docker daemon from the base Docker host (passes thru /var/run/ docker.sock).
 
 ### <sut_name_>
 
-Discrete container for each SUT agent. Runs testflinger-agent. • One
-container per sut agent. • Runs a customized Phusion/Baseimage (Docker
-optimized Ubuntu) image. • Includes snappy device agent. • Runs custom
-threaded subprocess pipe instrumentation (agent_entrypoint). • Logging
-to stdout, file and MQTT • Runs a healthcheck script to facilitate
-Docker healthchecks via MQTT.
+Discrete container for each SUT agent. Runs testflinger-agent.
+- One container per sut agent. 
+- Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+- Runs custom threaded subprocess pipe instrumentation (agent_entrypoint), logging to stdout, file and MQTT 
+- Runs a healthcheck script to facilitate Docker healthchecks via MQTT.
 
 ### tf-cli
 
@@ -44,145 +45,165 @@ Stack MQTT broker.
 
 ### tf-portainer
 
-Portainer container for managing the stack and related agents. • Needham
-Portainer details below.
+Portainer container for managing the stack and related agents. 
+- Needham Portainer details below.
+
+### nh-jenkins
+
+Runs the Jenkins instance to facilitate regression testing via Jenkins pipelines. Pipelines are multi-stages to 
 
 ## Files of interest and project notes
 
--   ./code/init_agent_cntnrs • Utilizes the Python Docker sdk to enable
-    containers to be created and spun up via the dockerd api at tf-agent
-    startup. • Creates all sut container properties and attributes. •
-    Image creation (streams build). • Network and network config. • Host
-    config with defined mounts for all files. • Mounts are used for
-    consistent scaling across many containers. • Agent healthcheck
-    (using MQTT). • Containers instantiated via iterating over the sut
-    conf dir in the project root. • Agent container image is created if
-    it doesn’t exist. • Agent containers are created if they do not
-    exist.
+-   ./code/init_agent_cntnrs 
+    - Utilizes the Python Docker sdk to enable containers to be created and spun up via the dockerd api at tf-agent startup. 
+    - Creates all sut container properties and attributes. 
+    - Image creation (streams build). 
+    - Network and network config. 
+    - Host config with defined mounts for all files. 
+    - Mounts are used for consistent scaling across many containers. 
+    - Agent healthcheck (using MQTT). 
+    - Containers instantiated via iterating over the sut conf dir in the project root. 
+    - Agent container image is created ifit doesn’t exist. 
+    - Agent containers are created if they do not exist.
 
--   ./code/agent_entrypoint • Loaded at agent container startup. • Runs
-    custom threaded subprocess pipe instrumentation. • Logging to
-    stdout, file and MQTT. • Transmits agent output to stack MQTT
-    broker. • Runs agent_healthcheck.py (as below). • Published MQTT
-    topics:: agent : agent/logger status c3 : current status of REST
-    comms from agent to C3 output: current agent output (broker
-    retained) submit_status : when active, lists topic to publish test
-    cmd last_job : last job seen by the sut agent (broker retained)
+-   ./code/agent_entrypoint 
+    - Loaded at agent container startup. 
+    - Runs custom threaded subprocess pipe instrumentation. 
+    - Logging to stdout, file and MQTT. 
+    - Transmits agent output to stack MQTT broker. 
+    - Runs agent_healthcheck.py (as below). 
+    - Published MQTT topics:
+        agent : agent/logger status
+        c3 : current status of REST comms from agent to C3
+        output: current agent output (broker retained)
+        submit_status : when active, lists topic to publish test cmd
+        last_job : last job seen by the sut agent (broker retained)
 
--   ./code/agent_healthcheck • Uses a simple MQTT subscribe poll on the
-    <sut>/agent topic. • Agent status is a looping timer thread that
-    runs parallel to agent logging. • If agent_entrypoint hangs or
-    terminates/crashes, the container health will report as unhealthy. •
-    Runs at a set interval as defined within init_agent_cntnrs • This is
-    directly relative to the agent status timer period. • Status timer
-    period should overlap with healthcheck interval and timeout. • Notes
-    on the agent status reporting for the healthcheck: • Relies on the
-    fact that the logging thread is the parent of the status thread. •
-    Status child thread sets daemon=True, so if/when the parent thread
-    fails, the child will follow suit and ‘ok’ messages will no longer
-    be sent. • Testing frequency of lines of output is problematic b/c
-    output varies in cadence depending on the agent function being
-    performed. • Likewise with monitoring log file growth. • Using a
-    looping thread timer allows for a • Healthcheck parameters in
-    init_agent_cntnrs detail: • timeout should be =\> than status timer
-    tperiod (or) • retries should be increased if timeout donesn’t cover
-    status timer tperiod.
+-   ./code/agent_healthcheck 
+    - Uses a simple MQTT subscribe poll on the (sut)/agent topic. 
+        - Agent status is a looping timer thread that runs parallel to agent logging. 
+        - If agent_entrypoint hangs or terminates/crashes, the container health will report as unhealthy. 
+    - Runs at a set interval as defined within init_agent_cntnrs
+        - This is directly relative to the agent status timer period.
+        - Status timer period should overlap with healthcheck interval and timeout.
+    - Notes on the agent status reporting for the healthcheck: 
+        - Relies on the fact that the logging thread is the parent of the status thread.
+            - Status child thread sets daemon=True, so if/when the parent thread fails, the child will follow suit and ‘ok’ messages will no longer be sent.
+        - Healthcheck parameters in init_agent_cntnrs detail: 
+            - timeout should be =\> than status timer tperiod (or) 
+            - retries should be increased if timeout donesn’t cover status timer tperiod.
 
--   ./code/start_submit_agents • Runs on testflinger-cli. • Starts
-    lightweight sut agents, similar to start_sut_agents. • The
-    “submit_status” topic will list instructions if the submit agent is
-    ready. • These agents listen for test submissions via MQTT, will
-    then start the appropriate job. See MQTT notes below for useage. •
-    Subscribed MQTT topics:: submit : listen for mqtt test_cmd message,
-    initiate job.
+-   ./code/start_submit_agents • Runs on testflinger-cli. 
+    - Starts lightweight sut agents, similar to start_sut_agents. 
+    - The “submit_status” topic will list instructions if the submit agent is
+    ready. 
+    - These agents listen for test submissions via MQTT, will then start the appropriate job. See MQTT notes below for useage. 
+    - Subscribed MQTT topics:
+        submit : listen for mqtt test_cmd message, initiate job.
 
--   ./code/01_run_sut_agents • Starts init_agent_cntrs via init on
-    tf-agent.
+-   ./code/01_run_sut_agents 
+    - Starts init_agent_cntrs via init on tf-agent.
 
--   ./code/01_run_submit_agents • Starts submit agents on
-    testflinger-cli boot.
+-   ./code/01_run_submit_agents 
+    - Starts submit agents on testflinger-cli boot.
 
--   ./code/export_ssh_pubkey (and export_ssh_pubkey_agnt) • Pushes ssh
-    keys to specified stack MAAS host for maas-cli api. • Runs on
-    container boot, will not push key if it already exists.
+-   ./code/export_ssh_pubkey (and export_ssh_pubkey_agnt) 
+    - Pushes ssh keys to specified stack MAAS host for maas-cli api.
+    - Runs on container boot, will not push key if it already exists.
 
--   ./reference.yaml • Reference device agent file to facilitate job
-    pushing via MQTT.
+-   ./reference.yaml 
+    - Reference device agent file to facilitate job pushing via MQTT.
 
--   ./tf-entrypoint • Runs on testflinger-agent. • Exports ssh keys and
-    starts init
+-   ./tf-entrypoint 
+    - Runs on testflinger-agent.
+    - Exports ssh keys and starts init.
 
--   ./container-entrypoint • Starts appropriate microservices, see below
-    for more info.
+-   ./container-entrypoint
+    - Starts appropriate microservices, see below for more info.
 
--   ./tools/\* • Contains convenience scripts for streamlined Docker
-    ops. • Most used scripts:: deploy_stack.sh : complete, clean
-    deployment of stack orb_nuke.sh : completely destroy stack and all
-    associated files and data reroll.sh : completely destroy stack, git
-    pull and redeploy (git repo optional)
+-   ./tools/\* 
+    - Contains convenience scripts for streamlined Docker ops.
+    - Most used scripts::
+        deploy_stack.sh : complete, clean deployment of stack
+        orb_nuke.sh : completely destroy stack and all associated files and data
+        reroll.sh : completely destroy stack, git pull and redeploy (git repo optional)
 
--   ./code/start_sut_agents (depreciated) • Runs on testflinger-agent. •
-    Starts all agents, and performs logging. • Transmits agent output to
-    stack MQTT broker. • Logs agent output /var/log/sut-agent within
-    testflinger-agent. • Developer notes and aspirations within source
-    file. • Published MQTT topics:: agent : agent/logger status c3 :
-    current status of REST comms from agent to C3 output: current agent
-    output (broker retained) submit_status : when active, lists topic to
-    publish test cmd last_job : last job seen by the sut agent (broker
-    retained)
+-   ./code/start_sut_agents (depreciated)
+    - Runs on testflinger-agent.
+    - Starts all agents, and performs logging.
+    - Transmits agent output to stack MQTT broker.
+    - Logs agent output /var/log/sut-agent within testflinger-agent.
+    - Developer notes and aspirations within source file.
+    - Published MQTT topics:: 
+        agent : agent/logger
+        status c3 : current status of REST comms from agent to C3
+        output: current agent output (broker retained)
+        submit_status : when active, lists topic to publish test cmd
+        last_job : last job seen by the sut agent (broker retained)
 
 ## Stack Operations
 
--   Starting and stopping the entire stack (including SUT agents): • Log
-    into the Docker host and execute (as appropriate): docker-compose
-    start docker-compose restart docker-compose stop • Alernatively,
-    reboot the Docker host. • Stack will stop cleanly on shutdown and
-    start on boot.
+-   Starting and stopping the entire stack (including SUT agents):
+    - Log into the Docker host and execute (as appropriate):
+        docker-compose start (container name)
+        docker-compose restart (container name)
+        docker-compose stop (container name)
+    - Alernatively, reboot the Docker host.
+        - Stack will stop cleanly on shutdown and start on boot.
 
 -   Starting and stopping SUT agents and/or individual stack containers:
-    • Log into the Docker host OR tf-agent (for SUT agents) and execute:
-    • Starting/Restarting/Stopping from shell:: docker start
-    <container name> docker restart <container name> docker stop
-    <container name> • Starting/Restarting/Stopping from Portainer works
-    as well. • Done via GUI; refer to Portainer notes below.
+    - Log into the Docker host OR tf-agent (for SUT agents) and execute:
+        - Starting/Restarting/Stopping from shell::
+        docker start (container name)
+        docker restart (container name)
+        docker stop (container name)
+        - Starting/Restarting/Stopping from Portainer works as well.
+            - Done via GUI; refer to Portainer notes below.
 
--   Checking container logs: • On the shell of the Docker host:: docker
-    logs <container name> docker-compose logs (for contiguous view of
-    stack container logs) • In Portainer (in the containers context): •
-    Click on the ‘<page icon>’ (leftmost icon) under ‘Quick actions.’ OR
-    • Click on the container name and select ‘<page icon> Logs.’
+-   Checking container logs:
+    - On the shell of the Docker host::
+        docker logs (container name)
+        docker-compose logs (for contiguous view of stack container logs)
+    - In Portainer (in the containers context): •
+    Click on the ‘(page icon)’ (leftmost icon) under ‘Quick actions.’
+    OR
+    - Click on the container name and select ‘(page icon) Logs.’
 
--   Entering a container’s console/shell: • On the shell of Docker
-    host:: docker exec -it <container name> bash • In Portainer (in the
-    containers context): • Click on the ‘\>*’ icon under quick actions.
-    OR • Click on the container name and select ’\>* Console.’
+-   Entering a container’s console/shell:
+    - On the shell of Docker host::
+        docker exec -it (container name) bash
+    - In Portainer (in the containers context):
+        - Click on the console prompt icon.
 
--   Changing/updating an agent’s config: • Enter the agent container’s
-    console (either method as above): • Agent conf file path is::
-    /data/testflinger-agent/sut/<sut_name>.conf • Edit the file, save
-    and restart the agent container (as above). • Conf file will reload
-    on restart.
+-   Changing/updating an agent’s config: 
+    - Enter the agent container’s console (either method as above):
+        - Agent conf file path is::
+            /data/testflinger-agent/sut/(sut_name).conf
+        - Edit the file, save and restart the agent container (as above).
+        - Conf file will reload on restart.
 
--   Adding an agent container: • On the Docker host, in the path::
-    /opt/testflinger-docker/sut • Create (or copy existing and change)
-    the following files within this dir: • Agent SUT conf::
-    <sut_name>.conf • Agent SUT yaml:: <sut_name>.yaml • Agent snappy
-    yaml:: <sut_name>\_snappy.yaml • It is recommended to copy another
-    sut’s agent files and… • ‘<sut_name>.conf’ • Replace all instances
-    of the sut name. • ‘<sut_name>.yaml’ • Replace the single instance
-    of the sut name. • ’<sut_name>\_snappy.yaml’ • Replace each instance
-    of: • device_ip • node_id • node_name • agent_name • secure_id •
-    Next, run the following command to sort these files into the
+-   Adding an agent container:
+    - On the Docker host, in the path::
+        /opt/testflinger-docker/sut
+    - Create (or copy existing and change) the following files within this dir:
+        - Agent SUT conf::
+            sut_name.conf
+        - Agent SUT yaml::
+            sut_name.yaml
+        - Agent snappy yaml::
+            sut_name_snappy.yaml
+    - Next, run the following command to sort these files into the
     relative subdirs to load in the appropriate stack containers RUN
     FROM DOCKER ROOT (/opt/testflinger-docker)::
-    ./tools/parse_tf_files.sh • Finally: • Restart the ‘tf-agent’ and
-    ‘tf-cli’ containers. • This will create the container(s) using the
-    sut name(s) (tf-agent) • Abdon statrup.
+        ./tools/parse_tf_files.sh
+    - Finally:
+        - Restart the ‘tf-agent’ and ‘tf-cli’ containers.
+        - This will create the container(s) using the sut name(s) (tf-agent) • Abdon statrup.
 
 -   Handling a healthcheck event: SUT agent containers are exclusively
-    running healthcheck functions. • If the healthy flag changes to
-    unhealthy, simply restart the flagged container. • The current
-    healthcheck process uses MQTT to publish from within the LogAgent
+    running healthcheck functions.
+    - If the healthy flag changes to unhealthy, simply restart the flagged container.
+    - The current healthcheck process uses MQTT to publish from within the LogAgent
 
 ## Portainer notes
 
@@ -191,36 +212,35 @@ console and shell access along with start/restart/stop for all
 containers. This interface checks nearly all of the boxes for container
 and agent specific management and information.
 
--   Portainer access and config, as in Needham: • Access via http/s •
-    https://10.245.128.15 (Needham) • Login with admin (request temp
-    PW). • Will move to LDAP in the future. • Allows for centralized: •
-    Start/stop/restarting of containers. • Accessing of console, logs
-    (sut output) and shell. • Also reports container healthchecks. •
-    Facilitated via agent_entrypoint and agent_healthcheck.
+-   Portainer access and config, as in Needham:
+    - Access via http/s
+    - https://10.245.128.15 (Needham)
+    - Login with admin (request temp PW).
+    - Will move to LDAP in the future.
+    - Allows for centralized:
+        - Start/stop/restarting of containers.
+        - Accessing of console, logs (sut output) and shell.
+        - Also reports container healthchecks.
+        - Facilitated via agent_entrypoint and agent_healthcheck.
 
 ## MQTT notes and useage
 
--   Grab a MQTT client, MQTT Explorer recommended. • This provides an
-    excellent top-level view of all MQTT clients and topics within the
-    MQTT broker. This means you can see all Testflinger agents running
-    in the lab and their respective output and auxillary topics such as
-    C3 status relative to the agent.
+-   Grab a MQTT client, MQTT Explorer recommended.
+    - This provides an excellent top-level view of all MQTT clients and topics within the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
 
 -   Point the client MQTT broker, as in Needham (stack broker settings):
-    • Protocol: mqtt:// • Host: 10.245.128.14 • Port: 1883 • Leave
-    username and password blank. • Keep ‘validate certificate’ and
-    ‘encryption’ unchecked
+    - Protocol: mqtt://
+    - Host: 10.245.128.14
+    - Port: 1883
+    - Leave username and password blank.
+    - Keep ‘validate certificate’ and ‘encryption’ unchecked
 
--   To submit a test via MQTT, publish to <sut>/submit. • The
-    “submit_status” topic indicates if the submit agent is ready. • If
-    using MQTT explorer (or similar clients): • Use the “publish” field
-    and use <sut>/submit as the topic. • Raw text mode suggested, but
-    other modes should work. • Publish the test cmd as in the same field
-    in the sut tf-cli yaml file:: ssh -o StrictHostKeyChecking=no  
-    ubuntu@$DEVICE_IP  
-    checkbox-cli launcher /usr/bin/test-functional-20.04  
-    -m "MQTT testing" Note: when using MQTT explorer, breaking up long
-    lines as above is recommended.
+-   To submit a test via MQTT, publish to (sut)/submit.
+    - The “submit_status” topic indicates if the submit agent is ready.
+    - If using MQTT explorer (or similar clients):
+        - Use the “publish” field and use (sut)/submit as the topic.
+        - Raw text mode suggested, but other modes should work.
+        - Publish the test cmd as in the same field ('test cmd') in the sut tf-cli yaml file. Note: when using MQTT explorer, breaking up long lines is recommended.
 
 -   A web based MQTT client running within the lab, as a part of larger
     monitoring/ automation/CI is the next natural step here.
@@ -305,10 +325,10 @@ Files that need to be updated: \* Required updates::
 File location: ./code/tf-entrypoint.sh (ref\*). This shell script is
 exec’d upon container boot/start.
 
--   Update the top-level variables to match your environment: •
-    TF_MAAS_ACT is the MAAS Testflinger account (create one if it
-    doesn’t exist). • MAAS API key is located in the MAAS dashboard for
-    the testflinger account’s settings (create one if it doesn’t exist).
+-   Update the top-level variables to match your environment:
+    - TF_MAAS_ACT is the MAAS Testflinger account (create one if it
+    doesn’t exist).
+    - MAAS API key is located in the MAAS dashboard for the testflinger account’s settings (create one if it doesn’t exist).
 
 -   Add them to the file as follows (w/ real values)::
     TF_MAAS_ACT=testflinger_a MAAS_SERVER=10.245.128.4 MAAS_PORT=5240
