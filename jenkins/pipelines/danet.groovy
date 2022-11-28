@@ -40,7 +40,7 @@ def testExec =
 
 def agentLog = "/var/log/${sutAgent}.log"
 
-def compltRegex = 'https|submissions.status'
+def compltRegex = 'submissions.status'
 
 def jobID
 
