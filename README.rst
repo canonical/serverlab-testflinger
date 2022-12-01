@@ -1,437 +1,576 @@
-******************
-Testflinger-Docker
-    Basic info, deployment and other notes.
-*******************************************
+Architecture
+------------
+
+This is a microservices architecture to run Canonical's Testflinger
+service. The core stack is comprised of the the below containers. Agents
+are facilitated by the 'tf-agent' container, which is running pass
+through Docker in Docker. Healthchecks run on each agent container and
+report through an MQTT broker. This MQTT broker facilitates agent
+logging, said healthchecks and allows for initiating Testflinger jobs
+via MQTT publish. (this secion in prgoress)
 
 Docker Containers
-=================
+-----------------
+
 All container dockerfiles are located in the project root.
 
 tf-agent
------------------
-Creates, starts and coordinated SUT agent containers. 
-    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
-    • Runs nested Docker to enable containers to be created and spun up via the 
-     Docker API at tf-agent startup.
-        • Performs agent creation and management.
-    • On first startup, will create agent image and create each agent container.
-    • Uses the Docker daemon from the base Docker host (passes thru /var/run/
-     docker.sock).
+~~~~~~~~
 
-<sut_name_>
-----------------
+Creates, starts and coordinated SUT agent containers.
+
+- Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+
+- Runs nested Docker to enable containers to be created and spun up via the
+  Docker API at tf-agent startup.
+
+- Performs agent creation and management.
+
+- On first startup, will create agent image and create each agent
+  container. Uses the Docker daemon from the base Docker host (passes thru
+  /var/run/ docker.sock).
+
+\<sut_name\_\>
+~~~~~~~~~~~~~~
+
 Discrete container for each SUT agent. Runs testflinger-agent.
-    • One container per sut agent.
-    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
-    • Includes snappy device agent.
-    • Runs custom threaded subprocess pipe instrumentation (agent_entrypoint).
-        • Logging to stdout, file and MQTT
-        • Runs a healthcheck script to facilitate Docker healthchecks via MQTT. 
+
+- One container per sut agent.
+
+- Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+
+- Runs custom threaded subprocess pipe instrumentation (agent_entrypoint),
+  logging to stdout, file and MQTT
+
+- Runs a healthcheck script to facilitate Docker healthchecks via MQTT.
 
 tf-cli
----------------
+~~~~~~
+
 Standard testflinger cli build, using Docker.
-    • Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
+
+- Runs a customized Phusion/Baseimage (Docker optimized Ubuntu) image.
 
 tf-api
----------------
+~~~~~~
+
 Gunicorn, with gevent.
 
 tf-db
---------------
+~~~~~
+
 Redis database container.
 
 tf-mqtt
-----------------
+~~~~~~~
+
 Stack MQTT broker.
 
 tf-portainer
-----------------
-Portainer container for managing the stack and related agents.
-    • Needham Portainer details below.
+~~~~~~~~~~~~
 
+Portainer container for managing the stack and related agents.
+
+- Needham Portainer details below.
+
+nh-jenkins
+~~~~~~~~~~
+
+Runs the Jenkins instance to facilitate regression testing via Jenkins
+pipelines. Pipelines are multi-stages to
 
 Files of interest and project notes
-===================================
-* ./code/init_agent_cntnrs
-    • Utilizes the Python Docker sdk to enable containers to be created 
-     and spun up via the dockerd api at tf-agent startup.
-    • Creates all sut container properties and attributes.
-        • Image creation (streams build).
-        • Network and network config.
-        • Host config with defined mounts for all files.
-            • Mounts are used for consistent scaling across many containers.
-        • Agent healthcheck (using MQTT).
-    • Containers instantiated via iterating over the sut conf dir in the
-     project root.
-        • Agent container image is created if it doesn't exist.
-        • Agent containers are created if they do not exist.
+-----------------------------------
 
-* ./code/agent_entrypoint
-    • Loaded at agent container startup.
-    • Runs custom threaded subprocess pipe instrumentation.
-          • Logging to stdout, file and MQTT.
-    • Transmits agent output to stack MQTT broker.
-    • Runs agent_healthcheck.py (as below).
-    • Published MQTT topics::
-        agent : agent/logger status
-        c3 : current status of REST comms from agent to C3
-        output: current agent output (broker retained)
-        submit_status : when active, lists topic to publish test cmd
-        last_job : last job seen by the sut agent (broker retained)
+-  ./code/init_agent_cntnrs
 
-* ./code/agent_healthcheck
-    • Uses a simple MQTT subscribe poll on the <sut>/agent topic.
-        • Agent status is a looping timer thread that runs parallel to
+   -  Utilizes the Python Docker sdk to enable containers to be created
+      and spun up via the dockerd api at tf-agent startup.
+   -  Creates all sut container properties and attributes.
+   -  Image creation (streams build).
+   -  Network and network config.
+   -  Host config with defined mounts for all files.
+   -  Mounts are used for consistent scaling across many containers.
+   -  Agent healthcheck (using MQTT).
+   -  Containers instantiated via iterating over the sut conf dir in the
+      project root.
+   -  Agent container image is created ifit doesn't exist.
+   -  Agent containers are created if they do not exist.
+
+-  ./code/agent_entrypoint
+
+   -  Loaded at agent container startup.
+
+   -  Runs custom threaded subprocess pipe instrumentation.
+
+   -  Logging to stdout, file and MQTT.
+
+   -  Transmits agent output to stack MQTT broker.
+
+   -  Runs agent_healthcheck.py (as below).
+
+   -  Published MQTT topics:
+
+      - agent
+
+      - agent/logger status c3
+
+      - current status of REST comms from agent to C3 output
+
+      - current agent output (broker retained) submit_status
+
+      - when active, lists topic to publish test cmd last_job
+
+      - last job seen by the sut agent (broker retained)
+
+-  ./code/agent_healthcheck
+
+   -  Uses a simple MQTT subscribe poll on the (sut)/agent topic.
+
+      -  Agent status is a looping timer thread that runs parallel to
          agent logging.
-        • If agent_entrypoint hangs or terminates/crashes, the container health 
-         will report as unhealthy.
-    • Runs at a set interval as defined within init_agent_cntnrs
-        • This is directly relative to the agent status timer period.
-        • Status timer period should overlap with healthcheck interval
+      -  If agent_entrypoint hangs or terminates/crashes, the container
+         health will report as unhealthy.
+
+   -  Runs at a set interval as defined within init_agent_cntnrs
+
+      -  This is directly relative to the agent status timer period.
+      -  Status timer period should overlap with healthcheck interval
          and timeout.
-    • Notes on the agent status reporting for the healthcheck:
-        • Relies on the fact that the logging thread is the parent
-         of the status thread.
-            • Status child thread sets daemon=True, so if/when the parent
-             thread fails, the child will follow suit and 'ok' messages
-             will no longer be sent.
-        • Testing frequency of lines of output is problematic b/c output varies
-         in cadence depending on the agent function being performed.
-            • Likewise with monitoring log file growth.
-            • Using a looping thread timer allows for a 
-        • Healthcheck parameters in init_agent_cntnrs detail:
-            • timeout should be => than status timer tperiod (or)
-            • retries should be increased if timeout donesn't cover
-             status timer tperiod.
 
-* ./code/start_submit_agents
-    • Runs on testflinger-cli.
-    • Starts lightweight sut agents, similar to start_sut_agents.
-    • The "submit_status" topic will list instructions if the submit agent is ready.
-    • These agents listen for test submissions via MQTT, will then start
-     the appropriate job. See MQTT notes below for useage.
-    • Subscribed MQTT topics::
-        submit : listen for mqtt test_cmd message, initiate job.
+   -  Notes on the agent status reporting for the healthcheck:
 
-* ./code/01_run_sut_agents
-    • Starts init_agent_cntrs via init on tf-agent.
+      -  Relies on the fact that the logging thread is the parent of the
+         status thread.
 
-* ./code/01_run_submit_agents
-    • Starts submit agents on testflinger-cli boot.
+         -  Status child thread sets daemon=True, so if/when the parent
+            thread fails, the child will follow suit and 'ok' messages
+            will no longer be sent.
 
-* ./code/export_ssh_pubkey (and export_ssh_pubkey_agnt)
-    • Pushes ssh keys to specified stack MAAS host for maas-cli api.
-    • Runs on container boot, will not push key if it already exists.
+      -  Healthcheck parameters in init_agent_cntnrs detail:
 
-* ./reference.yaml
-    • Reference device agent file to facilitate job pushing via MQTT.
+         -  timeout should be => than status timer tperiod (or)
+         -  retries should be increased if timeout donesn't cover status
+            timer tperiod.
 
-* ./tf-entrypoint
-    • Runs on testflinger-agent.
-    • Exports ssh keys and starts init
+-  ./code/start_submit_agents
 
-* ./container-entrypoint
-    • Starts appropriate microservices, see below for more info.
+   -  Runs on testflinger-cli.
 
-* ./tools/*
-    • Contains convenience scripts for streamlined Docker ops.
-    • Most used scripts::
-    	 deploy_stack.sh : complete, clean deployment of stack
-         orb_nuke.sh : completely destroy stack and all associated files and data
-    	 reroll.sh : completely destroy stack, git pull and redeploy
-                     (git repo optional)
+   -  Starts lightweight sut agents, similar to start_sut_agents.
 
-* ./code/start_sut_agents (depreciated)
-    • Runs on testflinger-agent.
-    • Starts all agents, and performs logging.
-    • Transmits agent output to stack MQTT broker.
-    • Logs agent output /var/log/sut-agent within testflinger-agent.
-    • Developer notes and aspirations within source file.
-    • Published MQTT topics::
-        agent : agent/logger status
-        c3 : current status of REST comms from agent to C3
-        output: current agent output (broker retained)
-        submit_status : when active, lists topic to publish test cmd
-        last_job : last job seen by the sut agent (broker retained)
+   -  The "submit_status" topic will list instructions if the submit
+      agent is ready.
 
+   -  These agents listen for test submissions via MQTT, will then start
+      the appropriate job. See MQTT notes below for useage.
+
+   -  Subscribed MQTT topics: submit : listen for mqtt test_cmd message,
+      initiate job.
+
+-  ./code/01_run_sut_agents
+
+   -  Starts init_agent_cntrs via init on tf-agent.
+
+-  ./code/01_run_submit_agents
+
+   -  Starts submit agents on testflinger-cli boot.
+
+-  ./code/export_ssh_pubkey (and export_ssh_pubkey_agnt)
+
+   -  Pushes ssh keys to specified stack MAAS host for maas-cli api.
+   -  Runs on container boot, will not push key if it already exists.
+
+-  ./reference.yaml
+
+   -  Reference device agent file to facilitate job pushing via MQTT.
+
+-  ./tf-entrypoint
+
+   -  Runs on testflinger-agent.
+   -  Exports ssh keys and starts init.
+
+-  ./container-entrypoint
+
+   -  Starts appropriate microservices, see below for more info.
+
+-  ./tools/\*
+
+   -  Contains convenience scripts for streamlined Docker ops.
+   -  Most used scripts:: deploy_stack.sh : complete, clean deployment
+      of stack orb_nuke.sh : completely destroy stack and all associated
+      files and data reroll.sh : completely destroy stack, git pull and
+      redeploy (git repo optional)
+
+-  ./code/start_sut_agents (depreciated)
+
+   -  Runs on testflinger-agent.
+   -  Starts all agents, and performs logging.
+   -  Transmits agent output to stack MQTT broker.
+   -  Logs agent output /var/log/sut-agent within testflinger-agent.
+   -  Developer notes and aspirations within source file.
+   -  Published MQTT topics:: agent : agent/logger status c3 : current
+      status of REST comms from agent to C3 output: current agent output
+      (broker retained) submit_status : when active, lists topic to
+      publish test cmd last_job : last job seen by the sut agent (broker
+      retained)
 
 Stack Operations
-================
-* Starting and stopping the entire stack (including SUT agents):
-    • Log into the Docker host and execute (as appropriate):
-        docker-compose start
-        docker-compose restart
-        docker-compose stop
-    • Alernatively, reboot the Docker host.
-        • Stack will stop cleanly on shutdown and start on boot.
+----------------
 
-* Starting and stopping SUT agents and/or individual stack containers:
-    • Log into the Docker host OR tf-agent (for SUT agents) and execute:
-        • Starting/Restarting/Stopping from shell::
-            docker start <container name>
-            docker restart <container name>
-            docker stop <container name>
-        • Starting/Restarting/Stopping from Portainer works as well.
-            • Done via GUI; refer to Portainer notes below.
+-  Starting and stopping the entire stack (including SUT agents):
 
-* Checking container logs:
-    • On the shell of the Docker host::
-        docker logs <container name>
+   -  Log into the Docker host and execute (as appropriate)::
+
+        docker-compose start (container name) docker-compose restart
+        (container name) docker-compose stop (container name)
+
+   -  Alernatively, reboot the Docker host.
+
+      -  Stack will stop cleanly on shutdown and start on boot.
+
+-  Starting and stopping SUT agents and/or individual stack containers:
+
+   -  Log into the Docker host OR tf-agent (for SUT agents) and execute:
+
+      -  Starting/Restarting/Stopping from shell::
+
+           docker start (container name)
+           docker restart (container name)
+           docker stop (container name)
+
+      -  Starting/Restarting/Stopping from Portainer works as well.
+
+         -  Done via GUI; refer to Portainer notes below.
+
+-  Checking container logs:
+
+   -  On the shell of the Docker host::
+
+        docker logs (container name)
         docker-compose logs (for contiguous view of stack container logs)
-    • In Portainer (in the containers context):
-        • Click on the '<page icon>' (leftmost icon) under 'Quick actions.'
+
+   -  In Portainer (in the containers context):
+
+      - Click on the "(page icon)" (leftmost icon) under "Quick actions."
         OR
-        • Click on the container name and select '<page icon> Logs.'
 
-* Entering a container's console/shell:
-    • On the shell of Docker host::
-        docker exec -it <container name> bash
-    • In Portainer (in the containers context):
-        • Click on the '>_' icon under quick actions.
-        OR
-        • Click on the container name and select '>_ Console.'
+      - Click on the container name and select "(page icon) Logs."
 
-* Changing/updating an agent's config:
-    • Enter the agent container's console (either method as above):
-        • Agent conf file path is::
-            /data/testflinger-agent/sut/<sut_name>.conf
-        • Edit the file, save and restart the agent container (as above).
-            • Conf file will reload on restart.
+-  Entering a container's console/shell:
 
-* Adding an agent container:
-    • On the Docker host, in the path::
-        /opt/testflinger-docker/sut
-    • Create (or copy existing and change) the following
-     files within this dir:
-        • Agent SUT conf::
-         <sut_name>.conf
-        • Agent SUT yaml::
-         <sut_name>.yaml
-        • Agent snappy yaml::
-         <sut_name>_snappy.yaml
-        • It is recommended to copy another sut's agent files and...
-            • '<sut_name>.conf'
-                • Replace all instances of the sut name.
-            • '<sut_name>.yaml'
-                • Replace the single instance of the sut name. 
-            • '<sut_name>_snappy.yaml'
-                • Replace each instance of:
-                    • device_ip
-                    • node_id
-                    • node_name
-                    • agent_name
-                    • secure_id
-    • Next, run the following command to sort these files into the relative
-     subdirs to load in the appropriate stack containers
-     RUN FROM DOCKER ROOT (/opt/testflinger-docker)::
-         ./tools/parse_tf_files.sh
-    • Finally:
-        • Restart the 'tf-agent' and 'tf-cli' containers.
-            • This will create the container(s) using the sut name(s) (tf-agent)
-            • Abdon statrup. 
+   -  On the shell of Docker host::
 
-* Handling a healthcheck event:
-    SUT agent containers are exclusively running healthcheck functions.
-        • If the healthy flag changes to unhealthy, simply restart the flagged container.
-        • The current healthcheck process uses MQTT to publish from within the LogAgent
+        docker exec -it (container name)
+        bash
 
+   -  In Portainer (in the containers context):
+
+      -  Click on the console prompt icon.
+
+-  Changing/updating an agent's config:
+
+   -  Enter the agent container's console (either method as above):
+
+      -  Agent conf file path is
+         ``/data/testflinger-agent/sut/(sut_name).conf``
+
+      -  Edit the file, save and restart the agent container (as above).
+
+      -  Conf file will reload on restart.
+
+-  Adding an agent container:
+
+   -  On the Docker host, in the path ``/opt/testflinger-docker/sut``
+
+   -  Create (or copy existing and change) the following files within
+      this dir:
+
+      -  Agent SUT conf: ``sut_name.conf``
+      -  Agent SUT yaml: ``sut_name.yaml``
+      -  Agent snappy yaml: ``sut_name_snappy.yaml``
+
+   -  Next, run the following command to sort these files into the
+      relative subdirs to load in the appropriate stack containers RUN
+      FROM DOCKER ROOT (``/opt/testflinger-docker``)::
+
+        ./tools/parse_tf_files.sh
+
+   -  Finally:
+
+      -  Restart the 'tf-agent' and 'tf-cli' containers.
+      -  This will create the container(s) using the sut name(s)
+         (tf-agent)
+
+         - Abdon startup.
+
+-  Handling a healthcheck event: SUT agent containers are exclusively
+   running healthcheck functions.
+
+   -  If the healthy flag changes to unhealthy, simply restart the
+      flagged container.
+   -  The current healthcheck process uses MQTT to publish from within
+      the LogAgent
 
 Portainer notes
-=====================
-This setup yields an HTML5 web interface with realtime log viewing, console and shell access along with start/restart/stop for all containers. This interface checks nearly all of the boxes for container and agent specific management and information.
+---------------
 
-* Portainer access and config, as in Needham:
-    • Access via http/s
-        • https://10.245.128.15 (Needham)
-        • Login with admin (request temp PW).
-            • Will move to LDAP in the future.
-    • Allows for centralized:
-        • Start/stop/restarting of containers.
-        • Accessing of console, logs (sut output) and shell.
-    • Also reports container healthchecks.
-        • Facilitated via agent_entrypoint and agent_healthcheck.
+This setup yields an HTML5 web interface with realtime log viewing,
+console and shell access along with start/restart/stop for all
+containers. This interface checks nearly all of the boxes for container
+and agent specific management and information.
+
+-  Portainer access and config, as in Needham:
+
+   -  Access via http/s
+   -  https://10.245.128.15 (Needham)
+   -  Login with admin (request temp PW).
+   -  Will move to LDAP in the future.
+   -  Allows for centralized:
+
+      -  Start/stop/restarting of containers.
+      -  Accessing of console, logs (sut output) and shell.
+      -  Also reports container healthchecks.
+      -  Facilitated via agent_entrypoint and agent_healthcheck.
 
 MQTT notes and useage
-=====================
-* Grab a MQTT client, MQTT Explorer recommended.
-    • This provides an excellent top-level view of all MQTT clients and topics within
-     the MQTT broker. This means you can see all Testflinger agents running in the lab and their respective output and auxillary topics such as C3 status relative to the agent.
+---------------------
 
-* Point the client MQTT broker, as in Needham (stack broker settings):
-    • Protocol: mqtt://
-    • Host: 10.245.128.14
-    • Port: 1883
-    • Leave username and password blank.
-    • Keep 'validate certificate' and 'encryption' unchecked
+-  Grab a MQTT client, MQTT Explorer recommended.
 
-* To submit a test via MQTT, publish to <sut>/submit.
-    • The "submit_status" topic indicates if the submit agent is ready.
-    • If using MQTT explorer (or similar clients):
-        • Use the "publish" field and use <sut>/submit as the topic. 
-        • Raw text mode suggested, but other modes should work.
-    • Publish the test cmd as in the same field in the sut tf-cli yaml file::
-        ssh -o StrictHostKeyChecking=no \
-        ubuntu@$DEVICE_IP \
-        checkbox-cli launcher /usr/bin/test-functional-20.04 \
-        -m \"MQTT testing\"
-    Note: when using MQTT explorer, breaking up long lines as above is recommended.
+   -  This provides an excellent top-level view of all MQTT clients and
+      topics within the MQTT broker. This means you can see all
+      Testflinger agents running in the lab and their respective output
+      and auxillary topics such as C3 status relative to the agent.
 
-* A web based MQTT client running within the lab, as a part of larger monitoring/ automation/CI is the next natural step here.
+-  Point the client MQTT broker, as in Needham (stack broker settings):
 
-* As a suppliment to MQTT, one could integrate REST calls via CoAP. Called inline in the same fashion as MQTT publish. A 'testflinger-rest' container could be a CoAP server (if necessary).
+   -  Protocol: mqtt://
+   -  Host: 10.245.128.14
+   -  Port: 1883
+   -  Leave username and password blank.
+   -  Keep 'validate certificate' and 'encryption' unchecked
 
+-  To submit a test via MQTT, publish to (sut)/submit.
+
+   -  The "submit_status" topic indicates if the submit agent is ready.
+   -  If using MQTT explorer (or similar clients):
+
+      -  Use the "publish" field and use (sut)/submit as the topic.
+      -  Raw text mode suggested, but other modes should work.
+      -  Publish the test cmd as in the same field ('test cmd') in the
+         sut tf-cli yaml file. Note: when using MQTT explorer, breaking
+         up long lines is recommended.
+
+-  A web based MQTT client running within the lab, as a part of larger
+   monitoring/ automation/CI is the next natural step here.
+
+-  As a suppliment to MQTT, one could integrate REST calls via CoAP.
+   Called inline in the same fashion as MQTT publish. A
+   'testflinger-rest' container could be a CoAP server (if necessary).
 
 Deploying Stack
-===============
-Utilizes single-shot deployment after installing some pre-reqs on the host system.
-    • Will create and start all containers using Docker Compose (for base) followed by the API (for agents).
+---------------
+
+Utilizes single-shot deployment after installing some pre-reqs on the
+host system.
+
+- Will create and start all containers using Docker Compose (for base)
+  followed by the API (for agents).
 
 Deploy and configure Docker host
---------------------------------
-Deploy 18.04+ host via MAAS.
-After host is deployed, setup prerequisites:
-    • Much of these steps will be moved to a conveince bash script.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Update system::
-    sudo apt update
+Deploy 18.04+ host via MAAS. After host is deployed, setup
+prerequisites: - Much of these steps will be moved to a conveince bash
+script.
 
-* Install Docker package dependencies::
-    sudo apt install apt-transport-https ca-certificates curl wget software-properties-common git
+-  Update system::
 
-* Install Docker GPG key::
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+     sudo apt update
 
-* Add Docker repo to APT sources::
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-    sudo apt update
-    apt-cache policy docker-ce
+-  Install Docker package dependencies::
 
-* Install Docker::
-    sudo apt install docker-ce
-    sudo systemctl start docker
+     sudo apt install apt-transport-https ca-certificates curl \
+          wget software-properties-common git
 
-* Add user to Docker group to exec Docker commands without sudo::
-    sudo usermod -aG docker ${USER}
-    su - ${USER}
-    (or logout and log back in)
+-  Install Docker GPG key::
 
-* Verify user in appropriate group::
-    id -nG | grep docker
+     curl -fsSL https://download.docker.com/linux/ubuntu/gpg
+     sudo apt-key add -
 
-* Find target Docker Compose version (use 1.29.2+)::
-    https://github.com/docker/compose/releases
+-  Add Docker repo to APT sources::
 
-* Download and install Docker Compose::
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+     sudo add-apt-repository \
+          "deb[arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+     sudo apt update apt-cache policy docker-ce
 
-* Make executable::
-    sudo chmod +x /usr/local/bin/docker-compose
+-  Install Docker::
 
-* Verify Docker Compose installation & version::
-    docker-compose --version
+     sudo apt install docker-ce
+     sudo systemctl start docker
 
-* Pull repo from Launchpad or Github::
-    git clone https://github.com/hum4n0id/testflinger-docker
+-  Add user to Docker group to exec Docker commands without sudo::
 
+     sudo usermod -aG docker ${USER} su - ${USER}
+
+   (or logout and log back in)
+
+-  Verify user in appropriate group::
+
+     id -nG \| grep docker
+
+-  Find target Docker Compose version (use 1.29.2+):
+   ``https://github.com/docker/compose/releases``
+
+-  Download and install Docker Compose::
+
+     sudo curl -L \
+     "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-(*u*n*a*m*e* -- *s*)--(uname -m)" \
+     -o /usr/local/bin/docker-compose
+
+-  Make executable::
+
+     sudo chmod +x /usr/local/bin/docker-compose
+
+-  Verify Docker Compose installation & version::
+
+     docker-compose --version
+
+-  Pull repo from Launchpad or Github::
+
+     git clone https://github.com/hum4n0id/testflinger-docker
 
 Customize source and config files for environment:
---------------------------------------------------
-All work is done in the Git cloned Docker root dir (testflinger-docker/).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All work is done in the Git cloned Docker root dir
+(``testflinger-docker/``).
 
 Update relevant files are to match local environment:
------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Files that need to be updated:
-* Required updates::
-    ./docker-compose.yaml
-    ./code/tf-entrypoint.sh
-    ./code/testflinger.conf
 
-* Deployment optional updates (can be added post-deployment)::
-    ./sut/*
+- Required updates:
 
-* Optional updates (uses default parameters)::
-    ./tools/deploy_stack.sh
+  - ``./docker-compose.yaml``
+  - ``./code/tf-entrypoint.sh``
+  - ``./code/testflinger.conf``
+
+-  Deployment optional updates (can be added post-deployment):
+
+   - ``./sut/\*``
+
+-  Optional updates (uses default parameters):
+
+   - ``./tools/deploy_stack.sh``
 
 Edit docker-compose.yaml file to match environment:
----------------------------------------------------
-* Change the parent network parameters to match the environment. Keeping the default bridge parameters will work in any standard environment.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Likewise, update container IPs to match said networks.
+-  Change the parent network parameters to match the environment.
+   Keeping the default bridge parameters will work in any standard
+   environment.
+
+-  Likewise, update container IPs to match said networks.
 
 Edit the testflinger entrypoint file (tf-entrypoint):
------------------------------------------------------
-File location: ./code/tf-entrypoint.sh (ref*).
-This shell script is exec’d upon container boot/start.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Update the top-level variables to match your environment:
-    • TF_MAAS_ACT is the MAAS Testflinger account (create one if it doesn’t exist).
-    • MAAS API key is located in the MAAS dashboard for the testflinger  account’s settings (create one if it doesn’t exist).
+File location: ``./code/tf-entrypoint.sh (ref*).`` This shell script is
+exec'd upon container boot/start.
 
-* Add them to the file as follows (w/ real values)::
-    TF_MAAS_ACT=testflinger_a
-    MAAS_SERVER=10.245.128.4
-    MAAS_PORT=5240
-    MAAS_API_KEY=’<api_key>’
+-  Update the top-level variables to match your environment:
 
-Edit ./code/testflinger.conf (ref *):
--------------------------------------
-* Update the REDIS_HOST field to the db container ip address::
-    REDIS_HOST = '10.172.10.13'
+   -  TF_MAAS_ACT is the MAAS Testflinger account (create one if it
+      doesn't exist).
+
+   -  MAAS API key is located in the MAAS dashboard for the testflinger
+      account's settings (create one if it doesn't exist).
+
+-  Add them to the file as follows (w/ real values)::
+
+     TF_MAAS_ACT=testflinger_a
+     MAAS_SERVER=10.245.128.4
+     MAAS_PORT=5240
+     MAAS_API_KEY=''
+
+Edit ``./code/testflinger.conf (ref \*)``:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Update the REDIS_HOST field to the db container ip address::
+
+     REDIS_HOST = '10.172.10.13'
 
 Modify/Create SUT files:
-------------------------
-* Update any testflinger-agent *.conf files with the api server IP::
-    server_address: http://10.245.128.10:8000 (use actual api ip)
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Make sure the snappy-device-agents yaml files are appended with _snappy if you want the deployment to automatically transfer them from the sut directory to the containers. You can alternatively create the config files inside the container post-deployment.
+-  Update any testflinger-agent \*.conf files with the api server IP::
+
+     server_address: http://10.245.128.10:8000
+
+   (use actual api ip)
+
+-  Make sure the snappy-device-agents yaml files are appended with
+   \_snappy if you want the deployment to automatically transfer them
+   from the sut directory to the containers. You can alternatively
+   create the config files inside the container post-deployment.
 
 Populate SUT conf dirs for deployment (required):
--------------------------------------------------
-* Run::
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Run::
+
      ./tools/parse_tf_files.sh
 
-
 Deploy Compose Stack:
-=====================
-* Execute the deploy-stack script to start deployment::
-    bash ./tools/deploy-stack.sh
+---------------------
 
-* If you want to start over from scratch, execute the orb_nuke (orbital nuke) script.::
-    bash ./tools/orb_nuke.sh
+-  Execute the deploy-stack script to start deployment::
 
-* The rest of the deployment should be handled by the Docker code included in the source directory.
+     bash ./tools/deploy-stack.sh
+
+-  If you want to start over from scratch, execute the orb_nuke (orbital
+   nuke) script.::
+
+     bash ./tools/orb_nuke.sh
+
+-  The rest of the deployment should be handled by the Docker code
+   included in the source directory.
 
 Validate Deployment:
---------------------
-When successfully deployed and running, you can check the output of the stack.
+~~~~~~~~~~~~~~~~~~~~
 
-* Show containers::
-    docker-compose ps
+When successfully deployed and running, you can check the output of the
+stack.
 
-* Validate logs::
-    docker logs <containter_name>
+-  Show containers::
 
-Once the deployment is complete, no other steps should be required to start executing Testflinger tests on SUTs outside of ensuring the appropriate configuration files are in the agent and cli containers.
+     docker-compose ps
 
+-  Validate logs::
+
+     docker logs
+
+Once the deployment is complete, no other steps should be required to
+start executing Testflinger tests on SUTs outside of ensuring the
+appropriate configuration files are in the agent and cli containers.
 
 References (incomplete):
-========================
+------------------------
+
 Docker Compose Specification:
 https://github.com/compose-spec/compose-spec/blob/master/spec.md
 
 Docker Build Ref (Dockerfile):
 https://docs.docker.com/engine/reference/builder/
 
-Docker Python SDK:
-https://docker-py.readthedocs.io/en/stable/#
+Docker Python SDK: https://docker-py.readthedocs.io/en/stable/#
 
-Phusion Baseimage:
-https://github.com/phusion/baseimage-docker
+Phusion Baseimage: https://github.com/phusion/baseimage-docker
 
-Portainer:
-https://www.portainer.io
+Portainer: https://www.portainer.io
 
-MQTT Eclipse Mosquitto:
-https://github.com/eclipse/mosquitto
+MQTT Eclipse Mosquitto: https://github.com/eclipse/mosquitto
 https://hub.docker.com/_/eclipse-mosquitto/
