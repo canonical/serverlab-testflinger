@@ -1,13 +1,18 @@
 Architecture
 ------------
 
-This is a microservices architecture to run Canonical's Testflinger
-service. The core stack is comprised of the the below containers. Agents
-are facilitated by the 'tf-agent' container, which is running pass
-through Docker in Docker. Healthchecks run on each agent container and
-report through an MQTT broker. This MQTT broker facilitates agent
-logging, said healthchecks and allows for initiating Testflinger jobs
-via MQTT publish. (this secion in prgoress)
+This is a microservices architecture to run Canonical's Testflinger service. 
+The core stack is comprised of the the below containers. The base container infrastructure is defined via a master Docker compose file, which will deploy the entire environment automatically upon docker-compose deploy invokation.
+
+Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment. These containers are created by the the tf-agent master container, via the Docker Python API, which is running pass through Docker in Docker. This allows for dynamic container creation, which is triggered by the presence of Testflinger configuration files in the associated base directory. 
+-diagram-
+
+Healthchecks run on each agent container and report through an MQTT broker. This MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting.
+-diagram-
+
+Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is availble from the Portainer web interface.
+    
+(this secion in prgoress),
 
 Docker Containers
 -----------------
