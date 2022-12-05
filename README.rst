@@ -3,9 +3,7 @@ Architecture and Rationale
 
 This is a microservices architecture to run Canonical's Testflinger service. A full-featured Docker architecture was chosen for the following reasons:
 
-- Testflinger agents run in discrete lightweight containers, allowing for dynamic healthchecking, reporting and operations. As there is no shared agent-level operating system, this creates complete segmentation from the other agents, which avoids the pitfalls to running agents via a shared systemctl/systemd.
-
-- Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment.
+- Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment. These are lightweight containers, allowing for dynamic healthchecking, reporting and operations. As there is no shared agent-level operating system, this creates complete segmentation from the other agents, which avoids the pitfalls to running agents via a shared systemctl/systemd.
 
 - Testflinger agents have a dedicated operating system for installing dependancies and other testing specific resources specific to that agent only - sidestepping conflicts seen in a shared environment. Reseting to a clean slate is trivial after testing is complete.
 
@@ -17,7 +15,7 @@ This is a microservices architecture to run Canonical's Testflinger service. A f
 
 - An MQTT broker is part of the core stack, which allows for a multitude of opersations, visibility and reporting.
 
-In summary, this enviroment allows for high-availability, automated scaling and thourough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependancies are eliminated on the infrastructure layer. This allows for an extremely consistent infrastructure that allows 
+In summary, this enviroment allows for high-availability, automated scaling and thourough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependancies are eliminated on the infrastructure layer. This allows for a consistent and reliable infrastructure. 
 
 -diagram-
 
