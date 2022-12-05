@@ -13,7 +13,9 @@ This is a microservices architecture to run Canonical's Testflinger service. A f
 
 - The agent container entrypoint runs non-blocking operations which push out-of-band logging, and sends health status to the stack MQTT broker and facilitates other operations. These
 
-- An MQTT broker is part of the core stack, which allows for a multitude of opersations, visibility and reporting.
+- An MQTT broker is part of the core stack, which allows for a multitude of opersations, visibility and reporting. Every agent communicates with this broker.
+
+- A Jenkins container is runninig in the enviroment. One pipeline per SUT in the lab, which has multi-stage granularity and progress.
 
 In summary, this enviroment allows for high-availability, automated scaling and thourough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependancies are eliminated on the infrastructure layer. This allows for a consistent and reliable infrastructure. 
 
