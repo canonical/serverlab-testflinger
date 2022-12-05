@@ -1,14 +1,25 @@
-Architecture
-------------
+Architecture and Rationale
+--------------------------
 
-This is a microservices architecture to run Canonical's Testflinger service. 
-The core stack is comprised of the the below containers. The base container infrastructure is defined via a master Docker compose file, which will deploy the entire environment automatically upon docker-compose deploy invokation.
+This is a microservices architecture to run Canonical's Testflinger service. A full-featured Docker architecture was chosen for the following reasons:
+- Testflinger agents run in discrete lightweight containers, allowing for dynamic healthchecking, reporting and operations. As there is no shared agent-level operating system, this creates complete segmentation from the other agents, which avoids the pitfalls to running agents via a shared systemctl/systemd.
+- Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment.
+- Testflinger agents have a dedicated operating system for installing dependancies and other testing specific resources specific to that agent only - sidestepping conflicts seen in a shared environment. Reseting to a clean slate is trivial after testing is complete.
+- Docker compose is utilized for fully automated deployment of the entire stack, allowing for extreme portability. The base container infrastructure is defined via a master Docker compose file, which will deploy the entire environment automatically upon docker-compose deploy invokation.
+- Agent containers are dynamically created via a full-fledged implimentation of the Docker API. This allows for dynamic container creation, which is triggered by the presence of Testflinger configuration files in the associated base directory. Agent container images are created if not present.
+- The agent container entrypoint runs non-blocking operations which push out-of-band logging, and sends health status to the stack MQTT broker and facilitates other operations. These
+- An MQTT broker is part of the core stack, which allows for a multitude of opersations, visibility and reporting.
 
-Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment. These containers are created by the the tf-agent master container, via the Docker Python API, which is running pass through Docker in Docker. This allows for dynamic container creation, which is triggered by the presence of Testflinger configuration files in the associated base directory. 
+In summary, this enviroment allows for high-availability, automated scaling and thourough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependancies are eliminated on the infrastructure layer. This allows for an extremely consistent infrastructure that allows 
+
 -diagram-
 
-Healthchecks run on each agent container and report through an MQTT broker. This MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting.
+The agent containers 
+
+Healthchecks run on each agent container and report through an MQTT broker. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. Currently, the 
 -diagram-
+
+This MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish. 
 
 Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is availble from the Portainer web interface.
     
