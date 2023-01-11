@@ -24,7 +24,7 @@ Visualizations and architecture specifics
 
 The Docker environment is laid as out as below:
 
-image:: docs/base_arch.jpg
+.. image:: docs/base_arch.jpg
 
 The base layer comprises of the core agent infrastructure containers, as defined in the root Docker compose file.
 Of note is the agent master continer named tf-agent. This container has access to the Docker daemon (dockerd) running on the Docker host. This allows for pseudo-nested (Docker-in-Docker) operations, creating an additional layer for every Testflinger agent container. This enables Testflinger agents to be dynamically created by the tf-agent container, via the Docker API. This is enables agents to be spun-up when named agent configuration files are added to the 'sut' subdir.
