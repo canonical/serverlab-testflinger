@@ -29,11 +29,17 @@ The Docker environment is laid as out as below:
 The base layer comprises of the core agent infrastructure containers, as defined in the root Docker compose file.
 Of note is the agent master continer named tf-agent. This container has access to the Docker daemon (dockerd) running on the Docker host. This allows for pseudo-nested (Docker-in-Docker) operations, creating an additional layer for every Testflinger agent container. This enables Testflinger agents to be dynamically created by the tf-agent container, via the Docker API. This is enables agents to be spun-up when named agent configuration files are added to the 'sut' subdir.
 
+Each 'SUT agent' is a container instance with the following functions:
+
+.. image: doc/sut_agent.jpg
+
+The agent entrypoint is run at container invokation, and spawns a minimal, custom init. SSH access is for remote access and Jenkins agent comms. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
+
 The MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish.
 
 .. image:: doc/mqtt.jpg
 
-As stated above, healthchecks run on each agent container and report through this MQTT broker, via the 'agent' topic. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. MQTT topic details are listed in the container specifics section below. 
+As stated above, healthchecks run on each agent container and report through this MQTT broker, via the 'agent' topic. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. MQTT topic details are listed in the container specifics section below.
 
 Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is availble from the Portainer web interface.
 
