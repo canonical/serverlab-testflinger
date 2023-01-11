@@ -33,7 +33,7 @@ Each 'SUT agent' is a container instance with the following functions:
 
 .. image:: doc/sut_agent.jpg
 
-The agent entrypoint is run at container invokation, and spawns a minimal, custom init. SSH access is for remote access and Jenkins agent comms. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
+The agent entrypoint is run at container invokation, and spawns a minimal, custom init. SSHd is for remote access and Jenkins agent comms. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
 
 The MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish.
 
