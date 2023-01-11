@@ -31,7 +31,7 @@ Of note is the agent master continer named tf-agent. This container has access t
 
 Each 'SUT agent' is a container instance with the following functions:
 
-.. image: doc/sut_agent.jpg
+.. image:: doc/sut_agent.jpg
 
 The agent entrypoint is run at container invokation, and spawns a minimal, custom init. SSH access is for remote access and Jenkins agent comms. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
 
