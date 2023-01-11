@@ -33,7 +33,7 @@ The MQTT broker facilitates agent logging, said healthchecks and allows for init
 
 .. image:: doc/mqtt.jpg
 
-As stated above, healthchecks run on each agent container and report through this MQTT broker, via the 'agent' topic. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions.
+As stated above, healthchecks run on each agent container and report through this MQTT broker, via the 'agent' topic. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. MQTT topic details are listed in the container specifics section below. 
 
 Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is availble from the Portainer web interface.
 
