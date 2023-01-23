@@ -542,7 +542,7 @@ Modify/Create SUT files:
 
 -  Update any testflinger-agent \*.conf files with the api server IP::
 
-     server_address: http://10.245.128.10:8000
+     server_address: https://testflinger.canonical.com:443
 
    (use actual api ip)
 

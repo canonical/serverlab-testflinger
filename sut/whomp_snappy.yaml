@@ -1,0 +1,8 @@
+device_ip: 10.245.130.53
+node_id: 8pk6f8
+node_name: whomp
+maas_user: testflinger_a
+agent_name: whomp
+env:
+    HEXR_DEVICE_SECURE_ID: GnZzh78ERa5eQ7Xyo9yPfP
+    DEVICE_IP: 10.245.130.53
