@@ -55,7 +55,8 @@ class SubmitAgent(Thread):
         self.conf_path = path.join(conf_dir, sut_conf)
         self.work_dir = work_dir
         # testflinger api server
-        self.api_server = '10.245.128.10'
+        self.api_server = 'testflinger.canonical.com'
+        self.api_port = '443'
         # testflinger deploy release
         self.release = 'focal'
         # mqtt setup
@@ -141,8 +142,9 @@ class SubmitAgent(Thread):
         self.update_yaml(test_cmd)
 
         cmd = shlex.split('testflinger-cli \
-                          --server http://%s:8000 \
+                          --server https://%s:%s \
                           submit %s' % (self.api_server,
+                                        self.api_port,
                                         self.conf_path))
 
         try:

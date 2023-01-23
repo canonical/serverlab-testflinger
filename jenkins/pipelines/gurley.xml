@@ -20,7 +20,7 @@ def testCMDFileSRU = &apos;/opt/sru_01.sh&apos;
 
 def testCMDFileEGX = &apos;/opt/egx_01.sh&apos;
 
-def apiServer = &apos;10.245.128.10&apos;
+def apiServer = &apos;testflinger.canonical.com&apos;
 
 def apiPort = &apos;8000&apos;
 
@@ -39,7 +39,7 @@ def yamlFile =
     &quot;&quot;&quot;
 
 def cmdPrefix =
-    &quot;testflinger-cli --server http://${apiServer}:${apiPort}&quot;
+    &quot;testflinger-cli --server https://${apiServer}:${apiPort}&quot;
 
 def testExec =
     &quot;${cmdPrefix} submit -q ${yamlFilePath}&quot;
