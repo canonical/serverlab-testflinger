@@ -43,6 +43,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # link python3 bin
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN pip3 install requests_oauthlib paho-mqtt xdg ruamel.yaml
+RUN pip3 install --upgrade requests
 
 # add users
 RUN useradd -ms /bin/bash ubuntu \
@@ -89,7 +90,7 @@ WORKDIR /data/testflinger-agent
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger-agent.git \
   && git fetch origin \
-  && git checkout -b main --track origin/main
+  && git checkout -b main --track origin/main \
   && git checkout 94c4e2120a1aa08dc58cd206e2d01d6aee952dc1
 
 WORKDIR /data/snappy-device-agents
