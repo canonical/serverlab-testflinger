@@ -90,8 +90,8 @@ WORKDIR /data/testflinger-agent
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger-agent.git \
   && git fetch origin \
-  && git checkout -b main --track origin/main
-  # && git checkout 94c4e2120a1aa08dc58cd206e2d01d6aee952dc1
+  && git checkout -b main --track origin/main \
+  && git checkout 94c4e2120a1aa08dc58cd206e2d01d6aee952dc1
 
 WORKDIR /data/snappy-device-agents
 RUN git init \
@@ -106,20 +106,20 @@ RUN git clone https://github.com/canonical/testflinger-cli.git
 # run tf-agent setup
 WORKDIR /data/testflinger-agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
-  && pip3 install
-  # && python3 setup.py install
+  # && pip3 install
+  && python3 setup.py install
 
 # run tf-cli setup
 WORKDIR /data/testflinger-cli
 RUN echo && echo "Running testflinger-cli setup:" \
-  && pip3 install
-  # && python3 setup.py install
+  # && pip3 install
+  && python3 setup.py install
 
 # run snappy-agent setup
 WORKDIR /data/snappy-device-agents
 RUN echo && echo "Running snappy-device-agents setup:" \
-  && pip3 install
-  # && python3 setup.py install
+  # && pip3 install
+  && python3 setup.py install
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
