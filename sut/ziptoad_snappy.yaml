@@ -1,0 +1,8 @@
+device_ip: 10.245.130.25
+node_id: 7egcp4
+node_name: ziptoad
+maas_user: testflinger_a
+agent_name: ziptoad
+env:
+    HEXR_DEVICE_SECURE_ID: 98XGTF3R6GGLVYL2ST4qnb
+    DEVICE_IP: 10.245.130.25

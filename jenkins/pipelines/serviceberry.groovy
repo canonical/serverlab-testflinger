@@ -14,9 +14,9 @@ def testCMDFileSRU = '/opt/sru_01.sh'
 
 def testCMDFileEGX = '/opt/egx_01.sh'
 
-def apiServer = 'testflinger.canonical.com'
+def apiServer = '10.245.128.10'
 
-def apiPort = '443'
+def apiPort = '8000'
 
 def yamlFilePath = '/home/jenkins/job.yaml'
 
@@ -33,7 +33,7 @@ def yamlFile =
     """
 
 def cmdPrefix =
-    "testflinger-cli --server https://${apiServer}:${apiPort}"
+    "testflinger-cli --server http://${apiServer}:${apiPort}"
 
 def testExec =
     "${cmdPrefix} submit -q ${yamlFilePath}"
@@ -120,7 +120,7 @@ pipeline {
                         def compltField = sh(
                             script: "grep -E '${compltRegex}' ${agentLog}",
                             returnStdout: true).trim()
-
+ 
                         // throw prior to echo
                         echo "Job COMPLETE: ${compltField}"
                     } catch (Exception) {

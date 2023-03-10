@@ -24,7 +24,6 @@ wait_for_ssh() {
         fi
         sleep 30
     done
-
 }
 ## Not used currently, but included for future use when we start adding snaps.
 wait_for_snap_complete() {
@@ -98,7 +97,7 @@ local_submission = yes
 TEST_TARGET_IPERF = 10.1.16.10,10.1.16.15,10.1.16.20,10.1.11.230,10.1.11.235,10.1.11.231,10.1.11.236,10.245.128.3
 
 [test plan]
-unit = com.canonical.certification::server-regression
+unit = com.canonical.certification::usb-only
 forced = yes
 
 [test selection]

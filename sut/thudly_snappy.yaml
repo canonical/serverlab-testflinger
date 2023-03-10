@@ -1,0 +1,8 @@
+device_ip: 10.245.130.71
+node_id: nx3wwp
+node_name: thudley
+maas_user: testflinger_a
+agent_name: thudley
+env:
+    HEXR_DEVICE_SECURE_ID: 98XGTF3R6GGLVYL2ST4qnb
+    DEVICE_IP: 10.245.130.71
