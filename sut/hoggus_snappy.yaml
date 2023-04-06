@@ -1,0 +1,8 @@
+device_ip: 10.245.130.81
+node_id: hpsn3k
+node_name: hoggus
+maas_user: testflinger_a
+agent_name: hoggus
+env:
+    HEXR_DEVICE_SECURE_ID: EZZptBXEeLYrJ3SY8mb8Qi
+    DEVICE_IP: 10.245.130.81
