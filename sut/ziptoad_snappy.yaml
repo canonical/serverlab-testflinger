@@ -1,4 +1,4 @@
-device_ip: 10.245.130.25
+device_ip: 10.245.130.25    
 node_id: 7egcp4
 node_name: ziptoad
 maas_user: testflinger_a
