@@ -1,0 +1,8 @@
+device_ip: 10.245.130.79
+node_id: dkkeb7
+node_name: penguru
+maas_user: testflinger_a
+agent_name: penguru
+env:
+    HEXR_DEVICE_SECURE_ID: fJ38kf29vz6nLDjMr2jPkF
+    DEVICE_IP: 10.245.130.79
