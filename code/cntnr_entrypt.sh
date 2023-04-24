@@ -5,6 +5,9 @@
 : ${MAAS_HOST:=10.245.128.4}
 : ${MAAS_PORT:=5240}
 : ${MAAS_API_KEY:='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'}
+: ${INFLUX_HOST:="10.245.128.9"}
+: ${INFLUX_USER:="root"}
+: ${INFLUX_PW:="root"}
 
 echo
 echo "###########################"

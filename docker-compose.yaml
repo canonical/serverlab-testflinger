@@ -115,6 +115,7 @@ services:
       - snappy_data:/data/snappy-device-agents
       - docker_data:/data/docker
       - ./log:/var/log/sut-agent
+      - ./sut:/data/testflinger-agent/sut
       # netdata volumes
       # - netdata_cache:/var/cache/netdata
       # - netdata_config:/etc/netdata
