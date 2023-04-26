@@ -60,6 +60,16 @@ class InitAgent:
                                  'etc',
                                  'my_init.d',
                                  init_file)
+        # influx_init_file
+        influx_init_file = PurePath(
+            '02_config_influx').with_suffix('.sh')
+        src_influx_init_path = PurePath(dhost_path,
+                                        'code',
+                                        influx_init_file)
+        dst_influx_init_path = PurePath('/',
+                                        'etc',
+                                        'my_init.d',
+                                        influx_init_file)
         # ssh export
         essh_file = PurePath(
             'export_ssh_pubkey_agnt').with_suffix('.py')
@@ -126,6 +136,15 @@ class InitAgent:
         dst_sru_path = PurePath('/',
                                 'opt',
                                 sru_file)
+        # influx_file
+        influx_file = PurePath(
+            'config_influx').with_suffix('.sh')
+        src_influx_path = PurePath(dhost_path,
+                                   'code',
+                                   influx_file)
+        dst_influx_path = PurePath('/',
+                                   'opt',
+                                   influx_file)
         # agnt conf
         src_conf_path = PurePath(dhost_path,
                                  'sut',
@@ -154,6 +173,11 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
                                    source=fspath(src_init_path),
+                                   read_only=True),
+                # init
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_influx_init_path),
+                                   source=fspath(src_influx_init_path),
                                    read_only=True),
                 # ssh export
                 docker.types.Mount(type='bind',
@@ -189,6 +213,11 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_sru_path),
                                    source=fspath(src_sru_path),
+                                   read_only=True),
+                # influx config
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_influx_path),
+                                   source=fspath(src_influx_path),
                                    read_only=True),
                 # unique mounts
                 # agnt conf
