@@ -18,10 +18,10 @@ INFLUX_PW="root"
 docker-compose build \
   --build-arg ubuntu_scr=$UBUNTU_SCR \
   --build-arg host_dir=$PWD \
-  --build-arg host_dir=$INFLUX_HOST \
-  --build-arg host_dir=$INFLUX_PW \
-  --build-arg host_dir=$INFLUX_USER \
-  --build-arg host_dir=$INFLUX_PORT \
+  --build-arg influx_host=$INFLUX_HOST \
+  --build-arg influx_pw=$INFLUX_PW \
+  --build-arg influx_user=$INFLUX_USER \
+  --build-arg influx_port=$INFLUX_PORT \
   --progress=tty 2>&1
 
 # start stack
