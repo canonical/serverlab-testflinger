@@ -6,6 +6,10 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agents:$PATH
+ENV INFLUX_HOST 10.245.128.9
+ENV INFLUX_PORT 8086
+ENV INFUX_USER root
+ENV INFLUX_PW root
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \
