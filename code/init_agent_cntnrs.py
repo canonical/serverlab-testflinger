@@ -10,7 +10,8 @@
 # use mounts for scale
 
 from pathlib import Path, PurePath
-from os import listdir, path, fspath, environ
+from os import listdir, path, fspath, environ, getenv
+from dotenv import load_dotenv
 import docker
 import time
 import sys
@@ -306,11 +307,19 @@ def init_network(client, net_name):
 
 def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
+        # import influx env vars
+        load_dotenv()
+        build_args = {
+            'INFLX_HOST': getenv('INFLX_HOST'),
+            'INFLX_USER': getenv('INFLX_USER'),
+            'INFLX_PW': getenv('INFLX_PW')
+        }
         for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
                                      rm=True,
-                                     decode=True):
+                                     decode=True,
+                                     buildargs=build_args):
             line = str(
                 line.get('stream')).rstrip('\n')
 

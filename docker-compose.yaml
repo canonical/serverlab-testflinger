@@ -271,7 +271,7 @@ services:
         - influxdb
       image: bitnami/influxdb-relay:latest
       restart: unless-stopped
-      container_name: nh-inflx_relay
+      container_name: nh-inflx-relay
 
       networks:
         needham_int:
@@ -280,7 +280,7 @@ services:
         #   ipv4_address: 10.172.10.17
       expose:
         - 9096
-      hostname: nh-influxdb
+      hostname: nh-inflx-relay
 
     grafana:
       depends_on:
@@ -328,6 +328,8 @@ volumes:
   portainer_data: {}
   jenkins_data: {}
   influx_data: {}
+  chronograf_data: {}
+  grafana_data: {}
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
