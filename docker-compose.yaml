@@ -227,6 +227,77 @@ services:
       fi; \
       done"]
 
+    influxdb:
+      depends_on:
+        - agent
+      image: influxdb:latest
+      restart: unless-stopped
+      container_name: nh-influxdb
+
+      networks:
+        needham_int:
+          ipv4_address: 10.245.128.17
+        # docker_int:
+        #   ipv4_address: 10.172.10.17
+      expose:
+        - 8086
+      hostname: nh-influxdb
+
+      volumes:
+        - influx_data:/var/lib/influxdb
+
+    chronograf:
+      depends_on:
+        - influxdb
+      image: chronograf:latest
+      restart: unless-stopped
+      container_name: nh-chronograf
+
+      networks:
+        needham_int:
+          ipv4_address: 10.245.128.18
+          # docker_int:
+          #   ipv4_address: 10.172.10.18
+      expose:
+        - 8888
+
+      volumes:
+        - chronograf_data:/var/lib/chronograf
+      environment:
+        - INFLUXDB_URL=http://influxdb:8086
+
+    influxdb_relay:
+      depends_on:
+        - influxdb
+      image: bitnami/influxdb-relay:latest
+      restart: unless-stopped
+      container_name: nh-inflx_relay
+
+      networks:
+        needham_int:
+          ipv4_address: 10.245.128.19
+        # docker_int:
+        #   ipv4_address: 10.172.10.17
+      expose:
+        - 9096
+      hostname: nh-influxdb
+
+    grafana:
+      depends_on:
+        - influxdb
+      image: grafana/grafana:latest
+      restart: unless-stopped
+      container_name: nh-grafana
+
+      networks:
+        needham_int:
+          ipv4_address: 10.245.128.20
+          # docker_int:
+          #   ipv4_address: 10.172.10.20
+      expose:
+        - 3000
+      hostname: nh-grafana
+
 networks:
   # docker_int:
   #   driver: macvlan
@@ -256,6 +327,7 @@ volumes:
   cli_data: {}
   portainer_data: {}
   jenkins_data: {}
+  influx_data: {}
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
