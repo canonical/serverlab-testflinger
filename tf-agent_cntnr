@@ -1,15 +1,20 @@
 FROM phusion/baseimage:focal-1.0.0
 
+ARG influx_host
+ARG influx_port
+ARG influx_user
+ARG influx_pw
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agents:$PATH
-ENV INFLUX_HOST 10.245.128.9
-ENV INFLUX_PORT 8086
-ENV INFLUX_USER root
-ENV INFLUX_PW root
+ENV INFLUX_HOST ${influx_host}
+ENV INFLUX_PORT ${influx_port}
+ENV INFLUX_USER ${influx_user}
+ENV INFLUX_PW ${influx_pw}
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \

@@ -10,8 +10,7 @@
 # use mounts for scale
 
 from pathlib import Path, PurePath
-from os import listdir, path, fspath, environ, getenv
-from dotenv import load_dotenv
+from os import listdir, path, fspath, environ
 import docker
 import time
 import sys
@@ -61,16 +60,6 @@ class InitAgent:
                                  'etc',
                                  'my_init.d',
                                  init_file)
-        # influx_init_file
-        influx_init_file = PurePath(
-            '02_config_influx').with_suffix('.sh')
-        src_influx_init_path = PurePath(dhost_path,
-                                        'code',
-                                        influx_init_file)
-        dst_influx_init_path = PurePath('/',
-                                        'etc',
-                                        'my_init.d',
-                                        influx_init_file)
         # ssh export
         essh_file = PurePath(
             'export_ssh_pubkey_agnt').with_suffix('.py')
@@ -137,15 +126,6 @@ class InitAgent:
         dst_sru_path = PurePath('/',
                                 'opt',
                                 sru_file)
-        # influx_file
-        influx_file = PurePath(
-            'config_influx').with_suffix('.sh')
-        src_influx_path = PurePath(dhost_path,
-                                   'code',
-                                   influx_file)
-        dst_influx_path = PurePath('/',
-                                   'opt',
-                                   influx_file)
         # agnt conf
         src_conf_path = PurePath(dhost_path,
                                  'sut',
@@ -174,11 +154,6 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_init_path),
                                    source=fspath(src_init_path),
-                                   read_only=True),
-                # init
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_influx_init_path),
-                                   source=fspath(src_influx_init_path),
                                    read_only=True),
                 # ssh export
                 docker.types.Mount(type='bind',
@@ -214,11 +189,6 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_sru_path),
                                    source=fspath(src_sru_path),
-                                   read_only=True),
-                # influx config
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_influx_path),
-                                   source=fspath(src_influx_path),
                                    read_only=True),
                 # unique mounts
                 # agnt conf
@@ -305,21 +275,34 @@ def init_network(client, net_name):
     return agnt_net
 
 
+def load_env_vars():
+    host = environ.get('INFLUX_HOST')
+    if not host:
+        print('InfluxDB host undefined')
+        sys.exit()
+    port = int(environ.get('INFLUX_PORT', 8086))
+    user = environ.get('INFLUX_USER', '')
+    password = environ.get('INFLUX_PW', '')
+
+    build_args = {
+        'influx_host': host,
+        'influx_port': port,
+        'influx_user': user,
+        'influx_pw': password
+    }
+
+    return build_args
+
+
 def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
         # import influx env vars
-        load_dotenv()
-        build_args = {
-            'INFLX_HOST': getenv('INFLX_HOST'),
-            'INFLX_USER': getenv('INFLX_USER'),
-            'INFLX_PW': getenv('INFLX_PW')
-        }
         for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
                                      rm=True,
                                      decode=True,
-                                     buildargs=build_args):
+                                     buildargs=load_env_vars()):
             line = str(
                 line.get('stream')).rstrip('\n')
 
