@@ -209,8 +209,17 @@ class InitAgent:
     def create_container(self):
         # prelim config
         net_config = self.create_net_config()
+
         # common parameters
         host_config, cmd_path, hlthc_path = self.create_host_config()
+
+        # env vars
+        env = {
+            'INFLUX_HOST': self.client.secrets.get('ihost_sec'),
+            'INFLUX_PORT': self.client.secrets.get('iport_sec'),
+            'INFLUX_USER': self.client.secrets.get('iuser_sec'),
+            'INFLUX_PW': self.client.secrets.get('ipass_sec')
+        }
 
         # define healthcheck
         healthchk = docker.types.Healthcheck(
@@ -231,6 +240,7 @@ class InitAgent:
             command=[fspath(cmd_path)],
             healthcheck=healthchk,
             domainname='maas',
+            environment=env,
             detach=True,
             tty=True)
         # except docker.errors.APIError:
@@ -304,19 +314,12 @@ def init_network(client, net_name):
 
 def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
-        # import influx env vars=
-        build_args = {
-            'influx_host': client.secrets.get('ihost_sec'),
-            'influx_port': client.secrets.get('iport_sec'),
-            'influx_user': client.secrets.get('iuser_sec'),
-            'influx_pass': client.secrets.get('ipass_sec')
-        }
+        # import influx env vars
         for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
                                      rm=True,
-                                     decode=True,
-                                     buildargs=build_args):
+                                     decode=True,):
             line = str(
                 line.get('stream')).rstrip('\n')
 
