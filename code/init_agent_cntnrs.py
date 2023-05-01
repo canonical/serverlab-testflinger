@@ -11,7 +11,7 @@
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
-# from dotenv import load_dotenv
+from get_docker_secret import get_docker_secret
 import docker
 import time
 import sys
@@ -215,10 +215,10 @@ class InitAgent:
 
         # env vars
         env = {
-            'INFLUX_HOST': self.client.secrets.get('ihost_sec'),
-            'INFLUX_PORT': self.client.secrets.get('iport_sec'),
-            'INFLUX_USER': self.client.secrets.get('iuser_sec'),
-            'INFLUX_PW': self.client.secrets.get('ipass_sec')
+            'INFLUX_HOST': get_docker_secret('ihost_sec'),
+            'INFLUX_PORT': get_docker_secret('iport_sec', default='8086'),
+            'INFLUX_USER': get_docker_secret('iuser_sec', default=''),
+            'INFLUX_PW': get_docker_secret('ipass_sec', default='')
         }
 
         # define healthcheck
