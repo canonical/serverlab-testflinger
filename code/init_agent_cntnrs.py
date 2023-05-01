@@ -11,7 +11,7 @@
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import docker
 import time
 import sys
@@ -302,19 +302,21 @@ def init_network(client, net_name):
 #         'INFLX_PW': getenv('INFLX_PW')
 
 
-def load_env_vars():
-    {'INFLUX_HOST': client.secrets.get('test_sec')}
-
-
 def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
-        # import influx env vars
+        # import influx env vars=
+        build_args = {
+            'influx_host': client.secrets.get('ihost_sec'),
+            'influx_port': client.secrets.get('iport_sec'),
+            'influx_user': client.secrets.get('iuser_sec'),
+            'influx_pass': client.secrets.get('ipass_sec')
+        }
         for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
                                      rm=True,
                                      decode=True,
-                                     buildargs=load_env_vars()):
+                                     buildargs=build_args):
             line = str(
                 line.get('stream')).rstrip('\n')
 
