@@ -11,6 +11,7 @@
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
+from dotenv import load_dotenv
 import docker
 import time
 import sys
@@ -275,23 +276,34 @@ def init_network(client, net_name):
     return agnt_net
 
 
+# def load_env_vars():
+#     host = getenv('INFLUX_HOST')
+#     if not host:
+#         print('InfluxDB host undefined')
+#         sys.exit()
+#     port = int(getenv('INFLUX_PORT', 8086))
+#     user = getenv('INFLUX_USER', '')
+#     password = getenv('INFLUX_PW', '')
+
+#     build_args = {
+#         'influx_host': host,
+#         'influx_port': port,
+#         'influx_user': user,
+#         'influx_pw': password
+#     }
+
+#     return build_args
+
+#     # import influx env vars
+#     load_dotenv()
+#     build_args = {
+#         'INFLX_HOST': getenv('INFLX_HOST'),
+#         'INFLX_USER': getenv('INFLX_USER'),
+#         'INFLX_PW': getenv('INFLX_PW')
+
+
 def load_env_vars():
-    host = environ.get('INFLUX_HOST')
-    if not host:
-        print('InfluxDB host undefined')
-        sys.exit()
-    port = int(environ.get('INFLUX_PORT', 8086))
-    user = environ.get('INFLUX_USER', '')
-    password = environ.get('INFLUX_PW', '')
-
-    build_args = {
-        'influx_host': host,
-        'influx_port': port,
-        'influx_user': user,
-        'influx_pw': password
-    }
-
-    return build_args
+    {'INFLUX_HOST': client.secrets.get('test_sec')}
 
 
 def build_cntnr_img(client, img_name, dockf_dir):

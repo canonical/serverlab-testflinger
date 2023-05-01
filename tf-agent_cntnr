@@ -14,7 +14,7 @@ ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agent
 ENV INFLUX_HOST ${influx_host}
 ENV INFLUX_PORT ${influx_port}
 ENV INFLUX_USER ${influx_user}
-ENV INFLUX_PW ${influx_pw}
+ENV INFLUX_PW ${influx_pass}
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \
