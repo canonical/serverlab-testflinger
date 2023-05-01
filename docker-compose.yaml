@@ -110,7 +110,7 @@ services:
 
     secrets:
       - ihost_sec
-      # - iport_sec
+      - iport_sec
       - iuser_sec
       - ipass_sec
 
@@ -342,10 +342,10 @@ volumes:
 
 secrets:
   ihost_sec:
-    environment: "INFLUX_HOST"
-  # iport_sec:
-  #   environment: "INFLUX_PORT"
+    external: true
+  iport_sec:
+    external: true
   iuser_sec:
-    environment: "INFLUX_USER"
+    external: true
   ipass_sec:
-    environment: "INFLUX_PW"
+    external: true
