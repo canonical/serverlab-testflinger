@@ -108,6 +108,12 @@ services:
       - 19999
     hostname: tf-agent
 
+    secrets:
+      - ihost_sec
+      - iport_sec
+      - iuser_sec
+      - ipass_sec
+
     volumes:
       # for agents (docker in docker)
       - /var/run/docker.sock:/var/run/docker.sock
@@ -333,3 +339,14 @@ volumes:
   # netdata_cache: {}
   # netdata_config: {}
   # netdata_lib: {}
+
+secrets:
+  ihost_sec:
+    file: ./secrets/ihost_sec
+  iport_sec:
+    file: ./secrets/iport_sec
+  iuser_sec:
+    file: ./secrets/iuser_sec
+  ipass_sec:
+    file: ./secrets/ipass_sec
+
