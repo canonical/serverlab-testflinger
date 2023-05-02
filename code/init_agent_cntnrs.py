@@ -11,9 +11,9 @@
 
 from pathlib import Path, PurePath
 from os import listdir, path, fspath, environ
-from get_docker_secret import get_docker_secret
 import docker
 import time
+import hvac
 import sys
 # from pudb import set_trace; set_trace()
 
@@ -206,6 +206,9 @@ class InitAgent:
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
 
+    # def decrypt_env_vars(self):
+
+
     def create_container(self):
         # prelim config
         net_config = self.create_net_config()
@@ -314,7 +317,6 @@ def init_network(client, net_name):
 
 def build_cntnr_img(client, img_name, dockf_dir):
     def stream_build():
-        # import influx env vars
         for line in client.api.build(path=dockf_dir,
                                      tag=img_name,
                                      nocache=True,
