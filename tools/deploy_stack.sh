@@ -11,7 +11,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 UBUNTU_SCR=ch4ng3m3
 # TESTFLINGER_SCR=u24xeO6EKuWt
 
-python3 /opt/vault-template.py
+python3 ./code/vault-template.py
 
 docker-compose build \
   --build-arg ubuntu_scr=$UBUNTU_SCR \
