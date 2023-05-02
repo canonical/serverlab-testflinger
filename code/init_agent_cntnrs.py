@@ -31,7 +31,16 @@ class InitAgent:
         self.net_name = net_name
         self.img_name = img_name
         self.agnt_ip = '10.245.130.%i' % agnt_ip
+        self.vclient = self.configure_vault()
         self.init_agent_cntnr()
+
+    def configure_vault():
+        client = hvac.Client(
+            url='http://10.245.128.21:8200',
+            token='nh-vault-root',
+        )
+
+        return client
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
@@ -206,8 +215,20 @@ class InitAgent:
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
 
-    # def decrypt_env_vars(self):
+    def decrypt_env_vars(self):
+        influx_vars = self.vclient.secrets.kv.read_secret_version(
+            path='influx'
+        )
 
+        # env vars
+        env = {
+            'INFLUX_HOST': influx_vars['data']['data']['host'],
+            'INFLUX_PORT': influx_vars['data']['data']['port'],
+            'INFLUX_USER': influx_vars['data']['data']['user'],
+            'INFLUX_PW': influx_vars['data']['data']['passw']
+        }
+
+        return env
 
     def create_container(self):
         # prelim config
@@ -215,14 +236,6 @@ class InitAgent:
 
         # common parameters
         host_config, cmd_path, hlthc_path = self.create_host_config()
-
-        # env vars
-        env = {
-            'INFLUX_HOST': get_docker_secret('ihost_sec'),
-            'INFLUX_PORT': get_docker_secret('iport_sec', default='8086'),
-            'INFLUX_USER': get_docker_secret('iuser_sec', default=''),
-            'INFLUX_PW': get_docker_secret('ipass_sec', default='')
-        }
 
         # define healthcheck
         healthchk = docker.types.Healthcheck(
@@ -243,7 +256,7 @@ class InitAgent:
             command=[fspath(cmd_path)],
             healthcheck=healthchk,
             domainname='maas',
-            environment=env,
+            environment=self.decrypt_env_vars(),
             detach=True,
             tty=True)
         # except docker.errors.APIError:
