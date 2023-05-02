@@ -108,6 +108,8 @@ services:
       - 19999
     hostname: tf-agent
 
+    tmpfs:
+      - /run/secrets
     secrets:
       - ihost_sec
       - iport_sec
@@ -136,7 +138,12 @@ services:
     # environment:
     #   - PATH=/data/testflinger-agent:/data/snappy-device-agents:$PATH
 
-    command: ["/opt/tf-entrypoint.sh"]
+    # command: ["/opt/tf-entrypoint.sh"]
+    entrypoint: [ '/bin/sh', '-c', 'export INFLUX_HOST=$$(cat /run/secrets/ihost_sec);
+                                    export INFLUX_PORT=$$(cat /run/secrets/iport_sec);
+                                    export INFLUX_USER=$$(cat /run/secrets/iuser_sec);
+                                    export INFLUX_PW=$$(cat /run/secrets/ipass_sec);
+                                    source /entrypoint.sh' ]
 
     # # for netdata
     #   cap_add:
