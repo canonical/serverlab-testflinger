@@ -89,7 +89,7 @@ services:
 
   agent:
     depends_on:
-      - api
+      - vault
     build:
       context: .
       dockerfile: tf-agent
@@ -256,8 +256,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.18
-        docker_int:
-          ipv4_address: 172.17.0.18
+      docker_int:
+        ipv4_address: 172.17.0.18
     expose:
       - 8888
 
@@ -292,8 +292,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.20
-        docker_int:
-          ipv4_address: 172.17.0.20
+      docker_int:
+        ipv4_address: 172.17.0.20
     expose:
       - 3000
     hostname: nh-grafana
@@ -308,8 +308,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.21
-        docker_int:
-          ipv4_address: 172.17.0.21
+      docker_int:
+        ipv4_address: 172.17.0.21
     expose:
       - 8200
     hostname: nh-vault
