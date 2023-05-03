@@ -311,7 +311,7 @@ services:
         # docker_int:
         #   ipv4_address: 10.172.10.21
     ports:
-      8200:8200
+      - 8200:8200
     hostname: nh-vault
 
     environment:
