@@ -8,7 +8,7 @@ docker rmi -f $(docker images -a -q)
 
 # docker volume rm -f $(docker volume ls -q)
 
-docker volume rm -f $(docker ps -a --format '{{.Names}}' | grep -v 'vault_data' | xargs -I {} docker ps -q -f name={})
+docker volume rm -f $(docker volume ls -q | grep -v testflinger-docker_vault_data)
 
 docker network prune -f
 
@@ -21,6 +21,6 @@ docker builder prune -a -f
 
 # docker rmi -f $(docker ps -a --format '{{.Names}}' | grep -v 'nh-vault' | xargs -I {} docker ps -q -f name={})
 
-# docker volume rm -f $(docker ps -a --format '{{.Names}}' | grep -v 'vault_data' | xargs -I {} docker ps -q -f name={})
+# docker volume rm -f $(docker volume ls -q | grep -v testflinger-docker_vault_data)
 
 # docker builder prune -a -f
