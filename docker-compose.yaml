@@ -10,7 +10,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.13
       docker_int:
-        ipv4_address: 10.172.10.13
+        ipv4_address: 172.17.0.13
     expose:
       - 6379
     hostname: tf-db
@@ -42,7 +42,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.14
       docker_int:
-        ipv4_address: 10.172.10.14
+        ipv4_address: 172.17.0.14
     expose:
       - 1883
       - 9001
@@ -67,7 +67,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.10
       docker_int:
-        ipv4_address: 10.172.10.10
+        ipv4_address: 172.17.0.10
     expose:
       - 8000
     hostname: tf-api
@@ -103,7 +103,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.11
       docker_int:
-        ipv4_address: 10.172.10.11
+        ipv4_address: 172.17.0.11
     expose:
       - 19999
     hostname: tf-agent
@@ -153,7 +153,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.12
       docker_int:
-        ipv4_address: 10.172.10.12
+        ipv4_address: 172.17.0.12
     hostname: tf-cli
 
     volumes:
@@ -173,7 +173,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.15
       docker_int:
-        ipv4_address: 10.172.10.15
+        ipv4_address: 172.17.0.15
     expose:
       - 9443
     hostname: nh-portainer
@@ -193,7 +193,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.16
       docker_int:
-        ipv4_address: 10.172.10.16
+        ipv4_address: 172.17.0.16
     expose:
       - 8080
       - 50000
@@ -238,7 +238,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.17
       docker_int:
-        ipv4_address: 10.172.10.17
+        ipv4_address: 172.17.0.17
     expose:
       - 8086
     hostname: nh-influxdb
@@ -257,7 +257,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.18
         docker_int:
-          ipv4_address: 10.172.10.18
+          ipv4_address: 172.17.0.18
     expose:
       - 8888
 
@@ -277,7 +277,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.19
       docker_int:
-        ipv4_address: 10.172.10.19
+        ipv4_address: 172.17.0.19
     expose:
       - 9096
     hostname: nh-inflx-relay
@@ -293,7 +293,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.20
         docker_int:
-          ipv4_address: 10.172.10.20
+          ipv4_address: 172.17.0.20
     expose:
       - 3000
     hostname: nh-grafana
@@ -309,7 +309,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.21
         docker_int:
-          ipv4_address: 10.172.10.21
+          ipv4_address: 172.17.0.21
     expose:
       - 8200
     hostname: nh-vault
@@ -332,7 +332,7 @@ networks:
         parent: docker0
     ipam:
       config:
-        - subnet: "10.172.10.1/24"
+        - subnet: "172.17.0.1/24"
 
   needham_int:
     driver: macvlan
