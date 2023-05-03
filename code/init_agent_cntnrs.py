@@ -36,7 +36,7 @@ class InitAgent:
 
     def configure_vault(self):
         client = hvac.Client(
-            url='http://10.245.128.21:8200',
+            url='http://10.172.10.21:8200',
             token='nh-vault-root',
         )
 
