@@ -87,35 +87,9 @@ services:
       "testflinger:app"
     ]
 
-  vault:
-    depends_on:
-      - api
-    image: vault:latest
-    restart: unless-stopped
-    container_name: nh-vault
-
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.21
-        docker_int:
-          ipv4_address: 172.17.0.21
-    expose:
-      - 8200
-    hostname: nh-vault
-
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: nh-vault-root
-      VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
-
-    volumes:
-      - vault_data:/vault/data
-
-    cap_add:
-      - IPC_LOCK
-
   agent:
     depends_on:
-      - vault
+      - api
     build:
       context: .
       dockerfile: tf-agent
@@ -323,6 +297,32 @@ services:
     expose:
       - 3000
     hostname: nh-grafana
+
+  vault:
+    depends_on:
+      - api
+    image: vault:latest
+    restart: unless-stopped
+    container_name: nh-vault
+
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.21
+        docker_int:
+          ipv4_address: 172.17.0.21
+    expose:
+      - 8200
+    hostname: nh-vault
+
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: nh-vault-root
+      VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
+
+    volumes:
+      - vault_data:/vault/data
+
+    cap_add:
+      - IPC_LOCK
 
 networks:
   docker_int:
