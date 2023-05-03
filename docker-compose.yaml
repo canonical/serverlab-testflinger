@@ -207,7 +207,7 @@ services:
       done"]
 
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.10
     container_name: nh-influxdb
     restart: unless-stopped
     depends_on:
@@ -226,7 +226,7 @@ services:
   chronograf:
     depends_on:
       - influxdb
-    image: chronograf:latest
+    image: chronograf:1.10
     restart: unless-stopped
     container_name: nh-chronograf
     networks:
