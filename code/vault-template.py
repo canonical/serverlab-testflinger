@@ -7,5 +7,11 @@ client = hvac.Client(
 
 create_response = client.secrets.kv.v2.create_or_update_secret(
     path='influx',
-    secret=dict(host='10.245.128.17', port=8086, user='root', passw='root'),
+    secret=dict(host='', port=8086, user='', passw=''),
 )
+
+read_response = client.secrets.kv.read_secret_version(path='influx')
+
+print(read_response['data']['data']['host'])
+print(read_response['data']['data']['port'])
+print(read_response['data']['data']['user'])
