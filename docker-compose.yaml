@@ -217,7 +217,7 @@ services:
       - 8082
     volumes:
       - influx_data:/var/lib/influxdb
-      - ./influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
     networks:
       needham_int:
         ipv4_address: 10.245.128.17
