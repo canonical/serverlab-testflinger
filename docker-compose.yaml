@@ -215,7 +215,6 @@ services:
     expose:
       - 8086
       - 8082
-      # udp
       - 8089
     volumes:
       - influx_data:/var/lib/influxdb
@@ -224,6 +223,9 @@ services:
       needham_int:
         ipv4_address: 10.245.128.17
     hostname: nh-influxdb
+    environment:
+      INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.17:8086
+      INFLUXDB_BIND_ADDRESS: 127.0.0.1:8086
 
   chronograf:
     depends_on:
@@ -236,21 +238,25 @@ services:
         ipv4_address: 10.245.128.18
     expose:
       - 8888
+    links:
+      - influxdb
     volumes:
       - chronograf_data:/var/lib/chronograf
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
 
-  influxdb_relay:
-    depends_on:
-      - influxdb
-    image: bitnami/influxdb-relay:latest
-    restart: unless-stopped
-    container_name: nh-inflx-relay
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.19
-    expose:
-      - 9096
-    hostname: nh-inflx-relay
+  # influxdb_relay:
+  #   depends_on:
+  #     - influxdb
+  #   image: bitnami/influxdb-relay:latest
+  #   restart: unless-stopped
+  #   container_name: nh-inflx-relay
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.19
+  #   expose:
+  #     - 9096
+  #   hostname: nh-inflx-relay
 
   grafana:
     depends_on:
@@ -263,6 +269,8 @@ services:
         ipv4_address: 10.245.128.20
     expose:
       - 3000
+    links:
+      - influxdb
     hostname: nh-grafana
 
   vault:
