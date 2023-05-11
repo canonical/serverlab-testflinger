@@ -170,7 +170,7 @@ services:
     container_name: nh-jenkins
     networks:
       needham_int:
-        ipv4_address: 10.245.128.16
+        ipv4_address: 10.245.128.116
         # docker_int:
         #   ipv4_address: 172.17.0.16
     expose:
@@ -224,10 +224,10 @@ services:
       - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
     networks:
       needham_int:
-        ipv4_address: 10.245.128.17
+        ipv4_address: 10.245.128.117
     hostname: nh-influxdb
     environment:
-      INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.17:8086
+      INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
       INFLUXDB_BIND_ADDRESS: 127.0.0.1:8086
 
   chronograf:
@@ -238,7 +238,7 @@ services:
     container_name: nh-chronograf
     networks:
       needham_int:
-        ipv4_address: 10.245.128.18
+        ipv4_address: 10.245.128.118
     expose:
       - 8888
     ports:
@@ -249,7 +249,7 @@ services:
       - chronograf_data:/var/lib/chronograf
     environment:
       - INFLUXDB_URL=http://influxdb:8086
-      - HOST=10.245.128.18:8888
+      - HOST=10.245.128.118:8888
 
   # influxdb_relay:
   #   depends_on:
@@ -272,7 +272,7 @@ services:
     container_name: nh-grafana
     networks:
       needham_int:
-        ipv4_address: 10.245.128.20
+        ipv4_address: 10.245.128.120
     expose:
       - 3000
     ports:
@@ -281,7 +281,7 @@ services:
       - influxdb
     hostname: nh-grafana
     environment:
-      - GF_SERVER_HTTP_HOST=10.245.128.20
+      - GF_SERVER_HTTP_HOST=10.245.128.120
 
   vault:
     depends_on:
@@ -291,7 +291,7 @@ services:
     container_name: nh-vault
     networks:
       needham_int:
-        ipv4_address: 10.245.128.21
+        ipv4_address: 10.245.128.121
     expose:
       - 8200
     ports:
@@ -299,7 +299,7 @@ services:
     hostname: nh-vault
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: nh-vault-root
-      VAULT_DEV_LISTEN_ADDRESS: 10.245.128.21:8200
+      VAULT_DEV_LISTEN_ADDRESS: 10.245.128.121:8200
     volumes:
       - vault_data:/vault/data
     cap_add:
