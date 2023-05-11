@@ -47,7 +47,7 @@ RUN git init \
 
 # install gunicorn threading deps
 RUN pip install gevent packaging
-RUN pip install -Iv urllib3==1.9.9
+RUN pip install -Iv urllib3==1.26.15
 
 # run setup
 RUN ./setup.py install
