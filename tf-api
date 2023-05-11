@@ -46,7 +46,7 @@ RUN git init \
 # RUN sed -i '22 s/^/#/' ./setup.py
 
 # install gunicorn threading deps
-RUN pip install gevent packaging
+RUN pip install gevent packaging urllib3
 
 # run setup
 RUN ./setup.py install
