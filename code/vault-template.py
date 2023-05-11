@@ -11,7 +11,7 @@ user = os.environ.get("INFLUX_USER", "")
 password = os.environ.get("INFLUX_PW", "")
 
 client = hvac.Client(
-    url='http://10.245.128.21:8200',
+    url='http://10.245.128.121:8200',
     token='nh-vault-root',
 )
 
