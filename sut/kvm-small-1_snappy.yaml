@@ -1,0 +1,7 @@
+device_ip: 10.245.131.15
+node_id: dhdrmt
+node_name: kvm-small-1
+maas_user: testflinger_a
+agent_name: kvm-small-1
+env:
+  DEVICE_IP: 10.245.131.15

@@ -1,0 +1,7 @@
+device_ip: 10.245.131.19
+node_id: fkygb8
+node_name: kvm-small-13
+maas_user: testflinger_a
+agent_name: kvm-small-13
+env:
+  DEVICE_IP: 10.245.131.19

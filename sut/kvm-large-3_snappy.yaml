@@ -1,0 +1,7 @@
+device_ip: 10.245.131.4
+node_id: w7kp6d
+node_name: kvm-large-3
+maas_user: testflinger_a
+agent_name: kvm-large-3
+env:
+  DEVICE_IP: 10.245.131.4

@@ -1,0 +1,7 @@
+device_ip: 10.245.131.20
+node_id: 6p6fpa
+node_name: kvm-small-14
+maas_user: testflinger_a
+agent_name: kvm-small-14
+env:
+  DEVICE_IP: 10.245.131.20
