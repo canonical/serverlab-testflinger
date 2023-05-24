@@ -116,8 +116,8 @@ RUN git init \
 COPY ./code/testflinger-agent.conf /data/testflinger-agent
 
 # copy tf-agent sut files
-RUN mkdir ./sut/
-COPY ./sut/agent/* /data/testflinger-agent/sut/
+# RUN mkdir ./sut/
+# COPY ./sut/agent/* /data/testflinger-agent/sut/
 
 # clone snappy-agent src in volume dir
 WORKDIR /data/snappy-device-agents
@@ -127,8 +127,8 @@ RUN git init \
   && git checkout -b main --track origin/main
 
 # copy snappy-agent sut files
-RUN mkdir ./sut/
-COPY ./sut/snappy/* /data/snappy-device-agents/sut/
+# RUN mkdir ./sut/
+# COPY ./sut/snappy/* /data/snappy-device-agents/sut/
 
 # run tf-agent setup
 # USER ubuntu
