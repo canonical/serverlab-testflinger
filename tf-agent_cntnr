@@ -24,6 +24,7 @@ RUN apt-get update \
     bash-completion \
     sudo \
     openssh-client \
+    ssh-import-id \
     build-essential \
     net-tools \
     iputils-ping \
