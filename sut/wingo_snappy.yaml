@@ -1,0 +1,8 @@
+device_ip: 10.245.130.82
+node_id: dpmw3b
+node_name: wingo
+maas_user: testflinger_a
+agent_name: wingo
+env:
+    HEXR_DEVICE_SECURE_ID: FKFRkXHejhDH6MWXvZZz2p
+    DEVICE_IP: 10.245.130.82
