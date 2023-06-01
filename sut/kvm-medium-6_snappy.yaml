@@ -1,5 +1,5 @@
 device_ip: 10.245.131.13
-node_id: bnagdm
+node_id: d78w6r
 node_name: kvm-medium-6
 maas_user: testflinger_a
 agent_name: kvm-medium-6

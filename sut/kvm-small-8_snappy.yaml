@@ -1,7 +1,7 @@
-device_ip: 10.245.131.27
-node_id: pmqyrd
+device_ip: 10.245.131.26
+node_id: g6qc8m
 node_name: kvm-small-8
 maas_user: testflinger_a
 agent_name: kvm-small-8
 env:
-  DEVICE_IP: 10.245.131.27
+  DEVICE_IP: 10.245.131.26

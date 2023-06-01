@@ -1,5 +1,5 @@
 device_ip: 10.245.131.3
-node_id: nqaxca
+node_id: md6sff
 node_name: kvm-large-2
 maas_user: testflinger_a
 agent_name: kvm-large-2

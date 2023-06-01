@@ -1,5 +1,5 @@
 device_ip: 10.245.131.12
-node_id: nr4mxc
+node_id: qnsxt8
 node_name: kvm-medium-5
 maas_user: testflinger_a
 agent_name: kvm-medium-5

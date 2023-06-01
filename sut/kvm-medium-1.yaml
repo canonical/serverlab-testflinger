@@ -7,8 +7,8 @@ logging_basedir: /data/testflinger-agent/tests/kvm-medium-1/logs
 results_basedir: /data/testflinger-agent/tests/kvm-medium-1/results
 logging_level: INFO
 job_queues:
-- kvm-medium
 - kvm-medium-1
+- kvm-medium
 setup_command: echo Setup
 provison_command: PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2
   provision -c /data/snappy-device-agents/sut/kvm-medium-1_snappy.yaml testflinger.json

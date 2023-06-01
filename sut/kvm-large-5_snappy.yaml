@@ -1,5 +1,5 @@
 device_ip: 10.245.131.6
-node_id: 6r8wss
+node_id: kekg44
 node_name: kvm-large-5
 maas_user: testflinger_a
 agent_name: kvm-large-5

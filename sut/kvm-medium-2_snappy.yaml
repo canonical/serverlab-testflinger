@@ -1,5 +1,5 @@
 device_ip: 10.245.131.9
-node_id: f7sqa7
+node_id: b7mdaw
 node_name: kvm-medium-2
 maas_user: testflinger_a
 agent_name: kvm-medium-2
