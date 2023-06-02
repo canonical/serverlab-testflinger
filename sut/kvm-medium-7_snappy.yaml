@@ -1,7 +1,0 @@
-device_ip: 10.245.131.14
-node_id: tb7chk
-node_name: kvm-medium-7
-maas_user: testflinger_a
-agent_name: kvm-medium-7
-env:
-  DEVICE_IP: 10.245.131.14
