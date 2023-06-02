@@ -4,5 +4,5 @@ node_name: tadrock
 maas_user: testflinger_a
 agent_name: tadrock
 env:
-    HEXR_DEVICE_SECURE_ID: MtKMoFMxYDP5uDRRXSyMmb
-    DEVICE_IP: 10.245.130.27
+  HEXR_DEVICE_SECURE_ID: MtKMoFMxYDP5uDRRXSyMmb
+  DEVICE_IP: 10.245.130.27

@@ -4,5 +4,5 @@ node_name: torchtusk
 maas_user: testflinger_a
 agent_name: torchtusk
 env:
-    HEXR_DEVICE_SECURE_ID: vnDCsfJgz6biCkF2fS3Q25
-    DEVICE_IP: 10.245.130.30
+  HEXR_DEVICE_SECURE_ID: vnDCsfJgz6biCkF2fS3Q25
+  DEVICE_IP: 10.245.130.30

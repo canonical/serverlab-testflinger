@@ -4,5 +4,5 @@ node_name: fava
 maas_user: testflinger_a
 agent_name: fava
 env:
-    HEXR_DEVICE_SECURE_ID: nBs8AYyMMYjYaDYNx3XQcb
-    DEVICE_IP: 10.245.130.77
+  HEXR_DEVICE_SECURE_ID: nBs8AYyMMYjYaDYNx3XQcb
+  DEVICE_IP: 10.245.130.77

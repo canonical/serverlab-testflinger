@@ -4,5 +4,5 @@ node_name: coinfish
 maas_user: testflinger_a
 agent_name: coinfish
 env:
-    HEXR_DEVICE_SECURE_ID: 4VZ6u5Fnt8TMd5VN9C4SUU
-    DEVICE_IP: 10.245.130.47
+  HEXR_DEVICE_SECURE_ID: 4VZ6u5Fnt8TMd5VN9C4SUU
+  DEVICE_IP: 10.245.130.47

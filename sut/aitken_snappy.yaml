@@ -4,5 +4,5 @@ node_name: aitken
 maas_user: testflinger_a
 agent_name: aitken
 env:
-    HEXR_DEVICE_SECURE_ID: KooKBE6tCN245ZSStNH5bP
-    DEVICE_IP: 10.245.130.64
+  HEXR_DEVICE_SECURE_ID: KooKBE6tCN245ZSStNH5bP
+  DEVICE_IP: 10.245.130.64

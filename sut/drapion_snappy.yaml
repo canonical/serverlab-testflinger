@@ -4,5 +4,5 @@ node_name: drapion
 maas_user: testflinger_a
 agent_name: drapion
 env:
-    HEXR_DEVICE_SECURE_ID: a00D000000gYPrSIAW
-    DEVICE_IP: 10.245.130.20
+  HEXR_DEVICE_SECURE_ID: a00D000000gYPrSIAW
+  DEVICE_IP: 10.245.130.20

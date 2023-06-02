@@ -4,5 +4,5 @@ node_name: ficet
 maas_user: testflinger_a
 agent_name: ficet
 env:
-    HEXR_DEVICE_SECURE_ID: g6mtsoXweQx2nS8h8hEJR2
-    DEVICE_IP: 10.245.130.56
+  HEXR_DEVICE_SECURE_ID: g6mtsoXweQx2nS8h8hEJR2
+  DEVICE_IP: 10.245.130.56

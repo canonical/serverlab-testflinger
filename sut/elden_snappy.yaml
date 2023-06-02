@@ -4,5 +4,5 @@ node_name: elden
 maas_user: testflinger_a
 agent_name: elden
 env:
-    HEXR_DEVICE_SECURE_ID: QrgCFnyRMNnAyjXvSAFfyC
-    DEVICE_IP: 10.245.130.73
+  HEXR_DEVICE_SECURE_ID: QrgCFnyRMNnAyjXvSAFfyC
+  DEVICE_IP: 10.245.130.73

@@ -4,5 +4,5 @@ node_name: makrutlime
 maas_user: testflinger_a
 agent_name: makrutlime
 env:
-    HEXR_DEVICE_SECURE_ID: a002000000EuC0r
-    DEVICE_IP: 10.245.130.13
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0r
+  DEVICE_IP: 10.245.130.13

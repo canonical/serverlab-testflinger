@@ -4,5 +4,5 @@ node_name: pikmin
 maas_user: testflinger_a
 agent_name: pikmin
 env:
-    HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
-    DEVICE_IP: 10.245.130.80
+  HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
+  DEVICE_IP: 10.245.130.80

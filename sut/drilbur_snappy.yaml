@@ -1,8 +1,8 @@
-device_ip: 10.245.130.31
+device_ip: null
 node_id: hpkh87
 node_name: drilbur
 maas_user: testflinger_a
 agent_name: drilbur
 env:
-    HEXR_DEVICE_SECURE_ID: a00D000000feNAjIAM
-    DEVICE_IP: 10.245.130.31
+  HEXR_DEVICE_SECURE_ID: a00D000000feNAjIAM
+  DEVICE_IP: null

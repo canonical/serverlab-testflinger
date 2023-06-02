@@ -4,5 +4,5 @@ node_name: beldam
 maas_user: testflinger_a
 agent_name: beldam
 env:
-    HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
-    DEVICE_IP: 10.245.130.36
+  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
+  DEVICE_IP: 10.245.130.36

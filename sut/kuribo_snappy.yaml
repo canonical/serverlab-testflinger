@@ -4,5 +4,5 @@ node_name: kuribo
 maas_user: testflinger_a
 agent_name: kuribo
 env:
-    HEXR_DEVICE_SECURE_ID: TEGVjfbK94HPopQbddKLxQ
-    DEVICE_IP: 10.245.130.35
+  HEXR_DEVICE_SECURE_ID: TEGVjfbK94HPopQbddKLxQ
+  DEVICE_IP: 10.245.130.35

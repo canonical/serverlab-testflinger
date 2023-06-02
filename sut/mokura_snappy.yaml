@@ -4,5 +4,5 @@ node_name: mokura
 maas_user: testflinger_a
 agent_name: mokura
 env:
-    HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
-    DEVICE_IP: 10.245.130.41
+  HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
+  DEVICE_IP: 10.245.130.41

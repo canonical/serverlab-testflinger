@@ -4,5 +4,5 @@ node_name: hildy
 maas_user: testflinger_a
 agent_name: hildy
 env:
-    HEXR_DEVICE_SECURE_ID: SzyNwsKFPe9jh3TVSevuga
-    DEVICE_IP: 10.245.130.42
+  HEXR_DEVICE_SECURE_ID: SzyNwsKFPe9jh3TVSevuga
+  DEVICE_IP: 10.245.130.42

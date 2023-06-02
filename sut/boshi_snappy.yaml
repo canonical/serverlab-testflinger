@@ -1,8 +1,8 @@
 device_ip: 10.245.130.69
 node_id: 4x8ga4
-node_name: blubi
+node_name: boshi
 maas_user: testflinger_a
-agent_name: blubi
+agent_name: boshi
 env:
-    HEXR_DEVICE_SECURE_ID: XuA6CivPEzuJgEqP2YrNgj
-    DEVICE_IP: 10.245.130.69
+  HEXR_DEVICE_SECURE_ID: XuA6CivPEzuJgEqP2YrNgj
+  DEVICE_IP: 10.245.130.69

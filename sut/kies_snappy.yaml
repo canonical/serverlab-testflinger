@@ -4,5 +4,5 @@ node_name: kies
 maas_user: testflinger_a
 agent_name: kies
 env:
-    HEXR_DEVICE_SECURE_ID: a00D000000gYO8dIAG
-    DEVICE_IP: 10.245.130.28
+  HEXR_DEVICE_SECURE_ID: a00D000000gYO8dIAG
+  DEVICE_IP: 10.245.130.28

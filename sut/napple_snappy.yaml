@@ -4,5 +4,5 @@ node_name: napple
 maas_user: testflinger_a
 agent_name: napple
 env:
-    HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
-    DEVICE_IP: 10.245.130.34
+  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
+  DEVICE_IP: 10.245.130.34

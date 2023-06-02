@@ -4,5 +4,5 @@ node_name: gloomer
 maas_user: testflinger_a
 agent_name: gloomer
 env:
-    HEXR_DEVICE_SECURE_ID: 5HpvCcPMQw3qQeDKiddVCC
-    DEVICE_IP: 10.245.130.54
+  HEXR_DEVICE_SECURE_ID: 5HpvCcPMQw3qQeDKiddVCC
+  DEVICE_IP: 10.245.130.54

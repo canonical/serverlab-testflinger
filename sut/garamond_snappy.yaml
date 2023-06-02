@@ -4,5 +4,5 @@ node_name: garamond
 maas_user: testflinger_a
 agent_name: garamond
 env:
-    HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
-    DEVICE_IP: 10.245.130.33
+  HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
+  DEVICE_IP: 10.245.130.33

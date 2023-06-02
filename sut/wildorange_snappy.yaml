@@ -4,5 +4,5 @@ node_name: wildorange
 maas_user: testflinger_a
 agent_name: wildorange
 env:
-    HEXR_DEVICE_SECURE_ID: a002000000FcUTr
-    DEVICE_IP: 10.245.130.5
+  HEXR_DEVICE_SECURE_ID: a002000000FcUTr
+  DEVICE_IP: 10.245.130.5

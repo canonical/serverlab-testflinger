@@ -4,5 +4,5 @@ node_name: krunch
 maas_user: testflinger_a
 agent_name: krunch
 env:
-    HEXR_DEVICE_SECURE_ID: ZP6yYk5LGGFjVAF7YJ2fQG
-    DEVICE_IP: 10.245.130.45
+  HEXR_DEVICE_SECURE_ID: ZP6yYk5LGGFjVAF7YJ2fQG
+  DEVICE_IP: 10.245.130.45

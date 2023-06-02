@@ -4,5 +4,5 @@ node_name: nabbit
 maas_user: testflinger_a
 agent_name: nabbit
 env:
-    HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
-    DEVICE_IP: 10.245.130.23
+  HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
+  DEVICE_IP: 10.245.130.23

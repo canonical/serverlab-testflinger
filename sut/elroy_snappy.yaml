@@ -4,5 +4,5 @@ node_name: elroy
 maas_user: testflinger_a
 agent_name: elroy
 env:
-    HEXR_DEVICE_SECURE_ID: XcdtyT3NEWbMNDAGKWjK7o
-    DEVICE_IP: 10.245.130.46
+  HEXR_DEVICE_SECURE_ID: XcdtyT3NEWbMNDAGKWjK7o
+  DEVICE_IP: 10.245.130.46

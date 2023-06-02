@@ -4,5 +4,5 @@ node_name: moltres
 maas_user: testflinger_a
 agent_name: moltres
 env:
-    HEXR_DEVICE_SECURE_ID: apq4DLRBGx4XykwG5QgKZb
-    DEVICE_IP: 10.245.130.19
+  HEXR_DEVICE_SECURE_ID: apq4DLRBGx4XykwG5QgKZb
+  DEVICE_IP: 10.245.130.19

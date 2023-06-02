@@ -4,5 +4,5 @@ node_name: jamiet
 maas_user: testflinger_a
 agent_name: jamiet
 env:
-    HEXR_DEVICE_SECURE_ID: QBRTP45EsDeg8uBCz8RktD
-    DEVICE_IP: 10.245.130.39
+  HEXR_DEVICE_SECURE_ID: QBRTP45EsDeg8uBCz8RktD
+  DEVICE_IP: 10.245.130.39

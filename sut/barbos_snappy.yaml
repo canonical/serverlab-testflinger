@@ -4,5 +4,5 @@ node_name: barbos
 maas_user: testflinger_a
 agent_name: barbos
 env:
-    HEXR_DEVICE_SECURE_ID: GLz2HwHGA5dNnsbpiLKQB5
-    DEVICE_IP: 10.245.130.9
+  HEXR_DEVICE_SECURE_ID: GLz2HwHGA5dNnsbpiLKQB5
+  DEVICE_IP: 10.245.130.9

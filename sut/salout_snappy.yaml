@@ -4,5 +4,5 @@ node_name: salout
 maas_user: testflinger_a
 agent_name: salout
 env:
-    HEXR_DEVICE_SECURE_ID: BPL46qGyeD5AvBNAzdxGnX
-    DEVICE_IP: 10.245.130.40
+  HEXR_DEVICE_SECURE_ID: BPL46qGyeD5AvBNAzdxGnX
+  DEVICE_IP: 10.245.130.40

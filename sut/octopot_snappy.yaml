@@ -1,8 +1,8 @@
-device_ip: 10.245.130.10
+device_ip: 10.245.130.49
 node_id: 44rbep
 node_name: octopot
 maas_user: testflinger_a
 agent_name: octopot
 env:
-    HEXR_DEVICE_SECURE_ID: yWxS5NCiPTzwhym2Ycrf2X
-    DEVICE_IP: 10.245.130.10
+  HEXR_DEVICE_SECURE_ID: yWxS5NCiPTzwhym2Ycrf2X
+  DEVICE_IP: 10.245.130.49

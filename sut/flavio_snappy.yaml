@@ -4,5 +4,5 @@ node_name: flavio
 maas_user: testflinger_a
 agent_name: flavio
 env:
-    HEXR_DEVICE_SECURE_ID: 2Rhoju2kwe52yKRdroCRpR
-    DEVICE_IP: 10.245.130.4
+  HEXR_DEVICE_SECURE_ID: 2Rhoju2kwe52yKRdroCRpR
+  DEVICE_IP: 10.245.130.4

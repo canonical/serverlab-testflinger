@@ -4,5 +4,5 @@ node_name: fleep
 maas_user: testflinger_a
 agent_name: fleep
 env:
-    HEXR_DEVICE_SECURE_ID: BK9cxNangxvMY3YCZYajAa
-    DEVICE_IP: 10.245.130.78
+  HEXR_DEVICE_SECURE_ID: BK9cxNangxvMY3YCZYajAa
+  DEVICE_IP: 10.245.130.78
