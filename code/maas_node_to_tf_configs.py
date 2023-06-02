@@ -57,15 +57,16 @@ def write_snappy_config(output_dir, hostname, machine):
         snappy_config["env"] = {}
     snappy_config["env"]["DEVICE_IP"] = machine["public_ip"]
     with open(snappy_config_path, "w") as f:
-        f.write(yaml.dump(snappy_config, sort_keys=False))
+        f.write(yaml.safe_dump(snappy_config, sort_keys=False))
 
 
 def write_testflinger_config(output_dir, hostname, machine):
-    testflinger_config_path = os.path.join(output_dir, f"{hostname}.yaml")
+    testflinger_config_path = os.path.join(output_dir, f"{hostname}.conf")
     testflinger_config = {}
     if os.path.exists(testflinger_config_path):
         with open(testflinger_config_path) as f:
-            testfllinger_config = yaml.safe_load(f)
+            testflinger_config = yaml.safe_load(f)
+            print("loaded existing data")
 
     testflinger_config["agent_id"] = hostname
     testflinger_config["server_address"] = "https://testflinger.canonical.com:443"
@@ -103,7 +104,7 @@ def write_testflinger_config(output_dir, hostname, machine):
     ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 cleanup -c /srv/testflinger-agent/sut/{hostname}_snappy.yaml testflinger.json || /bin/true"
 
     with open(testflinger_config_path, "w") as f:
-        f.write(yaml.dump(testflinger_config, sort_keys=False))
+        f.write(yaml.safe_dump(testflinger_config, sort_keys=False))
 
 
 def get_parser():
@@ -140,11 +141,17 @@ def main(args):
     root_dir = Path(parsed_args.output_dir)
     root_dir.mkdir(parents=True, exist_ok=True)
     for hostname, machine in machines.items():
-        if parsed_args.machine_name is not None and parsed_args.machine_name == hostname:
+        if (
+            parsed_args.machine_name is not None
+            and parsed_args.machine_name == hostname
+        ):
             print(f"writing configs for {hostname}")
             write_snappy_config(parsed_args.output_dir, hostname, machine)
             write_testflinger_config(parsed_args.output_dir, hostname, machine)
-        elif parsed_args.machine_name is None and root_dir.joinpath(Path(f"{hostname}.conf")).exists():
+        elif (
+            parsed_args.machine_name is None
+            and root_dir.joinpath(Path(f"{hostname}.conf")).exists()
+        ):
             print(f"writing configs for {hostname}")
             write_snappy_config(parsed_args.output_dir, hostname, machine)
             write_testflinger_config(parsed_args.output_dir, hostname, machine)
