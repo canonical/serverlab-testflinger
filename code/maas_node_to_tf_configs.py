@@ -37,7 +37,7 @@ def get_ip_address(interfaces, subnet):
             if link.get("subnet", {}).get("name") == subnet:
                 # assuming there is only one interface with a static ip on the subnet
                 if ip_address is None:
-                    ip_address = interface.get("ip_address")
+                    ip_address = link.get("ip_address")
     return ip_address
 
 
@@ -135,7 +135,7 @@ def main(args):
     parser = get_parser()
     parsed_args = parser.parse_args(args)
     print("loading machine data...")
-    machines = get_machines(parsed_args.maas_user, parsed_args.machine_name)
+    machines = get_machines(parsed_args.maas_user, parsed_args.subnet)
     print("done")
     root_dir = Path(parsed_args.output_dir)
     root_dir.mkdir(parents=True, exist_ok=True)
@@ -144,8 +144,8 @@ def main(args):
             print(f"writing configs for {hostname}")
             write_snappy_config(parsed_args.output_dir, hostname, machine)
             write_testflinger_config(parsed_args.output_dir, hostname, machine)
-        elif root_dir.joinpath(Path(f"{hostname}.conf")).exists():
-            print("writing configs for {hostname}")
+        elif parsed_args.machine_name is None and root_dir.joinpath(Path(f"{hostname}.conf")).exists():
+            print(f"writing configs for {hostname}")
             write_snappy_config(parsed_args.output_dir, hostname, machine)
             write_testflinger_config(parsed_args.output_dir, hostname, machine)
 
