@@ -1,8 +1,0 @@
-device_ip: 10.245.130.16
-node_id: drkgwp
-node_name: meitner
-maas_user: testflinger_a
-agent_name: meitner
-env:
-  HEXR_DEVICE_SECURE_ID: a00D000000gYNiWIAW
-  DEVICE_IP: 10.245.130.16
