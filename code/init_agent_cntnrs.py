@@ -428,8 +428,6 @@ def main():
                 ' # unable to start agent for: %s' % sut)
             print('  e: %s' % error)
             print(' -----------------------')
-        finally:
-            time.sleep(.3)
 
     print('==============================')
 
