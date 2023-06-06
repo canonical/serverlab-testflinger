@@ -71,7 +71,7 @@ def write_testflinger_config(output_dir, hostname, machine):
     testflinger_config["agent_id"] = hostname
     testflinger_config["server_address"] = "https://testflinger.canonical.com:443"
     testflinger_config["global_timeout"] = 172800
-    testflinger_config["output_timeouit"] = 43200
+    testflinger_config["output_timeout"] = 43200
     testflinger_config[
         "execution_basedir"
     ] = f"/data/testflinger-agent/tests/{hostname}/run"

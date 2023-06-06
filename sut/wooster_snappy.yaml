@@ -4,5 +4,5 @@ node_name: wooster
 maas_user: testflinger_a
 agent_name: wooster
 env:
-    HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
-    DEVICE_IP: 10.245.130.83
+  HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
+  DEVICE_IP: 10.245.130.83
