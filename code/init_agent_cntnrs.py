@@ -425,9 +425,9 @@ def main():
                           ip_n)
         except Exception as error:
             print(
-                ' # unable to start agent for: %s' % sut)
-            print('  e: %s' % error)
-            print(' -----------------------')
+                '  # unable to start agent for: %s' % sut)
+            print('    e: %s' % error)
+            print('    -----------------------')
 
     print('==============================')
 
