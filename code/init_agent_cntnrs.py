@@ -416,18 +416,20 @@ def main():
         log_f = PurePath(log_dir, sut).with_suffix('.log')
         Path(log_f).touch()
 
-        # try:
-        _ = InitAgent(client,
-                      sut_conf,
-                      agnt_net,
-                      net_name,
-                      img_name,
-                      ip_n)
-        # except Exception as error:
-        #     print(
-        #         ' # unable to start agent for: %s' % sut)
-        #     print('  e: %s' % error)
-        #     print(' -----------------------')
+        try:
+            _ = InitAgent(client,
+                          sut_conf,
+                          agnt_net,
+                          net_name,
+                          img_name,
+                          ip_n)
+        except Exception as error:
+            print(
+                ' # unable to start agent for: %s' % sut)
+            print('  e: %s' % error)
+            print(' -----------------------')
+        finally:
+            time.sleep(.3)
 
     print('==============================')
 
