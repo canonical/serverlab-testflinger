@@ -78,6 +78,26 @@ services:
   #   volumes:
   #     - api_data:/data/testflinger
 
+  vault:
+    image: vault:latest
+    restart: unless-stopped
+    container_name: nh-vault
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.121
+    expose:
+      - 8200
+    ports:
+      - "8200:8200"
+    hostname: nh-vault
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: nh-vault-root
+      VAULT_DEV_LISTEN_ADDRESS: 10.245.128.121:8200
+    volumes:
+      - vault_data:/vault/data
+    cap_add:
+      - IPC_LOCK
+
   agent:
     build:
       context: .
@@ -121,26 +141,26 @@ services:
     # security_opt:
     #   - apparmor:unconfined
 
-  # cli:
-  #   depends_on:
-  #     - agent
-  #   build:
-  #     context: .
-  #     dockerfile: tf-cli
-  #   stdin_open: true
-  #   tty: true
-  #   restart: unless-stopped
-  #   container_name: tf-cli
-  #   networks:
-  #     needham_int:
-  #       ipv4_address: 10.245.128.12
-  #       # docker_int:
-  #       #   ipv4_address: 172.17.0.12
-  #   hostname: tf-cli
-  #   volumes:
-  #     - cli_data:/data/testflinger-cli
-  #   environment:
-  #     - PATH=/data/testflinger-cli:$PATH
+  cli:
+    depends_on:
+      - agent
+    build:
+      context: .
+      dockerfile: tf-cli
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    container_name: tf-cli
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.12
+        # docker_int:
+        #   ipv4_address: 172.17.0.12
+    hostname: tf-cli
+    volumes:
+      - cli_data:/data/testflinger-cli
+    environment:
+      - PATH=/data/testflinger-cli:$PATH
 
   portainer:
     depends_on:
@@ -276,27 +296,6 @@ services:
   #   links:
   #     - influxdb
   #   hostname: nh-grafana
-
-  vault:
-    image: vault:latest
-    restart: unless-stopped
-    container_name: nh-vault
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.121
-    expose:
-      - 8200
-    ports:
-      - "8200:8200"
-    hostname: nh-vault
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: nh-vault-root
-      VAULT_DEV_LISTEN_ADDRESS: 10.245.128.121:8200
-    volumes:
-      - vault_data:/vault/data
-    cap_add:
-      - IPC_LOCK
-
 
 networks:
   # docker_int:
