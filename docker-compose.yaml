@@ -323,7 +323,7 @@ volumes:
   snappy_data: {}
   docker_data: {}
   agent_log: {}
-  # cli_data: {}
+  cli_data: {}
   portainer_data: {}
   jenkins_data: {}
   # influx_data: {}
