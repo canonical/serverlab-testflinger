@@ -310,7 +310,7 @@ networks:
   needham_int:
     driver: macvlan
     driver_opts:
-        parent: eno2
+        parent: ens3f1
     ipam:
       config:
         - subnet: "10.245.128.0/22"
