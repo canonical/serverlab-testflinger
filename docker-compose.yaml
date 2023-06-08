@@ -156,8 +156,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.12
-        docker_int:
-          ipv4_address: 172.17.0.12
+      docker_int:
+        ipv4_address: 172.17.0.12
     hostname: tf-cli
     volumes:
       - cli_data:/data/testflinger-cli
@@ -173,8 +173,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.15
-        docker_int:
-          ipv4_address: 172.17.0.15
+      docker_int:
+        ipv4_address: 172.17.0.15
     expose:
       - 9443
     hostname: nh-portainer
@@ -191,8 +191,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.116
-        docker_int:
-          ipv4_address: 172.17.0.16
+      docker_int:
+        ipv4_address: 172.17.0.16
     expose:
       - 8080
       - 50000
