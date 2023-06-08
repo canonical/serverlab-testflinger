@@ -158,6 +158,7 @@ class InitAgent:
         host_config = self.client.api.create_host_config(
             restart_policy={'Name': 'always'},
             # privileged=True,
+            mem_limit='1g',
             mounts=[
                 # shared mounts
                 # init

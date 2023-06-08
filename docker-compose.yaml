@@ -1,31 +1,31 @@
 version: "3.9"
 
 services:
-  db:
-    image: redis:latest
-    container_name: tf-db
-    restart: unless-stopped
-    expose:
-      - 6379
-    hostname: tf-db
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.13
-      # docker_int:
-      #   ipv4_address: 172.17.0.13
-    volumes:
-      - db_data:/data
-      - db_log:/var/log/redis
-    command:
-      - redis-server
-      - "--bind"
-      - "0.0.0.0"
-      - "--maxmemory"
-      - "16384mb"
-      - "--maxmemory-policy"
-      - "allkeys-lfu"
-    environment:
-      - REDIS_REPLICATION_MODE=master
+  # db:
+  #   image: redis:latest
+  #   container_name: tf-db
+  #   restart: unless-stopped
+  #   expose:
+  #     - 6379
+  #   hostname: tf-db
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.13
+  #     # docker_int:
+  #     #   ipv4_address: 172.17.0.13
+  #   volumes:
+  #     - db_data:/data
+  #     - db_log:/var/log/redis
+  #   command:
+  #     - redis-server
+  #     - "--bind"
+  #     - "0.0.0.0"
+  #     - "--maxmemory"
+  #     - "16384mb"
+  #     - "--maxmemory-policy"
+  #     - "allkeys-lfu"
+  #   environment:
+  #     - REDIS_REPLICATION_MODE=master
 
   mqtt:
     build:
@@ -47,36 +47,36 @@ services:
     # volumes:
     #   - ./mqtt/conf:/mosquitto/config
 
-  api:
-    build:
-      context: .
-      dockerfile: tf-api
-    command: [
-      "gunicorn",
-      "-b=0.0.0.0",
-      "-t=0",
-      "-k=gevent",
-      "--worker-connections=1000",
-      "testflinger:app"
-    ]
-    container_name: tf-api
-    depends_on:
-      - mqtt
-    environment:
-      - PATH=/data/testflinger:$PATH
-    expose:
-      - 8000
-    hostname: tf-api
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.10
-      # docker_int:
-      #   ipv4_address: 172.17.0.10
-    restart: unless-stopped
-    sysctls:
-      net.core.somaxconn: 2048
-    volumes:
-      - api_data:/data/testflinger
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: tf-api
+  #   command: [
+  #     "gunicorn",
+  #     "-b=0.0.0.0",
+  #     "-t=0",
+  #     "-k=gevent",
+  #     "--worker-connections=1000",
+  #     "testflinger:app"
+  #   ]
+  #   container_name: tf-api
+  #   depends_on:
+  #     - mqtt
+  #   environment:
+  #     - PATH=/data/testflinger:$PATH
+  #   expose:
+  #     - 8000
+  #   hostname: tf-api
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.10
+  #     # docker_int:
+  #     #   ipv4_address: 172.17.0.10
+  #   restart: unless-stopped
+  #   sysctls:
+  #     net.core.somaxconn: 2048
+  #   volumes:
+  #     - api_data:/data/testflinger
 
   agent:
     build:
@@ -121,30 +121,30 @@ services:
     # security_opt:
     #   - apparmor:unconfined
 
-  cli:
-    depends_on:
-      - agent
-    build:
-      context: .
-      dockerfile: tf-cli
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
-    container_name: tf-cli
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.12
-        # docker_int:
-        #   ipv4_address: 172.17.0.12
-    hostname: tf-cli
-    volumes:
-      - cli_data:/data/testflinger-cli
-    environment:
-      - PATH=/data/testflinger-cli:$PATH
+  # cli:
+  #   depends_on:
+  #     - agent
+  #   build:
+  #     context: .
+  #     dockerfile: tf-cli
+  #   stdin_open: true
+  #   tty: true
+  #   restart: unless-stopped
+  #   container_name: tf-cli
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.12
+  #       # docker_int:
+  #       #   ipv4_address: 172.17.0.12
+  #   hostname: tf-cli
+  #   volumes:
+  #     - cli_data:/data/testflinger-cli
+  #   environment:
+  #     - PATH=/data/testflinger-cli:$PATH
 
   portainer:
     depends_on:
-      - cli
+      - agent
     image: portainer/portainer-ce:2.9.3
     restart: unless-stopped
     container_name: nh-portainer
@@ -162,7 +162,7 @@ services:
 
   jenkins:
     depends_on:
-      - cli
+      - agent
     image: jenkins/jenkins:lts
     restart: unless-stopped
     container_name: nh-jenkins
@@ -181,71 +181,71 @@ services:
       - ./jenkins/backups:/data/backups
       - ./jenkins/pipelines:/opt/pipelines
 
-  restarter:
-    depends_on:
-      - api
-    image: docker
-    restart: unless-stopped
-    container_name: tf-restarter
+  # restarter:
+  #   depends_on:
+  #     - api
+  #   image: docker
+  #   restart: unless-stopped
+  #   container_name: tf-restarter
 
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
 
-    # periodic execution (UTC 06:00)
-    command: [
-      "/bin/sh",
-      "-c",
-      "while true; \
-      do if [ `date +'%H'` -eq 6 ];
-          then echo 'restarting tf-api @' `date`;
-          docker restart tf-api;
-          echo;
-          sleep 3600;
-      fi; \
-      done"]
+  #   # periodic execution (UTC 06:00)
+  #   command: [
+  #     "/bin/sh",
+  #     "-c",
+  #     "while true; \
+  #     do if [ `date +'%H'` -eq 6 ];
+  #         then echo 'restarting tf-api @' `date`;
+  #         docker restart tf-api;
+  #         echo;
+  #         sleep 3600;
+  #     fi; \
+  #     done"]
 
-  influxdb:
-    image: influxdb:1.8
-    container_name: nh-influxdb
-    restart: unless-stopped
-    depends_on:
-      - agent
-    expose:
-      - 8086
-      - 8082
-      - 8089
-    ports:
-      - "8086:8086"
-      - "8089:8089"
-    volumes:
-      - influx_data:/var/lib/influxdb
-      - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.117
-    hostname: nh-influxdb
-    environment:
-      INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
+  # influxdb:
+  #   image: influxdb:1.8
+  #   container_name: nh-influxdb
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - agent
+  #   expose:
+  #     - 8086
+  #     - 8082
+  #     - 8089
+  #   ports:
+  #     - "8086:8086"
+  #     - "8089:8089"
+  #   volumes:
+  #     - influx_data:/var/lib/influxdb
+  #     - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.117
+  #   hostname: nh-influxdb
+  #   environment:
+  #     INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
 
-  chronograf:
-    depends_on:
-      - influxdb
-    image: chronograf:latest
-    restart: unless-stopped
-    container_name: nh-chronograf
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.118
-    expose:
-      - 8888
-    ports:
-      - "8888:8888"
-    links:
-      - influxdb
-    volumes:
-      - chronograf_data:/var/lib/chronograf
-    environment:
-      - INFLUXDB_URL=http://influxdb:8086
+  # chronograf:
+  #   depends_on:
+  #     - influxdb
+  #   image: chronograf:latest
+  #   restart: unless-stopped
+  #   container_name: nh-chronograf
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.118
+  #   expose:
+  #     - 8888
+  #   ports:
+  #     - "8888:8888"
+  #   links:
+  #     - influxdb
+  #   volumes:
+  #     - chronograf_data:/var/lib/chronograf
+  #   environment:
+  #     - INFLUXDB_URL=http://influxdb:8086
 
   # influxdb_relay:
   #   depends_on:
@@ -260,26 +260,26 @@ services:
   #     - 9096
   #   hostname: nh-inflx-relay
 
-  grafana:
-    depends_on:
-      - influxdb
-    image: grafana/grafana:latest
-    restart: unless-stopped
-    container_name: nh-grafana
-    networks:
-      needham_int:
-        ipv4_address: 10.245.128.120
-    expose:
-      - 3000
-    ports:
-      - "3000:3000"
-    links:
-      - influxdb
-    hostname: nh-grafana
+  # grafana:
+  #   depends_on:
+  #     - influxdb
+  #   image: grafana/grafana:latest
+  #   restart: unless-stopped
+  #   container_name: nh-grafana
+  #   networks:
+  #     needham_int:
+  #       ipv4_address: 10.245.128.120
+  #   expose:
+  #     - 3000
+  #   ports:
+  #     - "3000:3000"
+  #   links:
+  #     - influxdb
+  #   hostname: nh-grafana
 
   vault:
     depends_on:
-      - api
+      - agent
     image: vault:latest
     restart: unless-stopped
     container_name: nh-vault
@@ -319,19 +319,19 @@ networks:
         # - gatway: "10.245.128.9"
 
 volumes:
-  db_data: {}
-  db_log: {}
-  api_data: {}
+  # db_data: {}
+  # db_log: {}
+  # api_data: {}
   agent_data: {}
   snappy_data: {}
   docker_data: {}
   agent_log: {}
-  cli_data: {}
+  # cli_data: {}
   portainer_data: {}
   jenkins_data: {}
-  influx_data: {}
-  chronograf_data: {}
-  grafana_data: {}
+  # influx_data: {}
+  # chronograf_data: {}
+  # grafana_data: {}
   vault_data: {}
   vault_config: {}
   # netdata_cache: {}
