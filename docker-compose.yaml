@@ -278,8 +278,6 @@ services:
   #   hostname: nh-grafana
 
   vault:
-    depends_on:
-      - agent
     image: vault:latest
     restart: unless-stopped
     container_name: nh-vault
