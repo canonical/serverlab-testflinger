@@ -12,7 +12,7 @@ services:
   #     needham_int:
   #       ipv4_address: 10.245.128.13
   #     # docker_int:
-  #     #   ipv4_address: 172.17.0.13
+  #     #   ipv4_address: 172.16.0.13
   #   volumes:
   #     - db_data:/data
   #     - db_log:/var/log/redis
@@ -42,7 +42,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.14
       docker_int:
-        ipv4_address: 172.17.0.14
+        ipv4_address: 172.16.0.14
     restart: unless-stopped
     # volumes:
     #   - ./mqtt/conf:/mosquitto/config
@@ -71,7 +71,7 @@ services:
   #     needham_int:
   #       ipv4_address: 10.245.128.10
   #     # docker_int:
-  #     #   ipv4_address: 172.17.0.10
+  #     #   ipv4_address: 172.16.0.10
   #   restart: unless-stopped
   #   sysctls:
   #     net.core.somaxconn: 2048
@@ -86,7 +86,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.121
       docker_int:
-        ipv4_address: 172.17.0.2
+        ipv4_address: 172.16.0.2
     expose:
       - 8200
     ports:
@@ -113,7 +113,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.11
       docker_int:
-        ipv4_address: 172.17.0.11
+        ipv4_address: 172.16.0.11
     expose:
       - 19999
     privileged: true
@@ -157,7 +157,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.12
       docker_int:
-        ipv4_address: 172.17.0.12
+        ipv4_address: 172.16.0.12
     hostname: tf-cli
     volumes:
       - cli_data:/data/testflinger-cli
@@ -174,7 +174,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.15
       docker_int:
-        ipv4_address: 172.17.0.15
+        ipv4_address: 172.16.0.15
     expose:
       - 9443
     hostname: nh-portainer
@@ -192,7 +192,7 @@ services:
       needham_int:
         ipv4_address: 10.245.128.116
       docker_int:
-        ipv4_address: 172.17.0.16
+        ipv4_address: 172.16.0.16
     expose:
       - 8080
       - 50000
@@ -304,7 +304,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: "172.17.0.1/24"
+        - subnet: "172.16.0.1/24"
 
   needham_int:
     driver: macvlan
