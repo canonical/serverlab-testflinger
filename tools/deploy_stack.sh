@@ -19,7 +19,5 @@ docker-compose build \
 # start stack
 docker-compose up --detach 2>&1
 
-python3 /opt/testflinger-docker/code/vault-template.py
-
 # todo:
 # add user input for pw?
