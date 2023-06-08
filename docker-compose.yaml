@@ -33,7 +33,7 @@ services:
       dockerfile: tf-mqtt
     container_name: tf-mqtt
     depends_on:
-      - db
+      - agent
     hostname: tf-mqtt
     expose:
       - 1883
