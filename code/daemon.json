@@ -1,0 +1,8 @@
+// controls log creep; place in /etc/docker
+
+{
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "500m"
+  }
+}
