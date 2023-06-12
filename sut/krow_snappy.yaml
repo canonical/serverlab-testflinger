@@ -1,0 +1,8 @@
+device_ip: 10.245.130.89
+node_id: a6ced7
+node_name: krow
+maas_user: testflinger_a
+agent_name: krow
+env:
+  HEXR_DEVICE_SECURE_ID: nNQgn76BemottjorYSGB9Z
+  DEVICE_IP: 10.245.130.89

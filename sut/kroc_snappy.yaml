@@ -1,0 +1,8 @@
+device_ip: 10.245.130.88
+node_id: qa88b8
+node_name: kroc
+maas_user: testflinger_a
+agent_name: kroc
+env:
+  HEXR_DEVICE_SECURE_ID: d4UWQFbgJwuc4GZKjuUKqs
+  DEVICE_IP: 10.245.130.88
