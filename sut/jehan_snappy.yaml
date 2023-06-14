@@ -1,0 +1,8 @@
+device_ip: 10.245.130.93
+node_id: ad3rhh
+node_name: jehan
+maas_user: testflinger_a
+agent_name: jehan
+env:
+  HEXR_DEVICE_SECURE_ID: 5RL7Mw4VVfmswKE6imzc6i
+  DEVICE_IP: 10.245.130.93

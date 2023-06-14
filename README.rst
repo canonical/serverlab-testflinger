@@ -591,6 +591,19 @@ Once the deployment is complete, no other steps should be required to
 start executing Testflinger tests on SUTs outside of ensuring the
 appropriate configuration files are in the agent and cli containers.
 
+Useful Commands:
+----------------
+Run on the Host Machine
+~~~~~~~~~~~~~~~~~~~~~~~
+-  View the logs for a specific container in real-time::
+     
+    docker logs tf-agent -f
+
+-  View the containers and their statuses::
+
+    docker ps
+
+
 References (incomplete):
 ------------------------
 

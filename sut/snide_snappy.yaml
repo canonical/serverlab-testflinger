@@ -1,0 +1,8 @@
+device_ip: 10.245.130.90
+node_id: fbntw3
+node_name: snide
+maas_user: testflinger_a
+agent_name: snide
+env:
+  HEXR_DEVICE_SECURE_ID: L9r79mnTdimMQ6aU3NtX3M
+  DEVICE_IP: 10.245.130.90
