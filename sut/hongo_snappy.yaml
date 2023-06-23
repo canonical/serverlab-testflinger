@@ -1,0 +1,8 @@
+device_ip: 10.245.130.85
+node_id: dq3wdd
+node_name: hongo
+maas_user: testflinger_a
+agent_name: hongo
+env:
+  HEXR_DEVICE_SECURE_ID: QunqfHmWqM3SwSo9FUc8BQ
+  DEVICE_IP: 10.245.130.85

@@ -1,0 +1,8 @@
+device_ip: 10.245.130.94
+node_id: p8f66a
+node_name: boddle
+maas_user: testflinger_a
+agent_name: boddle
+env:
+ HEXR_DEVICE_SECURE_ID: nxS7pArgZzPqfrSX8JKHd7
+ DEVICE_IP: 10.245.130.94
