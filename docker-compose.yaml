@@ -79,7 +79,7 @@ services:
   #     - api_data:/data/testflinger
 
   vault:
-    image: vault:latest
+    image: hashicorp/vault:latest
     restart: unless-stopped
     container_name: nh-vault
     networks:
