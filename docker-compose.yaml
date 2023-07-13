@@ -322,7 +322,7 @@ services:
     environment:
       - FOLDER=/web
       - PORT=9999
-      - URL_PREFIX='/srv'
+      - URL_PREFIX=/srv
     volumes:
       - ./filesrv:/web
 
