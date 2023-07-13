@@ -300,7 +300,7 @@ services:
 
   image_server:
     depends_on:
-      portainer
+      - portainer
     image:
     restart: unless-stopped
     container_name: nh-imgsrv
