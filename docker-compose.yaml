@@ -245,6 +245,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.117
+      docker_int:
+        ipv4_address: 172.16.0.17
     hostname: nh-influxdb
     environment:
       INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
@@ -258,6 +260,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.118
+      docker_int:
+        ipv4_address: 172.16.0.18
     expose:
       - 8888
     ports:
@@ -290,6 +294,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.120
+      docker_int:
+        ipv4_address: 172.16.0.20
     expose:
       - 3000
     ports:
@@ -307,6 +313,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.123
+      docker_int:
+        ipv4_address: 172.16.0.23
     expose:
       - 9999
     ports:
@@ -314,6 +322,7 @@ services:
     environment:
       - FOLDER=/web
       - PORT=9999
+      - URL_PREFIX='/srv'
     volumes:
       - ./filesrv:/web
 
