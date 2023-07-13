@@ -226,48 +226,48 @@ services:
   #     fi; \
   #     done"]
 
-  # influxdb:
-  #   image: influxdb:1.8
-  #   container_name: nh-influxdb
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - agent
-  #   expose:
-  #     - 8086
-  #     - 8082
-  #     - 8089
-  #   ports:
-  #     - "8086:8086"
-  #     - "8089:8089"
-  #   volumes:
-  #     - influx_data:/var/lib/influxdb
-  #     - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
-  #   networks:
-  #     needham_int:
-  #       ipv4_address: 10.245.128.117
-  #   hostname: nh-influxdb
-  #   environment:
-  #     INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
+  influxdb:
+    image: influxdb:1.8
+    container_name: nh-influxdb
+    restart: unless-stopped
+    depends_on:
+      - agent
+    expose:
+      - 8086
+      - 8082
+      - 8089
+    ports:
+      - "8086:8086"
+      - "8089:8089"
+    volumes:
+      - influx_data:/var/lib/influxdb
+      - ./db/influxdb.conf:/etc/influxdb/influxdb.conf
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.117
+    hostname: nh-influxdb
+    environment:
+      INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
 
-  # chronograf:
-  #   depends_on:
-  #     - influxdb
-  #   image: chronograf:latest
-  #   restart: unless-stopped
-  #   container_name: nh-chronograf
-  #   networks:
-  #     needham_int:
-  #       ipv4_address: 10.245.128.118
-  #   expose:
-  #     - 8888
-  #   ports:
-  #     - "8888:8888"
-  #   links:
-  #     - influxdb
-  #   volumes:
-  #     - chronograf_data:/var/lib/chronograf
-  #   environment:
-  #     - INFLUXDB_URL=http://influxdb:8086
+  chronograf:
+    depends_on:
+      - influxdb
+    image: chronograf:latest
+    restart: unless-stopped
+    container_name: nh-chronograf
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.118
+    expose:
+      - 8888
+    ports:
+      - "8888:8888"
+    links:
+      - influxdb
+    volumes:
+      - chronograf_data:/var/lib/chronograf
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
 
   # influxdb_relay:
   #   depends_on:
@@ -282,22 +282,41 @@ services:
   #     - 9096
   #   hostname: nh-inflx-relay
 
-  # grafana:
-  #   depends_on:
-  #     - influxdb
-  #   image: grafana/grafana:latest
-  #   restart: unless-stopped
-  #   container_name: nh-grafana
-  #   networks:
-  #     needham_int:
-  #       ipv4_address: 10.245.128.120
-  #   expose:
-  #     - 3000
-  #   ports:
-  #     - "3000:3000" 
-  #   links:
-  #     - influxdb
-  #   hostname: nh-grafana
+  grafana:
+    depends_on:
+      - influxdb
+    image: grafana/grafana:latest
+
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.120
+    expose:
+      - 3000
+    ports:
+      - "3000:3000" 
+    links:
+      - influxdb
+    hostname: nh-grafana
+
+  image_server:
+    depends_on:
+      portainer
+    image:
+    restart: unless-stopped
+    container_name: nh-imgsrv
+    networks:
+      needham_int:
+        ipv4_address: 10.245.128.123
+    expose:
+      - 9999
+    ports:
+      - "9999:9999" 
+    environment:
+      - FOLDER=/web
+      - PORT=9999
+    volumes:
+      - ./filesrv:/web
+
 
 networks:
   docker_int:
@@ -326,9 +345,9 @@ volumes:
   cli_data: {}
   portainer_data: {}
   jenkins_data: {}
-  # influx_data: {}
-  # chronograf_data: {}
-  # grafana_data: {}
+  influx_data: {}
+  chronograf_data: {}
+  grafana_data: {}
   vault_data: {}
   vault_config: {}
   # netdata_cache: {}

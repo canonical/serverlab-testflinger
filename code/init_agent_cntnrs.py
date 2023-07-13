@@ -97,16 +97,6 @@ class InitAgent:
         dst_centrypt_path = PurePath('/',
                                      'opt',
                                      centrypt_file)
-        # agnt snappy
-        src_snpy_path = PurePath(dhost_path,
-                                 'sut',
-                                 'snappy',
-                                 self.sut_snpy)
-        dst_snpy_path = PurePath('/',
-                                 'data',
-                                 'snappy-device-agents',
-                                 'sut',
-                                 self.sut_snpy)
         # agnt server
         srv_conf = PurePath(
             'testflinger-agent').with_suffix('.conf')
@@ -146,6 +136,16 @@ class InitAgent:
                                  'testflinger-agent',
                                  'sut',
                                  self.sut_conf)
+        # agnt snappy
+        src_snpy_path = PurePath(dhost_path,
+                                 'sut',
+                                 'snappy',
+                                 self.sut_snpy)
+        dst_snpy_path = PurePath('/',
+                                 'data',
+                                 'snappy-device-agents',
+                                 'sut',
+                                 self.sut_snpy)
         # log
         src_log_path = PurePath(dhost_path,
                                 'log',
@@ -181,11 +181,6 @@ class InitAgent:
                                    target=fspath(dst_centrypt_path),
                                    source=fspath(src_centrypt_path),
                                    read_only=True),
-                # agent snappy
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_snpy_path),
-                                   source=fspath(src_snpy_path),
-                                   read_only=True),
                 # agent server
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_sconf_path),
@@ -206,6 +201,11 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_conf_path),
                                    source=fspath(src_conf_path),
+                                   read_only=False),
+                # agent snappy
+                docker.types.Mount(type='bind',
+                                   target=fspath(dst_snpy_path),
+                                   source=fspath(src_snpy_path),
                                    read_only=False),
                 # log
                 docker.types.Mount(type='bind',
