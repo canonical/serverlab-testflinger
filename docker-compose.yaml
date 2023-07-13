@@ -301,7 +301,7 @@ services:
   image_server:
     depends_on:
       - portainer
-    image:
+    image: halverneus/static-file-server:latest
     restart: unless-stopped
     container_name: nh-imgsrv
     networks:
