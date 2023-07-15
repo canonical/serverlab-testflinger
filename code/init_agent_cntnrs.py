@@ -15,13 +15,19 @@ import docker
 import time
 import hvac
 import sys
-# from pudb import set_trace; set_trace()
+import logging
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(message)s')
+logger = logging.getLogger(__name__)
 
 
 class InitAgent:
 
     def __init__(
-            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip):
+            self, client, sut_conf, agnt_net, net_name, img_name):
         self.client = client
         self.sut_conf = sut_conf
         self.sut = PurePath(sut_conf).stem
@@ -30,7 +36,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '10.245.130.%i' % agnt_ip
+        # self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.vclient = self.configure_vault()
         self.init_agent_cntnr()
 
@@ -44,7 +50,7 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            ipv4_address=self.agnt_ip)
+            aliases=self.client)
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
 
@@ -56,7 +62,7 @@ class InitAgent:
             dhost_path = PurePath(  # passthru env var from dckrfile
                 str(environ.get('HOSTDIR')))
         except EnvironmentError:
-            print('Environment var HOSTDIR undefined!')
+            logger.error('Environment var HOSTDIR undefined!')
             sys.exit()
 
         # paths (relative to host docker root)
@@ -211,7 +217,7 @@ class InitAgent:
                 docker.types.Mount(type='bind',
                                    target=fspath(dst_log_path),
                                    source=fspath(src_log_path),
-                                   read_only=False)
+                                   read_only=False),
             ])
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
@@ -226,7 +232,7 @@ class InitAgent:
             'INFLUX_HOST': influx_vars['data']['data']['host'],
             'INFLUX_PORT': influx_vars['data']['data']['port'],
             'INFLUX_USER': influx_vars['data']['data']['user'],
-            'INFLUX_PW': influx_vars['data']['data']['passw']
+            'INFLUX_PW': influx_vars['data']['data']['passw'],
         }
 
         return env
@@ -247,22 +253,21 @@ class InitAgent:
             start_period=(1000000 * 25 * 1000)
         )
 
-        # try:
-        cntnr = self.client.api.create_container(
-            self.img_name,
-            name=self.sut,
-            hostname=self.sut,
-            host_config=host_config,
-            networking_config=net_config,
-            command=[fspath(cmd_path)],
-            healthcheck=healthchk,
-            domainname='maas',
-            environment=self.decrypt_env_vars(),
-            detach=True,
-            tty=True)
-        # except docker.errors.APIError:
-        #     print(' # error creating container!')
-        #     pass
+        try:
+            cntnr = self.client.api.create_container(
+                self.img_name,
+                name=self.sut,
+                hostname=self.sut,
+                host_config=host_config,
+                networking_config=net_config,
+                command=[fspath(cmd_path)],
+                healthcheck=healthchk,
+                domainname='maas',
+                environment=self.decrypt_env_vars(),
+                detach=True,
+                tty=True)
+        except docker.errors.APIError as error:
+            logger.error(f'{error}\nError creating container!')
 
         return cntnr
 
@@ -272,12 +277,13 @@ class InitAgent:
             try:
                 self.client.api.start(container=cntnr_id)
             except docker.errors.APIError as error:
-                print(
-                    ' # unable to start agent for: %s' % self.sut)
-                print('    e: %s' % error)
-                print('  -----------------------')
+                logger.error(
+                    f' # unable to start agent for: {self.sut}'
+                    f'    e: {error})'
+                    '  -----------------------'
+                )
             else:
-                print('  * %s' % self.sut)
+                logger.info(f'  * {self.sut}')
 
         try:
             cntnr = self.client.containers.get(self.sut)
@@ -292,41 +298,16 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.245.128.0/22')
+        subnet='10.245.128.0/21',
+        iprange='10.245.134.0/23',)
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
     agnt_net = client.api.create_network(net_name,
-                                         driver='macvlan',
+                                         driver='bridge',
                                          ipam=ipam_config)
 
     return agnt_net
-
-
-# def load_env_vars():
-#     host = getenv('INFLUX_HOST')
-#     if not host:
-#         print('InfluxDB host undefined')
-#         sys.exit()
-#     port = int(getenv('INFLUX_PORT', 8086))
-#     user = getenv('INFLUX_USER', '')
-#     password = getenv('INFLUX_PW', '')
-
-#     build_args = {
-#         'influx_host': host,
-#         'influx_port': port,
-#         'influx_user': user,
-#         'influx_pw': password
-#     }
-
-#     return build_args
-
-#     # import influx env vars
-#     load_dotenv()
-#     build_args = {
-#         'INFLX_HOST': getenv('INFLX_HOST'),
-#         'INFLX_USER': getenv('INFLX_USER'),
-#         'INFLX_PW': getenv('INFLX_PW')
 
 
 def build_cntnr_img(client, img_name, dockf_dir):
@@ -340,35 +321,26 @@ def build_cntnr_img(client, img_name, dockf_dir):
                 line.get('stream')).rstrip('\n')
 
             if line != 'None':
-                print(line)
+                logger.info(line)
 
-    print('==============================')
-    print('[ building agent cntnr image ]\n')
+    logger.info(
+        '=============================='
+        '[ building agent cntnr image ]\n'
+    )
     try:
         stream_build()
     except docker.errors.BuildError:
-        print(' # unable to build agent image!')
+        logger.info(' # unable to build agent image!')
         sys.exit()
-    else:
-        print()
-        print('[ validating agent image ]')
-        try:
-            client.images.get(img_name)
-        except docker.errors.ImageNotFound:
-            print(' # agent image not found!')
-            sys.exit()
-        else:  # just in case
-            print(' * agent image present')
 
+    logger.info('\n[ validating agent image ]')
+    try:
+        client.images.get(img_name)
+    except docker.errors.ImageNotFound:
+        logger(' # agent image not found!')
+        sys.exit()
 
-def create_cntnr_vol():
-    # map to /var/log/sut-agent/<sut>
-    pass
-
-
-def recreate_cntnrs():
-    # add arg to force recreation of containers
-    pass
+    logger.error(' * agent image present')
 
 
 def main():
@@ -395,23 +367,22 @@ def main():
 
     # setup network
     net_name = 'testflinger-docker_needham_int'
-    first_ip = 126  # x.x.x.first_ip
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
         agnt_net = init_network(client, net_name)
 
-    print('==============================')
-    print('[ loading agent containers ]')
+    logger.info(
+        '============================='
+        '[ loading agent containers ]'
+    )
 
     # iterate over agent conf dir to init agent cntnrs
     for idx, sut_conf in enumerate(conf_list):
         # filter non-conf files
         if not sut_conf.endswith('.conf'):
-            pass
+            continue
 
-        # agnt ip offset
-        ip_n = idx + first_ip
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
@@ -422,15 +393,15 @@ def main():
                           sut_conf,
                           agnt_net,
                           net_name,
-                          img_name,
-                          ip_n)
+                          img_name)
         except Exception as error:
-            print(
-                '  # unable to start agent for: %s' % sut)
-            print('    e: %s' % error)
-            print('    -----------------------')
+            logger.error(
+                f'  # unable to start agent for: {sut}'
+                f'    e: {error}'
+                '    -----------------------'
+            )
 
-    print('==============================')
+    logger.info('=============================')
 
 
 if __name__ == '__main__':
