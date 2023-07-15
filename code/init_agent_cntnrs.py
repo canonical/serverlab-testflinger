@@ -305,7 +305,7 @@ def init_network(client, net_name):
         pool_configs=[ipam_pool])
 
     agnt_net = client.api.create_network(net_name,
-                                         driver='bridge',
+                                         driver='macvlan',
                                          ipam=ipam_config)
 
     return agnt_net
