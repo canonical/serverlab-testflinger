@@ -125,6 +125,7 @@ services:
       - agent_data:/data/testflinger-agent
       - snappy_data:/data/snappy-device-agents
       - docker_data:/data/docker
+      - ./code/init_agent_cntnrs.py:/opt/init_agent_cntnrs.py
       - ./log:/var/log/sut-agent
       - ./sut/agent:/data/testflinger-agent/sut
       - ./sut/snappy:/data/snappy-device-agents/sut/

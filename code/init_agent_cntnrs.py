@@ -50,7 +50,7 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            aliases=self.client)
+            aliases=[self.sut, ])
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
 
@@ -279,8 +279,8 @@ class InitAgent:
             except docker.errors.APIError as error:
                 logger.error(
                     f' # unable to start agent for: {self.sut}'
-                    f'    e: {error})'
-                    '  -----------------------'
+                    f'\n    e: {error})'
+                    '\n  -----------------------'
                 )
             else:
                 logger.info(f'  * {self.sut}')
@@ -298,8 +298,9 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.245.128.0/21',
-        iprange='10.245.134.0/23',)
+        subnet='10.245.134.0/23',
+        iprange='10.245.134.0/23',
+        gateway='10.245.128.1')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
@@ -325,7 +326,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
 
     logger.info(
         '=============================='
-        '[ building agent cntnr image ]\n'
+        '\n[ building agent cntnr image ]\n'
     )
     try:
         stream_build()
@@ -374,7 +375,7 @@ def main():
 
     logger.info(
         '============================='
-        '[ loading agent containers ]'
+        '\n[ loading agent containers ]'
     )
 
     # iterate over agent conf dir to init agent cntnrs
@@ -389,16 +390,16 @@ def main():
         Path(log_f).touch()
 
         try:
-            _ = InitAgent(client,
-                          sut_conf,
-                          agnt_net,
-                          net_name,
-                          img_name)
+            InitAgent(client,
+                      sut_conf,
+                      agnt_net,
+                      net_name,
+                      img_name)
         except Exception as error:
             logger.error(
                 f'  # unable to start agent for: {sut}'
-                f'    e: {error}'
-                '    -----------------------'
+                f'\n    e: {error}'
+                '\n    -----------------------'
             )
 
     logger.info('=============================')
