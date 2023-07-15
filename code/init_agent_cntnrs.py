@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            self, client, sut_conf, agnt_net, net_name, img_name):
+            # self, client, sut_conf, agnt_net, net_name, img_name):
+            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip):
         self.client = client
         self.sut_conf = sut_conf
         self.sut = PurePath(sut_conf).stem
@@ -36,7 +37,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        # self.agnt_ip = '10.245.130.%i' % agnt_ip
+        self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.vclient = self.configure_vault()
         self.init_agent_cntnr()
 
@@ -50,7 +51,8 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            aliases=[self.sut, ])
+            ipv4_address=self.agnt_ip)
+        # aliases=[self.sut, ])
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
 
@@ -384,6 +386,7 @@ def main():
         if not sut_conf.endswith('.conf'):
             continue
 
+        ip_n = idx + 126
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
@@ -394,7 +397,8 @@ def main():
                       sut_conf,
                       agnt_net,
                       net_name,
-                      img_name)
+                      img_name,
+                      ip_n)
         except Exception as error:
             logger.error(
                 f'  # unable to start agent for: {sut}'
