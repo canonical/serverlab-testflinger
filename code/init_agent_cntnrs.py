@@ -27,8 +27,7 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            # self, client, sut_conf, agnt_net, net_name, img_name):
-            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip):
+            self, client, sut_conf, agnt_net, net_name, img_name, mac_addr):
         self.client = client
         self.sut_conf = sut_conf
         self.sut = PurePath(sut_conf).stem
@@ -37,7 +36,8 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '10.245.130.%i' % agnt_ip
+        # self.agnt_ip = '10.245.130.%i' % agnt_ip
+        self.mac_addr = mac_addr
         self.vclient = self.configure_vault()
         self.init_agent_cntnr()
 
@@ -51,8 +51,8 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            ipv4_address=self.agnt_ip)
-        # aliases=[self.sut, ])
+            # ipv4_address=self.agnt_ip)
+            aliases=[self.sut, ])
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
 
@@ -262,6 +262,7 @@ class InitAgent:
                 hostname=self.sut,
                 host_config=host_config,
                 networking_config=net_config,
+                mac_address=self.mac_addr,
                 command=[fspath(cmd_path)],
                 healthcheck=healthchk,
                 domainname='maas',
@@ -353,6 +354,8 @@ def main():
     log_dir = PurePath('/', 'var', 'log', 'sut-agent')
     # conf_list = list(Path(conf_dir).iterdir())
     conf_list = listdir(conf_dir)  # for enumerate
+    # matched in dhcp server snippet
+    mac_prefix = "02:42:0a:f5:"
 
     # docker init
     # need to use os.path
@@ -386,11 +389,19 @@ def main():
         if not sut_conf.endswith('.conf'):
             continue
 
-        ip_n = idx + 126
         sut = PurePath(sut_conf).stem
         # touch log file
         log_f = PurePath(log_dir, sut).with_suffix('.log')
         Path(log_f).touch()
+
+        # ip_n = idx + 126
+        # convert idx int to hex
+        mac_suffix = "{:05x}".format(idx)
+        if len(mac_suffix) > 5:
+            raise ValueError("Index too large for MAC address suffix")
+
+        mac_addr = mac_prefix + ":".join(
+            mac_suffix[i:i + 2] for i in range(0, len(mac_suffix), 2))
 
         try:
             InitAgent(client,
@@ -398,7 +409,8 @@ def main():
                       agnt_net,
                       net_name,
                       img_name,
-                      ip_n)
+                      # ip_n)
+                      mac_addr)
         except Exception as error:
             logger.error(
                 f'  # unable to start agent for: {sut}'
