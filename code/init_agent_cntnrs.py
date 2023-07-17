@@ -27,7 +27,15 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            self, client, sut_conf, agnt_net, net_name, img_name, mac_addr):
+            self,
+            client,
+            sut_conf,
+            agnt_net,
+            net_name,
+            img_name,
+            agnt_ip,
+            mac_addr
+    ):
         self.client = client
         self.sut_conf = sut_conf
         self.sut = PurePath(sut_conf).stem
@@ -36,7 +44,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        # self.agnt_ip = '10.245.130.%i' % agnt_ip
+        self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.mac_addr = mac_addr
         # self.vclient = self.configure_vault()
         self.init_agent_cntnr()
@@ -51,7 +59,7 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            # ipv4_address=self.agnt_ip)
+            ipv4_address=self.agnt_ip,
             aliases=[self.sut, ])
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
@@ -394,7 +402,7 @@ def main():
         log_f = PurePath(log_dir, sut).with_suffix('.log')
         Path(log_f).touch()
 
-        # ip_n = idx + 126
+        ip_n = idx + 126
         # convert idx int to hex
         mac_suffix = "{:05x}".format(idx)
         if len(mac_suffix) > 5:
@@ -409,7 +417,7 @@ def main():
                       agnt_net,
                       net_name,
                       img_name,
-                      # ip_n)
+                      ip_n,
                       mac_addr)
         except Exception as error:
             logger.error(
