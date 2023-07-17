@@ -342,6 +342,8 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/21"
+          ip_range: "10.245.134.0/23"
+          gateway: "10.245.128.1"
 
 volumes:
   # db_data: {}
