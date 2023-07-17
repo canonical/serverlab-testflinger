@@ -33,7 +33,6 @@ class InitAgent:
             agnt_net,
             net_name,
             img_name,
-            agnt_ip,
             mac_addr
     ):
         self.client = client
