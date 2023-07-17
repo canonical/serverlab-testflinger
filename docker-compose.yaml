@@ -339,9 +339,9 @@ networks:
     driver: macvlan
     driver_opts:
         parent: ens3f1
-    ipam:
-      config:
-        - gateway: "10.245.128.1"
+    # ipam:
+    #   config:
+    #     - gateway: "10.245.128.1"
 
 volumes:
   # db_data: {}
