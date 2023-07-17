@@ -1,0 +1,8 @@
+device_ip: 10.245.130.96
+node_id: 6nys3b
+node_name: gravetusk
+maas_user: testflinger_a
+agent_name: gravetusk
+env:
+ HEXR_DEVICE_SECURE_ID: 2yaEoCRbhXR22MWtAFxLNQ
+ DEVICE_IP: 10.245.130.96

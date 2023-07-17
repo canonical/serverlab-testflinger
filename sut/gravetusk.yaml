@@ -1,0 +1,6 @@
+job_queue: gravetusk
+provision_data:
+ distro: focal
+test_data:
+ test_cmds: |
+  ssh -o StrictHostKeyChecking=no ubuntu@10.245.130.96 ifconfig
