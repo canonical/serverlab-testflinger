@@ -38,16 +38,16 @@ class InitAgent:
         self.img_name = img_name
         # self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.mac_addr = mac_addr
-        self.vclient = self.configure_vault()
+        # self.vclient = self.configure_vault()
         self.init_agent_cntnr()
 
     def configure_vault(self):
-        client = hvac.Client(
+        vault_client = hvac.Client(
             url='http://172.16.0.2:8200',
             token='nh-vault-root',
         )
 
-        return client
+        return vault_client
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
@@ -224,20 +224,20 @@ class InitAgent:
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
 
-    def decrypt_env_vars(self):
-        influx_vars = self.vclient.secrets.kv.read_secret_version(
-            path='influx'
-        )
+    # def decrypt_env_vars(self):
+    #     influx_vars = self.vclient.secrets.kv.read_secret_version(
+    #         path='influx'
+    #     )
 
-        # env vars
-        env = {
-            'INFLUX_HOST': influx_vars['data']['data']['host'],
-            'INFLUX_PORT': influx_vars['data']['data']['port'],
-            'INFLUX_USER': influx_vars['data']['data']['user'],
-            'INFLUX_PW': influx_vars['data']['data']['passw'],
-        }
+    #     # env vars
+    #     env = {
+    #         'INFLUX_HOST': influx_vars['data']['data']['host'],
+    #         'INFLUX_PORT': influx_vars['data']['data']['port'],
+    #         'INFLUX_USER': influx_vars['data']['data']['user'],
+    #         'INFLUX_PW': influx_vars['data']['data']['passw'],
+    #     }
 
-        return env
+    #     return env
 
     def create_container(self):
         # prelim config
@@ -266,7 +266,7 @@ class InitAgent:
                 command=[fspath(cmd_path)],
                 healthcheck=healthchk,
                 domainname='maas',
-                environment=self.decrypt_env_vars(),
+                # environment=self.decrypt_env_vars(),
                 detach=True,
                 tty=True)
         except docker.errors.APIError as error:

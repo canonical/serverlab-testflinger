@@ -341,8 +341,7 @@ networks:
         parent: ens3f1
     ipam:
       config:
-        - subnet: "10.245.128.0/22"
-        # - gatway: "10.245.128.9"
+        - gateway: "10.245.128.1"
 
 volumes:
   # db_data: {}
