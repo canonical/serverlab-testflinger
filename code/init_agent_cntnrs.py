@@ -309,15 +309,16 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.245.134.0/23',
-        iprange='10.245.134.0/23',
+        # subnet='10.245.134.0/23',
+        subnet='10.245.128.0/21',
+        # iprange='10.245.134.0/23',
         gateway='10.245.128.1')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
 
     agnt_net = client.api.create_network(net_name,
-                                         driver='macvlan')
-                                         # ipam=ipam_config)
+                                         driver='macvlan',
+                                         ipam=ipam_config)
 
     return agnt_net
 
