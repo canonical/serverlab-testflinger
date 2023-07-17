@@ -344,17 +344,7 @@ networks:
         - subnet: "10.245.128.0/21"
         - ip_range: "10.245.134.0/23"
         - gateway: "10.245.128.1"
-        - aux_addresses:
-          reserved1: 10.245.128.1
-          reserved2: 10.245.128.2
-          reserved3: 10.245.128.3
-          reserved4: 10.245.128.4
-          reserved5: 10.245.128.5
-          reserved6: 10.245.128.6
-          reserved7: 10.245.128.7
-          reserved8: 10.245.128.8
-          reserved9: 10.245.128.9
-          reserved10: 10.245.128.10
+
 
 volumes:
   # db_data: {}
