@@ -43,7 +43,7 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        self.agnt_ip = '10.245.130.%i' % agnt_ip
+        # self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.mac_addr = mac_addr
         self.vclient = self.configure_vault()
         self.init_agent_cntnr()
