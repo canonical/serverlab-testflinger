@@ -27,7 +27,14 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip, mac_addr
+            self,
+            client,
+            sut_conf,
+            agnt_net,
+            net_name,
+            img_name,
+            agnt_ip,
+            mac_addr
     ):
         self.client = client
         self.sut_conf = sut_conf
@@ -294,7 +301,7 @@ class InitAgent:
         except docker.errors.NotFound:
             cntnr = self.create_container()
             # throttle calls
-            time.sleep(1)
+            time.sleep(3)
             start_cntnr(cntnr.get('Id'))
         else:
             start_cntnr(cntnr.id)
@@ -302,7 +309,7 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        subnet='10.245.128.1/21',
+        subnet='10.245.128.0/21',
         iprange='10.245.134.0/23',
         gateway='10.245.128.1')
     ipam_config = docker.types.IPAMConfig(
@@ -410,7 +417,6 @@ def main():
                       agnt_net,
                       net_name,
                       img_name,
-                      # ip_n,
                       mac_addr)
         except Exception as error:
             logger.error(
