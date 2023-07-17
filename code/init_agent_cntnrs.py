@@ -27,14 +27,7 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            self,
-            client,
-            sut_conf,
-            agnt_net,
-            net_name,
-            img_name,
-            agnt_ip,
-            mac_addr
+            self, client, sut_conf, agnt_net, net_name, img_name, agnt_ip, mac_addr
     ):
         self.client = client
         self.sut_conf = sut_conf
@@ -46,7 +39,7 @@ class InitAgent:
         self.img_name = img_name
         self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.mac_addr = mac_addr
-        # self.vclient = self.configure_vault()
+        self.vclient = self.configure_vault()
         self.init_agent_cntnr()
 
     def configure_vault(self):
@@ -59,7 +52,7 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            ipv4_address=self.agnt_ip,
+            # ipv4_address=self.agnt_ip,
             aliases=[self.sut, ])
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config})
@@ -232,20 +225,20 @@ class InitAgent:
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
 
-    # def decrypt_env_vars(self):
-    #     influx_vars = self.vclient.secrets.kv.read_secret_version(
-    #         path='influx'
-    #     )
+    def decrypt_env_vars(self):
+        influx_vars = self.vclient.secrets.kv.read_secret_version(
+            path='influx'
+        )
 
-    #     # env vars
-    #     env = {
-    #         'INFLUX_HOST': influx_vars['data']['data']['host'],
-    #         'INFLUX_PORT': influx_vars['data']['data']['port'],
-    #         'INFLUX_USER': influx_vars['data']['data']['user'],
-    #         'INFLUX_PW': influx_vars['data']['data']['passw'],
-    #     }
+        # env vars
+        env = {
+            'INFLUX_HOST': influx_vars['data']['data']['host'],
+            'INFLUX_PORT': influx_vars['data']['data']['port'],
+            'INFLUX_USER': influx_vars['data']['data']['user'],
+            'INFLUX_PW': influx_vars['data']['data']['passw'],
+        }
 
-    #     return env
+        return env
 
     def create_container(self):
         # prelim config
@@ -274,7 +267,7 @@ class InitAgent:
                 command=[fspath(cmd_path)],
                 healthcheck=healthchk,
                 domainname='maas',
-                # environment=self.decrypt_env_vars(),
+                environment=self.decrypt_env_vars(),
                 detach=True,
                 tty=True)
         except docker.errors.APIError as error:
@@ -301,7 +294,7 @@ class InitAgent:
         except docker.errors.NotFound:
             cntnr = self.create_container()
             # throttle calls
-            time.sleep(3)
+            time.sleep(1)
             start_cntnr(cntnr.get('Id'))
         else:
             start_cntnr(cntnr.id)
@@ -309,9 +302,8 @@ class InitAgent:
 
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
-        # subnet='10.245.134.0/23',
-        subnet='10.245.128.0/21',
-        # iprange='10.245.134.0/23',
+        subnet='10.245.128.1/21',
+        iprange='10.245.134.0/23',
         gateway='10.245.128.1')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
@@ -403,7 +395,7 @@ def main():
         log_f = PurePath(log_dir, sut).with_suffix('.log')
         Path(log_f).touch()
 
-        ip_n = idx + 126
+        # ip_n = idx + 126
         # convert idx int to hex
         mac_suffix = "{:05x}".format(idx)
         if len(mac_suffix) > 5:
@@ -418,7 +410,7 @@ def main():
                       agnt_net,
                       net_name,
                       img_name,
-                      ip_n,
+                      # ip_n,
                       mac_addr)
         except Exception as error:
             logger.error(
