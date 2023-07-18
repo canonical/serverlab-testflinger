@@ -1,7 +1,7 @@
-device_ip: 10.245.131.8
+device_ip: 10.245.135.8
 node_id: s7wc4h
 node_name: kvm-medium-1
 maas_user: testflinger_a
 agent_name: kvm-medium-1
 env:
-  DEVICE_IP: 10.245.131.8
+  DEVICE_IP: 10.245.135.8

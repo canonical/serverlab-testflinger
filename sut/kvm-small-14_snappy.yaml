@@ -1,7 +1,7 @@
-device_ip: 10.245.131.19
+device_ip: 10.245.135.19
 node_id: fr84gc
 node_name: kvm-small-14
 maas_user: testflinger_a
 agent_name: kvm-small-14
 env:
-  DEVICE_IP: 10.245.131.19
+  DEVICE_IP: 10.245.135.19
