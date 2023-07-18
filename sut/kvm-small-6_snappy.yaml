@@ -1,7 +1,7 @@
-device_ip: 10.245.131.24
+device_ip: 10.245.135.24
 node_id: bcmwpf
 node_name: kvm-small-6
 maas_user: testflinger_a
 agent_name: kvm-small-6
 env:
-  DEVICE_IP: 10.245.131.24
+  DEVICE_IP: 10.245.135.24
