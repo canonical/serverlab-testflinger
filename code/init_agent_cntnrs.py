@@ -27,13 +27,7 @@ logger = logging.getLogger(__name__)
 class InitAgent:
 
     def __init__(
-            self,
-            client,
-            sut_conf,
-            agnt_net,
-            net_name,
-            img_name,
-            mac_addr
+            self, client, sut_conf, agnt_net, net_name, img_name, mac_addr
     ):
         self.client = client
         self.sut_conf = sut_conf
@@ -43,7 +37,6 @@ class InitAgent:
         self.agnt_net = agnt_net
         self.net_name = net_name
         self.img_name = img_name
-        # self.agnt_ip = '10.245.130.%i' % agnt_ip
         self.mac_addr = mac_addr
         self.vclient = self.configure_vault()
         self.init_agent_cntnr()
@@ -58,10 +51,11 @@ class InitAgent:
 
     def create_net_config(self):
         endpt_config = self.client.api.create_endpoint_config(
-            # ipv4_address=self.agnt_ip,
-            aliases=[self.sut, ])
+            aliases=[self.sut, ]
+        )
         net_config = self.client.api.create_networking_config({
-            self.net_name: endpt_config})
+            self.net_name: endpt_config}
+        )
 
         return net_config
 
@@ -69,7 +63,8 @@ class InitAgent:
         # docker root
         try:
             dhost_path = PurePath(  # passthru env var from dckrfile
-                str(environ.get('HOSTDIR')))
+                str(environ.get('HOSTDIR'))
+            )
         except EnvironmentError:
             logger.error('Environment var HOSTDIR undefined!')
             sys.exit()
@@ -177,56 +172,76 @@ class InitAgent:
             mounts=[
                 # shared mounts
                 # init
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_init_path),
-                                   source=fspath(src_init_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_init_path),
+                    source=fspath(src_init_path),
+                    read_only=True
+                ),
                 # ssh export
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_essh_path),
-                                   source=fspath(src_essh_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_essh_path),
+                    source=fspath(src_essh_path),
+                    read_only=True
+                ),
                 # agent entrypoint
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_aentrypt_path),
-                                   source=fspath(src_aentrypt_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_aentrypt_path),
+                    source=fspath(src_aentrypt_path),
+                    read_only=True
+                ),
                 # cntnr entrypoint
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_centrypt_path),
-                                   source=fspath(src_centrypt_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_centrypt_path),
+                    source=fspath(src_centrypt_path),
+                    read_only=True
+                ),
                 # agent server
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_sconf_path),
-                                   source=fspath(src_sconf_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_sconf_path),
+                    source=fspath(src_sconf_path),
+                    read_only=True
+                ),
                 # healthcheck
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_hlthchk_path),
-                                   source=fspath(src_hlthchk_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_hlthchk_path),
+                    source=fspath(src_hlthchk_path),
+                    read_only=True
+                ),
                 # sru tests
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_sru_path),
-                                   source=fspath(src_sru_path),
-                                   read_only=True),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_sru_path),
+                    source=fspath(src_sru_path),
+                    read_only=True
+                ),
                 # unique mounts
                 # agnt conf
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_conf_path),
-                                   source=fspath(src_conf_path),
-                                   read_only=False),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_conf_path),
+                    source=fspath(src_conf_path),
+                    read_only=False
+                ),
                 # agent snappy
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_snpy_path),
-                                   source=fspath(src_snpy_path),
-                                   read_only=False),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_snpy_path),
+                    source=fspath(src_snpy_path),
+                    read_only=False
+                ),
                 # log
-                docker.types.Mount(type='bind',
-                                   target=fspath(dst_log_path),
-                                   source=fspath(src_log_path),
-                                   read_only=False),
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_log_path),
+                    source=fspath(src_log_path),
+                    read_only=False
+                ),
             ])
 
         return (host_config, dst_centrypt_path, dst_hlthchk_path)
@@ -275,7 +290,8 @@ class InitAgent:
                 domainname='maas',
                 environment=self.decrypt_env_vars(),
                 detach=True,
-                tty=True)
+                tty=True
+            )
         except docker.errors.APIError as error:
             logger.error(f'{error}\nError creating container!')
 
@@ -309,7 +325,7 @@ class InitAgent:
 def init_network(client, net_name):
     ipam_pool = docker.types.IPAMPool(
         subnet='10.245.128.0/21',
-        iprange='10.245.134.0/23',
+        iprange='10.245.133.0/23',
         gateway='10.245.128.1')
     ipam_config = docker.types.IPAMConfig(
         pool_configs=[ipam_pool])
@@ -379,7 +395,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'testflinger-docker_needham_int'
+    net_name = 'testflinger-docker_needham_int'  # docker-compose
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:
@@ -401,22 +417,23 @@ def main():
         log_f = PurePath(log_dir, sut).with_suffix('.log')
         Path(log_f).touch()
 
-        # ip_n = idx + 126
         # convert idx int to hex
         mac_suffix = "{:05x}".format(idx)
         if len(mac_suffix) > 5:
-            raise ValueError("Index too large for MAC address suffix")
+            raise ValueError("index length exceeds valid MAC suffix length")
 
         mac_addr = mac_prefix + ":".join(
             mac_suffix[i:i + 2] for i in range(0, len(mac_suffix), 2))
 
         try:
-            InitAgent(client,
-                      sut_conf,
-                      agnt_net,
-                      net_name,
-                      img_name,
-                      mac_addr)
+            InitAgent(
+                client,
+                sut_conf,
+                agnt_net,
+                net_name,
+                img_name,
+                mac_addr
+            )
         except Exception as error:
             logger.error(
                 f'  # unable to start agent for: {sut}'
