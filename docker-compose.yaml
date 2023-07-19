@@ -342,7 +342,7 @@ networks:
     ipam:
       config:
         - subnet: "10.245.128.0/21"
-          ip_range: "10.245.133.0/23"
+          ip_range: "10.245.132.1/23"
           gateway: "10.245.128.1"
 
 volumes:
