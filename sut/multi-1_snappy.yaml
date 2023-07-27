@@ -1,4 +1,4 @@
 agent_name: multi-1
 testflinger_server: https://testflinger.canonical.com
 env:
-    VIP_RANGE: 10.245.131.197-10.245.131.223 
+    VIP_RANGE: 10.245.131.197-10.245.131.254
