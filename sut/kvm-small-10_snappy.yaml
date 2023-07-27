@@ -1,5 +1,5 @@
 device_ip: 10.245.135.15
-node_id: gdgb7n
+node_id: 6ha7d4
 node_name: kvm-small-10
 maas_user: testflinger_a
 agent_name: kvm-small-10
