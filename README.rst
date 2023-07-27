@@ -1,23 +1,23 @@
 Architecture and Rationale
 --------------------------
 
-This is a microservices architecture to run Canonical's Testflinger service. A full-featured Docker architecture posses the following highlighted features (and supporting rationale):
+This is a microservices architecture to run Canonical's Testflinger service, a full-featured Docker architecture that posseses the following highlighted features (and supporting rationale):
 
-- Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment. These are lightweight containers, allowing for dynamic healthchecking, reporting and operations. As there is no shared agent-level operating system, this creates complete segmentation from the other agents, which avoids the pitfalls to running agents via a shared systemctl/systemd. Operationally, this also allows for easy healthcheck integration and allows for the utilization of Portainer for container status and management.
+- Testflinger agents run in individual, discrete containers denoted by the associated SUT name in the Needham lab environment. These are lightweight containers, allowing for dynamic health checking, reporting and operations. As there is no shared agent-level operating system, this creates complete segmentation from the other agents, which avoids the pitfalls of running agents via a shared systemctl/systemd. Operationally, this also allows for easy health check integration and allows for the utilization of Portainer for container status and management.
 
-- Testflinger agents have a dedicated operating system for installing dependancies and other testing specific resources specific to that agent only - sidestepping conflicts seen in a shared environment. Reseting to a clean slate is trivial after testing is complete, as the container operating system uses ephermal storage (shared, persistent storage is also utilized for Testflinger data).
+- Testflinger agents have a dedicated operating system for installing dependencies and other testing specific resources specific to that agent only - sidestepping conflicts seen in a shared environment. Resetting to a clean slate is trivial after testing is complete, as the container operating system uses ephemeral storage (shared, persistent storage is also utilized for Testflinger data).
 
-- Docker compose is utilized for fully automated deployment of the entire stack, allowing for extreme portability. The base container infrastructure is defined via a master Docker compose file, which will deploy the entire environment automatically upon docker-compose deploy invokation. This allows for single-shot deployments of entire environment.
+- Docker compose is utilized for fully automated deployment of the entire stack, allowing for extreme portability. The base container infrastructure is defined via a master Docker compose file, which will deploy the entire environment automatically upon docker-compose deploy invocation. This allows for single-shot deployments of entire environment.
 
-- Agent containers are dynamically created via a full-fledged implimentation of the Docker API. This allows for dynamic container creation, which is triggered by the presence of Testflinger configuration files in the associated base directory. Agent container images are created if not present.
+- Agent containers are dynamically created via a full-fledged implementation of the Docker API. This allows for dynamic container creation, which is triggered by the presence of Testflinger configuration files in the associated base directory. Agent container images are created if not present.
 
-- The agent container entrypoint runs non-blocking operations which push out-of-band logging, and sends health status to the stack MQTT broker and facilitates other operations. This enables dynamic status of the agent container while other operations take place within the agent container.
+- The agent container entry point runs non-blocking operations which push out-of-band logging, and sends health status to the stack MQTT broker and facilitates other operations. This enables dynamic status of the agent container while other operations take place within the agent container.
 
-- An MQTT broker is part of the core stack, which allows for a multitude of opersations, visibility and reporting. Every agent communicates with this broker. Each agent utilizes bi-directional communication with this MQTT broker, allowing for jobs to be initiated via an MQTT publish.
+- An MQTT broker is part of the core stack, which allows for a multitude of operations, visibility and reporting. Every agent communicates with this broker. Each agent utilizes bi-directional communication with this MQTT broker, allowing for jobs to be initiated via an MQTT publish.
 
-- A Jenkins container is runninig in the enviroment. One pipeline per SUT in the lab, which has multi-stage granularity and progress. This is a hostname context environment, with each host having its own agent and pipeline. This architecture may change in the future.
+- A Jenkins container is running in the environment. One pipeline per SUT in the lab, which has multi-stage granularity and progress. This is a hostname context environment, with each host having its own agent and pipeline. This architecture may change in the future.
 
-In summary, this enviroment allows for high-availability, automated scaling and thourough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependancies are eliminated on the infrastructure layer. This allows for a consistent and reliable infrastructure. 
+In summary, this environment allows for high-availability, automated scaling and thorough reporting. Agent status is easily exposed and operations are trivial to perform via interfaces like Portainer. As this is a Docker only architecture, interdependencies are eliminated on the infrastructure layer. This allows for a consistent and reliable infrastructure.
 
 Visualizations and architecture specifics
 -----------------------------------------
@@ -27,21 +27,21 @@ The Docker environment is laid as out as below:
 .. image:: doc/base_arch.jpg
 
 The base layer comprises of the core agent infrastructure containers, as defined in the root Docker compose file.
-Of note is the agent master continer named tf-agent. This container has access to the Docker daemon (dockerd) running on the Docker host. This allows for pseudo-nested (Docker-in-Docker) operations, creating an additional layer for every Testflinger agent container. This enables Testflinger agents to be dynamically created by the tf-agent container, via the Docker API. This is enables agents to be spun-up when named agent configuration files are added to the 'sut' subdir.
+Of note is the agent master container named tf-agent. This container has access to the Docker daemon (dockerd) running on the Docker host. This allows for pseudo-nested (Docker-in-Docker) operations, creating an additional layer for every Testflinger agent container. This enables Testflinger agents to be dynamically created by the tf-agent container, via the Docker API. This is enables agents to be spun-up when named agent configuration files are added to the 'sut' subdir.
 
 Each 'SUT agent' is a container instance with the following functions:
 
 .. image:: doc/sut_agent.jpg
 
-The agent entrypoint is run at container invokation, and spawns a minimal, custom init. SSHd is for remote access and Jenkins agent comms. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
+The agent entry point is run at container invocation, and spawns a minimal, custom init. SSHd is for remote access and Jenkins agent communications. Agent routines are classes/methods/functions running on each instance (agent_entrypt.py).
 
-The MQTT broker facilitates agent logging, said healthchecks and allows for initiating Testflinger jobs via MQTT publish.
+The MQTT broker facilitates agent logging, said health checks and allows for initiating Testflinger jobs via MQTT publish.
 
 .. image:: doc/mqtt.jpg
 
-As stated above, healthchecks run on each agent container and report through this MQTT broker, via the 'agent' topic. These healthchecks are exposed via Docker native healthchecking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. MQTT topic details are listed in the container specifics section below.
+As stated above, health checks run on each agent container and report through this MQTT broker, via the 'agent' topic. These health checks are exposed via Docker native health checking, making it available for standard Docker reporting. Healthy/unhealthy status can be set by a multitude of conditions. MQTT topic details are listed in the container specifics section below.
 
-Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is availble from the Portainer web interface.
+Container management is facilitated via Portainer, which is deployed as part of the base Docker compose configuration. Full container management and health checking is available from the Portainer web interface.
 
 Docker Containers
 -----------------
@@ -76,7 +76,7 @@ Discrete container for each SUT agent. Runs testflinger-agent.
 - Runs custom threaded subprocess pipe instrumentation (agent_entrypoint),
   logging to stdout, file and MQTT
 
-- Runs a healthcheck script to facilitate Docker healthchecks via MQTT.
+- Runs a health check script to facilitate Docker health checks via MQTT.
 
 tf-cli
 ~~~~~~
@@ -125,10 +125,10 @@ Files of interest and project notes
    -  Network and network config.
    -  Host config with defined mounts for all files.
    -  Mounts are used for consistent scaling across many containers.
-   -  Agent healthcheck (using MQTT).
+   -  Agent health check (using MQTT).
    -  Containers instantiated via iterating over the sut conf dir in the
       project root.
-   -  Agent container image is created ifit doesn't exist.
+   -  Agent container image is created if it doesn't exist.
    -  Agent containers are created if they do not exist.
 
 -  ./code/agent_entrypoint
@@ -169,10 +169,10 @@ Files of interest and project notes
    -  Runs at a set interval as defined within init_agent_cntnrs
 
       -  This is directly relative to the agent status timer period.
-      -  Status timer period should overlap with healthcheck interval
+      -  Status timer period should overlap with health check interval
          and timeout.
 
-   -  Notes on the agent status reporting for the healthcheck:
+   -  Notes on the agent status reporting for the health check:
 
       -  Relies on the fact that the logging thread is the parent of the
          status thread.
@@ -181,10 +181,10 @@ Files of interest and project notes
             thread fails, the child will follow suit and 'ok' messages
             will no longer be sent.
 
-      -  Healthcheck parameters in init_agent_cntnrs detail:
+      -  Health check parameters in init_agent_cntnrs detail:
 
          -  timeout should be => than status timer tperiod (or)
-         -  retries should be increased if timeout donesn't cover status
+         -  retries should be increased if timeout doesn't cover status
             timer tperiod.
 
 -  ./code/start_submit_agents
@@ -197,7 +197,7 @@ Files of interest and project notes
       agent is ready.
 
    -  These agents listen for test submissions via MQTT, will then start
-      the appropriate job. See MQTT notes below for useage.
+      the appropriate job. See MQTT notes below for usage.
 
    -  Subscribed MQTT topics: submit : listen for mqtt test_cmd message,
       initiate job.
@@ -259,7 +259,7 @@ Stack Operations
         docker-compose start (container name) docker-compose restart
         (container name) docker-compose stop (container name)
 
-   -  Alernatively, reboot the Docker host.
+   -  Alternatively, reboot the Docker host.
 
       -  Stack will stop cleanly on shutdown and start on boot.
 
@@ -338,12 +338,12 @@ Stack Operations
 
          - Abdon startup.
 
--  Handling a healthcheck event: SUT agent containers are exclusively
-   running healthcheck functions.
+-  Handling a health check event: SUT agent containers are exclusively
+   running health check functions.
 
    -  If the healthy flag changes to unhealthy, simply restart the
       flagged container.
-   -  The current healthcheck process uses MQTT to publish from within
+   -  The current health check process uses MQTT to publish from within
       the LogAgent
 
 Portainer notes
@@ -364,11 +364,11 @@ and agent specific management and information.
 
       -  Start/stop/restarting of containers.
       -  Accessing of console, logs (sut output) and shell.
-      -  Also reports container healthchecks.
+      -  Also reports container health checks.
       -  Facilitated via agent_entrypoint and agent_healthcheck.
 
-MQTT notes and useage
----------------------
+MQTT notes and usage
+--------------------
 
 -  Grab a MQTT client, MQTT Explorer recommended.
 
@@ -399,14 +399,14 @@ MQTT notes and useage
 -  A web based MQTT client running within the lab, as a part of larger
    monitoring/ automation/CI is the next natural step here.
 
--  As a suppliment to MQTT, one could integrate REST calls via CoAP.
+-  As a supplement to MQTT, one could integrate REST calls via CoAP.
    Called inline in the same fashion as MQTT publish. A
    'testflinger-rest' container could be a CoAP server (if necessary).
 
 Deploying Stack
 ---------------
 
-Utilizes single-shot deployment after installing some pre-reqs on the
+Utilizes single-shot deployment after installing some prerequisites on the
 host system.
 
 - Will create and start all containers using Docker Compose (for base)
@@ -416,8 +416,8 @@ Deploy and configure Docker host
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deploy 18.04+ host via MAAS. After host is deployed, setup
-prerequisites: - Much of these steps will be moved to a conveince bash
-script.
+prerequisites (most of these steps will be moved to a convenience bash
+script):
 
 -  Update system::
 
@@ -509,11 +509,11 @@ Edit docker-compose.yaml file to match environment:
 
 -  Likewise, update container IPs to match said networks.
 
-Edit the testflinger entrypoint file (tf-entrypoint):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Edit the testflinger entry point file (tf-entrypoint):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 File location: ``./code/tf-entrypoint.sh (ref*).`` This shell script is
-exec'd upon container boot/start.
+executed upon container boot/start.
 
 -  Update the top-level variables to match your environment:
 
@@ -551,8 +551,8 @@ Modify/Create SUT files:
    from the sut directory to the containers. You can alternatively
    create the config files inside the container post-deployment.
 
-Populate SUT conf dirs for deployment (required):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Populate SUT configuration directories for deployment (required):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  Run::
 
