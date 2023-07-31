@@ -1,8 +1,0 @@
-device_ip: 10.245.130.26
-node_id: rr3hfg
-node_name: mouchez
-maas_user: testflinger_a
-agent_name: mouchez
-env:
-  HEXR_DEVICE_SECURE_ID: XE7zGMMNStrZetdX85Z2Qg
-  DEVICE_IP: 10.245.130.26

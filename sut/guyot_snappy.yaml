@@ -1,8 +1,0 @@
-device_ip: 10.245.130.87
-node_id: 84ckst
-node_name: guyot
-maas_user: testflinger_a
-agent_name: guyot
-env:
- HEXR_DEVICE_SECURE_ID: RsVzZHp863XMAbSmRV8foc
- DEVICE_IP: 10.245.130.87

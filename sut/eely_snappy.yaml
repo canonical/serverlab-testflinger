@@ -1,8 +1,0 @@
-device_ip: null
-node_id: s4rfc6
-node_name: eely
-maas_user: testflinger_a
-agent_name: eely
-env:
-  HEXR_DEVICE_SECURE_ID: 6dnxzbov7oiHPT7JsiRmBJ
-  DEVICE_IP: null
