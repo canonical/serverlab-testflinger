@@ -1,8 +1,0 @@
-device_ip: null
-node_id: pkbrge
-node_name: fesenkov
-maas_user: testflinger_a
-agent_name: fesenkov
-env:
-  HEXR_DEVICE_SECURE_ID: mCaEzxMrRx2TCcWYqTv3xX
-  DEVICE_IP: null
