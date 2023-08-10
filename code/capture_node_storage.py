@@ -1,4 +1,5 @@
 from os import path, listdir
+import re
 import yaml
 import json
 import logging
@@ -116,20 +117,28 @@ def write_devs_to_file(path, device_list):
 
 
 def main():
-    # List all files in the './sut' directory
+    # Define a regex pattern for the desired filename
+    pattern = re.compile(r'.+_snappy\.yaml$')
+
+    # List all files in the './sut' directory and filter based on the pattern
     files = [
-        f for f in listdir("./sut") if path.isfile(path.join("./sut", f))
+        f for f in listdir("./sut") if path.isfile(
+            path.join("./sut", f)
+        ) and pattern.match(f)
     ]
 
     for fname in files:
         fpath = path.join("./sut", fname)
         config = read_config_from_file(fpath)
 
-        try:
-            maas_user = config.get("maas_user")
-            node_id = config.get("node_id")
-        except AttributeError:
-            logger.error("maas_user and/or node_id not in config")
+        maas_user = config.get("maas_user")
+        node_id = config.get("node_id")
+
+        if not maas_user or not node_id:
+            logger.error(
+                "maas_user and/or node_id not in config %s", fname
+            )
+            continue
 
         logger.info("Capturing node storage layout for %s", fname)
         node_info = read_node_info(maas_user, node_id)
