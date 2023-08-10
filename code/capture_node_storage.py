@@ -140,10 +140,8 @@ def write_devs_to_file(path, device_list):
 
 
 def main():
-    # Define a regex pattern for the desired filename
     pattern = re.compile(r'.+_snappy\.yaml$')
 
-    # List all files in the './sut' directory and filter based on the pattern
     files = [
         f for f in listdir("./sut") if path.isfile(
             path.join("./sut", f)
@@ -166,13 +164,21 @@ def main():
         logger.info("Capturing node storage layout for %s", fname)
         node_info = read_node_info(maas_user, node_id)
         device_list = capture_initial_config(node_info, config)
+
+        # only skip writing if default_disks exists but is empty
+        if "default_disks" in device_list and not device_list["default_disks"]:
+            logger.error(
+                "default_disks is empty for file %s. Skipping write.", fname
+            )
+            continue
+
         write_devs_to_file(fpath, device_list)
 
         # log the updated default_disks configuration
         logger.info(
             "Updated config for %s::\ndefault_disks:\n%s\n",
             fname,
-            yaml.dump(device_list["default_disks"]),
+            yaml.dump(device_list.get("default_disks", [])),
         )
 
 
