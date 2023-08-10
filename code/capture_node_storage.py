@@ -81,18 +81,41 @@ def capture_initial_config(node_info, config):
     return config
 
 
-def read_node_info(maas_user, node_id):
-    """subprocess placeholder"""
-    cmd = ["maas", maas_user, "block-devices", "read", node_id]
+def run_command(cmd):
+    """Execute the given command and return the output."""
     try:
         proc = subprocess.run(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False
         )
+        return proc.stdout.decode().strip()
     except subprocess.CalledProcessError:
         logger.error(f"error running: {' '.join(cmd)}")
+        return ""
 
-    data = json.loads(proc.stdout.decode())
 
+def parse_json_output(output, node_id, cmd):
+    """Parse the JSON output from the command."""
+    if not output:
+        logger.error(
+            f"No output for node_id: {node_id}. Command: {' '.join(cmd)}"
+        )
+        return {}
+
+    try:
+        data = json.loads(output)
+        return data
+    except json.JSONDecodeError:
+        logger.error(
+            f"Invalid JSON for node_id: {node_id}. Command: {' '.join(cmd)}"
+        )
+        return {}
+
+
+def read_node_info(maas_user, node_id):
+    """subprocess placeholder."""
+    cmd = ["maas", maas_user, "block-devices", "read", node_id]
+    output = run_command(cmd)
+    data = parse_json_output(output, node_id, cmd)
     return data
 
 
