@@ -1,4 +1,4 @@
-from os import uname
+from os import path, listdir
 import yaml
 import json
 import logging
@@ -12,7 +12,7 @@ logging.basicConfig(
     handlers=[
         logging.FileHandler("/var/log/default_disk"),
         logging.StreamHandler()
-    ]
+    ],
 )
 logger = logging.getLogger(__name__)
 
@@ -116,27 +116,32 @@ def write_devs_to_file(path, device_list):
 
 
 def main():
-    hostname = uname()[1]
-    path = f"/data/snappy-device-agents/sut/{hostname}_snappy.yaml"
-    config = read_config_from_file(path)
+    # List all files in the './sut' directory
+    files = [
+        f for f in listdir("./sut") if path.isfile(path.join("./sut", f))
+    ]
 
-    try:
-        maas_user = config.get("maas_user")
-        node_id = config.get("node_id")
-    except AttributeError:
-        logger.error("maas_user and/or node_id not in config")
+    for fname in files:
+        fpath = path.join("./sut", fname)
+        config = read_config_from_file(fpath)
 
-    logger.info("Capturing node storage layout")
-    node_info = read_node_info(maas_user, node_id)
-    device_list = capture_initial_config(node_info, config)
-    write_devs_to_file(path, device_list)
+        try:
+            maas_user = config.get("maas_user")
+            node_id = config.get("node_id")
+        except AttributeError:
+            logger.error("maas_user and/or node_id not in config")
 
-    # log the updated default_disks configuration
-    logger.info(
-        "Updated config::\ndefault_disks:\n%s\n", yaml.dump(
-            device_list["default_disks"]
+        logger.info("Capturing node storage layout for %s", fname)
+        node_info = read_node_info(maas_user, node_id)
+        device_list = capture_initial_config(node_info, config)
+        write_devs_to_file(fpath, device_list)
+
+        # log the updated default_disks configuration
+        logger.info(
+            "Updated config for %s::\ndefault_disks:\n%s\n",
+            fname,
+            yaml.dump(device_list["default_disks"]),
         )
-    )
 
 
 if __name__ == "__main__":
