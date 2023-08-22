@@ -20,7 +20,7 @@ def check_and_add_queues(yaml_file):
 
     # Extract disk and partition sizes
     sizes = [
-        entry.get("size", 0)
+        int(entry.get("size", 0))
         for entry in default_disks
         if entry["type"] in ["disk", "partition"]
     ]
