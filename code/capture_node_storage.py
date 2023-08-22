@@ -3,8 +3,8 @@ import re
 import yaml
 import json
 import logging
+import argparse
 import subprocess
-
 
 # Configure logging
 logging.basicConfig(
@@ -134,52 +134,115 @@ def write_devs_to_file(path, device_list):
         with open(path, "w") as config_file:
             yaml.dump(device_list, config_file)
     except OSError as error:
+        logger.error(f"{error}\nUnable to write node disk config to agent")
+
+
+def clear_default_disks(filename):
+    """Remove the default_disks key from the config file."""
+    with open(filename, "r") as f:
+        data = yaml.safe_load(f)
+
+    # Remove the default_disks key
+    data.pop("default_disks", None)
+
+    with open(filename, "w") as f:
+        yaml.dump(data, f)
+
+
+def file_needs_processing(filename):
+    """Check if the config file doesn't have a default_disks key."""
+    with open(filename, "r") as f:
+        data = yaml.safe_load(f)
+    return "default_disks" not in data
+
+
+def process_file(fpath):
+    """Process a given config file."""
+    config = read_config_from_file(fpath)
+
+    maas_user = config.get("maas_user")
+    node_id = config.get("node_id")
+
+    if not maas_user or not node_id:
+        logger.error(f"maas_user and/or node_id not in config {fpath}")
+        return
+
+    logger.info(f"Capturing node storage layout for {fpath}")
+    node_info = read_node_info(maas_user, node_id)
+    device_list = capture_initial_config(node_info, config)
+
+    if not device_list.get("default_disks"):
         logger.error(
-            f"{error}\nUnable to write node initial disk config to agent!"
+            f"default_disks is empty for file {fpath}. Skipping write."
         )
+        return
+
+    write_devs_to_file(fpath, device_list)
+
+    # log the updated default_disks configuration
+    logger.info(
+        f"Updated config for {fpath}::\ndefault_disks:\n"
+        f"{yaml.dump(device_list['default_disks'])}\n"
+    )
 
 
 def main():
-    pattern = re.compile(r'.+_snappy\.yaml$')
+    # Define a regex pattern for the desired filename
+    pattern = re.compile(r".+_snappy\.yaml$")
 
-    files = [
-        f for f in listdir("./sut") if path.isfile(
-            path.join("./sut", f)
-        ) and pattern.match(f)
-    ]
+    parser = argparse.ArgumentParser(
+        description="Process and clear config files."
+    )
+    parser.add_argument(
+        "--process", help="Process a config file", type=str
+    )
+    parser.add_argument(
+        "--clear",
+        help="Clear the default_disks key from a specific config file",
+        type=str,
+    )
+    parser.add_argument(
+        "--clear-all",
+        help="Clear the default_disks key from all config files",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--process-all",
+        help="Process all files without a default_disks key",
+        action="store_true",
+    )
 
-    for fname in files:
-        fpath = path.join("./sut", fname)
-        config = read_config_from_file(fpath)
+    args = parser.parse_args()
 
-        maas_user = config.get("maas_user")
-        node_id = config.get("node_id")
-
-        if not maas_user or not node_id:
-            logger.error(
-                "maas_user and/or node_id not in config %s", fname
-            )
-            continue
-
-        logger.info("Capturing node storage layout for %s", fname)
-        node_info = read_node_info(maas_user, node_id)
-        device_list = capture_initial_config(node_info, config)
-
-        # only skip writing if default_disks exists but is empty
-        if "default_disks" in device_list and not device_list["default_disks"]:
-            logger.error(
-                "default_disks is empty for file %s. Skipping write.", fname
-            )
-            continue
-
-        write_devs_to_file(fpath, device_list)
-
-        # log the updated default_disks configuration
-        logger.info(
-            "Updated config for %s::\ndefault_disks:\n%s\n",
-            fname,
-            yaml.dump(device_list.get("default_disks", [])),
-        )
+    if args.process:
+        if file_needs_processing(args.process):
+            # Process the specified file
+            process_file(args.process)
+    elif args.clear:
+        # Clear default_disks from the specified file
+        clear_default_disks(args.clear)
+    elif args.clear_all:
+        # Clear default_disks from all config files
+        files = [
+            f
+            for f in listdir("./sut")
+            if path.isfile(path.join("./sut", f)) and pattern.match(f)
+        ]
+        for fname in files:
+            clear_default_disks(path.join("./sut", fname))
+    elif args.process_all or not (
+        args.process or args.clear or args.clear_all
+    ):
+        # Process all config files without a default_disks key
+        files = [
+            f
+            for f in listdir("./sut")
+            if path.isfile(path.join("./sut", f))
+            and pattern.match(f)
+            and file_needs_processing(path.join("./sut", f))
+        ]
+        for fname in files:
+            process_file(path.join("./sut", fname))
 
 
 if __name__ == "__main__":
