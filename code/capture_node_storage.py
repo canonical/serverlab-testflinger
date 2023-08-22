@@ -194,7 +194,8 @@ def main():
         description="Process and clear config files."
     )
     parser.add_argument(
-        "--process", help="Process a config file", type=str
+        "--process", help="Process a config file",
+        type=str
     )
     parser.add_argument(
         "--clear",
