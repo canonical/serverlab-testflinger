@@ -1,8 +1,54 @@
+agent_name: drapion
+default_disks:
+- id: '70'
+  name: sda
+  parent_disk_blkid: '70'
+  ptable: GPT
+  type: disk
+- device: '574'
+  id: sda-part1
+  number: '574'
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 574-format
+  label: efi
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  type: format
+  volume: '574'
+- device: 574-format
+  id: 574-mount
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  path: /boot/efi
+  type: mount
+- device: '575'
+  id: sda-part2
+  number: '575'
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  size: '298454089728'
+  type: partition
+- fstype: ext4
+  id: 575-format
+  label: root
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  type: format
+  volume: '575'
+- device: 575-format
+  id: 575-mount
+  parent_disk: '70'
+  parent_disk_blkid: '70'
+  path: /
+  type: mount
 device_ip: 10.245.130.20
+env:
+  DEVICE_IP: 10.245.130.20
+  HEXR_DEVICE_SECURE_ID: a00D000000gYPrSIAW
+maas_user: testflinger_a
 node_id: ksnms7
 node_name: drapion
-maas_user: testflinger_a
-agent_name: drapion
-env:
-  HEXR_DEVICE_SECURE_ID: a00D000000gYPrSIAW
-  DEVICE_IP: 10.245.130.20

@@ -1,7 +1,33 @@
-device_ip: 10.245.135.27
-node_id: ghcqnh
-node_name: kvm-small-9
-maas_user: testflinger_a
 agent_name: kvm-small-9
+default_disks:
+- id: '320'
+  name: vda
+  parent_disk_blkid: '320'
+  ptable: GPT
+  type: disk
+- device: '1056'
+  id: vda-part2
+  number: '1056'
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  size: '39992688640'
+  type: partition
+- fstype: ext4
+  id: 1056-format
+  label: root
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  type: format
+  volume: '1056'
+- device: 1056-format
+  id: 1056-mount
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  path: /
+  type: mount
+device_ip: 10.245.135.27
 env:
   DEVICE_IP: 10.245.135.27
+maas_user: testflinger_a
+node_id: ghcqnh
+node_name: kvm-small-9

@@ -1,8 +1,39 @@
+agent_name: saiph
+default_disks:
+- id: '27'
+  name: sda
+  parent_disk_blkid: '27'
+  ptable: null
+  type: disk
+- id: '28'
+  name: sdb
+  parent_disk_blkid: '28'
+  ptable: GPT
+  type: disk
+- device: '1250'
+  id: sdb-part2
+  number: '1250'
+  parent_disk: '28'
+  parent_disk_blkid: '28'
+  size: '146809028608'
+  type: partition
+- fstype: ext4
+  id: 1250-format
+  label: root
+  parent_disk: '28'
+  parent_disk_blkid: '28'
+  type: format
+  volume: '1250'
+- device: 1250-format
+  id: 1250-mount
+  parent_disk: '28'
+  parent_disk_blkid: '28'
+  path: /
+  type: mount
 device_ip: 10.245.130.12
+env:
+  DEVICE_IP: 10.245.130.12
+  HEXR_DEVICE_SECURE_ID: a00D000000IjNgp
+maas_user: testflinger_a
 node_id: gbe7qy
 node_name: saiph
-maas_user: testflinger_a
-agent_name: saiph
-env:
-  HEXR_DEVICE_SECURE_ID: a00D000000IjNgp
-  DEVICE_IP: 10.245.130.12

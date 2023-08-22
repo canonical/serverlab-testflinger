@@ -1,8 +1,54 @@
+agent_name: birdo
+default_disks:
+- id: '150'
+  name: nvme0n1
+  parent_disk_blkid: '150'
+  ptable: GPT
+  type: disk
+- device: '872'
+  id: nvme0n1-part1
+  number: '872'
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 872-format
+  label: efi
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  type: format
+  volume: '872'
+- device: 872-format
+  id: 872-mount
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  path: /boot/efi
+  type: mount
+- device: '873'
+  id: nvme0n1-part2
+  number: '873'
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 873-format
+  label: root
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  type: format
+  volume: '873'
+- device: 873-format
+  id: 873-mount
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  path: /
+  type: mount
 device_ip: 10.245.130.50
+env:
+  DEVICE_IP: 10.245.130.50
+  HEXR_DEVICE_SECURE_ID: AgRZZycCv37CuFTMXjvpJT
+maas_user: testflinger_a
 node_id: ndm3s6
 node_name: birdo
-maas_user: testflinger_a
-agent_name: birdo
-env:
-  HEXR_DEVICE_SECURE_ID: AgRZZycCv37CuFTMXjvpJT
-  DEVICE_IP: 10.245.130.50

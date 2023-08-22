@@ -1,8 +1,54 @@
+agent_name: boshi
+default_disks:
+- id: '207'
+  name: sda
+  parent_disk_blkid: '207'
+  ptable: GPT
+  type: disk
+- device: '771'
+  id: sda-part1
+  number: '771'
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 771-format
+  label: efi
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  type: format
+  volume: '771'
+- device: 771-format
+  id: 771-mount
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  path: /boot/efi
+  type: mount
+- device: '772'
+  id: sda-part2
+  number: '772'
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 772-format
+  label: root
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  type: format
+  volume: '772'
+- device: 772-format
+  id: 772-mount
+  parent_disk: '207'
+  parent_disk_blkid: '207'
+  path: /
+  type: mount
 device_ip: 10.245.130.69
+env:
+  DEVICE_IP: 10.245.130.69
+  HEXR_DEVICE_SECURE_ID: XuA6CivPEzuJgEqP2YrNgj
+maas_user: testflinger_a
 node_id: 4x8ga4
 node_name: boshi
-maas_user: testflinger_a
-agent_name: boshi
-env:
-  HEXR_DEVICE_SECURE_ID: XuA6CivPEzuJgEqP2YrNgj
-  DEVICE_IP: 10.245.130.69

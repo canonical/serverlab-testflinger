@@ -1,7 +1,33 @@
-device_ip: 10.245.135.2
-node_id: k4xaxd
-node_name: kvm-large-1
-maas_user: testflinger_a
 agent_name: kvm-large-1
+default_disks:
+- id: '332'
+  name: vda
+  parent_disk_blkid: '332'
+  ptable: GPT
+  type: disk
+- device: '1070'
+  id: vda-part2
+  number: '1070'
+  parent_disk: '332'
+  parent_disk_blkid: '332'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 1070-format
+  label: root
+  parent_disk: '332'
+  parent_disk_blkid: '332'
+  type: format
+  volume: '1070'
+- device: 1070-format
+  id: 1070-mount
+  parent_disk: '332'
+  parent_disk_blkid: '332'
+  path: /
+  type: mount
+device_ip: 10.245.135.2
 env:
   DEVICE_IP: 10.245.135.2
+maas_user: testflinger_a
+node_id: k4xaxd
+node_name: kvm-large-1

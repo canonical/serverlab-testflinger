@@ -1,8 +1,59 @@
+agent_name: prunes
+default_disks:
+- id: '35'
+  name: sda
+  parent_disk_blkid: '35'
+  ptable: GPT
+  type: disk
+- device: '73'
+  id: sda-part1
+  number: '73'
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 73-format
+  label: efi
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  type: format
+  volume: '73'
+- device: 73-format
+  id: 73-mount
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  path: /boot/efi
+  type: mount
+- device: '74'
+  id: sda-part2
+  number: '74'
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  size: '146272157696'
+  type: partition
+- fstype: ext4
+  id: 74-format
+  label: root
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  type: format
+  volume: '74'
+- device: 74-format
+  id: 74-mount
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  path: /
+  type: mount
+- id: '36'
+  name: sdb
+  parent_disk_blkid: '36'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.14
+env:
+  DEVICE_IP: 10.245.130.14
+  HEXR_DEVICE_SECURE_ID: a00D000000IGBG6
+maas_user: testflinger_a
 node_id: qnfxr4
 node_name: prunes
-maas_user: testflinger_a
-agent_name: prunes
-env:
-  HEXR_DEVICE_SECURE_ID: a00D000000IGBG6
-  DEVICE_IP: 10.245.130.14

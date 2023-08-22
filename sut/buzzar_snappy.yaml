@@ -1,8 +1,74 @@
+agent_name: buzzar
+default_disks:
+- id: '93'
+  name: nvme0n1
+  parent_disk_blkid: '93'
+  ptable: GPT
+  type: disk
+- device: '1167'
+  id: nvme0n1-part1
+  number: '1167'
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1167-format
+  label: efi
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  type: format
+  volume: '1167'
+- device: 1167-format
+  id: 1167-mount
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  path: /boot/efi
+  type: mount
+- device: '1168'
+  id: nvme0n1-part2
+  number: '1168'
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  size: '3200086179840'
+  type: partition
+- fstype: ext4
+  id: 1168-format
+  label: root
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  type: format
+  volume: '1168'
+- device: 1168-format
+  id: 1168-mount
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  path: /
+  type: mount
+- id: '94'
+  name: sda
+  parent_disk_blkid: '94'
+  ptable: null
+  type: disk
+- id: '95'
+  name: sdb
+  parent_disk_blkid: '95'
+  ptable: null
+  type: disk
+- id: '96'
+  name: sdd
+  parent_disk_blkid: '96'
+  ptable: null
+  type: disk
+- id: '97'
+  name: sde
+  parent_disk_blkid: '97'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.37
+env:
+  DEVICE_IP: 10.245.130.37
+  HEXR_DEVICE_SECURE_ID: 5kGheTQnsgQuBQnjKP2rPY
+maas_user: testflinger_a
 node_id: b4qyqh
 node_name: buzzar
-maas_user: testflinger_a
-agent_name: buzzar
-env:
-  HEXR_DEVICE_SECURE_ID: 5kGheTQnsgQuBQnjKP2rPY
-  DEVICE_IP: 10.245.130.37

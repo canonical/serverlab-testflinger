@@ -1,8 +1,79 @@
+agent_name: fava
+default_disks:
+- id: '243'
+  name: sda
+  parent_disk_blkid: '243'
+  ptable: GPT
+  type: disk
+- device: '961'
+  id: sda-part1
+  number: '961'
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 961-format
+  label: efi
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  type: format
+  volume: '961'
+- device: 961-format
+  id: 961-mount
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  path: /boot/efi
+  type: mount
+- device: '962'
+  id: sda-part2
+  number: '962'
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  size: '299456528384'
+  type: partition
+- fstype: ext4
+  id: 962-format
+  label: root
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  type: format
+  volume: '962'
+- device: 962-format
+  id: 962-mount
+  parent_disk: '243'
+  parent_disk_blkid: '243'
+  path: /
+  type: mount
+- id: '244'
+  name: sdb
+  parent_disk_blkid: '244'
+  ptable: GPT
+  type: disk
+- device: '963'
+  id: sdb-part1
+  number: '963'
+  parent_disk: '244'
+  parent_disk_blkid: '244'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 963-format
+  label: ''
+  parent_disk: '244'
+  parent_disk_blkid: '244'
+  type: format
+  volume: '963'
+- device: 963-format
+  id: 963-mount
+  parent_disk: '244'
+  parent_disk_blkid: '244'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.77
+env:
+  DEVICE_IP: 10.245.130.77
+  HEXR_DEVICE_SECURE_ID: nBs8AYyMMYjYaDYNx3XQcb
+maas_user: testflinger_a
 node_id: fc3afk
 node_name: fava
-maas_user: testflinger_a
-agent_name: fava
-env:
-  HEXR_DEVICE_SECURE_ID: nBs8AYyMMYjYaDYNx3XQcb
-  DEVICE_IP: 10.245.130.77

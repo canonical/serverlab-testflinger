@@ -1,8 +1,54 @@
+agent_name: garamond
+default_disks:
+- id: '211'
+  name: sda
+  parent_disk_blkid: '211'
+  ptable: GPT
+  type: disk
+- device: '966'
+  id: sda-part1
+  number: '966'
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 966-format
+  label: efi
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  type: format
+  volume: '966'
+- device: 966-format
+  id: 966-mount
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  path: /boot/efi
+  type: mount
+- device: '967'
+  id: sda-part2
+  number: '967'
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 967-format
+  label: root
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  type: format
+  volume: '967'
+- device: 967-format
+  id: 967-mount
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  path: /
+  type: mount
 device_ip: 10.245.130.33
+env:
+  DEVICE_IP: 10.245.130.33
+  HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
+maas_user: testflinger_a
 node_id: wkwxnb
 node_name: garamond
-maas_user: testflinger_a
-agent_name: garamond
-env:
-  HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
-  DEVICE_IP: 10.245.130.33

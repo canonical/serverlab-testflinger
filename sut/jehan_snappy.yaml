@@ -1,8 +1,104 @@
+agent_name: jehan
+default_disks:
+- id: '350'
+  name: nvme0n1
+  parent_disk_blkid: '350'
+  ptable: GPT
+  type: disk
+- device: '1129'
+  id: nvme0n1-part1
+  number: '1129'
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1129-format
+  label: efi
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  type: format
+  volume: '1129'
+- device: 1129-format
+  id: 1129-mount
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  path: /boot/efi
+  type: mount
+- device: '1130'
+  id: nvme0n1-part2
+  number: '1130'
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  size: '511566675968'
+  type: partition
+- fstype: ext4
+  id: 1130-format
+  label: root
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  type: format
+  volume: '1130'
+- device: 1130-format
+  id: 1130-mount
+  parent_disk: '350'
+  parent_disk_blkid: '350'
+  path: /
+  type: mount
+- id: '351'
+  name: sda
+  parent_disk_blkid: '351'
+  ptable: GPT
+  type: disk
+- device: '1131'
+  id: sda-part1
+  number: '1131'
+  parent_disk: '351'
+  parent_disk_blkid: '351'
+  size: '400077881344'
+  type: partition
+- fstype: ext4
+  id: 1131-format
+  label: ''
+  parent_disk: '351'
+  parent_disk_blkid: '351'
+  type: format
+  volume: '1131'
+- device: 1131-format
+  id: 1131-mount
+  parent_disk: '351'
+  parent_disk_blkid: '351'
+  path: /data/SSDSC2BX40-sda
+  type: mount
+- id: '352'
+  name: sdb
+  parent_disk_blkid: '352'
+  ptable: GPT
+  type: disk
+- device: '1132'
+  id: sdb-part1
+  number: '1132'
+  parent_disk: '352'
+  parent_disk_blkid: '352'
+  size: '400077881344'
+  type: partition
+- fstype: ext4
+  id: 1132-format
+  label: ''
+  parent_disk: '352'
+  parent_disk_blkid: '352'
+  type: format
+  volume: '1132'
+- device: 1132-format
+  id: 1132-mount
+  parent_disk: '352'
+  parent_disk_blkid: '352'
+  path: /data/SSDSC2BX40-sdb
+  type: mount
 device_ip: 10.245.130.93
+env:
+  DEVICE_IP: 10.245.130.93
+  HEXR_DEVICE_SECURE_ID: 5RL7Mw4VVfmswKE6imzc6i
+maas_user: testflinger_a
 node_id: ad3rhh
 node_name: jehan
-maas_user: testflinger_a
-agent_name: jehan
-env:
-  HEXR_DEVICE_SECURE_ID: 5RL7Mw4VVfmswKE6imzc6i
-  DEVICE_IP: 10.245.130.93

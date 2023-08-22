@@ -1,8 +1,59 @@
+agent_name: cractus
+default_disks:
+- id: '233'
+  name: sda
+  parent_disk_blkid: '233'
+  ptable: GPT
+  type: disk
+- device: '935'
+  id: sda-part2
+  number: '935'
+  parent_disk: '233'
+  parent_disk_blkid: '233'
+  size: '299993399296'
+  type: partition
+- fstype: ext4
+  id: 935-format
+  label: root
+  parent_disk: '233'
+  parent_disk_blkid: '233'
+  type: format
+  volume: '935'
+- device: 935-format
+  id: 935-mount
+  parent_disk: '233'
+  parent_disk_blkid: '233'
+  path: /
+  type: mount
+- id: '234'
+  name: sdb
+  parent_disk_blkid: '234'
+  ptable: GPT
+  type: disk
+- device: '936'
+  id: sdb-part2
+  number: '936'
+  parent_disk: '234'
+  parent_disk_blkid: '234'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 936-format
+  label: ''
+  parent_disk: '234'
+  parent_disk_blkid: '234'
+  type: format
+  volume: '936'
+- device: 936-format
+  id: 936-mount
+  parent_disk: '234'
+  parent_disk_blkid: '234'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.70
+env:
+  DEVICE_IP: 10.245.130.70
+  HEXR_DEVICE_SECURE_ID: mxBVzDwSGt4wbmrqVz2KLy
+maas_user: testflinger_a
 node_id: t767dn
 node_name: cractus
-maas_user: testflinger_a
-agent_name: cractus
-env:
-  HEXR_DEVICE_SECURE_ID: mxBVzDwSGt4wbmrqVz2KLy
-  DEVICE_IP: 10.245.130.70

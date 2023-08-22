@@ -1,7 +1,20 @@
-device_ip: 10.245.135.14
-node_id: h7d7er
-node_name: kvm-small-1
-maas_user: testflinger_a
 agent_name: kvm-small-1
+default_disks:
+- id: '312'
+  name: vda
+  parent_disk_blkid: '312'
+  ptable: GPT
+  type: disk
+- device: '1264'
+  id: vda-part2
+  number: '1264'
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  size: '39992688640'
+  type: partition
+device_ip: 10.245.135.14
 env:
   DEVICE_IP: 10.245.135.14
+maas_user: testflinger_a
+node_id: h7d7er
+node_name: kvm-small-1

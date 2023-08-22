@@ -1,8 +1,79 @@
+agent_name: toadsworth
+default_disks:
+- id: '187'
+  name: nvme0n1
+  parent_disk_blkid: '187'
+  ptable: GPT
+  type: disk
+- device: '731'
+  id: nvme0n1-part1
+  number: '731'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 731-format
+  label: efi
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '731'
+- device: 731-format
+  id: 731-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /boot/efi
+  type: mount
+- device: '732'
+  id: nvme0n1-part2
+  number: '732'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 732-format
+  label: root
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '732'
+- device: 732-format
+  id: 732-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /
+  type: mount
+- id: '188'
+  name: sda
+  parent_disk_blkid: '188'
+  ptable: GPT
+  type: disk
+- device: '733'
+  id: sda-part1
+  number: '733'
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  size: '957987422208'
+  type: partition
+- fstype: ext4
+  id: 733-format
+  label: ''
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  type: format
+  volume: '733'
+- device: 733-format
+  id: 733-mount
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  path: /mnt/sda1
+  type: mount
 device_ip: 10.245.130.67
+env:
+  DEVICE_IP: 10.245.130.67
+  HEXR_DEVICE_SECURE_ID: gYGHh36Y2w3wtQ3CeqN4Jh
+maas_user: testflinger_a
 node_id: cbbhky
 node_name: toadsworth
-maas_user: testflinger_a
-agent_name: toadsworth
-env:
-  HEXR_DEVICE_SECURE_ID: gYGHh36Y2w3wtQ3CeqN4Jh
-  DEVICE_IP: 10.245.130.67

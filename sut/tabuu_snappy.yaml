@@ -1,8 +1,79 @@
+agent_name: tabuu
+default_disks:
+- id: '125'
+  name: sda
+  parent_disk_blkid: '125'
+  ptable: GPT
+  type: disk
+- device: '467'
+  id: sda-part1
+  number: '467'
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 467-format
+  label: efi
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  type: format
+  volume: '467'
+- device: 467-format
+  id: 467-mount
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  path: /boot/efi
+  type: mount
+- device: '468'
+  id: sda-part2
+  number: '468'
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 468-format
+  label: root
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  type: format
+  volume: '468'
+- device: 468-format
+  id: 468-mount
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  path: /
+  type: mount
+- id: '126'
+  name: sdb
+  parent_disk_blkid: '126'
+  ptable: GPT
+  type: disk
+- device: '469'
+  id: sdb-part1
+  number: '469'
+  parent_disk: '126'
+  parent_disk_blkid: '126'
+  size: '14000507060224'
+  type: partition
+- fstype: ext4
+  id: 469-format
+  label: ''
+  parent_disk: '126'
+  parent_disk_blkid: '126'
+  type: format
+  volume: '469'
+- device: 469-format
+  id: 469-mount
+  parent_disk: '126'
+  parent_disk_blkid: '126'
+  path: /data-sdb
+  type: mount
 device_ip: 10.245.130.43
+env:
+  DEVICE_IP: 10.245.130.43
+  HEXR_DEVICE_SECURE_ID: ACkcUsNimCoPYEDMAjY6nK
+maas_user: testflinger_a
 node_id: gfsx4h
 node_name: tabuu
-maas_user: testflinger_a
-agent_name: tabuu
-env:
-  HEXR_DEVICE_SECURE_ID: ACkcUsNimCoPYEDMAjY6nK
-  DEVICE_IP: 10.245.130.43

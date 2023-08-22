@@ -1,8 +1,64 @@
+agent_name: cappy
+default_disks:
+- id: '151'
+  name: sda
+  parent_disk_blkid: '151'
+  ptable: GPT
+  type: disk
+- device: '1141'
+  id: sda-part1
+  number: '1141'
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1141-format
+  label: efi
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  type: format
+  volume: '1141'
+- device: 1141-format
+  id: 1141-mount
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  path: /boot/efi
+  type: mount
+- device: '1142'
+  id: sda-part2
+  number: '1142'
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  size: '599584145408'
+  type: partition
+- fstype: ext4
+  id: 1142-format
+  label: root
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  type: format
+  volume: '1142'
+- device: 1142-format
+  id: 1142-mount
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  path: /
+  type: mount
+- id: '152'
+  name: sdb
+  parent_disk_blkid: '152'
+  ptable: null
+  type: disk
+- id: '153'
+  name: sdc
+  parent_disk_blkid: '153'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.61
+env:
+  DEVICE_IP: 10.245.130.61
+  HEXR_DEVICE_SECURE_ID: Urvp9vmfPXRUR9vpPiMdSc
+maas_user: testflinger_a
 node_id: m7m7r8
 node_name: cappy
-maas_user: testflinger_a
-agent_name: cappy
-env:
-  HEXR_DEVICE_SECURE_ID: Urvp9vmfPXRUR9vpPiMdSc
-  DEVICE_IP: 10.245.130.61

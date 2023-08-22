@@ -1,8 +1,74 @@
+agent_name: beldam
+default_disks:
+- id: '80'
+  name: nvme0n1
+  parent_disk_blkid: '80'
+  ptable: GPT
+  type: disk
+- device: '823'
+  id: nvme0n1-part1
+  number: '823'
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 823-format
+  label: efi
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  type: format
+  volume: '823'
+- device: 823-format
+  id: 823-mount
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  path: /boot/efi
+  type: mount
+- device: '824'
+  id: nvme0n1-part2
+  number: '824'
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 824-format
+  label: root
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  type: format
+  volume: '824'
+- device: 824-format
+  id: 824-mount
+  parent_disk: '80'
+  parent_disk_blkid: '80'
+  path: /
+  type: mount
+- id: '81'
+  name: sda
+  parent_disk_blkid: '81'
+  ptable: null
+  type: disk
+- id: '82'
+  name: sdb
+  parent_disk_blkid: '82'
+  ptable: null
+  type: disk
+- id: '83'
+  name: sdc
+  parent_disk_blkid: '83'
+  ptable: null
+  type: disk
+- id: '84'
+  name: sdd
+  parent_disk_blkid: '84'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.36
+env:
+  DEVICE_IP: 10.245.130.36
+  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
+maas_user: testflinger_a
 node_id: da7pmq
 node_name: beldam
-maas_user: testflinger_a
-agent_name: beldam
-env:
-  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
-  DEVICE_IP: 10.245.130.36

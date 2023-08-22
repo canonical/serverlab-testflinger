@@ -1,8 +1,54 @@
+agent_name: blubi
+default_disks:
+- id: '206'
+  name: sda
+  parent_disk_blkid: '206'
+  ptable: GPT
+  type: disk
+- device: '777'
+  id: sda-part1
+  number: '777'
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 777-format
+  label: efi
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  type: format
+  volume: '777'
+- device: 777-format
+  id: 777-mount
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  path: /boot/efi
+  type: mount
+- device: '778'
+  id: sda-part2
+  number: '778'
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  size: '1919271567360'
+  type: partition
+- fstype: ext4
+  id: 778-format
+  label: root
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  type: format
+  volume: '778'
+- device: 778-format
+  id: 778-mount
+  parent_disk: '206'
+  parent_disk_blkid: '206'
+  path: /
+  type: mount
 device_ip: 10.245.130.68
+env:
+  DEVICE_IP: 10.245.130.68
+  HEXR_DEVICE_SECURE_ID: hz6sDsz3JuQfnbRGKyNFY8
+maas_user: testflinger_a
 node_id: kk3pfr
 node_name: blubi
-maas_user: testflinger_a
-agent_name: blubi
-env:
-  HEXR_DEVICE_SECURE_ID: hz6sDsz3JuQfnbRGKyNFY8
-  DEVICE_IP: 10.245.130.68

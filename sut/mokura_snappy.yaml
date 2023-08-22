@@ -1,8 +1,79 @@
+agent_name: mokura
+default_disks:
+- id: '100'
+  name: sda
+  parent_disk_blkid: '100'
+  ptable: GPT
+  type: disk
+- device: '845'
+  id: sda-part1
+  number: '845'
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 845-format
+  label: efi
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  type: format
+  volume: '845'
+- device: 845-format
+  id: 845-mount
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  path: /boot/efi
+  type: mount
+- device: '846'
+  id: sda-part2
+  number: '846'
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 846-format
+  label: root
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  type: format
+  volume: '846'
+- device: 846-format
+  id: 846-mount
+  parent_disk: '100'
+  parent_disk_blkid: '100'
+  path: /
+  type: mount
+- id: '104'
+  name: sdb
+  parent_disk_blkid: '104'
+  ptable: GPT
+  type: disk
+- device: '847'
+  id: sdb-part1
+  number: '847'
+  parent_disk: '104'
+  parent_disk_blkid: '104'
+  size: '959107301376'
+  type: partition
+- fstype: ext4
+  id: 847-format
+  label: ''
+  parent_disk: '104'
+  parent_disk_blkid: '104'
+  type: format
+  volume: '847'
+- device: 847-format
+  id: 847-mount
+  parent_disk: '104'
+  parent_disk_blkid: '104'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.41
+env:
+  DEVICE_IP: 10.245.130.41
+  HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
+maas_user: testflinger_a
 node_id: yxrean
 node_name: mokura
-maas_user: testflinger_a
-agent_name: mokura
-env:
-  HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
-  DEVICE_IP: 10.245.130.41

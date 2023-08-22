@@ -1,8 +1,59 @@
+agent_name: boddle
+default_disks:
+- id: '355'
+  name: sda
+  parent_disk_blkid: '355'
+  ptable: GPT
+  type: disk
+- device: '1155'
+  id: sda-part1
+  number: '1155'
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1155-format
+  label: efi
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  type: format
+  volume: '1155'
+- device: 1155-format
+  id: 1155-mount
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  path: /boot/efi
+  type: mount
+- device: '1156'
+  id: sda-part2
+  number: '1156'
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 1156-format
+  label: root
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  type: format
+  volume: '1156'
+- device: 1156-format
+  id: 1156-mount
+  parent_disk: '355'
+  parent_disk_blkid: '355'
+  path: /
+  type: mount
+- id: '356'
+  name: sdb
+  parent_disk_blkid: '356'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.94
+env:
+  DEVICE_IP: 10.245.130.94
+  HEXR_DEVICE_SECURE_ID: nxS7pArgZzPqfrSX8JKHd7
+maas_user: testflinger_a
 node_id: p8f66a
 node_name: boddle
-maas_user: testflinger_a
-agent_name: boddle
-env:
- HEXR_DEVICE_SECURE_ID: nxS7pArgZzPqfrSX8JKHd7
- DEVICE_IP: 10.245.130.94

@@ -1,7 +1,33 @@
-device_ip: 10.245.135.12
-node_id: qnsxt8
-node_name: kvm-medium-5
-maas_user: testflinger_a
 agent_name: kvm-medium-5
+default_disks:
+- id: '330'
+  name: vda
+  parent_disk_blkid: '330'
+  ptable: GPT
+  type: disk
+- device: '1068'
+  id: vda-part2
+  number: '1068'
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  size: '99992207360'
+  type: partition
+- fstype: ext4
+  id: 1068-format
+  label: root
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  type: format
+  volume: '1068'
+- device: 1068-format
+  id: 1068-mount
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  path: /
+  type: mount
+device_ip: 10.245.135.12
 env:
   DEVICE_IP: 10.245.135.12
+maas_user: testflinger_a
+node_id: qnsxt8
+node_name: kvm-medium-5

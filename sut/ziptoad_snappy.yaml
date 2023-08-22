@@ -1,8 +1,104 @@
+agent_name: ziptoad
+default_disks:
+- id: '221'
+  name: sda
+  parent_disk_blkid: '221'
+  ptable: GPT
+  type: disk
+- device: '929'
+  id: sda-part1
+  number: '929'
+  parent_disk: '221'
+  parent_disk_blkid: '221'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 929-format
+  label: ''
+  parent_disk: '221'
+  parent_disk_blkid: '221'
+  type: format
+  volume: '929'
+- device: 929-format
+  id: 929-mount
+  parent_disk: '221'
+  parent_disk_blkid: '221'
+  path: /data-sda-SAS
+  type: mount
+- id: '222'
+  name: sdb
+  parent_disk_blkid: '222'
+  ptable: GPT
+  type: disk
+- device: '928'
+  id: sdb-part1
+  number: '928'
+  parent_disk: '222'
+  parent_disk_blkid: '222'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 928-format
+  label: ''
+  parent_disk: '222'
+  parent_disk_blkid: '222'
+  type: format
+  volume: '928'
+- device: 928-format
+  id: 928-mount
+  parent_disk: '222'
+  parent_disk_blkid: '222'
+  path: /data-sdb-SAS
+  type: mount
+- id: '228'
+  name: sdc
+  parent_disk_blkid: '228'
+  ptable: GPT
+  type: disk
+- device: '925'
+  id: sdc-part1
+  number: '925'
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 925-format
+  label: efi
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  type: format
+  volume: '925'
+- device: 925-format
+  id: 925-mount
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  path: /boot/efi
+  type: mount
+- device: '926'
+  id: sdc-part2
+  number: '926'
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  size: '239444426752'
+  type: partition
+- fstype: ext4
+  id: 926-format
+  label: root
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  type: format
+  volume: '926'
+- device: 926-format
+  id: 926-mount
+  parent_disk: '228'
+  parent_disk_blkid: '228'
+  path: /
+  type: mount
 device_ip: 10.245.130.25
+env:
+  DEVICE_IP: 10.245.130.25
+  HEXR_DEVICE_SECURE_ID: 98XGTF3R6GGLVYL2ST4qnb
+maas_user: testflinger_a
 node_id: 7egcp4
 node_name: ziptoad
-maas_user: testflinger_a
-agent_name: ziptoad
-env:
-  HEXR_DEVICE_SECURE_ID: 98XGTF3R6GGLVYL2ST4qnb
-  DEVICE_IP: 10.245.130.25

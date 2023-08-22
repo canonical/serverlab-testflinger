@@ -1,7 +1,33 @@
-device_ip: 10.245.135.13
-node_id: 8bkyms
-node_name: kvm-medium-6
-maas_user: testflinger_a
 agent_name: kvm-medium-6
+default_disks:
+- id: '386'
+  name: vda
+  parent_disk_blkid: '386'
+  ptable: GPT
+  type: disk
+- device: '1275'
+  id: vda-part2
+  number: '1275'
+  parent_disk: '386'
+  parent_disk_blkid: '386'
+  size: '99992207360'
+  type: partition
+- fstype: ext4
+  id: 1275-format
+  label: root
+  parent_disk: '386'
+  parent_disk_blkid: '386'
+  type: format
+  volume: '1275'
+- device: 1275-format
+  id: 1275-mount
+  parent_disk: '386'
+  parent_disk_blkid: '386'
+  path: /
+  type: mount
+device_ip: 10.245.135.13
 env:
   DEVICE_IP: 10.245.135.13
+maas_user: testflinger_a
+node_id: 8bkyms
+node_name: kvm-medium-6

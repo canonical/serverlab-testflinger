@@ -1,8 +1,79 @@
+agent_name: napple
+default_disks:
+- id: '85'
+  name: sda
+  parent_disk_blkid: '85'
+  ptable: GPT
+  type: disk
+- device: '342'
+  id: sda-part1
+  number: '342'
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 342-format
+  label: efi
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  type: format
+  volume: '342'
+- device: 342-format
+  id: 342-mount
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  path: /boot/efi
+  type: mount
+- device: '343'
+  id: sda-part2
+  number: '343'
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 343-format
+  label: root
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  type: format
+  volume: '343'
+- device: 343-format
+  id: 343-mount
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  path: /
+  type: mount
+- id: '86'
+  name: sdb
+  parent_disk_blkid: '86'
+  ptable: GPT
+  type: disk
+- device: '347'
+  id: sdb-part1
+  number: '347'
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  size: '480059064320'
+  type: partition
+- fstype: ext4
+  id: 347-format
+  label: ''
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  type: format
+  volume: '347'
+- device: 347-format
+  id: 347-mount
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.34
+env:
+  DEVICE_IP: 10.245.130.34
+  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
+maas_user: testflinger_a
 node_id: b4r6nh
 node_name: napple
-maas_user: testflinger_a
-agent_name: napple
-env:
-  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
-  DEVICE_IP: 10.245.130.34

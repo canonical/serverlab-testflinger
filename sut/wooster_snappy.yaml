@@ -1,8 +1,104 @@
+agent_name: wooster
+default_disks:
+- id: '270'
+  name: nvme1n1
+  parent_disk_blkid: '270'
+  ptable: GPT
+  type: disk
+- device: '997'
+  id: nvme1n1-part1
+  number: '997'
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 997-format
+  label: efi
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  type: format
+  volume: '997'
+- device: 997-format
+  id: 997-mount
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  path: /boot/efi
+  type: mount
+- device: '998'
+  id: nvme1n1-part2
+  number: '998'
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  size: '7680957612032'
+  type: partition
+- fstype: ext4
+  id: 998-format
+  label: root
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  type: format
+  volume: '998'
+- device: 998-format
+  id: 998-mount
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  path: /
+  type: mount
+- id: '271'
+  name: nvme2n1
+  parent_disk_blkid: '271'
+  ptable: GPT
+  type: disk
+- device: '1039'
+  id: nvme2n1-part1
+  number: '1039'
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 1039-format
+  label: ''
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  type: format
+  volume: '1039'
+- device: 1039-format
+  id: 1039-mount
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  path: /data/nvme2n1part1
+  type: mount
+- id: '272'
+  name: nvme3n1
+  parent_disk_blkid: '272'
+  ptable: GPT
+  type: disk
+- device: '1040'
+  id: nvme3n1-part1
+  number: '1040'
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 1040-format
+  label: ''
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  type: format
+  volume: '1040'
+- device: 1040-format
+  id: 1040-mount
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  path: /data/nvme3n1part1
+  type: mount
 device_ip: 10.245.130.83
+env:
+  DEVICE_IP: 10.245.130.83
+  HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
+maas_user: testflinger_a
 node_id: sf3rrg
 node_name: wooster
-maas_user: testflinger_a
-agent_name: wooster
-env:
-  HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
-  DEVICE_IP: 10.245.130.83

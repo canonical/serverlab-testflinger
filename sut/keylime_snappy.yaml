@@ -1,8 +1,39 @@
+agent_name: keylime
+default_disks:
+- id: '15'
+  name: sdc
+  parent_disk_blkid: '15'
+  ptable: null
+  type: disk
+- id: '16'
+  name: sdd
+  parent_disk_blkid: '16'
+  ptable: GPT
+  type: disk
+- device: '1253'
+  id: sdd-part2
+  number: '1253'
+  parent_disk: '16'
+  parent_disk_blkid: '16'
+  size: '299993399296'
+  type: partition
+- fstype: ext4
+  id: 1253-format
+  label: root
+  parent_disk: '16'
+  parent_disk_blkid: '16'
+  type: format
+  volume: '1253'
+- device: 1253-format
+  id: 1253-mount
+  parent_disk: '16'
+  parent_disk_blkid: '16'
+  path: /
+  type: mount
 device_ip: 10.245.130.21
+env:
+  DEVICE_IP: 10.245.130.21
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0D
+maas_user: testflinger_a
 node_id: bpydxs
 node_name: keylime
-maas_user: testflinger_a
-agent_name: keylime
-env:
-  HEXR_DEVICE_SECURE_ID: a002000000EuC0D
-  DEVICE_IP: 10.245.130.21

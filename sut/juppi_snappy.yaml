@@ -1,8 +1,54 @@
+agent_name: juppi
+default_disks:
+- id: '172'
+  name: sda
+  parent_disk_blkid: '172'
+  ptable: GPT
+  type: disk
+- device: '912'
+  id: sda-part1
+  number: '912'
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 912-format
+  label: efi
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  type: format
+  volume: '912'
+- device: 912-format
+  id: 912-mount
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  path: /boot/efi
+  type: mount
+- device: '913'
+  id: sda-part2
+  number: '913'
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  size: '478456840192'
+  type: partition
+- fstype: ext4
+  id: 913-format
+  label: root
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  type: format
+  volume: '913'
+- device: 913-format
+  id: 913-mount
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  path: /
+  type: mount
 device_ip: 10.245.130.57
+env:
+  DEVICE_IP: 10.245.130.57
+  HEXR_DEVICE_SECURE_ID: 56qNSjF3mVkNja469w8jEd
+maas_user: testflinger_a
 node_id: 7ar4g6
 node_name: juppi
-maas_user: testflinger_a
-agent_name: juppi
-env:
-  HEXR_DEVICE_SECURE_ID: 56qNSjF3mVkNja469w8jEd
-  DEVICE_IP: 10.245.130.57

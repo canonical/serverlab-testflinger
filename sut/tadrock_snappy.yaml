@@ -1,8 +1,54 @@
+agent_name: tadrock
+default_disks:
+- id: '60'
+  name: sda
+  parent_disk_blkid: '60'
+  ptable: GPT
+  type: disk
+- device: '186'
+  id: sda-part1
+  number: '186'
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 186-format
+  label: efi
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  type: format
+  volume: '186'
+- device: 186-format
+  id: 186-mount
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  path: /boot/efi
+  type: mount
+- device: '187'
+  id: sda-part2
+  number: '187'
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 187-format
+  label: root
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  type: format
+  volume: '187'
+- device: 187-format
+  id: 187-mount
+  parent_disk: '60'
+  parent_disk_blkid: '60'
+  path: /
+  type: mount
 device_ip: 10.245.130.27
+env:
+  DEVICE_IP: 10.245.130.27
+  HEXR_DEVICE_SECURE_ID: MtKMoFMxYDP5uDRRXSyMmb
+maas_user: testflinger_a
 node_id: 883asa
 node_name: tadrock
-maas_user: testflinger_a
-agent_name: tadrock
-env:
-  HEXR_DEVICE_SECURE_ID: MtKMoFMxYDP5uDRRXSyMmb
-  DEVICE_IP: 10.245.130.27

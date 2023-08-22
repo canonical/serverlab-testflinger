@@ -1,7 +1,33 @@
-device_ip: 10.245.135.3
-node_id: md6sff
-node_name: kvm-large-2
-maas_user: testflinger_a
 agent_name: kvm-large-2
+default_disks:
+- id: '333'
+  name: vda
+  parent_disk_blkid: '333'
+  ptable: GPT
+  type: disk
+- device: '1071'
+  id: vda-part2
+  number: '1071'
+  parent_disk: '333'
+  parent_disk_blkid: '333'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 1071-format
+  label: root
+  parent_disk: '333'
+  parent_disk_blkid: '333'
+  type: format
+  volume: '1071'
+- device: 1071-format
+  id: 1071-mount
+  parent_disk: '333'
+  parent_disk_blkid: '333'
+  path: /
+  type: mount
+device_ip: 10.245.135.3
 env:
   DEVICE_IP: 10.245.135.3
+maas_user: testflinger_a
+node_id: md6sff
+node_name: kvm-large-2

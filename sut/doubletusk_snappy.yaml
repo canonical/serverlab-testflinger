@@ -1,8 +1,79 @@
+agent_name: doubletusk
+default_disks:
+- id: '9'
+  name: nvme0n1
+  parent_disk_blkid: '9'
+  ptable: GPT
+  type: disk
+- device: '561'
+  id: nvme0n1-part1
+  number: '561'
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 561-format
+  label: efi
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  type: format
+  volume: '561'
+- device: 561-format
+  id: 561-mount
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  path: /boot/efi
+  type: mount
+- device: '562'
+  id: nvme0n1-part2
+  number: '562'
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 562-format
+  label: root
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  type: format
+  volume: '562'
+- device: 562-format
+  id: 562-mount
+  parent_disk: '9'
+  parent_disk_blkid: '9'
+  path: /
+  type: mount
+- id: '10'
+  name: nvme1n1
+  parent_disk_blkid: '10'
+  ptable: GPT
+  type: disk
+- device: '563'
+  id: nvme1n1-part1
+  number: '563'
+  parent_disk: '10'
+  parent_disk_blkid: '10'
+  size: '960189431808'
+  type: partition
+- fstype: ext4
+  id: 563-format
+  label: ''
+  parent_disk: '10'
+  parent_disk_blkid: '10'
+  type: format
+  volume: '563'
+- device: 563-format
+  id: 563-mount
+  parent_disk: '10'
+  parent_disk_blkid: '10'
+  path: /data-nvme1n1
+  type: mount
 device_ip: 10.245.130.29
+env:
+  DEVICE_IP: 10.245.130.29
+  HEXR_DEVICE_SECURE_ID: wLWDLeWK5H9JbeezsyLZoK
+maas_user: testflinger_a
 node_id: syr86p
 node_name: doubletusk
-maas_user: testflinger_a
-agent_name: doubletusk
-env:
-  HEXR_DEVICE_SECURE_ID: wLWDLeWK5H9JbeezsyLZoK
-  DEVICE_IP: 10.245.130.29

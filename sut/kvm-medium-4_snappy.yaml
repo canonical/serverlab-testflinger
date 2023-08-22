@@ -1,7 +1,33 @@
-device_ip: 10.245.135.11
-node_id: qymrth
-node_name: kvm-medium-4
-maas_user: testflinger_a
 agent_name: kvm-medium-4
+default_disks:
+- id: '329'
+  name: vda
+  parent_disk_blkid: '329'
+  ptable: GPT
+  type: disk
+- device: '1067'
+  id: vda-part2
+  number: '1067'
+  parent_disk: '329'
+  parent_disk_blkid: '329'
+  size: '99992207360'
+  type: partition
+- fstype: ext4
+  id: 1067-format
+  label: root
+  parent_disk: '329'
+  parent_disk_blkid: '329'
+  type: format
+  volume: '1067'
+- device: 1067-format
+  id: 1067-mount
+  parent_disk: '329'
+  parent_disk_blkid: '329'
+  path: /
+  type: mount
+device_ip: 10.245.135.11
 env:
   DEVICE_IP: 10.245.135.11
+maas_user: testflinger_a
+node_id: qymrth
+node_name: kvm-medium-4

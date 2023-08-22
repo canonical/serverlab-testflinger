@@ -1,8 +1,79 @@
+agent_name: gloomer
+default_disks:
+- id: '161'
+  name: sda
+  parent_disk_blkid: '161'
+  ptable: GPT
+  type: disk
+- device: '905'
+  id: sda-part1
+  number: '905'
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 905-format
+  label: efi
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  type: format
+  volume: '905'
+- device: 905-format
+  id: 905-mount
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  path: /boot/efi
+  type: mount
+- device: '906'
+  id: sda-part2
+  number: '906'
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 906-format
+  label: root
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  type: format
+  volume: '906'
+- device: 906-format
+  id: 906-mount
+  parent_disk: '161'
+  parent_disk_blkid: '161'
+  path: /
+  type: mount
+- id: '162'
+  name: sdb
+  parent_disk_blkid: '162'
+  ptable: GPT
+  type: disk
+- device: '907'
+  id: sdb-part1
+  number: '907'
+  parent_disk: '162'
+  parent_disk_blkid: '162'
+  size: '1000198897664'
+  type: partition
+- fstype: ext4
+  id: 907-format
+  label: ''
+  parent_disk: '162'
+  parent_disk_blkid: '162'
+  type: format
+  volume: '907'
+- device: 907-format
+  id: 907-mount
+  parent_disk: '162'
+  parent_disk_blkid: '162'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.54
+env:
+  DEVICE_IP: 10.245.130.54
+  HEXR_DEVICE_SECURE_ID: 5HpvCcPMQw3qQeDKiddVCC
+maas_user: testflinger_a
 node_id: 7yf7a8
 node_name: gloomer
-maas_user: testflinger_a
-agent_name: gloomer
-env:
-  HEXR_DEVICE_SECURE_ID: 5HpvCcPMQw3qQeDKiddVCC
-  DEVICE_IP: 10.245.130.54

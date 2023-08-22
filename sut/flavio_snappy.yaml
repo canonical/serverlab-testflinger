@@ -1,8 +1,54 @@
+agent_name: flavio
+default_disks:
+- id: '217'
+  name: nvme0n1
+  parent_disk_blkid: '217'
+  ptable: GPT
+  type: disk
+- device: '888'
+  id: nvme0n1-part1
+  number: '888'
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 888-format
+  label: efi
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  type: format
+  volume: '888'
+- device: 888-format
+  id: 888-mount
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  path: /boot/efi
+  type: mount
+- device: '889'
+  id: nvme0n1-part2
+  number: '889'
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 889-format
+  label: root
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  type: format
+  volume: '889'
+- device: 889-format
+  id: 889-mount
+  parent_disk: '217'
+  parent_disk_blkid: '217'
+  path: /
+  type: mount
 device_ip: 10.245.130.4
+env:
+  DEVICE_IP: 10.245.130.4
+  HEXR_DEVICE_SECURE_ID: 2Rhoju2kwe52yKRdroCRpR
+maas_user: testflinger_a
 node_id: e6wbk6
 node_name: flavio
-maas_user: testflinger_a
-agent_name: flavio
-env:
-  HEXR_DEVICE_SECURE_ID: 2Rhoju2kwe52yKRdroCRpR
-  DEVICE_IP: 10.245.130.4

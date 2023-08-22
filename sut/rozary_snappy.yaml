@@ -1,8 +1,64 @@
+agent_name: rozary
+default_disks:
+- id: '142'
+  name: sda
+  parent_disk_blkid: '142'
+  ptable: GPT
+  type: disk
+- device: '1096'
+  id: sda-part1
+  number: '1096'
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1096-format
+  label: efi
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  type: format
+  volume: '1096'
+- device: 1096-format
+  id: 1096-mount
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  path: /boot/efi
+  type: mount
+- device: '1097'
+  id: sda-part2
+  number: '1097'
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  size: '1198555922432'
+  type: partition
+- fstype: ext4
+  id: 1097-format
+  label: root
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  type: format
+  volume: '1097'
+- device: 1097-format
+  id: 1097-mount
+  parent_disk: '142'
+  parent_disk_blkid: '142'
+  path: /
+  type: mount
+- id: '143'
+  name: sdc
+  parent_disk_blkid: '143'
+  ptable: null
+  type: disk
+- id: '144'
+  name: sdb
+  parent_disk_blkid: '144'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.44
+env:
+  DEVICE_IP: 10.245.130.44
+  HEXR_DEVICE_SECURE_ID: 2MVcdQUU6dJs3saNTW5CnR
+maas_user: testflinger_a
 node_id: fny73k
 node_name: rozary
-maas_user: testflinger_a
-agent_name: rozary
-env:
-  HEXR_DEVICE_SECURE_ID: 2MVcdQUU6dJs3saNTW5CnR
-  DEVICE_IP: 10.245.130.44

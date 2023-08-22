@@ -1,8 +1,54 @@
+agent_name: polari
+default_disks:
+- id: '41'
+  name: sda
+  parent_disk_blkid: '41'
+  ptable: GPT
+  type: disk
+- device: '599'
+  id: sda-part1
+  number: '599'
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 599-format
+  label: efi
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  type: format
+  volume: '599'
+- device: 599-format
+  id: 599-mount
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  path: /boot/efi
+  type: mount
+- device: '600'
+  id: sda-part2
+  number: '600'
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  size: '959111495680'
+  type: partition
+- fstype: ext4
+  id: 600-format
+  label: root
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  type: format
+  volume: '600'
+- device: 600-format
+  id: 600-mount
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  path: /
+  type: mount
 device_ip: 10.245.130.22
+env:
+  DEVICE_IP: 10.245.130.22
+  HEXR_DEVICE_SECURE_ID: p6rBUqTxZYtJBfeoJMakCW
+maas_user: testflinger_a
 node_id: dghm44
 node_name: polari
-maas_user: testflinger_a
-agent_name: polari
-env:
-  HEXR_DEVICE_SECURE_ID: p6rBUqTxZYtJBfeoJMakCW
-  DEVICE_IP: 10.245.130.22

@@ -1,8 +1,54 @@
+agent_name: elroy
+default_disks:
+- id: '208'
+  name: sda
+  parent_disk_blkid: '208'
+  ptable: GPT
+  type: disk
+- device: '841'
+  id: sda-part1
+  number: '841'
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 841-format
+  label: efi
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  type: format
+  volume: '841'
+- device: 841-format
+  id: 841-mount
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  path: /boot/efi
+  type: mount
+- device: '842'
+  id: sda-part2
+  number: '842'
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 842-format
+  label: root
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  type: format
+  volume: '842'
+- device: 842-format
+  id: 842-mount
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  path: /
+  type: mount
 device_ip: 10.245.130.46
+env:
+  DEVICE_IP: 10.245.130.46
+  HEXR_DEVICE_SECURE_ID: XcdtyT3NEWbMNDAGKWjK7o
+maas_user: testflinger_a
 node_id: 64y6tt
 node_name: elroy
-maas_user: testflinger_a
-agent_name: elroy
-env:
-  HEXR_DEVICE_SECURE_ID: XcdtyT3NEWbMNDAGKWjK7o
-  DEVICE_IP: 10.245.130.46

@@ -1,8 +1,54 @@
+agent_name: octopot
+default_disks:
+- id: '147'
+  name: sda
+  parent_disk_blkid: '147'
+  ptable: GPT
+  type: disk
+- device: '448'
+  id: sda-part1
+  number: '448'
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 448-format
+  label: efi
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  type: format
+  volume: '448'
+- device: 448-format
+  id: 448-mount
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  path: /boot/efi
+  type: mount
+- device: '449'
+  id: sda-part2
+  number: '449'
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  size: '11999593365504'
+  type: partition
+- fstype: ext4
+  id: 449-format
+  label: root
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  type: format
+  volume: '449'
+- device: 449-format
+  id: 449-mount
+  parent_disk: '147'
+  parent_disk_blkid: '147'
+  path: /
+  type: mount
 device_ip: 10.245.130.49
+env:
+  DEVICE_IP: 10.245.130.49
+  HEXR_DEVICE_SECURE_ID: yWxS5NCiPTzwhym2Ycrf2X
+maas_user: testflinger_a
 node_id: 44rbep
 node_name: octopot
-maas_user: testflinger_a
-agent_name: octopot
-env:
-  HEXR_DEVICE_SECURE_ID: yWxS5NCiPTzwhym2Ycrf2X
-  DEVICE_IP: 10.245.130.49

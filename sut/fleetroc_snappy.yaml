@@ -1,8 +1,59 @@
+agent_name: fleetroc
+default_disks:
+- id: '204'
+  name: sda
+  parent_disk_blkid: '204'
+  ptable: GPT
+  type: disk
+- device: '711'
+  id: sda-part1
+  number: '711'
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 711-format
+  label: efi
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  type: format
+  volume: '711'
+- device: 711-format
+  id: 711-mount
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  path: /boot/efi
+  type: mount
+- device: '712'
+  id: sda-part2
+  number: '712'
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 712-format
+  label: root
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  type: format
+  volume: '712'
+- device: 712-format
+  id: 712-mount
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  path: /
+  type: mount
+- id: '205'
+  name: sdb
+  parent_disk_blkid: '205'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.10
+env:
+  DEVICE_IP: 10.245.130.10
+  HEXR_DEVICE_SECURE_ID: j2889PqRM2EmPN3SEjE8rP
+maas_user: testflinger_a
 node_id: gwmhd6
 node_name: fleetroc
-maas_user: testflinger_a
-agent_name: fleetroc
-env:
-  HEXR_DEVICE_SECURE_ID: j2889PqRM2EmPN3SEjE8rP
-  DEVICE_IP: 10.245.130.10

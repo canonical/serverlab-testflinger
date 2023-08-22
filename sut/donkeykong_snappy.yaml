@@ -1,8 +1,54 @@
+agent_name: donkeykong
+default_disks:
+- id: '198'
+  name: sda
+  parent_disk_blkid: '198'
+  ptable: GPT
+  type: disk
+- device: '821'
+  id: sda-part1
+  number: '821'
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 821-format
+  label: efi
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  type: format
+  volume: '821'
+- device: 821-format
+  id: 821-mount
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  path: /boot/efi
+  type: mount
+- device: '822'
+  id: sda-part2
+  number: '822'
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  size: '957454745600'
+  type: partition
+- fstype: ext4
+  id: 822-format
+  label: root
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  type: format
+  volume: '822'
+- device: 822-format
+  id: 822-mount
+  parent_disk: '198'
+  parent_disk_blkid: '198'
+  path: /
+  type: mount
 device_ip: 10.245.130.66
+env:
+  DEVICE_IP: 10.245.130.66
+  HEXR_DEVICE_SECURE_ID: F7UTGtnispX4pbNWfoF7K4
+maas_user: testflinger_a
 node_id: xfg87p
 node_name: donkeykong
-maas_user: testflinger_a
-agent_name: donkeykong
-env:
-  HEXR_DEVICE_SECURE_ID: F7UTGtnispX4pbNWfoF7K4
-  DEVICE_IP: 10.245.130.66

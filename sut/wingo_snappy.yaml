@@ -1,8 +1,104 @@
+agent_name: wingo
+default_disks:
+- id: '267'
+  name: nvme1n1
+  parent_disk_blkid: '267'
+  ptable: GPT
+  type: disk
+- device: '999'
+  id: nvme1n1-part1
+  number: '999'
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 999-format
+  label: efi
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  type: format
+  volume: '999'
+- device: 999-format
+  id: 999-mount
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  path: /boot/efi
+  type: mount
+- device: '1000'
+  id: nvme1n1-part2
+  number: '1000'
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  size: '7680957612032'
+  type: partition
+- fstype: ext4
+  id: 1000-format
+  label: root
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  type: format
+  volume: '1000'
+- device: 1000-format
+  id: 1000-mount
+  parent_disk: '267'
+  parent_disk_blkid: '267'
+  path: /
+  type: mount
+- id: '268'
+  name: nvme2n1
+  parent_disk_blkid: '268'
+  ptable: GPT
+  type: disk
+- device: '1041'
+  id: nvme2n1-part1
+  number: '1041'
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 1041-format
+  label: ''
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  type: format
+  volume: '1041'
+- device: 1041-format
+  id: 1041-mount
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  path: /data/nvme2n1part1
+  type: mount
+- id: '269'
+  name: nvme3n1
+  parent_disk_blkid: '269'
+  ptable: GPT
+  type: disk
+- device: '1042'
+  id: nvme3n1-part1
+  number: '1042'
+  parent_disk: '269'
+  parent_disk_blkid: '269'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 1042-format
+  label: ''
+  parent_disk: '269'
+  parent_disk_blkid: '269'
+  type: format
+  volume: '1042'
+- device: 1042-format
+  id: 1042-mount
+  parent_disk: '269'
+  parent_disk_blkid: '269'
+  path: /data/nvme3n1part1
+  type: mount
 device_ip: null
+env:
+  DEVICE_IP: null
+  HEXR_DEVICE_SECURE_ID: FKFRkXHejhDH6MWXvZZz2p
+maas_user: testflinger_a
 node_id: dpmw3b
 node_name: wingo
-maas_user: testflinger_a
-agent_name: wingo
-env:
-  HEXR_DEVICE_SECURE_ID: FKFRkXHejhDH6MWXvZZz2p
-  DEVICE_IP: null

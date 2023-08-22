@@ -1,7 +1,33 @@
-device_ip: 10.245.135.8
-node_id: s7wc4h
-node_name: kvm-medium-1
-maas_user: testflinger_a
 agent_name: kvm-medium-1
+default_disks:
+- id: '326'
+  name: vda
+  parent_disk_blkid: '326'
+  ptable: GPT
+  type: disk
+- device: '1064'
+  id: vda-part2
+  number: '1064'
+  parent_disk: '326'
+  parent_disk_blkid: '326'
+  size: '99992207360'
+  type: partition
+- fstype: ext4
+  id: 1064-format
+  label: root
+  parent_disk: '326'
+  parent_disk_blkid: '326'
+  type: format
+  volume: '1064'
+- device: 1064-format
+  id: 1064-mount
+  parent_disk: '326'
+  parent_disk_blkid: '326'
+  path: /
+  type: mount
+device_ip: 10.245.135.8
 env:
   DEVICE_IP: 10.245.135.8
+maas_user: testflinger_a
+node_id: s7wc4h
+node_name: kvm-medium-1

@@ -1,8 +1,34 @@
+agent_name: mayapple
+default_disks:
+- id: '58'
+  name: sda
+  parent_disk_blkid: '58'
+  ptable: GPT
+  type: disk
+- device: '115'
+  id: sda-part2
+  number: '115'
+  parent_disk: '58'
+  parent_disk_blkid: '58'
+  size: '72737619968'
+  type: partition
+- fstype: ext4
+  id: 115-format
+  label: root
+  parent_disk: '58'
+  parent_disk_blkid: '58'
+  type: format
+  volume: '115'
+- device: 115-format
+  id: 115-mount
+  parent_disk: '58'
+  parent_disk_blkid: '58'
+  path: /
+  type: mount
 device_ip: 10.245.130.8
+env:
+  DEVICE_IP: 10.245.130.8
+  HEXR_DEVICE_SECURE_ID: a0020000009zubi
+maas_user: testflinger_a
 node_id: fbh36g
 node_name: mayapple
-maas_user: testflinger_a
-agent_name: mayapple
-env:
-  HEXR_DEVICE_SECURE_ID: a0020000009zubi
-  DEVICE_IP: 10.245.130.8

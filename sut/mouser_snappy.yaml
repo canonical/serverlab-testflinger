@@ -1,8 +1,79 @@
+agent_name: mouser
+default_disks:
+- id: '180'
+  name: sda
+  parent_disk_blkid: '180'
+  ptable: GPT
+  type: disk
+- device: '578'
+  id: sda-part1
+  number: '578'
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 578-format
+  label: efi
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  type: format
+  volume: '578'
+- device: 578-format
+  id: 578-mount
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  path: /boot/efi
+  type: mount
+- device: '579'
+  id: sda-part2
+  number: '579'
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 579-format
+  label: root
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  type: format
+  volume: '579'
+- device: 579-format
+  id: 579-mount
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  path: /
+  type: mount
+- id: '181'
+  name: sdb
+  parent_disk_blkid: '181'
+  ptable: GPT
+  type: disk
+- device: '580'
+  id: sdb-part1
+  number: '580'
+  parent_disk: '181'
+  parent_disk_blkid: '181'
+  size: '480059064320'
+  type: partition
+- fstype: ext4
+  id: 580-format
+  label: ''
+  parent_disk: '181'
+  parent_disk_blkid: '181'
+  type: format
+  volume: '580'
+- device: 580-format
+  id: 580-mount
+  parent_disk: '181'
+  parent_disk_blkid: '181'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.62
+env:
+  DEVICE_IP: 10.245.130.62
+  HEXR_DEVICE_SECURE_ID: 6o5Zupba9ppSB8LL3BRycZ
+maas_user: testflinger_a
 node_id: 8td7f3
 node_name: mouser
-maas_user: testflinger_a
-agent_name: mouser
-env:
-  HEXR_DEVICE_SECURE_ID: 6o5Zupba9ppSB8LL3BRycZ
-  DEVICE_IP: 10.245.130.62

@@ -1,8 +1,54 @@
+agent_name: kongfu
+default_disks:
+- id: '213'
+  name: sda
+  parent_disk_blkid: '213'
+  ptable: GPT
+  type: disk
+- device: '1244'
+  id: sda-part1
+  number: '1244'
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1244-format
+  label: efi
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  type: format
+  volume: '1244'
+- device: 1244-format
+  id: 1244-mount
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  path: /boot/efi
+  type: mount
+- device: '1245'
+  id: sda-part2
+  number: '1245'
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  size: '799056855040'
+  type: partition
+- fstype: ext4
+  id: 1245-format
+  label: root
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  type: format
+  volume: '1245'
+- device: 1245-format
+  id: 1245-mount
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  path: /
+  type: mount
 device_ip: 10.245.130.84
+env:
+  DEVICE_IP: 10.245.130.84
+  HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
+maas_user: testflinger_a
 node_id: fcmq3a
 node_name: kongfu
-maas_user: testflinger_a
-agent_name: kongfu
-env:
-  HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
-  DEVICE_IP: 10.245.130.84

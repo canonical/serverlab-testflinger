@@ -1,8 +1,61 @@
+agent_name: torchtusk
+default_disks:
+- id: '71'
+  name: nvme0n1
+  parent_disk_blkid: '71'
+  ptable: GPT
+  type: disk
+- device: '736'
+  id: nvme0n1-part1
+  number: '736'
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 736-format
+  label: efi
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  type: format
+  volume: '736'
+- device: 736-format
+  id: 736-mount
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  path: /boot/efi
+  type: mount
+- device: '1031'
+  id: nvme0n1-part2
+  number: '1031'
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  size: '749996081152'
+  type: partition
+- fstype: ext4
+  id: 1031-format
+  label: ''
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  type: format
+  volume: '1031'
+- device: 1031-format
+  id: 1031-mount
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  path: /
+  type: mount
+- device: '1032'
+  id: nvme0n1-part3
+  number: '1032'
+  parent_disk: '71'
+  parent_disk_blkid: '71'
+  size: '209648091136'
+  type: partition
 device_ip: 10.245.130.30
+env:
+  DEVICE_IP: 10.245.130.30
+  HEXR_DEVICE_SECURE_ID: vnDCsfJgz6biCkF2fS3Q25
+maas_user: testflinger_a
 node_id: p4bceg
 node_name: torchtusk
-maas_user: testflinger_a
-agent_name: torchtusk
-env:
-  HEXR_DEVICE_SECURE_ID: vnDCsfJgz6biCkF2fS3Q25
-  DEVICE_IP: 10.245.130.30

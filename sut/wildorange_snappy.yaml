@@ -1,8 +1,69 @@
+agent_name: wildorange
+default_disks:
+- id: '54'
+  name: sda
+  parent_disk_blkid: '54'
+  ptable: GPT
+  type: disk
+- device: '1251'
+  id: sda-part1
+  number: '1251'
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1251-format
+  label: efi
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  type: format
+  volume: '1251'
+- device: 1251-format
+  id: 1251-mount
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  path: /boot/efi
+  type: mount
+- device: '1252'
+  id: sda-part2
+  number: '1252'
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  size: '146272157696'
+  type: partition
+- fstype: ext4
+  id: 1252-format
+  label: root
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  type: format
+  volume: '1252'
+- device: 1252-format
+  id: 1252-mount
+  parent_disk: '54'
+  parent_disk_blkid: '54'
+  path: /
+  type: mount
+- id: '55'
+  name: sdb
+  parent_disk_blkid: '55'
+  ptable: null
+  type: disk
+- id: '56'
+  name: sdc
+  parent_disk_blkid: '56'
+  ptable: null
+  type: disk
+- id: '57'
+  name: sdd
+  parent_disk_blkid: '57'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.5
+env:
+  DEVICE_IP: 10.245.130.5
+  HEXR_DEVICE_SECURE_ID: a002000000FcUTr
+maas_user: testflinger_a
 node_id: m7gfpp
 node_name: wildorange
-maas_user: testflinger_a
-agent_name: wildorange
-env:
-  HEXR_DEVICE_SECURE_ID: a002000000FcUTr
-  DEVICE_IP: 10.245.130.5

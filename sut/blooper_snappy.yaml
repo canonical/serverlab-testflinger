@@ -1,8 +1,59 @@
+agent_name: blooper
+default_disks:
+- id: '357'
+  name: sda
+  parent_disk_blkid: '357'
+  ptable: GPT
+  type: disk
+- device: '1165'
+  id: sda-part1
+  number: '1165'
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1165-format
+  label: efi
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  type: format
+  volume: '1165'
+- device: 1165-format
+  id: 1165-mount
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  path: /boot/efi
+  type: mount
+- device: '1166'
+  id: sda-part2
+  number: '1166'
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 1166-format
+  label: root
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  type: format
+  volume: '1166'
+- device: 1166-format
+  id: 1166-mount
+  parent_disk: '357'
+  parent_disk_blkid: '357'
+  path: /
+  type: mount
+- id: '358'
+  name: sdb
+  parent_disk_blkid: '358'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.95
+env:
+  DEVICE_IP: 10.245.130.95
+  HEXR_DEVICE_SECURE_ID: AE8SQpucCfv4DPWoZcf95k
+maas_user: testflinger_a
 node_id: agxhre
 node_name: blooper
-maas_user: testflinger_a
-agent_name: blooper
-env:
- HEXR_DEVICE_SECURE_ID: AE8SQpucCfv4DPWoZcf95k
- DEVICE_IP: 10.245.130.95

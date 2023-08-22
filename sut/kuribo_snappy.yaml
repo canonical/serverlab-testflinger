@@ -1,8 +1,79 @@
+agent_name: kuribo
+default_disks:
+- id: '89'
+  name: sda
+  parent_disk_blkid: '89'
+  ptable: GPT
+  type: disk
+- device: '345'
+  id: sda-part1
+  number: '345'
+  parent_disk: '89'
+  parent_disk_blkid: '89'
+  size: '1000198897664'
+  type: partition
+- fstype: ext4
+  id: 345-format
+  label: ''
+  parent_disk: '89'
+  parent_disk_blkid: '89'
+  type: format
+  volume: '345'
+- device: 345-format
+  id: 345-mount
+  parent_disk: '89'
+  parent_disk_blkid: '89'
+  path: /mnt/sda1
+  type: mount
+- id: '90'
+  name: sdb
+  parent_disk_blkid: '90'
+  ptable: GPT
+  type: disk
+- device: '338'
+  id: sdb-part1
+  number: '338'
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 338-format
+  label: efi
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  type: format
+  volume: '338'
+- device: 338-format
+  id: 338-mount
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  path: /boot/efi
+  type: mount
+- device: '339'
+  id: sdb-part2
+  number: '339'
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  size: '239444426752'
+  type: partition
+- fstype: ext4
+  id: 339-format
+  label: root
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  type: format
+  volume: '339'
+- device: 339-format
+  id: 339-mount
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  path: /
+  type: mount
 device_ip: 10.245.130.35
+env:
+  DEVICE_IP: 10.245.130.35
+  HEXR_DEVICE_SECURE_ID: TEGVjfbK94HPopQbddKLxQ
+maas_user: testflinger_a
 node_id: aw8eyd
 node_name: kuribo
-maas_user: testflinger_a
-agent_name: kuribo
-env:
-  HEXR_DEVICE_SECURE_ID: TEGVjfbK94HPopQbddKLxQ
-  DEVICE_IP: 10.245.130.35

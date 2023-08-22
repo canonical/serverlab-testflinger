@@ -1,8 +1,79 @@
+agent_name: serviceberry
+default_disks:
+- id: '37'
+  name: sdc
+  parent_disk_blkid: '37'
+  ptable: GPT
+  type: disk
+- device: '864'
+  id: sdc-part1
+  number: '864'
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 864-format
+  label: efi
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  type: format
+  volume: '864'
+- device: 864-format
+  id: 864-mount
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  path: /boot/efi
+  type: mount
+- device: '865'
+  id: sdc-part2
+  number: '865'
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  size: '599584145408'
+  type: partition
+- fstype: ext4
+  id: 865-format
+  label: root
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  type: format
+  volume: '865'
+- device: 865-format
+  id: 865-mount
+  parent_disk: '37'
+  parent_disk_blkid: '37'
+  path: /
+  type: mount
+- id: '38'
+  name: sdd
+  parent_disk_blkid: '38'
+  ptable: GPT
+  type: disk
+- device: '866'
+  id: sdd-part1
+  number: '866'
+  parent_disk: '38'
+  parent_disk_blkid: '38'
+  size: '600116822016'
+  type: partition
+- fstype: ext4
+  id: 866-format
+  label: ''
+  parent_disk: '38'
+  parent_disk_blkid: '38'
+  type: format
+  volume: '866'
+- device: 866-format
+  id: 866-mount
+  parent_disk: '38'
+  parent_disk_blkid: '38'
+  path: /mnt/sdd1
+  type: mount
 device_ip: 10.245.130.18
+env:
+  DEVICE_IP: 10.245.130.18
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0h
+maas_user: testflinger_a
 node_id: pfx6k3
 node_name: serviceberry
-maas_user: testflinger_a
-agent_name: serviceberry
-env:
-  HEXR_DEVICE_SECURE_ID: a002000000EuC0h
-  DEVICE_IP: 10.245.130.18

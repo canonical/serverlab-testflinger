@@ -1,7 +1,33 @@
-device_ip: 10.245.135.16
-node_id: 8qndyb
-node_name: kvm-small-11
-maas_user: testflinger_a
 agent_name: kvm-small-11
+default_disks:
+- id: '384'
+  name: vda
+  parent_disk_blkid: '384'
+  ptable: GPT
+  type: disk
+- device: '1273'
+  id: vda-part2
+  number: '1273'
+  parent_disk: '384'
+  parent_disk_blkid: '384'
+  size: '39992688640'
+  type: partition
+- fstype: ext4
+  id: 1273-format
+  label: root
+  parent_disk: '384'
+  parent_disk_blkid: '384'
+  type: format
+  volume: '1273'
+- device: 1273-format
+  id: 1273-mount
+  parent_disk: '384'
+  parent_disk_blkid: '384'
+  path: /
+  type: mount
+device_ip: 10.245.135.16
 env:
   DEVICE_IP: 10.245.135.16
+maas_user: testflinger_a
+node_id: 8qndyb
+node_name: kvm-small-11

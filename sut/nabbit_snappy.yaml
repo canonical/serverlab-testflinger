@@ -1,8 +1,59 @@
+agent_name: nabbit
+default_disks:
+- id: '5'
+  name: nvme0n1
+  parent_disk_blkid: '5'
+  ptable: GPT
+  type: disk
+- device: '294'
+  id: nvme0n1-part1
+  number: '294'
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 294-format
+  label: efi
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  type: format
+  volume: '294'
+- device: 294-format
+  id: 294-mount
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  path: /boot/efi
+  type: mount
+- device: '295'
+  id: nvme0n1-part2
+  number: '295'
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  size: '749610205184'
+  type: partition
+- fstype: ext4
+  id: 295-format
+  label: root
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  type: format
+  volume: '295'
+- device: 295-format
+  id: 295-mount
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  path: /
+  type: mount
+- id: '6'
+  name: sda
+  parent_disk_blkid: '6'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.23
+env:
+  DEVICE_IP: 10.245.130.23
+  HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
+maas_user: testflinger_a
 node_id: x7867a
 node_name: nabbit
-maas_user: testflinger_a
-agent_name: nabbit
-env:
-  HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
-  DEVICE_IP: 10.245.130.23

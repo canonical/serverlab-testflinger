@@ -1,8 +1,54 @@
+agent_name: danet
+default_disks:
+- id: '154'
+  name: nvme0n1
+  parent_disk_blkid: '154'
+  ptable: GPT
+  type: disk
+- device: '496'
+  id: nvme0n1-part1
+  number: '496'
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 496-format
+  label: efi
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  type: format
+  volume: '496'
+- device: 496-format
+  id: 496-mount
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  path: /boot/efi
+  type: mount
+- device: '497'
+  id: nvme0n1-part2
+  number: '497'
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 497-format
+  label: root
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  type: format
+  volume: '497'
+- device: 497-format
+  id: 497-mount
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  path: /
+  type: mount
 device_ip: 10.245.130.52
+env:
+  DEVICE_IP: 10.245.130.52
+  HEXR_DEVICE_SECURE_ID: 6TimgMA3UYqj2E3K2LPpt3
+maas_user: testflinger_a
 node_id: ayh4pm
 node_name: danet
-maas_user: testflinger_a
-agent_name: danet
-env:
-  HEXR_DEVICE_SECURE_ID: 6TimgMA3UYqj2E3K2LPpt3
-  DEVICE_IP: 10.245.130.52

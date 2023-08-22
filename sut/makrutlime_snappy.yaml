@@ -1,8 +1,39 @@
+agent_name: makrutlime
+default_disks:
+- id: '20'
+  name: sdc
+  parent_disk_blkid: '20'
+  ptable: null
+  type: disk
+- id: '21'
+  name: sdd
+  parent_disk_blkid: '21'
+  ptable: GPT
+  type: disk
+- device: '1254'
+  id: sdd-part2
+  number: '1254'
+  parent_disk: '21'
+  parent_disk_blkid: '21'
+  size: '146809028608'
+  type: partition
+- fstype: ext4
+  id: 1254-format
+  label: root
+  parent_disk: '21'
+  parent_disk_blkid: '21'
+  type: format
+  volume: '1254'
+- device: 1254-format
+  id: 1254-mount
+  parent_disk: '21'
+  parent_disk_blkid: '21'
+  path: /
+  type: mount
 device_ip: 10.245.130.13
+env:
+  DEVICE_IP: 10.245.130.13
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0r
+maas_user: testflinger_a
 node_id: 7r8gpw
 node_name: makrutlime
-maas_user: testflinger_a
-agent_name: makrutlime
-env:
-  HEXR_DEVICE_SECURE_ID: a002000000EuC0r
-  DEVICE_IP: 10.245.130.13

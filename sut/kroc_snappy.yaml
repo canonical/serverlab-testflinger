@@ -1,8 +1,79 @@
+agent_name: kroc
+default_disks:
+- id: '340'
+  name: sda
+  parent_disk_blkid: '340'
+  ptable: GPT
+  type: disk
+- device: '1100'
+  id: sda-part1
+  number: '1100'
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1100-format
+  label: efi
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  type: format
+  volume: '1100'
+- device: 1100-format
+  id: 1100-mount
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  path: /boot/efi
+  type: mount
+- device: '1101'
+  id: sda-part2
+  number: '1101'
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 1101-format
+  label: root
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  type: format
+  volume: '1101'
+- device: 1101-format
+  id: 1101-mount
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  path: /
+  type: mount
+- id: '341'
+  name: sdb
+  parent_disk_blkid: '341'
+  ptable: GPT
+  type: disk
+- device: '1102'
+  id: sdb-part1
+  number: '1102'
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  size: '1000186314752'
+  type: partition
+- fstype: ext4
+  id: 1102-format
+  label: ''
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  type: format
+  volume: '1102'
+- device: 1102-format
+  id: 1102-mount
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  path: /data/sdb1
+  type: mount
 device_ip: 10.245.130.88
+env:
+  DEVICE_IP: 10.245.130.88
+  HEXR_DEVICE_SECURE_ID: d4UWQFbgJwuc4GZKjuUKqs
+maas_user: testflinger_a
 node_id: qa88b8
 node_name: kroc
-maas_user: testflinger_a
-agent_name: kroc
-env:
-  HEXR_DEVICE_SECURE_ID: d4UWQFbgJwuc4GZKjuUKqs
-  DEVICE_IP: 10.245.130.88

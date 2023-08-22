@@ -1,8 +1,54 @@
+agent_name: pikmin
+default_disks:
+- id: '240'
+  name: nvme0n1
+  parent_disk_blkid: '240'
+  ptable: GPT
+  type: disk
+- device: '1143'
+  id: nvme0n1-part1
+  number: '1143'
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 1143-format
+  label: efi
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  type: format
+  volume: '1143'
+- device: 1143-format
+  id: 1143-mount
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  path: /boot/efi
+  type: mount
+- device: '1144'
+  id: nvme0n1-part2
+  number: '1144'
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 1144-format
+  label: root
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  type: format
+  volume: '1144'
+- device: 1144-format
+  id: 1144-mount
+  parent_disk: '240'
+  parent_disk_blkid: '240'
+  path: /
+  type: mount
 device_ip: 10.245.130.80
+env:
+  DEVICE_IP: 10.245.130.80
+  HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
+maas_user: testflinger_a
 node_id: nqby4y
 node_name: pikmin
-maas_user: testflinger_a
-agent_name: pikmin
-env:
-  HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
-  DEVICE_IP: 10.245.130.80
