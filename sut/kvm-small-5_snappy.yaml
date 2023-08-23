@@ -1,5 +1,5 @@
 device_ip: 10.245.135.23
-node_id: g64ss4
+node_id: 8dtack
 node_name: kvm-small-5
 maas_user: testflinger_a
 agent_name: kvm-small-5
