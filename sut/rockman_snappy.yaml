@@ -1,0 +1,8 @@
+device_ip: 10.245.130.84
+node_id: dhbdpt
+node_name: rockman
+maas_user: testflinger_a
+agent_name: rockman
+env:
+ HEXR_DEVICE_SECURE_ID: 7oVHU9DXEFFU6T97LtNBsd
+ DEVICE_IP: 10.245.130.84
