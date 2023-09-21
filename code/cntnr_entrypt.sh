@@ -6,6 +6,8 @@
 : ${MAAS_PORT:=5240}
 : ${MAAS_API_KEY:='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'}
 
+/usr/sbin/ip route change default via 10.245.128.1
+
 echo
 echo "###########################"
 echo

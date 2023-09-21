@@ -41,8 +41,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.14
-      docker_int:
-        ipv4_address: 172.16.0.14
+      # docker_int:
+      #   ipv4_address: 172.16.0.14
     restart: unless-stopped
     # volumes:
     #   - ./mqtt/conf:/mosquitto/config
@@ -83,8 +83,8 @@ services:
     restart: unless-stopped
     container_name: nh-vault
     networks:
-      # needham_int:
-      #   ipv4_address: 10.245.128.121
+      needham_int:
+        ipv4_address: 10.245.128.121
       docker_int:
         ipv4_address: 172.16.0.2
     expose:
@@ -174,8 +174,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.15
-      docker_int:
-        ipv4_address: 172.16.0.15
+      # docker_int:
+      #   ipv4_address: 172.16.0.15
     expose:
       - 9443
     hostname: nh-portainer
@@ -192,8 +192,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.116
-      docker_int:
-        ipv4_address: 172.16.0.16
+      # docker_int:
+      #   ipv4_address: 172.16.0.16
     expose:
       - 8080
       - 50000
@@ -246,8 +246,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.117
-      docker_int:
-        ipv4_address: 172.16.0.17
+      # docker_int:
+      #   ipv4_address: 172.16.0.17
     hostname: nh-influxdb
     environment:
       INFLUXDB_HTTP_BIND_ADDRESS: 10.245.128.117:8086
@@ -261,8 +261,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.118
-      docker_int:
-        ipv4_address: 172.16.0.18
+      # docker_int:
+      #   ipv4_address: 172.16.0.18
     expose:
       - 8888
     ports:
@@ -295,8 +295,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.120
-      docker_int:
-        ipv4_address: 172.16.0.20
+      # docker_int:
+      #   ipv4_address: 172.16.0.20
     expose:
       - 3000
     ports:
@@ -314,8 +314,8 @@ services:
     networks:
       needham_int:
         ipv4_address: 10.245.128.123
-      docker_int:
-        ipv4_address: 172.16.0.23
+      # docker_int:
+      #   ipv4_address: 172.16.0.23
     expose:
       - 9999
     ports:

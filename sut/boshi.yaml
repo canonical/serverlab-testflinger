@@ -2,86 +2,74 @@ job_queue: boshi
 provision_data:
   distro: focal
   disks:
-      - id: disk0
-        disk: 0
-        type: disk
-      - id: disk0-part1 # XXX: bug 1867812
-        device: disk0
-        type: partition
-        size: 399.5G
-        number: 1
-      - id: disk1
-        disk: 1
-        type: disk
-        ptable: gpt
-      - id: disk1-part1
-        device: disk1
-        type: partition
-        size: 500M
-        number: 1
-      - id: disk1-part1-format
-        type: format
-        volume: disk1-part1
-        fstype: fat32
-        label: efi
-      - id: disk1-part1-mount
-        device: disk1-part1-format
-        path: /boot/efi
-        type: mount
-      - id: disk1-part2
-        device: disk1
-        type: partition
-        size: 2G
-        number: 2
-      - id: disk1-part2-format
-        volume: disk1-part2
-        type: format
-        fstype: ext4
-        label: boot
-      - id: disk1-part2-mount
-        device: disk1-part2-format
-        path: /boot
-        type: mount
-      - id: disk1-part3
-        device: disk1
-        type: partition
-        size: 100G
-        number: 3
-      - backing_device: disk1-part3
-        cache_device: disk0-part1
-        cache_mode: writeback
-        id: bcache0
-        name: bcache0
-        type: bcache
-      - id: bcache0-format
-        volume: bcache0
-        type: format
-        fstype: ext4
-        label: root
-      - id: bcache0-mount
-        device: bcache0-format
-        path: /
-        type: mount
-      - id: disk1-part4
-        device: disk1
-        type: partition
-        size: 897.4G
-        number: 4
-      - backing_device: disk1-part4
-        cache_device: disk0-part1
-        cache_mode: writeback
-        id: bcache2
-        name: bcache-nova-ephemeral
-        type: bcache
-      - id: disk2
-        disk: 2
-        type: disk
-      - backing_device: disk2
-        cache_device: disk0-part1
-        cache_mode: writeback
-        id: bcache1
-        name: bcache1
-        type: bcache
+    - id: disk0
+      disk: 0
+      type: disk
+      ptable: gpt
+    - id: disk0-part1
+      device: disk0
+      type: partition
+      number: 1
+      size: 2G
+      alloc_pct: 80
+    - id: disk0-part1-format
+      type: format
+      volume: disk0-part1
+      fstype: ext4
+      label: nova-ephemeral
+    - id: disk1-part1-mount
+      device: disk1-part1-format
+      path: /
+      type: mount
+    - id: disk1
+      disk: 1
+      type: disk
+      ptable: gpt
+    - id: disk1-part1
+      device: disk1
+      type: partition
+      number: 1
+      size: 500M
+      alloc_pct: 10
+    - id: disk1-part1-format
+      type: format
+      volume: disk1-part1
+      fstype: fat32
+      label: efi
+    - id: disk1-part1-mount
+      device: disk1-part1-format
+      path: /boot/efi
+      type: mount
+    - id: disk1-part2
+      device: disk1
+      type: partition
+      number: 2
+      size: 1G
+      alloc_pct: 20
+    - id: disk1-part2-format
+      volume: disk1-part2
+      type: format
+      fstype: ext4
+      label: boot
+    - id: disk1-part2-mount
+      device: disk1-part2-format
+      path: /boot
+      type: mount
+    - id: disk1-part3
+      device: disk1
+      type: partition
+      number: 3
+      size: 10G
+      alloc_pct: 60
+    - id: disk1-part3-format
+      volume: disk1-part3
+      type: format
+      fstype: ext4
+      label: ceph
+    - id: disk1-part3-mount
+      device: disk1-part3-format
+      path: /data
+      type: mount
 test_data:
   test_cmds: |
     ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
