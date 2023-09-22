@@ -1,149 +1,129 @@
 agent_name: ficet
 default_disks:
-- id: '163'
+- id: '401'
   name: nvme0n1
-  parent_disk_blkid: '163'
+  parent_disk_blkid: '401'
   ptable: GPT
   type: disk
-- device: '672'
+- device: '6769'
   id: nvme0n1-part1
-  number: '672'
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  number: '6769'
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 672-format
+  id: 6769-format
   label: efi
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   type: format
-  volume: '672'
-- device: 672-format
-  id: 672-mount
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  volume: '6769'
+- device: 6769-format
+  id: 6769-mount
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   path: /boot/efi
   type: mount
-- device: '673'
+- device: '6770'
   id: nvme0n1-part2
-  number: '673'
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  number: '6770'
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 673-format
+  id: 6770-format
   label: root
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   type: format
-  volume: '673'
-- device: 673-format
-  id: 673-mount
-  parent_disk: '163'
-  parent_disk_blkid: '163'
+  volume: '6770'
+- device: 6770-format
+  id: 6770-mount
+  parent_disk: '401'
+  parent_disk_blkid: '401'
   path: /
   type: mount
-- id: '164'
+- id: '402'
   name: nvme1n1
-  parent_disk_blkid: '164'
-  ptable: GPT
+  parent_disk_blkid: '402'
+  ptable: null
   type: disk
-- device: '674'
-  id: nvme1n1-part1
-  number: '674'
-  parent_disk: '164'
-  parent_disk_blkid: '164'
-  size: '960189431808'
-  type: partition
-- fstype: ext4
-  id: 674-format
-  label: ''
-  parent_disk: '164'
-  parent_disk_blkid: '164'
-  type: format
-  volume: '674'
-- device: 674-format
-  id: 674-mount
-  parent_disk: '164'
-  parent_disk_blkid: '164'
-  path: /mnt/nvme1n1p1
-  type: mount
-- id: '165'
+- id: '403'
   name: nvme2n1
-  parent_disk_blkid: '165'
+  parent_disk_blkid: '403'
   ptable: GPT
   type: disk
-- device: '675'
+- device: '6771'
   id: nvme2n1-part1
-  number: '675'
-  parent_disk: '165'
-  parent_disk_blkid: '165'
-  size: '1919376424960'
+  number: '6771'
+  parent_disk: '403'
+  parent_disk_blkid: '403'
+  size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 675-format
+  id: 6771-format
   label: ''
-  parent_disk: '165'
-  parent_disk_blkid: '165'
+  parent_disk: '403'
+  parent_disk_blkid: '403'
   type: format
-  volume: '675'
-- device: 675-format
-  id: 675-mount
-  parent_disk: '165'
-  parent_disk_blkid: '165'
-  path: /mnt/nvme2n1p1
+  volume: '6771'
+- device: 6771-format
+  id: 6771-mount
+  parent_disk: '403'
+  parent_disk_blkid: '403'
+  path: /data/nvme2n1
   type: mount
-- id: '166'
+- id: '404'
   name: nvme3n1
-  parent_disk_blkid: '166'
+  parent_disk_blkid: '404'
   ptable: GPT
   type: disk
-- device: '676'
+- device: '6772'
   id: nvme3n1-part1
-  number: '676'
-  parent_disk: '166'
-  parent_disk_blkid: '166'
-  size: '1919997181952'
+  number: '6772'
+  parent_disk: '404'
+  parent_disk_blkid: '404'
+  size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 676-format
+  id: 6772-format
   label: ''
-  parent_disk: '166'
-  parent_disk_blkid: '166'
+  parent_disk: '404'
+  parent_disk_blkid: '404'
   type: format
-  volume: '676'
-- device: 676-format
-  id: 676-mount
-  parent_disk: '166'
-  parent_disk_blkid: '166'
-  path: /mnt/nvme3n1p1
+  volume: '6772'
+- device: 6772-format
+  id: 6772-mount
+  parent_disk: '404'
+  parent_disk_blkid: '404'
+  path: /data/nvme3n1
   type: mount
-- id: '167'
+- id: '405'
   name: nvme4n1
-  parent_disk_blkid: '167'
+  parent_disk_blkid: '405'
   ptable: GPT
   type: disk
-- device: '677'
+- device: '6773'
   id: nvme4n1-part1
-  number: '677'
-  parent_disk: '167'
-  parent_disk_blkid: '167'
-  size: '1920299171840'
+  number: '6773'
+  parent_disk: '405'
+  parent_disk_blkid: '405'
+  size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 677-format
+  id: 6773-format
   label: ''
-  parent_disk: '167'
-  parent_disk_blkid: '167'
+  parent_disk: '405'
+  parent_disk_blkid: '405'
   type: format
-  volume: '677'
-- device: 677-format
-  id: 677-mount
-  parent_disk: '167'
-  parent_disk_blkid: '167'
-  path: /mnt/nvme4n1p1
+  volume: '6773'
+- device: 6773-format
+  id: 6773-mount
+  parent_disk: '405'
+  parent_disk_blkid: '405'
+  path: /data/nvme4n1
   type: mount
 device_ip: 10.245.130.56
 env:
