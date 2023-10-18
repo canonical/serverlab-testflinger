@@ -5,22 +5,22 @@ default_disks:
   parent_disk_blkid: '233'
   ptable: GPT
   type: disk
-- device: '935'
+- device: '8356'
   id: sda-part2
-  number: '935'
+  number: '8356'
   parent_disk: '233'
   parent_disk_blkid: '233'
   size: '299993399296'
   type: partition
 - fstype: ext4
-  id: 935-format
+  id: 8356-format
   label: root
   parent_disk: '233'
   parent_disk_blkid: '233'
   type: format
-  volume: '935'
-- device: 935-format
-  id: 935-mount
+  volume: '8356'
+- device: 8356-format
+  id: 8356-mount
   parent_disk: '233'
   parent_disk_blkid: '233'
   path: /
@@ -30,22 +30,22 @@ default_disks:
   parent_disk_blkid: '234'
   ptable: GPT
   type: disk
-- device: '936'
+- device: '8357'
   id: sdb-part2
-  number: '936'
+  number: '8357'
   parent_disk: '234'
   parent_disk_blkid: '234'
   size: '299989204992'
   type: partition
 - fstype: ext4
-  id: 936-format
+  id: 8357-format
   label: ''
   parent_disk: '234'
   parent_disk_blkid: '234'
   type: format
-  volume: '936'
-- device: 936-format
-  id: 936-mount
+  volume: '8357'
+- device: 8357-format
+  id: 8357-mount
   parent_disk: '234'
   parent_disk_blkid: '234'
   path: /mnt/sdb1

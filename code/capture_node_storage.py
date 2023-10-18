@@ -1,21 +1,30 @@
-from os import path, listdir
+#!/usr/bin/env python3
+from os import path, listdir, environ
 import re
 import yaml
 import json
 import logging
 import argparse
 import subprocess
+import sys
+
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler("/var/log/default_disk"),
-        logging.StreamHandler()
-    ],
-)
-logger = logging.getLogger(__name__)
+log_file=f"{environ.get('HOME')}/default_disk.log"
+try:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+               handlers=[
+                   logging.FileHandler(log_file),
+                   logging.StreamHandler()
+               ],
+    )
+except PermissionError:
+    print(f"ERROR, unable to open {log_file}")
+    sys.exit(1)
+else:
+    logger = logging.getLogger(__name__)
 
 
 def gen_disk_cfg(dev):
@@ -156,19 +165,20 @@ def file_needs_processing(filename):
     return "default_disks" not in data
 
 
-def process_file(fpath):
+def process_file(fpath, maas_profile=None):
     """Process a given config file."""
     config = read_config_from_file(fpath)
 
-    maas_user = config.get("maas_user")
+    if maas_profile is None:
+        maas_profile = config.get("maas_user")
     node_id = config.get("node_id")
 
-    if not maas_user or not node_id:
+    if not maas_profile or not node_id:
         logger.error(f"maas_user and/or node_id not in config {fpath}")
         return
 
     logger.info(f"Capturing node storage layout for {fpath}")
-    node_info = read_node_info(maas_user, node_id)
+    node_info = read_node_info(maas_profile, node_id)
     device_list = capture_initial_config(node_info, config)
 
     if not device_list.get("default_disks"):
@@ -194,6 +204,11 @@ def main():
         description="Process and clear config files."
     )
     parser.add_argument(
+        "--profile",
+        help="The maas profile to use (if not using the default)",
+        type=str,
+    )
+    parser.add_argument(
         "--process", help="Process a config file",
         type=str
     )
@@ -215,10 +230,15 @@ def main():
 
     args = parser.parse_args()
 
+    if args.profile:
+        maas_profile = args.profile
+    else:
+        maas_profile = None
+
     if args.process:
         if file_needs_processing(args.process):
             # Process the specified file
-            process_file(args.process)
+            process_file(args.process, maas_profile)
     elif args.clear:
         # Clear default_disks from the specified file
         clear_default_disks(args.clear)
@@ -231,9 +251,7 @@ def main():
         ]
         for fname in files:
             clear_default_disks(path.join("./sut", fname))
-    elif args.process_all or not (
-        args.process or args.clear or args.clear_all
-    ):
+    elif args.process_all:
         # Process all config files without a default_disks key
         files = [
             f
@@ -243,7 +261,11 @@ def main():
             and file_needs_processing(path.join("./sut", f))
         ]
         for fname in files:
-            process_file(path.join("./sut", fname))
+            process_file(path.join("./sut", fname), maas_profile)
+    else:
+        logger.error("ERROR, no valid arguments passed")
+        parser.print_usage(sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

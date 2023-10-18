@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '85'
   ptable: GPT
   type: disk
-- device: '342'
+- device: '4397'
   id: sda-part1
-  number: '342'
+  number: '4397'
   parent_disk: '85'
   parent_disk_blkid: '85'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 342-format
+  id: 4397-format
   label: efi
   parent_disk: '85'
   parent_disk_blkid: '85'
   type: format
-  volume: '342'
-- device: 342-format
-  id: 342-mount
+  volume: '4397'
+- device: 4397-format
+  id: 4397-mount
   parent_disk: '85'
   parent_disk_blkid: '85'
   path: /boot/efi
   type: mount
-- device: '343'
+- device: '4398'
   id: sda-part2
-  number: '343'
+  number: '4398'
   parent_disk: '85'
   parent_disk_blkid: '85'
   size: '299422973952'
   type: partition
 - fstype: ext4
-  id: 343-format
+  id: 4398-format
   label: root
   parent_disk: '85'
   parent_disk_blkid: '85'
   type: format
-  volume: '343'
-- device: 343-format
-  id: 343-mount
+  volume: '4398'
+- device: 4398-format
+  id: 4398-mount
   parent_disk: '85'
   parent_disk_blkid: '85'
   path: /
@@ -50,25 +50,25 @@ default_disks:
   parent_disk_blkid: '86'
   ptable: GPT
   type: disk
-- device: '347'
+- device: '16473'
   id: sdb-part1
-  number: '347'
+  number: '16473'
   parent_disk: '86'
   parent_disk_blkid: '86'
   size: '480059064320'
   type: partition
 - fstype: ext4
-  id: 347-format
+  id: 16473-format
   label: ''
   parent_disk: '86'
   parent_disk_blkid: '86'
   type: format
-  volume: '347'
-- device: 347-format
-  id: 347-mount
+  volume: '16473'
+- device: 16473-format
+  id: 16473-mount
   parent_disk: '86'
   parent_disk_blkid: '86'
-  path: /mnt/sdb1
+  path: /data-sdb
   type: mount
 device_ip: 10.245.130.34
 env:

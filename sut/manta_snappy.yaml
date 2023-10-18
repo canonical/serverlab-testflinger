@@ -1,96 +1,116 @@
 agent_name: manta
 default_disks:
 - id: '175'
-  name: nvme0n1
+  name: disk0
   parent_disk_blkid: '175'
   ptable: GPT
   type: disk
-- device: '535'
-  id: nvme0n1-part1
-  number: '535'
+- device: '7011'
+  id: disk0-part1
+  number: '7011'
   parent_disk: '175'
   parent_disk_blkid: '175'
-  size: '536870912'
+  size: '499122176'
   type: partition
 - fstype: fat32
-  id: 535-format
+  id: 7011-format
   label: efi
   parent_disk: '175'
   parent_disk_blkid: '175'
   type: format
-  volume: '535'
-- device: 535-format
-  id: 535-mount
+  volume: '7011'
+- device: 7011-format
+  id: 7011-mount
   parent_disk: '175'
   parent_disk_blkid: '175'
   path: /boot/efi
   type: mount
-- device: '536'
-  id: nvme0n1-part2
-  number: '536'
+- device: '7012'
+  id: disk0-part2
+  number: '7012'
   parent_disk: '175'
   parent_disk_blkid: '175'
-  size: '1919837798400'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 536-format
+  id: 7012-format
+  label: boot
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  type: format
+  volume: '7012'
+- device: 7012-format
+  id: 7012-mount
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  path: /boot
+  type: mount
+- device: '7013'
+  id: disk0-part3
+  number: '7013'
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  size: '99996401664'
+  type: partition
+- fstype: ext4
+  id: 7013-format
   label: root
   parent_disk: '175'
   parent_disk_blkid: '175'
   type: format
-  volume: '536'
-- device: 536-format
-  id: 536-mount
+  volume: '7013'
+- device: 7013-format
+  id: 7013-mount
   parent_disk: '175'
   parent_disk_blkid: '175'
   path: /
   type: mount
 - id: '176'
-  name: sda
+  name: disk1
   parent_disk_blkid: '176'
   ptable: GPT
   type: disk
-- device: '537'
-  id: sda-part1
-  number: '537'
+- device: '16465'
+  id: disk1-part1
+  number: '16465'
   parent_disk: '176'
   parent_disk_blkid: '176'
-  size: '240048406528'
+  size: '240035823616'
   type: partition
 - fstype: ext4
-  id: 537-format
+  id: 16465-format
   label: ''
   parent_disk: '176'
   parent_disk_blkid: '176'
   type: format
-  volume: '537'
-- device: 537-format
-  id: 537-mount
+  volume: '16465'
+- device: 16465-format
+  id: 16465-mount
   parent_disk: '176'
   parent_disk_blkid: '176'
-  path: /mnt/sda1
+  path: /mnt/disk1p1
   type: mount
 - id: '177'
   name: sdb
   parent_disk_blkid: '177'
   ptable: GPT
   type: disk
-- device: '539'
+- device: '16466'
   id: sdb-part1
-  number: '539'
+  number: '16466'
   parent_disk: '177'
   parent_disk_blkid: '177'
-  size: '240048406528'
+  size: '240035823616'
   type: partition
 - fstype: ext4
-  id: 539-format
+  id: 16466-format
   label: ''
   parent_disk: '177'
   parent_disk_blkid: '177'
   type: format
-  volume: '539'
-- device: 539-format
-  id: 539-mount
+  volume: '16466'
+- device: 16466-format
+  id: 16466-mount
   parent_disk: '177'
   parent_disk_blkid: '177'
   path: /mnt/sdb1
@@ -100,22 +120,22 @@ default_disks:
   parent_disk_blkid: '178'
   ptable: GPT
   type: disk
-- device: '538'
+- device: '16467'
   id: sdc-part1
-  number: '538'
+  number: '16467'
   parent_disk: '178'
   parent_disk_blkid: '178'
-  size: '480096813056'
+  size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 538-format
+  id: 16467-format
   label: ''
   parent_disk: '178'
   parent_disk_blkid: '178'
   type: format
-  volume: '538'
-- device: 538-format
-  id: 538-mount
+  volume: '16467'
+- device: 16467-format
+  id: 16467-mount
   parent_disk: '178'
   parent_disk_blkid: '178'
   path: /mnt/sdc1

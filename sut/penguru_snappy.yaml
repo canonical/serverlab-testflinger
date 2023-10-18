@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '241'
   ptable: GPT
   type: disk
-- device: '1078'
+- device: '8086'
   id: nvme0n1-part1
-  number: '1078'
+  number: '8086'
   parent_disk: '241'
   parent_disk_blkid: '241'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1078-format
+  id: 8086-format
   label: efi
   parent_disk: '241'
   parent_disk_blkid: '241'
   type: format
-  volume: '1078'
-- device: 1078-format
-  id: 1078-mount
+  volume: '8086'
+- device: 8086-format
+  id: 8086-mount
   parent_disk: '241'
   parent_disk_blkid: '241'
   path: /boot/efi
   type: mount
-- device: '1079'
+- device: '8087'
   id: nvme0n1-part2
-  number: '1079'
+  number: '8087'
   parent_disk: '241'
   parent_disk_blkid: '241'
   size: '479559942144'
   type: partition
 - fstype: ext4
-  id: 1079-format
+  id: 8087-format
   label: root
   parent_disk: '241'
   parent_disk_blkid: '241'
   type: format
-  volume: '1079'
-- device: 1079-format
-  id: 1079-mount
+  volume: '8087'
+- device: 8087-format
+  id: 8087-mount
   parent_disk: '241'
   parent_disk_blkid: '241'
   path: /

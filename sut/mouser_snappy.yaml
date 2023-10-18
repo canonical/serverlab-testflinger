@@ -1,74 +1,94 @@
 agent_name: mouser
 default_disks:
 - id: '180'
-  name: sda
+  name: disk0
   parent_disk_blkid: '180'
   ptable: GPT
   type: disk
-- device: '578'
-  id: sda-part1
-  number: '578'
+- device: '6959'
+  id: disk0-part1
+  number: '6959'
   parent_disk: '180'
   parent_disk_blkid: '180'
-  size: '536870912'
+  size: '499122176'
   type: partition
 - fstype: fat32
-  id: 578-format
+  id: 6959-format
   label: efi
   parent_disk: '180'
   parent_disk_blkid: '180'
   type: format
-  volume: '578'
-- device: 578-format
-  id: 578-mount
+  volume: '6959'
+- device: 6959-format
+  id: 6959-mount
   parent_disk: '180'
   parent_disk_blkid: '180'
   path: /boot/efi
   type: mount
-- device: '579'
-  id: sda-part2
-  number: '579'
+- device: '6960'
+  id: disk0-part2
+  number: '6960'
   parent_disk: '180'
   parent_disk_blkid: '180'
-  size: '299422973952'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 579-format
+  id: 6960-format
+  label: boot
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  type: format
+  volume: '6960'
+- device: 6960-format
+  id: 6960-mount
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  path: /boot
+  type: mount
+- device: '6961'
+  id: disk0-part3
+  number: '6961'
+  parent_disk: '180'
+  parent_disk_blkid: '180'
+  size: '99996401664'
+  type: partition
+- fstype: ext4
+  id: 6961-format
   label: root
   parent_disk: '180'
   parent_disk_blkid: '180'
   type: format
-  volume: '579'
-- device: 579-format
-  id: 579-mount
+  volume: '6961'
+- device: 6961-format
+  id: 6961-mount
   parent_disk: '180'
   parent_disk_blkid: '180'
   path: /
   type: mount
 - id: '181'
-  name: sdb
+  name: disk1
   parent_disk_blkid: '181'
   ptable: GPT
   type: disk
-- device: '580'
-  id: sdb-part1
-  number: '580'
+- device: '16468'
+  id: disk1-part1
+  number: '16468'
   parent_disk: '181'
   parent_disk_blkid: '181'
   size: '480059064320'
   type: partition
 - fstype: ext4
-  id: 580-format
+  id: 16468-format
   label: ''
   parent_disk: '181'
   parent_disk_blkid: '181'
   type: format
-  volume: '580'
-- device: 580-format
-  id: 580-mount
+  volume: '16468'
+- device: 16468-format
+  id: 16468-mount
   parent_disk: '181'
   parent_disk_blkid: '181'
-  path: /mnt/sdb1
+  path: /mnt/disk1p1
   type: mount
 device_ip: 10.245.130.62
 env:

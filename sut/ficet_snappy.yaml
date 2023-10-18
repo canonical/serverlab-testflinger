@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '401'
   ptable: GPT
   type: disk
-- device: '6769'
+- device: '8735'
   id: nvme0n1-part1
-  number: '6769'
+  number: '8735'
   parent_disk: '401'
   parent_disk_blkid: '401'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 6769-format
+  id: 8735-format
   label: efi
   parent_disk: '401'
   parent_disk_blkid: '401'
   type: format
-  volume: '6769'
-- device: 6769-format
-  id: 6769-mount
+  volume: '8735'
+- device: 8735-format
+  id: 8735-mount
   parent_disk: '401'
   parent_disk_blkid: '401'
   path: /boot/efi
   type: mount
-- device: '6770'
+- device: '8736'
   id: nvme0n1-part2
-  number: '6770'
+  number: '8736'
   parent_disk: '401'
   parent_disk_blkid: '401'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 6770-format
+  id: 8736-format
   label: root
   parent_disk: '401'
   parent_disk_blkid: '401'
   type: format
-  volume: '6770'
-- device: 6770-format
-  id: 6770-mount
+  volume: '8736'
+- device: 8736-format
+  id: 8736-mount
   parent_disk: '401'
   parent_disk_blkid: '401'
   path: /
@@ -55,22 +55,22 @@ default_disks:
   parent_disk_blkid: '403'
   ptable: GPT
   type: disk
-- device: '6771'
+- device: '8737'
   id: nvme2n1-part1
-  number: '6771'
+  number: '8737'
   parent_disk: '403'
   parent_disk_blkid: '403'
   size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 6771-format
+  id: 8737-format
   label: ''
   parent_disk: '403'
   parent_disk_blkid: '403'
   type: format
-  volume: '6771'
-- device: 6771-format
-  id: 6771-mount
+  volume: '8737'
+- device: 8737-format
+  id: 8737-mount
   parent_disk: '403'
   parent_disk_blkid: '403'
   path: /data/nvme2n1
@@ -80,22 +80,22 @@ default_disks:
   parent_disk_blkid: '404'
   ptable: GPT
   type: disk
-- device: '6772'
+- device: '8738'
   id: nvme3n1-part1
-  number: '6772'
+  number: '8738'
   parent_disk: '404'
   parent_disk_blkid: '404'
   size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 6772-format
+  id: 8738-format
   label: ''
   parent_disk: '404'
   parent_disk_blkid: '404'
   type: format
-  volume: '6772'
-- device: 6772-format
-  id: 6772-mount
+  volume: '8738'
+- device: 8738-format
+  id: 8738-mount
   parent_disk: '404'
   parent_disk_blkid: '404'
   path: /data/nvme3n1
@@ -105,22 +105,22 @@ default_disks:
   parent_disk_blkid: '405'
   ptable: GPT
   type: disk
-- device: '6773'
+- device: '8739'
   id: nvme4n1-part1
-  number: '6773'
+  number: '8739'
   parent_disk: '405'
   parent_disk_blkid: '405'
   size: '1920366280704'
   type: partition
 - fstype: ext4
-  id: 6773-format
+  id: 8739-format
   label: ''
   parent_disk: '405'
   parent_disk_blkid: '405'
   type: format
-  volume: '6773'
-- device: 6773-format
-  id: 6773-mount
+  volume: '8739'
+- device: 8739-format
+  id: 8739-mount
   parent_disk: '405'
   parent_disk_blkid: '405'
   path: /data/nvme4n1

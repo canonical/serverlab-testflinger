@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '93'
   ptable: GPT
   type: disk
-- device: '1167'
+- device: '8496'
   id: nvme0n1-part1
-  number: '1167'
+  number: '8496'
   parent_disk: '93'
   parent_disk_blkid: '93'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1167-format
+  id: 8496-format
   label: efi
   parent_disk: '93'
   parent_disk_blkid: '93'
   type: format
-  volume: '1167'
-- device: 1167-format
-  id: 1167-mount
+  volume: '8496'
+- device: 8496-format
+  id: 8496-mount
   parent_disk: '93'
   parent_disk_blkid: '93'
   path: /boot/efi
   type: mount
-- device: '1168'
+- device: '8497'
   id: nvme0n1-part2
-  number: '1168'
+  number: '8497'
   parent_disk: '93'
   parent_disk_blkid: '93'
   size: '3200086179840'
   type: partition
 - fstype: ext4
-  id: 1168-format
+  id: 8497-format
   label: root
   parent_disk: '93'
   parent_disk_blkid: '93'
   type: format
-  volume: '1168'
-- device: 1168-format
-  id: 1168-mount
+  volume: '8497'
+- device: 8497-format
+  id: 8497-mount
   parent_disk: '93'
   parent_disk_blkid: '93'
   path: /
@@ -48,23 +48,103 @@ default_disks:
 - id: '94'
   name: sda
   parent_disk_blkid: '94'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16440'
+  id: sda-part1
+  number: '16440'
+  parent_disk: '94'
+  parent_disk_blkid: '94'
+  size: '8001549238272'
+  type: partition
+- fstype: ext4
+  id: 16440-format
+  label: ''
+  parent_disk: '94'
+  parent_disk_blkid: '94'
+  type: format
+  volume: '16440'
+- device: 16440-format
+  id: 16440-mount
+  parent_disk: '94'
+  parent_disk_blkid: '94'
+  path: /mnt/sda1
+  type: mount
 - id: '95'
   name: sdb
   parent_disk_blkid: '95'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16441'
+  id: sdb-part1
+  number: '16441'
+  parent_disk: '95'
+  parent_disk_blkid: '95'
+  size: '8001549238272'
+  type: partition
+- fstype: ext4
+  id: 16441-format
+  label: ''
+  parent_disk: '95'
+  parent_disk_blkid: '95'
+  type: format
+  volume: '16441'
+- device: 16441-format
+  id: 16441-mount
+  parent_disk: '95'
+  parent_disk_blkid: '95'
+  path: /mnt/sdb1
+  type: mount
 - id: '96'
   name: sdd
   parent_disk_blkid: '96'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16442'
+  id: sdd-part1
+  number: '16442'
+  parent_disk: '96'
+  parent_disk_blkid: '96'
+  size: '8001549238272'
+  type: partition
+- fstype: ext4
+  id: 16442-format
+  label: ''
+  parent_disk: '96'
+  parent_disk_blkid: '96'
+  type: format
+  volume: '16442'
+- device: 16442-format
+  id: 16442-mount
+  parent_disk: '96'
+  parent_disk_blkid: '96'
+  path: /mnt/sdd1
+  type: mount
 - id: '97'
   name: sde
   parent_disk_blkid: '97'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16443'
+  id: sde-part1
+  number: '16443'
+  parent_disk: '97'
+  parent_disk_blkid: '97'
+  size: '8001549238272'
+  type: partition
+- fstype: ext4
+  id: 16443-format
+  label: ''
+  parent_disk: '97'
+  parent_disk_blkid: '97'
+  type: format
+  volume: '16443'
+- device: 16443-format
+  id: 16443-mount
+  parent_disk: '97'
+  parent_disk_blkid: '97'
+  path: /mnt/sde1
+  type: mount
 device_ip: 10.245.130.37
 env:
   DEVICE_IP: 10.245.130.37

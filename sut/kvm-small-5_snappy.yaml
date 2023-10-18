@@ -1,7 +1,73 @@
-device_ip: 10.245.135.23
-node_id: 8dtack
-node_name: kvm-small-5
-maas_user: testflinger_a
 agent_name: kvm-small-5
+default_disks:
+- id: '390'
+  name: disk0
+  parent_disk_blkid: '390'
+  ptable: GPT
+  type: disk
+- device: '16364'
+  id: disk0-part2
+  number: '16364'
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16364-format
+  label: efi
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  type: format
+  volume: '16364'
+- device: 16364-format
+  id: 16364-mount
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  path: /boot/efi
+  type: mount
+- device: '16365'
+  id: disk0-part3
+  number: '16365'
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 16365-format
+  label: boot
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  type: format
+  volume: '16365'
+- device: 16365-format
+  id: 16365-mount
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  path: /boot
+  type: mount
+- device: '16367'
+  id: disk0-part4
+  number: '16367'
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  size: '37199282176'
+  type: partition
+- fstype: ext4
+  id: 16367-format
+  label: root
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  type: format
+  volume: '16367'
+- device: 16367-format
+  id: 16367-mount
+  parent_disk: '390'
+  parent_disk_blkid: '390'
+  path: /
+  type: mount
+device_ip: 10.245.135.23
 env:
   DEVICE_IP: 10.245.135.23
+maas_user: testflinger_a
+node_id: 8dtack
+node_name: kvm-small-5

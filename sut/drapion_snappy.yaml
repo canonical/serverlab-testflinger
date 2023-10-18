@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '70'
   ptable: GPT
   type: disk
-- device: '574'
+- device: '15511'
   id: sda-part1
-  number: '574'
+  number: '15511'
   parent_disk: '70'
   parent_disk_blkid: '70'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 574-format
+  id: 15511-format
   label: efi
   parent_disk: '70'
   parent_disk_blkid: '70'
   type: format
-  volume: '574'
-- device: 574-format
-  id: 574-mount
+  volume: '15511'
+- device: 15511-format
+  id: 15511-mount
   parent_disk: '70'
   parent_disk_blkid: '70'
   path: /boot/efi
   type: mount
-- device: '575'
+- device: '15512'
   id: sda-part2
-  number: '575'
+  number: '15512'
   parent_disk: '70'
   parent_disk_blkid: '70'
   size: '298454089728'
   type: partition
 - fstype: ext4
-  id: 575-format
+  id: 15512-format
   label: root
   parent_disk: '70'
   parent_disk_blkid: '70'
   type: format
-  volume: '575'
-- device: 575-format
-  id: 575-mount
+  volume: '15512'
+- device: 15512-format
+  id: 15512-mount
   parent_disk: '70'
   parent_disk_blkid: '70'
   path: /

@@ -1,29 +1,69 @@
 agent_name: kvm-small-3
 default_disks:
 - id: '314'
-  name: vda
+  name: disk0
   parent_disk_blkid: '314'
   ptable: GPT
   type: disk
-- device: '1052'
-  id: vda-part2
-  number: '1052'
+- device: '16291'
+  id: disk0-part4
+  number: '16291'
   parent_disk: '314'
   parent_disk_blkid: '314'
-  size: '39992688640'
+  size: '37199282176'
   type: partition
 - fstype: ext4
-  id: 1052-format
+  id: 16291-format
   label: root
   parent_disk: '314'
   parent_disk_blkid: '314'
   type: format
-  volume: '1052'
-- device: 1052-format
-  id: 1052-mount
+  volume: '16291'
+- device: 16291-format
+  id: 16291-mount
   parent_disk: '314'
   parent_disk_blkid: '314'
   path: /
+  type: mount
+- device: '16289'
+  id: disk0-part2
+  number: '16289'
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16289-format
+  label: efi
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  type: format
+  volume: '16289'
+- device: 16289-format
+  id: 16289-mount
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  path: /boot/efi
+  type: mount
+- device: '16290'
+  id: disk0-part3
+  number: '16290'
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 16290-format
+  label: boot
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  type: format
+  volume: '16290'
+- device: 16290-format
+  id: 16290-mount
+  parent_disk: '314'
+  parent_disk_blkid: '314'
+  path: /boot
   type: mount
 device_ip: 10.245.135.21
 env:

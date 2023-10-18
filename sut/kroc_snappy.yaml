@@ -5,67 +5,67 @@ default_disks:
   parent_disk_blkid: '340'
   ptable: GPT
   type: disk
-- device: '1100'
-  id: sda-part1
-  number: '1100'
-  parent_disk: '340'
-  parent_disk_blkid: '340'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 1100-format
-  label: efi
-  parent_disk: '340'
-  parent_disk_blkid: '340'
-  type: format
-  volume: '1100'
-- device: 1100-format
-  id: 1100-mount
-  parent_disk: '340'
-  parent_disk_blkid: '340'
-  path: /boot/efi
-  type: mount
-- device: '1101'
+- device: '8998'
   id: sda-part2
-  number: '1101'
+  number: '8998'
   parent_disk: '340'
   parent_disk_blkid: '340'
   size: '999662026752'
   type: partition
 - fstype: ext4
-  id: 1101-format
+  id: 8998-format
   label: root
   parent_disk: '340'
   parent_disk_blkid: '340'
   type: format
-  volume: '1101'
-- device: 1101-format
-  id: 1101-mount
+  volume: '8998'
+- device: 8998-format
+  id: 8998-mount
   parent_disk: '340'
   parent_disk_blkid: '340'
   path: /
+  type: mount
+- device: '8997'
+  id: sda-part1
+  number: '8997'
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 8997-format
+  label: efi
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  type: format
+  volume: '8997'
+- device: 8997-format
+  id: 8997-mount
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  path: /boot/efi
   type: mount
 - id: '341'
   name: sdb
   parent_disk_blkid: '341'
   ptable: GPT
   type: disk
-- device: '1102'
+- device: '8999'
   id: sdb-part1
-  number: '1102'
+  number: '8999'
   parent_disk: '341'
   parent_disk_blkid: '341'
   size: '1000186314752'
   type: partition
 - fstype: ext4
-  id: 1102-format
+  id: 8999-format
   label: ''
   parent_disk: '341'
   parent_disk_blkid: '341'
   type: format
-  volume: '1102'
-- device: 1102-format
-  id: 1102-mount
+  volume: '8999'
+- device: 8999-format
+  id: 8999-mount
   parent_disk: '341'
   parent_disk_blkid: '341'
   path: /data/sdb1

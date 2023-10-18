@@ -5,45 +5,45 @@ default_disks:
   parent_disk_blkid: '179'
   ptable: GPT
   type: disk
-- device: '862'
-  id: nvme0n1-part1
-  number: '862'
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 862-format
-  label: efi
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  type: format
-  volume: '862'
-- device: 862-format
-  id: 862-mount
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  path: /boot/efi
-  type: mount
-- device: '863'
+- device: '15585'
   id: nvme0n1-part2
-  number: '863'
+  number: '15585'
   parent_disk: '179'
   parent_disk_blkid: '179'
   size: '649592832000'
   type: partition
 - fstype: ext4
-  id: 863-format
+  id: 15585-format
   label: root
   parent_disk: '179'
   parent_disk_blkid: '179'
   type: format
-  volume: '863'
-- device: 863-format
-  id: 863-mount
+  volume: '15585'
+- device: 15585-format
+  id: 15585-mount
   parent_disk: '179'
   parent_disk_blkid: '179'
   path: /
+  type: mount
+- device: '15584'
+  id: nvme0n1-part1
+  number: '15584'
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 15584-format
+  label: efi
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  type: format
+  volume: '15584'
+- device: 15584-format
+  id: 15584-mount
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  path: /boot/efi
   type: mount
 device_ip: 10.245.130.60
 env:

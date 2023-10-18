@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '147'
   ptable: GPT
   type: disk
-- device: '448'
+- device: '8894'
   id: sda-part1
-  number: '448'
+  number: '8894'
   parent_disk: '147'
   parent_disk_blkid: '147'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 448-format
+  id: 8894-format
   label: efi
   parent_disk: '147'
   parent_disk_blkid: '147'
   type: format
-  volume: '448'
-- device: 448-format
-  id: 448-mount
+  volume: '8894'
+- device: 8894-format
+  id: 8894-mount
   parent_disk: '147'
   parent_disk_blkid: '147'
   path: /boot/efi
   type: mount
-- device: '449'
+- device: '8897'
   id: sda-part2
-  number: '449'
+  number: '8897'
   parent_disk: '147'
   parent_disk_blkid: '147'
   size: '11999593365504'
   type: partition
 - fstype: ext4
-  id: 449-format
+  id: 8897-format
   label: root
   parent_disk: '147'
   parent_disk_blkid: '147'
   type: format
-  volume: '449'
-- device: 449-format
-  id: 449-mount
+  volume: '8897'
+- device: 8897-format
+  id: 8897-mount
   parent_disk: '147'
   parent_disk_blkid: '147'
   path: /

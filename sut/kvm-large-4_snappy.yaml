@@ -1,26 +1,66 @@
 agent_name: kvm-large-4
 default_disks:
 - id: '335'
-  name: vda
+  name: disk0
   parent_disk_blkid: '335'
   ptable: GPT
   type: disk
-- device: '1073'
-  id: vda-part2
-  number: '1073'
+- device: '16349'
+  id: disk0-part2
+  number: '16349'
   parent_disk: '335'
   parent_disk_blkid: '335'
-  size: '199992803328'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16349-format
+  label: efi
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  type: format
+  volume: '16349'
+- device: 16349-format
+  id: 16349-mount
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  path: /boot/efi
+  type: mount
+- device: '16350'
+  id: disk0-part3
+  number: '16350'
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 1073-format
+  id: 16350-format
+  label: boot
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  type: format
+  volume: '16350'
+- device: 16350-format
+  id: 16350-mount
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  path: /boot
+  type: mount
+- device: '16351'
+  id: disk0-part4
+  number: '16351'
+  parent_disk: '335'
+  parent_disk_blkid: '335'
+  size: '185996410880'
+  type: partition
+- fstype: ext4
+  id: 16351-format
   label: root
   parent_disk: '335'
   parent_disk_blkid: '335'
   type: format
-  volume: '1073'
-- device: 1073-format
-  id: 1073-mount
+  volume: '16351'
+- device: 16351-format
+  id: 16351-mount
   parent_disk: '335'
   parent_disk_blkid: '335'
   path: /

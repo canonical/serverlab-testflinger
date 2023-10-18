@@ -5,22 +5,22 @@ default_disks:
   parent_disk_blkid: '58'
   ptable: GPT
   type: disk
-- device: '115'
+- device: '7853'
   id: sda-part2
-  number: '115'
+  number: '7853'
   parent_disk: '58'
   parent_disk_blkid: '58'
   size: '72737619968'
   type: partition
 - fstype: ext4
-  id: 115-format
+  id: 7853-format
   label: root
   parent_disk: '58'
   parent_disk_blkid: '58'
   type: format
-  volume: '115'
-- device: 115-format
-  id: 115-mount
+  volume: '7853'
+- device: 7853-format
+  id: 7853-mount
   parent_disk: '58'
   parent_disk_blkid: '58'
   path: /

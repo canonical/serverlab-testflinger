@@ -5,45 +5,45 @@ default_disks:
   parent_disk_blkid: '218'
   ptable: GPT
   type: disk
-- device: '1163'
-  id: sda-part1
-  number: '1163'
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 1163-format
-  label: efi
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  type: format
-  volume: '1163'
-- device: 1163-format
-  id: 1163-mount
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  path: /boot/efi
-  type: mount
-- device: '1164'
+- device: '9076'
   id: sda-part2
-  number: '1164'
+  number: '9076'
   parent_disk: '218'
   parent_disk_blkid: '218'
   size: '479559942144'
   type: partition
 - fstype: ext4
-  id: 1164-format
+  id: 9076-format
   label: root
   parent_disk: '218'
   parent_disk_blkid: '218'
   type: format
-  volume: '1164'
-- device: 1164-format
-  id: 1164-mount
+  volume: '9076'
+- device: 9076-format
+  id: 9076-mount
   parent_disk: '218'
   parent_disk_blkid: '218'
   path: /
+  type: mount
+- device: '9075'
+  id: sda-part1
+  number: '9075'
+  parent_disk: '218'
+  parent_disk_blkid: '218'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 9075-format
+  label: efi
+  parent_disk: '218'
+  parent_disk_blkid: '218'
+  type: format
+  volume: '9075'
+- device: 9075-format
+  id: 9075-mount
+  parent_disk: '218'
+  parent_disk_blkid: '218'
+  path: /boot/efi
   type: mount
 device_ip: 10.245.130.71
 env:
