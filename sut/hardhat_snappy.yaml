@@ -1,96 +1,116 @@
 agent_name: hardhat
 default_disks:
 - id: '168'
-  name: sda
+  name: disk0
   parent_disk_blkid: '168'
   ptable: GPT
   type: disk
-- device: '517'
-  id: sda-part1
-  number: '517'
+- device: '16396'
+  id: disk0-part3
+  number: '16396'
   parent_disk: '168'
   parent_disk_blkid: '168'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 517-format
-  label: efi
-  parent_disk: '168'
-  parent_disk_blkid: '168'
-  type: format
-  volume: '517'
-- device: 517-format
-  id: 517-mount
-  parent_disk: '168'
-  parent_disk_blkid: '168'
-  path: /boot/efi
-  type: mount
-- device: '518'
-  id: sda-part2
-  number: '518'
-  parent_disk: '168'
-  parent_disk_blkid: '168'
-  size: '479559942144'
+  size: '99996401664'
   type: partition
 - fstype: ext4
-  id: 518-format
+  id: 16396-format
   label: root
   parent_disk: '168'
   parent_disk_blkid: '168'
   type: format
-  volume: '518'
-- device: 518-format
-  id: 518-mount
+  volume: '16396'
+- device: 16396-format
+  id: 16396-mount
   parent_disk: '168'
   parent_disk_blkid: '168'
   path: /
   type: mount
+- device: '16394'
+  id: disk0-part1
+  number: '16394'
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16394-format
+  label: efi
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  type: format
+  volume: '16394'
+- device: 16394-format
+  id: 16394-mount
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  path: /boot/efi
+  type: mount
+- device: '16395'
+  id: disk0-part2
+  number: '16395'
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 16395-format
+  label: boot
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  type: format
+  volume: '16395'
+- device: 16395-format
+  id: 16395-mount
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  path: /boot
+  type: mount
 - id: '169'
-  name: sdb
+  name: disk1
   parent_disk_blkid: '169'
   ptable: GPT
   type: disk
-- device: '519'
-  id: sdb-part1
-  number: '519'
+- device: '16450'
+  id: disk1-part1
+  number: '16450'
   parent_disk: '169'
   parent_disk_blkid: '169'
-  size: '480096813056'
+  size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 519-format
+  id: 16450-format
   label: ''
   parent_disk: '169'
   parent_disk_blkid: '169'
   type: format
-  volume: '519'
-- device: 519-format
-  id: 519-mount
+  volume: '16450'
+- device: 16450-format
+  id: 16450-mount
   parent_disk: '169'
   parent_disk_blkid: '169'
-  path: /mnt/sdb1
+  path: /mnt/disk1p1
   type: mount
 - id: '170'
   name: sdc
   parent_disk_blkid: '170'
   ptable: GPT
   type: disk
-- device: '520'
+- device: '16451'
   id: sdc-part1
-  number: '520'
+  number: '16451'
   parent_disk: '170'
   parent_disk_blkid: '170'
-  size: '480096813056'
+  size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 520-format
+  id: 16451-format
   label: ''
   parent_disk: '170'
   parent_disk_blkid: '170'
   type: format
-  volume: '520'
-- device: 520-format
-  id: 520-mount
+  volume: '16451'
+- device: 16451-format
+  id: 16451-mount
   parent_disk: '170'
   parent_disk_blkid: '170'
   path: /mnt/sdc1
@@ -100,22 +120,22 @@ default_disks:
   parent_disk_blkid: '171'
   ptable: GPT
   type: disk
-- device: '521'
+- device: '16452'
   id: sdd-part1
-  number: '521'
+  number: '16452'
   parent_disk: '171'
   parent_disk_blkid: '171'
-  size: '480096813056'
+  size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 521-format
+  id: 16452-format
   label: ''
   parent_disk: '171'
   parent_disk_blkid: '171'
   type: format
-  volume: '521'
-- device: 521-format
-  id: 521-mount
+  volume: '16452'
+- device: 16452-format
+  id: 16452-mount
   parent_disk: '171'
   parent_disk_blkid: '171'
   path: /mnt/sdd1

@@ -5,46 +5,20 @@ default_disks:
   parent_disk_blkid: '172'
   ptable: GPT
   type: disk
-- device: '912'
+- device: '15281'
   id: sda-part1
-  number: '912'
+  number: '15281'
   parent_disk: '172'
   parent_disk_blkid: '172'
   size: '536870912'
   type: partition
-- fstype: fat32
-  id: 912-format
-  label: efi
-  parent_disk: '172'
-  parent_disk_blkid: '172'
-  type: format
-  volume: '912'
-- device: 912-format
-  id: 912-mount
-  parent_disk: '172'
-  parent_disk_blkid: '172'
-  path: /boot/efi
-  type: mount
-- device: '913'
+- device: '15282'
   id: sda-part2
-  number: '913'
+  number: '15282'
   parent_disk: '172'
   parent_disk_blkid: '172'
   size: '478456840192'
   type: partition
-- fstype: ext4
-  id: 913-format
-  label: root
-  parent_disk: '172'
-  parent_disk_blkid: '172'
-  type: format
-  volume: '913'
-- device: 913-format
-  id: 913-mount
-  parent_disk: '172'
-  parent_disk_blkid: '172'
-  path: /
-  type: mount
 device_ip: 10.245.130.57
 env:
   DEVICE_IP: 10.245.130.57

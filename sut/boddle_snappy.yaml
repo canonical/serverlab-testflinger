@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '355'
   ptable: GPT
   type: disk
-- device: '1155'
+- device: '9024'
   id: sda-part1
-  number: '1155'
+  number: '9024'
   parent_disk: '355'
   parent_disk_blkid: '355'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1155-format
+  id: 9024-format
   label: efi
   parent_disk: '355'
   parent_disk_blkid: '355'
   type: format
-  volume: '1155'
-- device: 1155-format
-  id: 1155-mount
+  volume: '9024'
+- device: 9024-format
+  id: 9024-mount
   parent_disk: '355'
   parent_disk_blkid: '355'
   path: /boot/efi
   type: mount
-- device: '1156'
+- device: '9025'
   id: sda-part2
-  number: '1156'
+  number: '9025'
   parent_disk: '355'
   parent_disk_blkid: '355'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 1156-format
+  id: 9025-format
   label: root
   parent_disk: '355'
   parent_disk_blkid: '355'
   type: format
-  volume: '1156'
-- device: 1156-format
-  id: 1156-mount
+  volume: '9025'
+- device: 9025-format
+  id: 9025-mount
   parent_disk: '355'
   parent_disk_blkid: '355'
   path: /

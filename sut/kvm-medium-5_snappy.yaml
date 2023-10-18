@@ -1,26 +1,66 @@
 agent_name: kvm-medium-5
 default_disks:
 - id: '330'
-  name: vda
+  name: disk0
   parent_disk_blkid: '330'
   ptable: GPT
   type: disk
-- device: '1068'
-  id: vda-part2
-  number: '1068'
+- device: '16369'
+  id: disk0-part2
+  number: '16369'
   parent_disk: '330'
   parent_disk_blkid: '330'
-  size: '99992207360'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16369-format
+  label: efi
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  type: format
+  volume: '16369'
+- device: 16369-format
+  id: 16369-mount
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  path: /boot/efi
+  type: mount
+- device: '16371'
+  id: disk0-part3
+  number: '16371'
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 1068-format
+  id: 16371-format
+  label: boot
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  type: format
+  volume: '16371'
+- device: 16371-format
+  id: 16371-mount
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  path: /boot
+  type: mount
+- device: '16372'
+  id: disk0-part4
+  number: '16372'
+  parent_disk: '330'
+  parent_disk_blkid: '330'
+  size: '92996108288'
+  type: partition
+- fstype: ext4
+  id: 16372-format
   label: root
   parent_disk: '330'
   parent_disk_blkid: '330'
   type: format
-  volume: '1068'
-- device: 1068-format
-  id: 1068-mount
+  volume: '16372'
+- device: 16372-format
+  id: 16372-mount
   parent_disk: '330'
   parent_disk_blkid: '330'
   path: /

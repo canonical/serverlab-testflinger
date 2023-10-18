@@ -1,96 +1,123 @@
 agent_name: aitken
 default_disks:
 - id: '191'
-  name: nvme0n1
+  name: disk0
   parent_disk_blkid: '191'
   ptable: GPT
   type: disk
-- device: '783'
-  id: nvme0n1-part1
-  number: '783'
+- device: '16402'
+  id: disk0-part1
+  number: '16402'
   parent_disk: '191'
   parent_disk_blkid: '191'
-  size: '536870912'
+  size: '499122176'
   type: partition
 - fstype: fat32
-  id: 783-format
+  id: 16402-format
   label: efi
   parent_disk: '191'
   parent_disk_blkid: '191'
   type: format
-  volume: '783'
-- device: 783-format
-  id: 783-mount
+  volume: '16402'
+- device: 16402-format
+  id: 16402-mount
   parent_disk: '191'
   parent_disk_blkid: '191'
   path: /boot/efi
   type: mount
-- device: '784'
-  id: nvme0n1-part2
-  number: '784'
+- device: '16403'
+  id: disk0-part2
+  number: '16403'
   parent_disk: '191'
   parent_disk_blkid: '191'
-  size: '959652560896'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 784-format
+  id: 16403-format
+  label: boot
+  parent_disk: '191'
+  parent_disk_blkid: '191'
+  type: format
+  volume: '16403'
+- device: 16403-format
+  id: 16403-mount
+  parent_disk: '191'
+  parent_disk_blkid: '191'
+  path: /boot
+  type: mount
+- device: '16404'
+  id: disk0-part3
+  number: '16404'
+  parent_disk: '191'
+  parent_disk_blkid: '191'
+  size: '99996401664'
+  type: partition
+- fstype: ext4
+  id: 16404-format
   label: root
   parent_disk: '191'
   parent_disk_blkid: '191'
   type: format
-  volume: '784'
-- device: 784-format
-  id: 784-mount
+  volume: '16404'
+- device: 16404-format
+  id: 16404-mount
   parent_disk: '191'
   parent_disk_blkid: '191'
   path: /
   type: mount
 - id: '192'
-  name: nvme1n1
+  name: disk1
   parent_disk_blkid: '192'
   ptable: GPT
   type: disk
-- device: '785'
-  id: nvme1n1-part1
-  number: '785'
+- device: '16406'
+  id: disk1-part1
+  number: '16406'
   parent_disk: '192'
   parent_disk_blkid: '192'
-  size: '960189431808'
+  size: '499122176'
+  type: partition
+- device: '16429'
+  id: disk1-part2
+  number: '16429'
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  size: '959686115328'
   type: partition
 - fstype: ext4
-  id: 785-format
+  id: 16429-format
   label: ''
   parent_disk: '192'
   parent_disk_blkid: '192'
   type: format
-  volume: '785'
-- device: 785-format
-  id: 785-mount
+  volume: '16429'
+- device: 16429-format
+  id: 16429-mount
   parent_disk: '192'
   parent_disk_blkid: '192'
-  path: /mnt/nvme1n1p1
+  path: /mnt/disk1
   type: mount
 - id: '193'
   name: nvme2n1
   parent_disk_blkid: '193'
   ptable: GPT
   type: disk
-- device: '786'
+- device: '16430'
   id: nvme2n1-part1
-  number: '786'
+  number: '16430'
   parent_disk: '193'
   parent_disk_blkid: '193'
-  size: '960189431808'
+  size: '960176848896'
   type: partition
 - fstype: ext4
-  id: 786-format
+  id: 16430-format
   label: ''
   parent_disk: '193'
   parent_disk_blkid: '193'
   type: format
-  volume: '786'
-- device: 786-format
-  id: 786-mount
+  volume: '16430'
+- device: 16430-format
+  id: 16430-mount
   parent_disk: '193'
   parent_disk_blkid: '193'
   path: /mnt/nvme2n1p1
@@ -100,22 +127,22 @@ default_disks:
   parent_disk_blkid: '194'
   ptable: GPT
   type: disk
-- device: '787'
+- device: '16431'
   id: nvme3n1-part1
-  number: '787'
+  number: '16431'
   parent_disk: '194'
   parent_disk_blkid: '194'
-  size: '960189431808'
+  size: '960176848896'
   type: partition
 - fstype: ext4
-  id: 787-format
+  id: 16431-format
   label: ''
   parent_disk: '194'
   parent_disk_blkid: '194'
   type: format
-  volume: '787'
-- device: 787-format
-  id: 787-mount
+  volume: '16431'
+- device: 16431-format
+  id: 16431-mount
   parent_disk: '194'
   parent_disk_blkid: '194'
   path: /mnt/nvme3n1p1
@@ -125,22 +152,22 @@ default_disks:
   parent_disk_blkid: '195'
   ptable: GPT
   type: disk
-- device: '788'
+- device: '16432'
   id: sda-part1
-  number: '788'
+  number: '16432'
   parent_disk: '195'
   parent_disk_blkid: '195'
-  size: '9994988683264'
+  size: '9994976100352'
   type: partition
 - fstype: ext4
-  id: 788-format
+  id: 16432-format
   label: ''
   parent_disk: '195'
   parent_disk_blkid: '195'
   type: format
-  volume: '788'
-- device: 788-format
-  id: 788-mount
+  volume: '16432'
+- device: 16432-format
+  id: 16432-mount
   parent_disk: '195'
   parent_disk_blkid: '195'
   path: /mnt/sda1
@@ -150,22 +177,22 @@ default_disks:
   parent_disk_blkid: '196'
   ptable: GPT
   type: disk
-- device: '840'
+- device: '16433'
   id: sdb-part1
-  number: '840'
+  number: '16433'
   parent_disk: '196'
   parent_disk_blkid: '196'
-  size: '1589997731840'
+  size: '1597987880960'
   type: partition
 - fstype: ext4
-  id: 840-format
+  id: 16433-format
   label: ''
   parent_disk: '196'
   parent_disk_blkid: '196'
   type: format
-  volume: '840'
-- device: 840-format
-  id: 840-mount
+  volume: '16433'
+- device: 16433-format
+  id: 16433-mount
   parent_disk: '196'
   parent_disk_blkid: '196'
   path: /mnt/sdb1
@@ -175,22 +202,22 @@ default_disks:
   parent_disk_blkid: '197'
   ptable: GPT
   type: disk
-- device: '790'
+- device: '16434'
   id: sdc-part1
-  number: '790'
+  number: '16434'
   parent_disk: '197'
   parent_disk_blkid: '197'
-  size: '127959826432'
+  size: '127947243520'
   type: partition
 - fstype: ext4
-  id: 790-format
+  id: 16434-format
   label: ''
   parent_disk: '197'
   parent_disk_blkid: '197'
   type: format
-  volume: '790'
-- device: 790-format
-  id: 790-mount
+  volume: '16434'
+- device: 16434-format
+  id: 16434-mount
   parent_disk: '197'
   parent_disk_blkid: '197'
   path: /mnt/sdc1

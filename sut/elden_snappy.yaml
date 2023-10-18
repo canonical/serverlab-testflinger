@@ -5,45 +5,45 @@ default_disks:
   parent_disk_blkid: '231'
   ptable: GPT
   type: disk
-- device: '1149'
-  id: sda-part1
-  number: '1149'
-  parent_disk: '231'
-  parent_disk_blkid: '231'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 1149-format
-  label: efi
-  parent_disk: '231'
-  parent_disk_blkid: '231'
-  type: format
-  volume: '1149'
-- device: 1149-format
-  id: 1149-mount
-  parent_disk: '231'
-  parent_disk_blkid: '231'
-  path: /boot/efi
-  type: mount
-- device: '1150'
+- device: '8910'
   id: sda-part2
-  number: '1150'
+  number: '8910'
   parent_disk: '231'
   parent_disk_blkid: '231'
   size: '479526387712'
   type: partition
 - fstype: ext4
-  id: 1150-format
+  id: 8910-format
   label: root
   parent_disk: '231'
   parent_disk_blkid: '231'
   type: format
-  volume: '1150'
-- device: 1150-format
-  id: 1150-mount
+  volume: '8910'
+- device: 8910-format
+  id: 8910-mount
   parent_disk: '231'
   parent_disk_blkid: '231'
   path: /
+  type: mount
+- device: '8908'
+  id: sda-part1
+  number: '8908'
+  parent_disk: '231'
+  parent_disk_blkid: '231'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 8908-format
+  label: efi
+  parent_disk: '231'
+  parent_disk_blkid: '231'
+  type: format
+  volume: '8908'
+- device: 8908-format
+  id: 8908-mount
+  parent_disk: '231'
+  parent_disk_blkid: '231'
+  path: /boot/efi
   type: mount
 device_ip: 10.245.130.73
 env:

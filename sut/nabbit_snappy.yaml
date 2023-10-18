@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '5'
   ptable: GPT
   type: disk
-- device: '294'
+- device: '9009'
   id: nvme0n1-part1
-  number: '294'
+  number: '9009'
   parent_disk: '5'
   parent_disk_blkid: '5'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 294-format
+  id: 9009-format
   label: efi
   parent_disk: '5'
   parent_disk_blkid: '5'
   type: format
-  volume: '294'
-- device: 294-format
-  id: 294-mount
+  volume: '9009'
+- device: 9009-format
+  id: 9009-mount
   parent_disk: '5'
   parent_disk_blkid: '5'
   path: /boot/efi
   type: mount
-- device: '295'
+- device: '9010'
   id: nvme0n1-part2
-  number: '295'
+  number: '9010'
   parent_disk: '5'
   parent_disk_blkid: '5'
   size: '749610205184'
   type: partition
 - fstype: ext4
-  id: 295-format
+  id: 9010-format
   label: root
   parent_disk: '5'
   parent_disk_blkid: '5'
   type: format
-  volume: '295'
-- device: 295-format
-  id: 295-mount
+  volume: '9010'
+- device: 9010-format
+  id: 9010-mount
   parent_disk: '5'
   parent_disk_blkid: '5'
   path: /
@@ -48,8 +48,28 @@ default_disks:
 - id: '6'
   name: sda
   parent_disk_blkid: '6'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16422'
+  id: sda-part1
+  number: '16422'
+  parent_disk: '6'
+  parent_disk_blkid: '6'
+  size: '299427168256'
+  type: partition
+- fstype: ext4
+  id: 16422-format
+  label: ''
+  parent_disk: '6'
+  parent_disk_blkid: '6'
+  type: format
+  volume: '16422'
+- device: 16422-format
+  id: 16422-mount
+  parent_disk: '6'
+  parent_disk_blkid: '6'
+  path: /data-sda1
+  type: mount
 device_ip: 10.245.130.23
 env:
   DEVICE_IP: 10.245.130.23

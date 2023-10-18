@@ -3,29 +3,49 @@ default_disks:
 - id: '15'
   name: sdc
   parent_disk_blkid: '15'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16458'
+  id: sdc-part2
+  number: '16458'
+  parent_disk: '15'
+  parent_disk_blkid: '15'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 16458-format
+  label: ''
+  parent_disk: '15'
+  parent_disk_blkid: '15'
+  type: format
+  volume: '16458'
+- device: 16458-format
+  id: 16458-mount
+  parent_disk: '15'
+  parent_disk_blkid: '15'
+  path: /mnt/sdc1
+  type: mount
 - id: '16'
   name: sdd
   parent_disk_blkid: '16'
   ptable: GPT
   type: disk
-- device: '1253'
+- device: '9056'
   id: sdd-part2
-  number: '1253'
+  number: '9056'
   parent_disk: '16'
   parent_disk_blkid: '16'
   size: '299993399296'
   type: partition
 - fstype: ext4
-  id: 1253-format
+  id: 9056-format
   label: root
   parent_disk: '16'
   parent_disk_blkid: '16'
   type: format
-  volume: '1253'
-- device: 1253-format
-  id: 1253-mount
+  volume: '9056'
+- device: 9056-format
+  id: 9056-mount
   parent_disk: '16'
   parent_disk_blkid: '16'
   path: /

@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '151'
   ptable: GPT
   type: disk
-- device: '1141'
+- device: '15716'
   id: sda-part1
-  number: '1141'
+  number: '15716'
   parent_disk: '151'
   parent_disk_blkid: '151'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1141-format
+  id: 15716-format
   label: efi
   parent_disk: '151'
   parent_disk_blkid: '151'
   type: format
-  volume: '1141'
-- device: 1141-format
-  id: 1141-mount
+  volume: '15716'
+- device: 15716-format
+  id: 15716-mount
   parent_disk: '151'
   parent_disk_blkid: '151'
   path: /boot/efi
   type: mount
-- device: '1142'
+- device: '15717'
   id: sda-part2
-  number: '1142'
+  number: '15717'
   parent_disk: '151'
   parent_disk_blkid: '151'
   size: '599584145408'
   type: partition
 - fstype: ext4
-  id: 1142-format
+  id: 15717-format
   label: root
   parent_disk: '151'
   parent_disk_blkid: '151'
   type: format
-  volume: '1142'
-- device: 1142-format
-  id: 1142-mount
+  volume: '15717'
+- device: 15717-format
+  id: 15717-mount
   parent_disk: '151'
   parent_disk_blkid: '151'
   path: /
@@ -48,13 +48,53 @@ default_disks:
 - id: '152'
   name: sdb
   parent_disk_blkid: '152'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16444'
+  id: sdb-part1
+  number: '16444'
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  size: '600116822016'
+  type: partition
+- fstype: ext4
+  id: 16444-format
+  label: ''
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  type: format
+  volume: '16444'
+- device: 16444-format
+  id: 16444-mount
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  path: /mnt/sdb1
+  type: mount
 - id: '153'
   name: sdc
   parent_disk_blkid: '153'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16445'
+  id: sdc-part1
+  number: '16445'
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  size: '600116822016'
+  type: partition
+- fstype: ext4
+  id: 16445-format
+  label: ''
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  type: format
+  volume: '16445'
+- device: 16445-format
+  id: 16445-mount
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  path: /mnt/sdc1
+  type: mount
 device_ip: 10.245.130.61
 env:
   DEVICE_IP: 10.245.130.61

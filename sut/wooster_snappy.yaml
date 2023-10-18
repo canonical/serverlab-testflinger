@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '270'
   ptable: GPT
   type: disk
-- device: '997'
+- device: '7348'
   id: nvme1n1-part1
-  number: '997'
+  number: '7348'
   parent_disk: '270'
   parent_disk_blkid: '270'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 997-format
+  id: 7348-format
   label: efi
   parent_disk: '270'
   parent_disk_blkid: '270'
   type: format
-  volume: '997'
-- device: 997-format
-  id: 997-mount
+  volume: '7348'
+- device: 7348-format
+  id: 7348-mount
   parent_disk: '270'
   parent_disk_blkid: '270'
   path: /boot/efi
   type: mount
-- device: '998'
+- device: '7349'
   id: nvme1n1-part2
-  number: '998'
+  number: '7349'
   parent_disk: '270'
   parent_disk_blkid: '270'
   size: '7680957612032'
   type: partition
 - fstype: ext4
-  id: 998-format
+  id: 7349-format
   label: root
   parent_disk: '270'
   parent_disk_blkid: '270'
   type: format
-  volume: '998'
-- device: 998-format
-  id: 998-mount
+  volume: '7349'
+- device: 7349-format
+  id: 7349-mount
   parent_disk: '270'
   parent_disk_blkid: '270'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '271'
   ptable: GPT
   type: disk
-- device: '1039'
+- device: '7350'
   id: nvme2n1-part1
-  number: '1039'
+  number: '7350'
   parent_disk: '271'
   parent_disk_blkid: '271'
   size: '7681486094336'
   type: partition
 - fstype: ext4
-  id: 1039-format
+  id: 7350-format
   label: ''
   parent_disk: '271'
   parent_disk_blkid: '271'
   type: format
-  volume: '1039'
-- device: 1039-format
-  id: 1039-mount
+  volume: '7350'
+- device: 7350-format
+  id: 7350-mount
   parent_disk: '271'
   parent_disk_blkid: '271'
   path: /data/nvme2n1part1
@@ -75,22 +75,22 @@ default_disks:
   parent_disk_blkid: '272'
   ptable: GPT
   type: disk
-- device: '1040'
+- device: '7351'
   id: nvme3n1-part1
-  number: '1040'
+  number: '7351'
   parent_disk: '272'
   parent_disk_blkid: '272'
   size: '7681486094336'
   type: partition
 - fstype: ext4
-  id: 1040-format
+  id: 7351-format
   label: ''
   parent_disk: '272'
   parent_disk_blkid: '272'
   type: format
-  volume: '1040'
-- device: 1040-format
-  id: 1040-mount
+  volume: '7351'
+- device: 7351-format
+  id: 7351-mount
   parent_disk: '272'
   parent_disk_blkid: '272'
   path: /data/nvme3n1part1

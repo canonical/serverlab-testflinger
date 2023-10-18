@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '54'
   ptable: GPT
   type: disk
-- device: '1251'
+- device: '9077'
   id: sda-part1
-  number: '1251'
+  number: '9077'
   parent_disk: '54'
   parent_disk_blkid: '54'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1251-format
+  id: 9077-format
   label: efi
   parent_disk: '54'
   parent_disk_blkid: '54'
   type: format
-  volume: '1251'
-- device: 1251-format
-  id: 1251-mount
+  volume: '9077'
+- device: 9077-format
+  id: 9077-mount
   parent_disk: '54'
   parent_disk_blkid: '54'
   path: /boot/efi
   type: mount
-- device: '1252'
+- device: '9078'
   id: sda-part2
-  number: '1252'
+  number: '9078'
   parent_disk: '54'
   parent_disk_blkid: '54'
   size: '146272157696'
   type: partition
 - fstype: ext4
-  id: 1252-format
+  id: 9078-format
   label: root
   parent_disk: '54'
   parent_disk_blkid: '54'
   type: format
-  volume: '1252'
-- device: 1252-format
-  id: 1252-mount
+  volume: '9078'
+- device: 9078-format
+  id: 9078-mount
   parent_disk: '54'
   parent_disk_blkid: '54'
   path: /
@@ -48,18 +48,78 @@ default_disks:
 - id: '55'
   name: sdb
   parent_disk_blkid: '55'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16489'
+  id: sdb-part1
+  number: '16489'
+  parent_disk: '55'
+  parent_disk_blkid: '55'
+  size: '146796445696'
+  type: partition
+- fstype: ext4
+  id: 16489-format
+  label: ''
+  parent_disk: '55'
+  parent_disk_blkid: '55'
+  type: format
+  volume: '16489'
+- device: 16489-format
+  id: 16489-mount
+  parent_disk: '55'
+  parent_disk_blkid: '55'
+  path: /data-sdb
+  type: mount
 - id: '56'
   name: sdc
   parent_disk_blkid: '56'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16490'
+  id: sdc-part1
+  number: '16490'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  size: '146796445696'
+  type: partition
+- fstype: ext4
+  id: 16490-format
+  label: ''
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  type: format
+  volume: '16490'
+- device: 16490-format
+  id: 16490-mount
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  path: /data-sdc
+  type: mount
 - id: '57'
   name: sdd
   parent_disk_blkid: '57'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16491'
+  id: sdd-part1
+  number: '16491'
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  size: '146796445696'
+  type: partition
+- fstype: ext4
+  id: 16491-format
+  label: ''
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  type: format
+  volume: '16491'
+- device: 16491-format
+  id: 16491-mount
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  path: /data-sdd
+  type: mount
 device_ip: 10.245.130.5
 env:
   DEVICE_IP: 10.245.130.5

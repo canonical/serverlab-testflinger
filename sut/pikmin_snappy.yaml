@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '240'
   ptable: GPT
   type: disk
-- device: '1143'
+- device: '8177'
   id: nvme0n1-part1
-  number: '1143'
+  number: '8177'
   parent_disk: '240'
   parent_disk_blkid: '240'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 1143-format
+  id: 8177-format
   label: efi
   parent_disk: '240'
   parent_disk_blkid: '240'
   type: format
-  volume: '1143'
-- device: 1143-format
-  id: 1143-mount
+  volume: '8177'
+- device: 8177-format
+  id: 8177-mount
   parent_disk: '240'
   parent_disk_blkid: '240'
   path: /boot/efi
   type: mount
-- device: '1144'
+- device: '8179'
   id: nvme0n1-part2
-  number: '1144'
+  number: '8179'
   parent_disk: '240'
   parent_disk_blkid: '240'
   size: '479559942144'
   type: partition
 - fstype: ext4
-  id: 1144-format
+  id: 8179-format
   label: root
   parent_disk: '240'
   parent_disk_blkid: '240'
   type: format
-  volume: '1144'
-- device: 1144-format
-  id: 1144-mount
+  volume: '8179'
+- device: 8179-format
+  id: 8179-mount
   parent_disk: '240'
   parent_disk_blkid: '240'
   path: /

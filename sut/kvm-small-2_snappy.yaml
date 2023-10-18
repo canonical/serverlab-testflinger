@@ -5,22 +5,22 @@ default_disks:
   parent_disk_blkid: '313'
   ptable: GPT
   type: disk
-- device: '1051'
+- device: '14649'
   id: vda-part2
-  number: '1051'
+  number: '14649'
   parent_disk: '313'
   parent_disk_blkid: '313'
   size: '39992688640'
   type: partition
 - fstype: ext4
-  id: 1051-format
+  id: 14649-format
   label: root
   parent_disk: '313'
   parent_disk_blkid: '313'
   type: format
-  volume: '1051'
-- device: 1051-format
-  id: 1051-mount
+  volume: '14649'
+- device: 14649-format
+  id: 14649-mount
   parent_disk: '313'
   parent_disk_blkid: '313'
   path: /

@@ -1,29 +1,69 @@
 agent_name: kvm-small-7
 default_disks:
 - id: '388'
-  name: vda
+  name: disk0
   parent_disk_blkid: '388'
   ptable: GPT
   type: disk
-- device: '1277'
-  id: vda-part2
-  number: '1277'
+- device: '16212'
+  id: disk0-part3
+  number: '16212'
   parent_disk: '388'
   parent_disk_blkid: '388'
-  size: '39992688640'
+  size: '1996488704'
   type: partition
 - fstype: ext4
-  id: 1277-format
+  id: 16212-format
+  label: boot
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  type: format
+  volume: '16212'
+- device: 16212-format
+  id: 16212-mount
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  path: /boot
+  type: mount
+- device: '16213'
+  id: disk0-part4
+  number: '16213'
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  size: '37199282176'
+  type: partition
+- fstype: ext4
+  id: 16213-format
   label: root
   parent_disk: '388'
   parent_disk_blkid: '388'
   type: format
-  volume: '1277'
-- device: 1277-format
-  id: 1277-mount
+  volume: '16213'
+- device: 16213-format
+  id: 16213-mount
   parent_disk: '388'
   parent_disk_blkid: '388'
   path: /
+  type: mount
+- device: '16211'
+  id: disk0-part2
+  number: '16211'
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 16211-format
+  label: efi
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  type: format
+  volume: '16211'
+- device: 16211-format
+  id: 16211-mount
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  path: /boot/efi
   type: mount
 device_ip: 10.245.135.25
 env:

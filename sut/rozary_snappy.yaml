@@ -48,13 +48,53 @@ default_disks:
 - id: '143'
   name: sdc
   parent_disk_blkid: '143'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16475'
+  id: sdc-part1
+  number: '16475'
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  size: '480088424448'
+  type: partition
+- fstype: ext4
+  id: 16475-format
+  label: ''
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  type: format
+  volume: '16475'
+- device: 16475-format
+  id: 16475-mount
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  path: /data-sdc
+  type: mount
 - id: '144'
   name: sdb
   parent_disk_blkid: '144'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16474'
+  id: sdb-part1
+  number: '16474'
+  parent_disk: '144'
+  parent_disk_blkid: '144'
+  size: '32128368640'
+  type: partition
+- fstype: vfat
+  id: 16474-format
+  label: ''
+  parent_disk: '144'
+  parent_disk_blkid: '144'
+  type: format
+  volume: '16474'
+- device: 16474-format
+  id: 16474-mount
+  parent_disk: '144'
+  parent_disk_blkid: '144'
+  path: /data-sdb-SD-vfat
+  type: mount
 device_ip: 10.245.130.44
 env:
   DEVICE_IP: 10.245.130.44

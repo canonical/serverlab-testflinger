@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '199'
   ptable: GPT
   type: disk
-- device: '724'
+- device: '16470'
   id: sda-part1
-  number: '724'
+  number: '16470'
   parent_disk: '199'
   parent_disk_blkid: '199'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 724-format
+  id: 16470-format
   label: efi
   parent_disk: '199'
   parent_disk_blkid: '199'
   type: format
-  volume: '724'
-- device: 724-format
-  id: 724-mount
+  volume: '16470'
+- device: 16470-format
+  id: 16470-mount
   parent_disk: '199'
   parent_disk_blkid: '199'
   path: /boot/efi
   type: mount
-- device: '725'
+- device: '16471'
   id: sda-part2
-  number: '725'
+  number: '16471'
   parent_disk: '199'
   parent_disk_blkid: '199'
   size: '799623086080'
   type: partition
 - fstype: ext4
-  id: 725-format
+  id: 16471-format
   label: root
   parent_disk: '199'
   parent_disk_blkid: '199'
   type: format
-  volume: '725'
-- device: 725-format
-  id: 725-mount
+  volume: '16471'
+- device: 16471-format
+  id: 16471-mount
   parent_disk: '199'
   parent_disk_blkid: '199'
   path: /
@@ -50,25 +50,25 @@ default_disks:
   parent_disk_blkid: '200'
   ptable: GPT
   type: disk
-- device: '728'
+- device: '16472'
   id: sdb-part1
-  number: '728'
+  number: '16472'
   parent_disk: '200'
   parent_disk_blkid: '200'
-  size: '800159956992'
+  size: '800147374080'
   type: partition
 - fstype: ext4
-  id: 728-format
+  id: 16472-format
   label: ''
   parent_disk: '200'
   parent_disk_blkid: '200'
   type: format
-  volume: '728'
-- device: 728-format
-  id: 728-mount
+  volume: '16472'
+- device: 16472-format
+  id: 16472-mount
   parent_disk: '200'
   parent_disk_blkid: '200'
-  path: /mnt/sdb1
+  path: /data-sdb
   type: mount
 device_ip: 10.245.130.65
 env:

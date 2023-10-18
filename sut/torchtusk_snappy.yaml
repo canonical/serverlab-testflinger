@@ -5,49 +5,49 @@ default_disks:
   parent_disk_blkid: '71'
   ptable: GPT
   type: disk
-- device: '736'
+- device: '15721'
   id: nvme0n1-part1
-  number: '736'
+  number: '15721'
   parent_disk: '71'
   parent_disk_blkid: '71'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 736-format
+  id: 15721-format
   label: efi
   parent_disk: '71'
   parent_disk_blkid: '71'
   type: format
-  volume: '736'
-- device: 736-format
-  id: 736-mount
+  volume: '15721'
+- device: 15721-format
+  id: 15721-mount
   parent_disk: '71'
   parent_disk_blkid: '71'
   path: /boot/efi
   type: mount
-- device: '1031'
+- device: '15723'
   id: nvme0n1-part2
-  number: '1031'
+  number: '15723'
   parent_disk: '71'
   parent_disk_blkid: '71'
   size: '749996081152'
   type: partition
 - fstype: ext4
-  id: 1031-format
+  id: 15723-format
   label: ''
   parent_disk: '71'
   parent_disk_blkid: '71'
   type: format
-  volume: '1031'
-- device: 1031-format
-  id: 1031-mount
+  volume: '15723'
+- device: 15723-format
+  id: 15723-mount
   parent_disk: '71'
   parent_disk_blkid: '71'
   path: /
   type: mount
-- device: '1032'
+- device: '15726'
   id: nvme0n1-part3
-  number: '1032'
+  number: '15726'
   parent_disk: '71'
   parent_disk_blkid: '71'
   size: '209648091136'

@@ -5,45 +5,45 @@ default_disks:
   parent_disk_blkid: '301'
   ptable: GPT
   type: disk
-- device: '1043'
-  id: sda-part1
-  number: '1043'
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 1043-format
-  label: efi
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  type: format
-  volume: '1043'
-- device: 1043-format
-  id: 1043-mount
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  path: /boot/efi
-  type: mount
-- device: '1044'
+- device: '15594'
   id: sda-part2
-  number: '1044'
+  number: '15594'
   parent_disk: '301'
   parent_disk_blkid: '301'
   size: '239511535616'
   type: partition
 - fstype: ext4
-  id: 1044-format
+  id: 15594-format
   label: root
   parent_disk: '301'
   parent_disk_blkid: '301'
   type: format
-  volume: '1044'
-- device: 1044-format
-  id: 1044-mount
+  volume: '15594'
+- device: 15594-format
+  id: 15594-mount
   parent_disk: '301'
   parent_disk_blkid: '301'
   path: /
+  type: mount
+- device: '15593'
+  id: sda-part1
+  number: '15593'
+  parent_disk: '301'
+  parent_disk_blkid: '301'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 15593-format
+  label: efi
+  parent_disk: '301'
+  parent_disk_blkid: '301'
+  type: format
+  volume: '15593'
+- device: 15593-format
+  id: 15593-mount
+  parent_disk: '301'
+  parent_disk_blkid: '301'
+  path: /boot/efi
   type: mount
 device_ip: 10.245.130.85
 env:

@@ -1,8 +1,54 @@
+agent_name: rockman
+default_disks:
+- id: '399'
+  name: nvme0n1
+  parent_disk_blkid: '399'
+  ptable: GPT
+  type: disk
+- device: '6342'
+  id: nvme0n1-part1
+  number: '6342'
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 6342-format
+  label: efi
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  type: format
+  volume: '6342'
+- device: 6342-format
+  id: 6342-mount
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  path: /boot/efi
+  type: mount
+- device: '6343'
+  id: nvme0n1-part2
+  number: '6343'
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 6343-format
+  label: root
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  type: format
+  volume: '6343'
+- device: 6343-format
+  id: 6343-mount
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  path: /
+  type: mount
 device_ip: 10.245.130.84
+env:
+  DEVICE_IP: 10.245.130.84
+  HEXR_DEVICE_SECURE_ID: 7oVHU9DXEFFU6T97LtNBsd
+maas_user: testflinger_a
 node_id: dhbdpt
 node_name: rockman
-maas_user: testflinger_a
-agent_name: rockman
-env:
- HEXR_DEVICE_SECURE_ID: 7oVHU9DXEFFU6T97LtNBsd
- DEVICE_IP: 10.245.130.84

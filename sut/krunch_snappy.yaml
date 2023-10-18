@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '116'
   ptable: GPT
   type: disk
-- device: '805'
+- device: '15690'
   id: nvme0n1-part1
-  number: '805'
+  number: '15690'
   parent_disk: '116'
   parent_disk_blkid: '116'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 805-format
+  id: 15690-format
   label: efi
   parent_disk: '116'
   parent_disk_blkid: '116'
   type: format
-  volume: '805'
-- device: 805-format
-  id: 805-mount
+  volume: '15690'
+- device: 15690-format
+  id: 15690-mount
   parent_disk: '116'
   parent_disk_blkid: '116'
   path: /boot/efi
   type: mount
-- device: '806'
+- device: '15692'
   id: nvme0n1-part2
-  number: '806'
+  number: '15692'
   parent_disk: '116'
   parent_disk_blkid: '116'
   size: '374538764288'
   type: partition
 - fstype: ext4
-  id: 806-format
+  id: 15692-format
   label: root
   parent_disk: '116'
   parent_disk_blkid: '116'
   type: format
-  volume: '806'
-- device: 806-format
-  id: 806-mount
+  volume: '15692'
+- device: 15692-format
+  id: 15692-mount
   parent_disk: '116'
   parent_disk_blkid: '116'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '117'
   ptable: GPT
   type: disk
-- device: '808'
+- device: '15694'
   id: sdc-part1
-  number: '808'
+  number: '15694'
   parent_disk: '117'
   parent_disk_blkid: '117'
   size: '480096813056'
   type: partition
 - fstype: ext4
-  id: 808-format
+  id: 15694-format
   label: ''
   parent_disk: '117'
   parent_disk_blkid: '117'
   type: format
-  volume: '808'
-- device: 808-format
-  id: 808-mount
+  volume: '15694'
+- device: 15694-format
+  id: 15694-mount
   parent_disk: '117'
   parent_disk_blkid: '117'
   path: /media/sdc
@@ -73,34 +73,74 @@ default_disks:
 - id: '118'
   name: sdd
   parent_disk_blkid: '118'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16461'
+  id: sdd-part1
+  number: '16461'
+  parent_disk: '118'
+  parent_disk_blkid: '118'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 16461-format
+  label: ''
+  parent_disk: '118'
+  parent_disk_blkid: '118'
+  type: format
+  volume: '16461'
+- device: 16461-format
+  id: 16461-mount
+  parent_disk: '118'
+  parent_disk_blkid: '118'
+  path: /mnt/sdd1
+  type: mount
 - id: '119'
   name: sde
   parent_disk_blkid: '119'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16462'
+  id: sde-part1
+  number: '16462'
+  parent_disk: '119'
+  parent_disk_blkid: '119'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 16462-format
+  label: ''
+  parent_disk: '119'
+  parent_disk_blkid: '119'
+  type: format
+  volume: '16462'
+- device: 16462-format
+  id: 16462-mount
+  parent_disk: '119'
+  parent_disk_blkid: '119'
+  path: /mnt/sde1
+  type: mount
 - id: '120'
   name: sda
   parent_disk_blkid: '120'
   ptable: GPT
   type: disk
-- device: '807'
+- device: '15696'
   id: sda-part1
-  number: '807'
+  number: '15696'
   parent_disk: '120'
   parent_disk_blkid: '120'
   size: '240048406528'
   type: partition
 - fstype: ext4
-  id: 807-format
+  id: 15696-format
   label: ''
   parent_disk: '120'
   parent_disk_blkid: '120'
   type: format
-  volume: '807'
-- device: 807-format
-  id: 807-mount
+  volume: '15696'
+- device: 15696-format
+  id: 15696-mount
   parent_disk: '120'
   parent_disk_blkid: '120'
   path: /media/sda
@@ -108,8 +148,28 @@ default_disks:
 - id: '121'
   name: sdb
   parent_disk_blkid: '121'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '16459'
+  id: sdb-part1
+  number: '16459'
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  size: '240035823616'
+  type: partition
+- fstype: ext4
+  id: 16459-format
+  label: ''
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  type: format
+  volume: '16459'
+- device: 16459-format
+  id: 16459-mount
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.45
 env:
   DEVICE_IP: 10.245.130.45
