@@ -7,7 +7,7 @@ docker rm -vf $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
 
 # docker volume rm -f $(docker volume ls -q)
-docker volume rm -f $(docker volume ls -q | grep -v testflinger-docker_vault_data)
+docker volume rm -f $(docker volume ls -q | grep -v serverlab-testflinger_vault_data)
 
 docker network prune -f
 
@@ -20,3 +20,4 @@ git pull
 sleep 1
 
 ./tools/deploy_stack.sh
+

@@ -395,7 +395,7 @@ def main():
         build_cntnr_img(client, img_name, dockf_dir)
 
     # setup network
-    net_name = 'testflinger-docker_needham_int'  # docker-compose
+    net_name = 'serverlab-testflinger_needham_int'  # docker-compose
     try:
         agnt_net = client.networks.get(net_name)
     except docker.errors.NotFound:

@@ -7,3 +7,9 @@ ssh/
 code/nr_*
 nr_*
 .DS_Store
+
+#ignore runtime directories
+log/
+sut/agent/
+sut/cli/
+sut/snappy/

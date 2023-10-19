@@ -315,7 +315,7 @@ Stack Operations
 
 -  Adding an agent container:
 
-   -  On the Docker host, in the path ``/opt/testflinger-docker/sut``
+   -  On the Docker host, in the path ``/opt/serverlab-testflinger/sut``
 
    -  Create (or copy existing and change) the following files within
       this dir:
@@ -326,7 +326,7 @@ Stack Operations
 
    -  Next, run the following command to sort these files into the
       relative subdirs to load in the appropriate stack containers RUN
-      FROM DOCKER ROOT (``/opt/testflinger-docker``)::
+      FROM DOCKER ROOT (``/opt/serverlab-testflinger``)::
 
         ./tools/parse_tf_files.sh
 
@@ -473,13 +473,13 @@ script):
 
 -  Pull repo from Launchpad or Github::
 
-     git clone https://github.com/hum4n0id/testflinger-docker
+     git clone https://github.com/canonical/serverlab-testflinger
 
 Customize source and config files for environment:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All work is done in the Git cloned Docker root dir
-(``testflinger-docker/``).
+(``serverlab-testflinger/``).
 
 Update relevant files are to match local environment:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
