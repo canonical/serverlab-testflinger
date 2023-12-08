@@ -1,75 +1,75 @@
 agent_name: krow
 default_disks:
-- id: '344'
-  name: sda
-  parent_disk_blkid: '344'
-  ptable: GPT
-  type: disk
-- device: '8457'
-  id: sda-part1
-  number: '8457'
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 8457-format
-  label: efi
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  type: format
-  volume: '8457'
-- device: 8457-format
-  id: 8457-mount
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  path: /boot/efi
-  type: mount
-- device: '8458'
-  id: sda-part2
-  number: '8458'
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  size: '999662026752'
-  type: partition
-- fstype: ext4
-  id: 8458-format
-  label: root
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  type: format
-  volume: '8458'
-- device: 8458-format
-  id: 8458-mount
-  parent_disk: '344'
-  parent_disk_blkid: '344'
-  path: /
-  type: mount
-- id: '345'
-  name: sdb
-  parent_disk_blkid: '345'
-  ptable: GPT
-  type: disk
-- device: '8459'
-  id: sdb-part1
-  number: '8459'
-  parent_disk: '345'
-  parent_disk_blkid: '345'
-  size: '1000186314752'
-  type: partition
-- fstype: ext4
-  id: 8459-format
-  label: ''
-  parent_disk: '345'
-  parent_disk_blkid: '345'
-  type: format
-  volume: '8459'
-- device: 8459-format
-  id: 8459-mount
-  parent_disk: '345'
-  parent_disk_blkid: '345'
-  path: /data/sdb
-  type: mount
+  - id: '344'
+    name: sda
+    parent_disk_blkid: '344'
+    ptable: GPT
+    type: disk
+  - device: '8457'
+    id: sda-part1
+    number: '8457'
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 8457-format
+    label: efi
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    type: format
+    volume: '8457'
+  - device: 8457-format
+    id: 8457-mount
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    path: /boot/efi
+    type: mount
+  - device: '8458'
+    id: sda-part2
+    number: '8458'
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    size: '999662026752'
+    type: partition
+  - fstype: ext4
+    id: 8458-format
+    label: root
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    type: format
+    volume: '8458'
+  - device: 8458-format
+    id: 8458-mount
+    parent_disk: '344'
+    parent_disk_blkid: '344'
+    path: /
+    type: mount
+  - id: '345'
+    name: sdb
+    parent_disk_blkid: '345'
+    ptable: GPT
+    type: disk
+  - device: '8459'
+    id: sdb-part1
+    number: '8459'
+    parent_disk: '345'
+    parent_disk_blkid: '345'
+    size: '1000186314752'
+    type: partition
+  - fstype: ext4
+    id: 8459-format
+    label: ''
+    parent_disk: '345'
+    parent_disk_blkid: '345'
+    type: format
+    volume: '8459'
+  - device: 8459-format
+    id: 8459-mount
+    parent_disk: '345'
+    parent_disk_blkid: '345'
+    path: /data/sdb
+    type: mount
 device_ip: 10.245.130.89
 env:
   DEVICE_IP: 10.245.130.89
@@ -77,3 +77,4 @@ env:
 maas_user: testflinger_a
 node_id: a6ced7
 node_name: krow
+max_reserve_timeout: 604800

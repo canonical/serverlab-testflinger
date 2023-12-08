@@ -1,50 +1,50 @@
 agent_name: drapion
 default_disks:
-- id: '70'
-  name: sda
-  parent_disk_blkid: '70'
-  ptable: GPT
-  type: disk
-- device: '15511'
-  id: sda-part1
-  number: '15511'
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15511-format
-  label: efi
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  type: format
-  volume: '15511'
-- device: 15511-format
-  id: 15511-mount
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  path: /boot/efi
-  type: mount
-- device: '15512'
-  id: sda-part2
-  number: '15512'
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  size: '298454089728'
-  type: partition
-- fstype: ext4
-  id: 15512-format
-  label: root
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  type: format
-  volume: '15512'
-- device: 15512-format
-  id: 15512-mount
-  parent_disk: '70'
-  parent_disk_blkid: '70'
-  path: /
-  type: mount
+  - id: '70'
+    name: sda
+    parent_disk_blkid: '70'
+    ptable: GPT
+    type: disk
+  - device: '15511'
+    id: sda-part1
+    number: '15511'
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15511-format
+    label: efi
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    type: format
+    volume: '15511'
+  - device: 15511-format
+    id: 15511-mount
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    path: /boot/efi
+    type: mount
+  - device: '15512'
+    id: sda-part2
+    number: '15512'
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    size: '298454089728'
+    type: partition
+  - fstype: ext4
+    id: 15512-format
+    label: root
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    type: format
+    volume: '15512'
+  - device: 15512-format
+    id: 15512-mount
+    parent_disk: '70'
+    parent_disk_blkid: '70'
+    path: /
+    type: mount
 device_ip: 10.245.130.20
 env:
   DEVICE_IP: 10.245.130.20
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: ksnms7
 node_name: drapion
+max_reserve_timeout: 604800

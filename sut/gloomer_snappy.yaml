@@ -1,95 +1,95 @@
 agent_name: gloomer
 default_disks:
-- id: '161'
-  name: disk0
-  parent_disk_blkid: '161'
-  ptable: GPT
-  type: disk
-- device: '7019'
-  id: disk0-part1
-  number: '7019'
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 7019-format
-  label: efi
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  type: format
-  volume: '7019'
-- device: 7019-format
-  id: 7019-mount
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  path: /boot/efi
-  type: mount
-- device: '7020'
-  id: disk0-part2
-  number: '7020'
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 7020-format
-  label: boot
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  type: format
-  volume: '7020'
-- device: 7020-format
-  id: 7020-mount
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  path: /boot
-  type: mount
-- device: '7021'
-  id: disk0-part3
-  number: '7021'
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  size: '99996401664'
-  type: partition
-- fstype: ext4
-  id: 7021-format
-  label: root
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  type: format
-  volume: '7021'
-- device: 7021-format
-  id: 7021-mount
-  parent_disk: '161'
-  parent_disk_blkid: '161'
-  path: /
-  type: mount
-- id: '162'
-  name: disk1
-  parent_disk_blkid: '162'
-  ptable: GPT
-  type: disk
-- device: '16423'
-  id: disk1-part1
-  number: '16423'
-  parent_disk: '162'
-  parent_disk_blkid: '162'
-  size: '1000186314752'
-  type: partition
-- fstype: ext4
-  id: 16423-format
-  label: ''
-  parent_disk: '162'
-  parent_disk_blkid: '162'
-  type: format
-  volume: '16423'
-- device: 16423-format
-  id: 16423-mount
-  parent_disk: '162'
-  parent_disk_blkid: '162'
-  path: /mnt/disk1
-  type: mount
+  - id: '161'
+    name: disk0
+    parent_disk_blkid: '161'
+    ptable: GPT
+    type: disk
+  - device: '7019'
+    id: disk0-part1
+    number: '7019'
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 7019-format
+    label: efi
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    type: format
+    volume: '7019'
+  - device: 7019-format
+    id: 7019-mount
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    path: /boot/efi
+    type: mount
+  - device: '7020'
+    id: disk0-part2
+    number: '7020'
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 7020-format
+    label: boot
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    type: format
+    volume: '7020'
+  - device: 7020-format
+    id: 7020-mount
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    path: /boot
+    type: mount
+  - device: '7021'
+    id: disk0-part3
+    number: '7021'
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    size: '99996401664'
+    type: partition
+  - fstype: ext4
+    id: 7021-format
+    label: root
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    type: format
+    volume: '7021'
+  - device: 7021-format
+    id: 7021-mount
+    parent_disk: '161'
+    parent_disk_blkid: '161'
+    path: /
+    type: mount
+  - id: '162'
+    name: disk1
+    parent_disk_blkid: '162'
+    ptable: GPT
+    type: disk
+  - device: '16423'
+    id: disk1-part1
+    number: '16423'
+    parent_disk: '162'
+    parent_disk_blkid: '162'
+    size: '1000186314752'
+    type: partition
+  - fstype: ext4
+    id: 16423-format
+    label: ''
+    parent_disk: '162'
+    parent_disk_blkid: '162'
+    type: format
+    volume: '16423'
+  - device: 16423-format
+    id: 16423-mount
+    parent_disk: '162'
+    parent_disk_blkid: '162'
+    path: /mnt/disk1
+    type: mount
 device_ip: 10.245.130.54
 env:
   DEVICE_IP: 10.245.130.54
@@ -97,3 +97,4 @@ env:
 maas_user: testflinger_a
 node_id: 7yf7a8
 node_name: gloomer
+max_reserve_timeout: 604800

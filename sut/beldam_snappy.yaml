@@ -1,150 +1,150 @@
 agent_name: beldam
 default_disks:
-- id: '80'
-  name: nvme0n1
-  parent_disk_blkid: '80'
-  ptable: GPT
-  type: disk
-- device: '823'
-  id: nvme0n1-part1
-  number: '823'
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 823-format
-  label: efi
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  type: format
-  volume: '823'
-- device: 823-format
-  id: 823-mount
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  path: /boot/efi
-  type: mount
-- device: '824'
-  id: nvme0n1-part2
-  number: '824'
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  size: '1599778848768'
-  type: partition
-- fstype: ext4
-  id: 824-format
-  label: root
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  type: format
-  volume: '824'
-- device: 824-format
-  id: 824-mount
-  parent_disk: '80'
-  parent_disk_blkid: '80'
-  path: /
-  type: mount
-- id: '81'
-  name: sda
-  parent_disk_blkid: '81'
-  ptable: GPT
-  type: disk
-- device: '16435'
-  id: sda-part1
-  number: '16435'
-  parent_disk: '81'
-  parent_disk_blkid: '81'
-  size: '6001159831552'
-  type: partition
-- fstype: ext4
-  id: 16435-format
-  label: ''
-  parent_disk: '81'
-  parent_disk_blkid: '81'
-  type: format
-  volume: '16435'
-- device: 16435-format
-  id: 16435-mount
-  parent_disk: '81'
-  parent_disk_blkid: '81'
-  path: /mnt/sda1
-  type: mount
-- id: '82'
-  name: sdb
-  parent_disk_blkid: '82'
-  ptable: GPT
-  type: disk
-- device: '16436'
-  id: sdb-part1
-  number: '16436'
-  parent_disk: '82'
-  parent_disk_blkid: '82'
-  size: '480088424448'
-  type: partition
-- fstype: ext4
-  id: 16436-format
-  label: ''
-  parent_disk: '82'
-  parent_disk_blkid: '82'
-  type: format
-  volume: '16436'
-- device: 16436-format
-  id: 16436-mount
-  parent_disk: '82'
-  parent_disk_blkid: '82'
-  path: /mnt/sdb1
-  type: mount
-- id: '83'
-  name: sdc
-  parent_disk_blkid: '83'
-  ptable: GPT
-  type: disk
-- device: '16437'
-  id: sdc-part1
-  number: '16437'
-  parent_disk: '83'
-  parent_disk_blkid: '83'
-  size: '480088424448'
-  type: partition
-- fstype: ext4
-  id: 16437-format
-  label: ''
-  parent_disk: '83'
-  parent_disk_blkid: '83'
-  type: format
-  volume: '16437'
-- device: 16437-format
-  id: 16437-mount
-  parent_disk: '83'
-  parent_disk_blkid: '83'
-  path: /mnt/sdc1
-  type: mount
-- id: '84'
-  name: sdd
-  parent_disk_blkid: '84'
-  ptable: GPT
-  type: disk
-- device: '16438'
-  id: sdd-part1
-  number: '16438'
-  parent_disk: '84'
-  parent_disk_blkid: '84'
-  size: '6001159831552'
-  type: partition
-- fstype: ext4
-  id: 16438-format
-  label: ''
-  parent_disk: '84'
-  parent_disk_blkid: '84'
-  type: format
-  volume: '16438'
-- device: 16438-format
-  id: 16438-mount
-  parent_disk: '84'
-  parent_disk_blkid: '84'
-  path: /mnt/sdd1
-  type: mount
+  - id: '80'
+    name: nvme0n1
+    parent_disk_blkid: '80'
+    ptable: GPT
+    type: disk
+  - device: '823'
+    id: nvme0n1-part1
+    number: '823'
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 823-format
+    label: efi
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    type: format
+    volume: '823'
+  - device: 823-format
+    id: 823-mount
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    path: /boot/efi
+    type: mount
+  - device: '824'
+    id: nvme0n1-part2
+    number: '824'
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    size: '1599778848768'
+    type: partition
+  - fstype: ext4
+    id: 824-format
+    label: root
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    type: format
+    volume: '824'
+  - device: 824-format
+    id: 824-mount
+    parent_disk: '80'
+    parent_disk_blkid: '80'
+    path: /
+    type: mount
+  - id: '81'
+    name: sda
+    parent_disk_blkid: '81'
+    ptable: GPT
+    type: disk
+  - device: '16435'
+    id: sda-part1
+    number: '16435'
+    parent_disk: '81'
+    parent_disk_blkid: '81'
+    size: '6001159831552'
+    type: partition
+  - fstype: ext4
+    id: 16435-format
+    label: ''
+    parent_disk: '81'
+    parent_disk_blkid: '81'
+    type: format
+    volume: '16435'
+  - device: 16435-format
+    id: 16435-mount
+    parent_disk: '81'
+    parent_disk_blkid: '81'
+    path: /mnt/sda1
+    type: mount
+  - id: '82'
+    name: sdb
+    parent_disk_blkid: '82'
+    ptable: GPT
+    type: disk
+  - device: '16436'
+    id: sdb-part1
+    number: '16436'
+    parent_disk: '82'
+    parent_disk_blkid: '82'
+    size: '480088424448'
+    type: partition
+  - fstype: ext4
+    id: 16436-format
+    label: ''
+    parent_disk: '82'
+    parent_disk_blkid: '82'
+    type: format
+    volume: '16436'
+  - device: 16436-format
+    id: 16436-mount
+    parent_disk: '82'
+    parent_disk_blkid: '82'
+    path: /mnt/sdb1
+    type: mount
+  - id: '83'
+    name: sdc
+    parent_disk_blkid: '83'
+    ptable: GPT
+    type: disk
+  - device: '16437'
+    id: sdc-part1
+    number: '16437'
+    parent_disk: '83'
+    parent_disk_blkid: '83'
+    size: '480088424448'
+    type: partition
+  - fstype: ext4
+    id: 16437-format
+    label: ''
+    parent_disk: '83'
+    parent_disk_blkid: '83'
+    type: format
+    volume: '16437'
+  - device: 16437-format
+    id: 16437-mount
+    parent_disk: '83'
+    parent_disk_blkid: '83'
+    path: /mnt/sdc1
+    type: mount
+  - id: '84'
+    name: sdd
+    parent_disk_blkid: '84'
+    ptable: GPT
+    type: disk
+  - device: '16438'
+    id: sdd-part1
+    number: '16438'
+    parent_disk: '84'
+    parent_disk_blkid: '84'
+    size: '6001159831552'
+    type: partition
+  - fstype: ext4
+    id: 16438-format
+    label: ''
+    parent_disk: '84'
+    parent_disk_blkid: '84'
+    type: format
+    volume: '16438'
+  - device: 16438-format
+    id: 16438-mount
+    parent_disk: '84'
+    parent_disk_blkid: '84'
+    path: /mnt/sdd1
+    type: mount
 device_ip: 10.245.130.36
 env:
   DEVICE_IP: 10.245.130.36
@@ -152,3 +152,4 @@ env:
 maas_user: testflinger_a
 node_id: da7pmq
 node_name: beldam
+max_reserve_timeout: 604800

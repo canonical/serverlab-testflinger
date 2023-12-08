@@ -1,50 +1,50 @@
 agent_name: boshi
 default_disks:
-- id: '207'
-  name: sda
-  parent_disk_blkid: '207'
-  ptable: GPT
-  type: disk
-- device: '16147'
-  id: sda-part2
-  number: '16147'
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  size: '479559942144'
-  type: partition
-- fstype: ext4
-  id: 16147-format
-  label: root
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  type: format
-  volume: '16147'
-- device: 16147-format
-  id: 16147-mount
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  path: /
-  type: mount
-- device: '16146'
-  id: sda-part1
-  number: '16146'
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 16146-format
-  label: efi
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  type: format
-  volume: '16146'
-- device: 16146-format
-  id: 16146-mount
-  parent_disk: '207'
-  parent_disk_blkid: '207'
-  path: /boot/efi
-  type: mount
+  - id: '207'
+    name: sda
+    parent_disk_blkid: '207'
+    ptable: GPT
+    type: disk
+  - device: '16147'
+    id: sda-part2
+    number: '16147'
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    size: '479559942144'
+    type: partition
+  - fstype: ext4
+    id: 16147-format
+    label: root
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    type: format
+    volume: '16147'
+  - device: 16147-format
+    id: 16147-mount
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    path: /
+    type: mount
+  - device: '16146'
+    id: sda-part1
+    number: '16146'
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 16146-format
+    label: efi
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    type: format
+    volume: '16146'
+  - device: 16146-format
+    id: 16146-mount
+    parent_disk: '207'
+    parent_disk_blkid: '207'
+    path: /boot/efi
+    type: mount
 device_ip: 10.245.130.69
 env:
   DEVICE_IP: 10.245.130.69
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: 4x8ga4
 node_name: boshi
+max_reserve_timeout: 604800

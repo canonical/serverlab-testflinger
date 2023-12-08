@@ -1,73 +1,74 @@
 agent_name: kvm-medium-2
 default_disks:
-- id: '327'
-  name: disk0
-  parent_disk_blkid: '327'
-  ptable: GPT
-  type: disk
-- device: '16331'
-  id: disk0-part3
-  number: '16331'
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 16331-format
-  label: boot
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  type: format
-  volume: '16331'
-- device: 16331-format
-  id: 16331-mount
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  path: /boot
-  type: mount
-- device: '16332'
-  id: disk0-part4
-  number: '16332'
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  size: '92996108288'
-  type: partition
-- fstype: ext4
-  id: 16332-format
-  label: root
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  type: format
-  volume: '16332'
-- device: 16332-format
-  id: 16332-mount
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  path: /
-  type: mount
-- device: '16329'
-  id: disk0-part2
-  number: '16329'
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 16329-format
-  label: efi
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  type: format
-  volume: '16329'
-- device: 16329-format
-  id: 16329-mount
-  parent_disk: '327'
-  parent_disk_blkid: '327'
-  path: /boot/efi
-  type: mount
+  - id: '327'
+    name: disk0
+    parent_disk_blkid: '327'
+    ptable: GPT
+    type: disk
+  - device: '16331'
+    id: disk0-part3
+    number: '16331'
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 16331-format
+    label: boot
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    type: format
+    volume: '16331'
+  - device: 16331-format
+    id: 16331-mount
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    path: /boot
+    type: mount
+  - device: '16332'
+    id: disk0-part4
+    number: '16332'
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    size: '92996108288'
+    type: partition
+  - fstype: ext4
+    id: 16332-format
+    label: root
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    type: format
+    volume: '16332'
+  - device: 16332-format
+    id: 16332-mount
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    path: /
+    type: mount
+  - device: '16329'
+    id: disk0-part2
+    number: '16329'
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 16329-format
+    label: efi
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    type: format
+    volume: '16329'
+  - device: 16329-format
+    id: 16329-mount
+    parent_disk: '327'
+    parent_disk_blkid: '327'
+    path: /boot/efi
+    type: mount
 device_ip: 10.245.135.9
 env:
   DEVICE_IP: 10.245.135.9
 maas_user: testflinger_a
 node_id: b7mdaw
 node_name: kvm-medium-2
+max_reserve_timeout: 604800

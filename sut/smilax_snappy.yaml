@@ -1,75 +1,75 @@
 agent_name: smilax
 default_disks:
-- id: '348'
-  name: sda
-  parent_disk_blkid: '348'
-  ptable: GPT
-  type: disk
-- device: '1124'
-  id: sda-part1
-  number: '1124'
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 1124-format
-  label: efi
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  type: format
-  volume: '1124'
-- device: 1124-format
-  id: 1124-mount
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  path: /boot/efi
-  type: mount
-- device: '1125'
-  id: sda-part2
-  number: '1125'
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  size: '1599778848768'
-  type: partition
-- fstype: ext4
-  id: 1125-format
-  label: root
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  type: format
-  volume: '1125'
-- device: 1125-format
-  id: 1125-mount
-  parent_disk: '348'
-  parent_disk_blkid: '348'
-  path: /
-  type: mount
-- id: '349'
-  name: sdb
-  parent_disk_blkid: '349'
-  ptable: GPT
-  type: disk
-- device: '1126'
-  id: sdb-part1
-  number: '1126'
-  parent_disk: '349'
-  parent_disk_blkid: '349'
-  size: '1600307331072'
-  type: partition
-- fstype: ext4
-  id: 1126-format
-  label: ''
-  parent_disk: '349'
-  parent_disk_blkid: '349'
-  type: format
-  volume: '1126'
-- device: 1126-format
-  id: 1126-mount
-  parent_disk: '349'
-  parent_disk_blkid: '349'
-  path: /data/MO001600KXPTR
-  type: mount
+  - id: '348'
+    name: sda
+    parent_disk_blkid: '348'
+    ptable: GPT
+    type: disk
+  - device: '1124'
+    id: sda-part1
+    number: '1124'
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 1124-format
+    label: efi
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    type: format
+    volume: '1124'
+  - device: 1124-format
+    id: 1124-mount
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    path: /boot/efi
+    type: mount
+  - device: '1125'
+    id: sda-part2
+    number: '1125'
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    size: '1599778848768'
+    type: partition
+  - fstype: ext4
+    id: 1125-format
+    label: root
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    type: format
+    volume: '1125'
+  - device: 1125-format
+    id: 1125-mount
+    parent_disk: '348'
+    parent_disk_blkid: '348'
+    path: /
+    type: mount
+  - id: '349'
+    name: sdb
+    parent_disk_blkid: '349'
+    ptable: GPT
+    type: disk
+  - device: '1126'
+    id: sdb-part1
+    number: '1126'
+    parent_disk: '349'
+    parent_disk_blkid: '349'
+    size: '1600307331072'
+    type: partition
+  - fstype: ext4
+    id: 1126-format
+    label: ''
+    parent_disk: '349'
+    parent_disk_blkid: '349'
+    type: format
+    volume: '1126'
+  - device: 1126-format
+    id: 1126-mount
+    parent_disk: '349'
+    parent_disk_blkid: '349'
+    path: /data/MO001600KXPTR
+    type: mount
 device_ip: 10.245.130.92
 env:
   DEVICE_IP: 10.245.130.92
@@ -77,3 +77,4 @@ env:
 maas_user: testflinger_a
 node_id: 48e8k4
 node_name: smilax
+max_reserve_timeout: 604800

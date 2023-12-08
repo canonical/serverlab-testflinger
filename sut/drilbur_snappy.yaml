@@ -1,75 +1,75 @@
 agent_name: drilbur
 default_disks:
-- id: '62'
-  name: sda
-  parent_disk_blkid: '62'
-  ptable: GPT
-  type: disk
-- device: '9013'
-  id: sda-part1
-  number: '9013'
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 9013-format
-  label: efi
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  type: format
-  volume: '9013'
-- device: 9013-format
-  id: 9013-mount
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  path: /boot/efi
-  type: mount
-- device: '9015'
-  id: sda-part2
-  number: '9015'
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  size: '499562577920'
-  type: partition
-- fstype: ext4
-  id: 9015-format
-  label: root
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  type: format
-  volume: '9015'
-- device: 9015-format
-  id: 9015-mount
-  parent_disk: '62'
-  parent_disk_blkid: '62'
-  path: /
-  type: mount
-- id: '63'
-  name: sdb
-  parent_disk_blkid: '63'
-  ptable: GPT
-  type: disk
-- device: '9016'
-  id: sdb-part1
-  number: '9016'
-  parent_disk: '63'
-  parent_disk_blkid: '63'
-  size: '500099448832'
-  type: partition
-- fstype: ext4
-  id: 9016-format
-  label: ''
-  parent_disk: '63'
-  parent_disk_blkid: '63'
-  type: format
-  volume: '9016'
-- device: 9016-format
-  id: 9016-mount
-  parent_disk: '63'
-  parent_disk_blkid: '63'
-  path: /mnt/sdb
-  type: mount
+  - id: '62'
+    name: sda
+    parent_disk_blkid: '62'
+    ptable: GPT
+    type: disk
+  - device: '9013'
+    id: sda-part1
+    number: '9013'
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 9013-format
+    label: efi
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    type: format
+    volume: '9013'
+  - device: 9013-format
+    id: 9013-mount
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    path: /boot/efi
+    type: mount
+  - device: '9015'
+    id: sda-part2
+    number: '9015'
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    size: '499562577920'
+    type: partition
+  - fstype: ext4
+    id: 9015-format
+    label: root
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    type: format
+    volume: '9015'
+  - device: 9015-format
+    id: 9015-mount
+    parent_disk: '62'
+    parent_disk_blkid: '62'
+    path: /
+    type: mount
+  - id: '63'
+    name: sdb
+    parent_disk_blkid: '63'
+    ptable: GPT
+    type: disk
+  - device: '9016'
+    id: sdb-part1
+    number: '9016'
+    parent_disk: '63'
+    parent_disk_blkid: '63'
+    size: '500099448832'
+    type: partition
+  - fstype: ext4
+    id: 9016-format
+    label: ''
+    parent_disk: '63'
+    parent_disk_blkid: '63'
+    type: format
+    volume: '9016'
+  - device: 9016-format
+    id: 9016-mount
+    parent_disk: '63'
+    parent_disk_blkid: '63'
+    path: /mnt/sdb
+    type: mount
 device_ip: null
 env:
   DEVICE_IP: null
@@ -77,3 +77,4 @@ env:
 maas_user: testflinger_a
 node_id: hpkh87
 node_name: drilbur
+max_reserve_timeout: 604800

@@ -1,50 +1,50 @@
 agent_name: luma
 default_disks:
-- id: '179'
-  name: nvme0n1
-  parent_disk_blkid: '179'
-  ptable: GPT
-  type: disk
-- device: '15585'
-  id: nvme0n1-part2
-  number: '15585'
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  size: '649592832000'
-  type: partition
-- fstype: ext4
-  id: 15585-format
-  label: root
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  type: format
-  volume: '15585'
-- device: 15585-format
-  id: 15585-mount
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  path: /
-  type: mount
-- device: '15584'
-  id: nvme0n1-part1
-  number: '15584'
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15584-format
-  label: efi
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  type: format
-  volume: '15584'
-- device: 15584-format
-  id: 15584-mount
-  parent_disk: '179'
-  parent_disk_blkid: '179'
-  path: /boot/efi
-  type: mount
+  - id: '179'
+    name: nvme0n1
+    parent_disk_blkid: '179'
+    ptable: GPT
+    type: disk
+  - device: '15585'
+    id: nvme0n1-part2
+    number: '15585'
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    size: '649592832000'
+    type: partition
+  - fstype: ext4
+    id: 15585-format
+    label: root
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    type: format
+    volume: '15585'
+  - device: 15585-format
+    id: 15585-mount
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    path: /
+    type: mount
+  - device: '15584'
+    id: nvme0n1-part1
+    number: '15584'
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15584-format
+    label: efi
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    type: format
+    volume: '15584'
+  - device: 15584-format
+    id: 15584-mount
+    parent_disk: '179'
+    parent_disk_blkid: '179'
+    path: /boot/efi
+    type: mount
 device_ip: 10.245.130.60
 env:
   DEVICE_IP: 10.245.130.60
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: xtpyry
 node_name: luma
+max_reserve_timeout: 604800

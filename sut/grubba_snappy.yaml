@@ -1,5 +1,6 @@
 agent_name: grubba
 device_ip: 10.229.48.48
 env:
-    HEXR_DEVICE_SECURE_ID: J3B4uh2fEFhRZGLJUE9Gtm
-    DEVICE_IP: 10.229.48.48
+  HEXR_DEVICE_SECURE_ID: J3B4uh2fEFhRZGLJUE9Gtm
+  DEVICE_IP: 10.229.48.48
+max_reserve_timeout: 604800

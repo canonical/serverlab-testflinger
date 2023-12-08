@@ -1,95 +1,95 @@
 agent_name: fava
 default_disks:
-- id: '243'
-  name: disk0
-  parent_disk_blkid: '243'
-  ptable: GPT
-  type: disk
-- device: '16416'
-  id: disk0-part3
-  number: '16416'
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  size: '99996401664'
-  type: partition
-- fstype: ext4
-  id: 16416-format
-  label: root
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  type: format
-  volume: '16416'
-- device: 16416-format
-  id: 16416-mount
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  path: /
-  type: mount
-- device: '16414'
-  id: disk0-part1
-  number: '16414'
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 16414-format
-  label: efi
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  type: format
-  volume: '16414'
-- device: 16414-format
-  id: 16414-mount
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  path: /boot/efi
-  type: mount
-- device: '16415'
-  id: disk0-part2
-  number: '16415'
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 16415-format
-  label: boot
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  type: format
-  volume: '16415'
-- device: 16415-format
-  id: 16415-mount
-  parent_disk: '243'
-  parent_disk_blkid: '243'
-  path: /boot
-  type: mount
-- id: '244'
-  name: disk1
-  parent_disk_blkid: '244'
-  ptable: GPT
-  type: disk
-- device: '16447'
-  id: disk1-part1
-  number: '16447'
-  parent_disk: '244'
-  parent_disk_blkid: '244'
-  size: '299989204992'
-  type: partition
-- fstype: ext4
-  id: 16447-format
-  label: ''
-  parent_disk: '244'
-  parent_disk_blkid: '244'
-  type: format
-  volume: '16447'
-- device: 16447-format
-  id: 16447-mount
-  parent_disk: '244'
-  parent_disk_blkid: '244'
-  path: /mnt/disk1p1
-  type: mount
+  - id: '243'
+    name: disk0
+    parent_disk_blkid: '243'
+    ptable: GPT
+    type: disk
+  - device: '16416'
+    id: disk0-part3
+    number: '16416'
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    size: '99996401664'
+    type: partition
+  - fstype: ext4
+    id: 16416-format
+    label: root
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    type: format
+    volume: '16416'
+  - device: 16416-format
+    id: 16416-mount
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    path: /
+    type: mount
+  - device: '16414'
+    id: disk0-part1
+    number: '16414'
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 16414-format
+    label: efi
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    type: format
+    volume: '16414'
+  - device: 16414-format
+    id: 16414-mount
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    path: /boot/efi
+    type: mount
+  - device: '16415'
+    id: disk0-part2
+    number: '16415'
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 16415-format
+    label: boot
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    type: format
+    volume: '16415'
+  - device: 16415-format
+    id: 16415-mount
+    parent_disk: '243'
+    parent_disk_blkid: '243'
+    path: /boot
+    type: mount
+  - id: '244'
+    name: disk1
+    parent_disk_blkid: '244'
+    ptable: GPT
+    type: disk
+  - device: '16447'
+    id: disk1-part1
+    number: '16447'
+    parent_disk: '244'
+    parent_disk_blkid: '244'
+    size: '299989204992'
+    type: partition
+  - fstype: ext4
+    id: 16447-format
+    label: ''
+    parent_disk: '244'
+    parent_disk_blkid: '244'
+    type: format
+    volume: '16447'
+  - device: 16447-format
+    id: 16447-mount
+    parent_disk: '244'
+    parent_disk_blkid: '244'
+    path: /mnt/disk1p1
+    type: mount
 device_ip: 10.245.130.77
 env:
   DEVICE_IP: 10.245.130.77
@@ -97,3 +97,4 @@ env:
 maas_user: testflinger_a
 node_id: fc3afk
 node_name: fava
+max_reserve_timeout: 604800

@@ -1,73 +1,74 @@
 agent_name: kvm-large-1
 default_disks:
-- id: '332'
-  name: disk0
-  parent_disk_blkid: '332'
-  ptable: GPT
-  type: disk
-- device: '16348'
-  id: disk0-part4
-  number: '16348'
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  size: '185996410880'
-  type: partition
-- fstype: ext4
-  id: 16348-format
-  label: root
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  type: format
-  volume: '16348'
-- device: 16348-format
-  id: 16348-mount
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  path: /
-  type: mount
-- device: '16346'
-  id: disk0-part2
-  number: '16346'
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 16346-format
-  label: efi
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  type: format
-  volume: '16346'
-- device: 16346-format
-  id: 16346-mount
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  path: /boot/efi
-  type: mount
-- device: '16347'
-  id: disk0-part3
-  number: '16347'
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 16347-format
-  label: boot
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  type: format
-  volume: '16347'
-- device: 16347-format
-  id: 16347-mount
-  parent_disk: '332'
-  parent_disk_blkid: '332'
-  path: /boot
-  type: mount
+  - id: '332'
+    name: disk0
+    parent_disk_blkid: '332'
+    ptable: GPT
+    type: disk
+  - device: '16348'
+    id: disk0-part4
+    number: '16348'
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    size: '185996410880'
+    type: partition
+  - fstype: ext4
+    id: 16348-format
+    label: root
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    type: format
+    volume: '16348'
+  - device: 16348-format
+    id: 16348-mount
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    path: /
+    type: mount
+  - device: '16346'
+    id: disk0-part2
+    number: '16346'
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 16346-format
+    label: efi
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    type: format
+    volume: '16346'
+  - device: 16346-format
+    id: 16346-mount
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    path: /boot/efi
+    type: mount
+  - device: '16347'
+    id: disk0-part3
+    number: '16347'
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 16347-format
+    label: boot
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    type: format
+    volume: '16347'
+  - device: 16347-format
+    id: 16347-mount
+    parent_disk: '332'
+    parent_disk_blkid: '332'
+    path: /boot
+    type: mount
 device_ip: 10.245.135.2
 env:
   DEVICE_IP: 10.245.135.2
 maas_user: testflinger_a
 node_id: k4xaxd
 node_name: kvm-large-1
+max_reserve_timeout: 604800

@@ -1,55 +1,55 @@
 agent_name: fesenkov
 default_disks:
-- id: '75'
-  name: sda
-  parent_disk_blkid: '75'
-  ptable: GPT
-  type: disk
-- device: '16426'
-  id: sda-part2
-  number: '16426'
-  parent_disk: '75'
-  parent_disk_blkid: '75'
-  size: '1000190509056'
-  type: partition
-- fstype: ext4
-  id: 16426-format
-  label: root
-  parent_disk: '75'
-  parent_disk_blkid: '75'
-  type: format
-  volume: '16426'
-- device: 16426-format
-  id: 16426-mount
-  parent_disk: '75'
-  parent_disk_blkid: '75'
-  path: /
-  type: mount
-- id: '76'
-  name: sdb
-  parent_disk_blkid: '76'
-  ptable: GPT
-  type: disk
-- device: '16469'
-  id: sdb-part1
-  number: '16469'
-  parent_disk: '76'
-  parent_disk_blkid: '76'
-  size: '1000186314752'
-  type: partition
-- fstype: ext4
-  id: 16469-format
-  label: ''
-  parent_disk: '76'
-  parent_disk_blkid: '76'
-  type: format
-  volume: '16469'
-- device: 16469-format
-  id: 16469-mount
-  parent_disk: '76'
-  parent_disk_blkid: '76'
-  path: /data-sdb
-  type: mount
+  - id: '75'
+    name: sda
+    parent_disk_blkid: '75'
+    ptable: GPT
+    type: disk
+  - device: '16426'
+    id: sda-part2
+    number: '16426'
+    parent_disk: '75'
+    parent_disk_blkid: '75'
+    size: '1000190509056'
+    type: partition
+  - fstype: ext4
+    id: 16426-format
+    label: root
+    parent_disk: '75'
+    parent_disk_blkid: '75'
+    type: format
+    volume: '16426'
+  - device: 16426-format
+    id: 16426-mount
+    parent_disk: '75'
+    parent_disk_blkid: '75'
+    path: /
+    type: mount
+  - id: '76'
+    name: sdb
+    parent_disk_blkid: '76'
+    ptable: GPT
+    type: disk
+  - device: '16469'
+    id: sdb-part1
+    number: '16469'
+    parent_disk: '76'
+    parent_disk_blkid: '76'
+    size: '1000186314752'
+    type: partition
+  - fstype: ext4
+    id: 16469-format
+    label: ''
+    parent_disk: '76'
+    parent_disk_blkid: '76'
+    type: format
+    volume: '16469'
+  - device: 16469-format
+    id: 16469-mount
+    parent_disk: '76'
+    parent_disk_blkid: '76'
+    path: /data-sdb
+    type: mount
 device_ip: 10.245.130.17
 env:
   DEVICE_IP: 10.245.130.17
@@ -57,3 +57,4 @@ env:
 maas_user: testflinger_a
 node_id: pkbrge
 node_name: fesenkov
+max_reserve_timeout: 604800

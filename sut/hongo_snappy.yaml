@@ -1,50 +1,50 @@
 agent_name: hongo
 default_disks:
-- id: '301'
-  name: sda
-  parent_disk_blkid: '301'
-  ptable: GPT
-  type: disk
-- device: '15594'
-  id: sda-part2
-  number: '15594'
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  size: '239511535616'
-  type: partition
-- fstype: ext4
-  id: 15594-format
-  label: root
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  type: format
-  volume: '15594'
-- device: 15594-format
-  id: 15594-mount
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  path: /
-  type: mount
-- device: '15593'
-  id: sda-part1
-  number: '15593'
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15593-format
-  label: efi
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  type: format
-  volume: '15593'
-- device: 15593-format
-  id: 15593-mount
-  parent_disk: '301'
-  parent_disk_blkid: '301'
-  path: /boot/efi
-  type: mount
+  - id: '301'
+    name: sda
+    parent_disk_blkid: '301'
+    ptable: GPT
+    type: disk
+  - device: '15594'
+    id: sda-part2
+    number: '15594'
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    size: '239511535616'
+    type: partition
+  - fstype: ext4
+    id: 15594-format
+    label: root
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    type: format
+    volume: '15594'
+  - device: 15594-format
+    id: 15594-mount
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    path: /
+    type: mount
+  - device: '15593'
+    id: sda-part1
+    number: '15593'
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15593-format
+    label: efi
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    type: format
+    volume: '15593'
+  - device: 15593-format
+    id: 15593-mount
+    parent_disk: '301'
+    parent_disk_blkid: '301'
+    path: /boot/efi
+    type: mount
 device_ip: 10.245.130.85
 env:
   DEVICE_IP: 10.245.130.85
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: dq3wdd
 node_name: hongo
+max_reserve_timeout: 604800

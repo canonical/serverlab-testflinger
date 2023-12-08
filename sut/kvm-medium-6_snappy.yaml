@@ -1,73 +1,74 @@
 agent_name: kvm-medium-6
 default_disks:
-- id: '386'
-  name: disk0
-  parent_disk_blkid: '386'
-  ptable: GPT
-  type: disk
-- device: '16381'
-  id: disk0-part2
-  number: '16381'
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 16381-format
-  label: efi
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  type: format
-  volume: '16381'
-- device: 16381-format
-  id: 16381-mount
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  path: /boot/efi
-  type: mount
-- device: '16384'
-  id: disk0-part3
-  number: '16384'
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 16384-format
-  label: boot
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  type: format
-  volume: '16384'
-- device: 16384-format
-  id: 16384-mount
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  path: /boot
-  type: mount
-- device: '16386'
-  id: disk0-part4
-  number: '16386'
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  size: '92996108288'
-  type: partition
-- fstype: ext4
-  id: 16386-format
-  label: root
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  type: format
-  volume: '16386'
-- device: 16386-format
-  id: 16386-mount
-  parent_disk: '386'
-  parent_disk_blkid: '386'
-  path: /
-  type: mount
+  - id: '386'
+    name: disk0
+    parent_disk_blkid: '386'
+    ptable: GPT
+    type: disk
+  - device: '16381'
+    id: disk0-part2
+    number: '16381'
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 16381-format
+    label: efi
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    type: format
+    volume: '16381'
+  - device: 16381-format
+    id: 16381-mount
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    path: /boot/efi
+    type: mount
+  - device: '16384'
+    id: disk0-part3
+    number: '16384'
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 16384-format
+    label: boot
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    type: format
+    volume: '16384'
+  - device: 16384-format
+    id: 16384-mount
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    path: /boot
+    type: mount
+  - device: '16386'
+    id: disk0-part4
+    number: '16386'
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    size: '92996108288'
+    type: partition
+  - fstype: ext4
+    id: 16386-format
+    label: root
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    type: format
+    volume: '16386'
+  - device: 16386-format
+    id: 16386-mount
+    parent_disk: '386'
+    parent_disk_blkid: '386'
+    path: /
+    type: mount
 device_ip: 10.245.135.13
 env:
   DEVICE_IP: 10.245.135.13
 maas_user: testflinger_a
 node_id: 8bkyms
 node_name: kvm-medium-6
+max_reserve_timeout: 604800

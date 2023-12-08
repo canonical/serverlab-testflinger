@@ -1,50 +1,50 @@
 agent_name: jamano
 default_disks:
-- id: '212'
-  name: sda
-  parent_disk_blkid: '212'
-  ptable: GPT
-  type: disk
-- device: '15567'
-  id: sda-part1
-  number: '15567'
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15567-format
-  label: efi
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  type: format
-  volume: '15567'
-- device: 15567-format
-  id: 15567-mount
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  path: /boot/efi
-  type: mount
-- device: '15568'
-  id: sda-part2
-  number: '15568'
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  size: '298454089728'
-  type: partition
-- fstype: ext4
-  id: 15568-format
-  label: root
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  type: format
-  volume: '15568'
-- device: 15568-format
-  id: 15568-mount
-  parent_disk: '212'
-  parent_disk_blkid: '212'
-  path: /
-  type: mount
+  - id: '212'
+    name: sda
+    parent_disk_blkid: '212'
+    ptable: GPT
+    type: disk
+  - device: '15567'
+    id: sda-part1
+    number: '15567'
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15567-format
+    label: efi
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    type: format
+    volume: '15567'
+  - device: 15567-format
+    id: 15567-mount
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    path: /boot/efi
+    type: mount
+  - device: '15568'
+    id: sda-part2
+    number: '15568'
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    size: '298454089728'
+    type: partition
+  - fstype: ext4
+    id: 15568-format
+    label: root
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    type: format
+    volume: '15568'
+  - device: 15568-format
+    id: 15568-mount
+    parent_disk: '212'
+    parent_disk_blkid: '212'
+    path: /
+    type: mount
 device_ip: 10.245.130.32
 env:
   DEVICE_IP: 10.245.130.32
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: yxwy6r
 node_name: jamano
+max_reserve_timeout: 604800

@@ -6,3 +6,4 @@ env:
 maas_user: testflinger_a
 node_id: 7ar4g6
 node_name: juppi
+max_reserve_timeout: 604800

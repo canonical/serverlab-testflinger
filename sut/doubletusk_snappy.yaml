@@ -1,102 +1,102 @@
 agent_name: doubletusk
 default_disks:
-- id: '9'
-  name: disk0
-  parent_disk_blkid: '9'
-  ptable: GPT
-  type: disk
-- device: '16412'
-  id: disk0-part3
-  number: '16412'
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  size: '99996401664'
-  type: partition
-- fstype: ext4
-  id: 16412-format
-  label: root
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  type: format
-  volume: '16412'
-- device: 16412-format
-  id: 16412-mount
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  path: /
-  type: mount
-- device: '16411'
-  id: disk0-part2
-  number: '16411'
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  size: '1996488704'
-  type: partition
-- fstype: ext4
-  id: 16411-format
-  label: boot
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  type: format
-  volume: '16411'
-- device: 16411-format
-  id: 16411-mount
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  path: /boot
-  type: mount
-- device: '16410'
-  id: disk0-part1
-  number: '16410'
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  size: '499122176'
-  type: partition
-- fstype: fat32
-  id: 16410-format
-  label: efi
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  type: format
-  volume: '16410'
-- device: 16410-format
-  id: 16410-mount
-  parent_disk: '9'
-  parent_disk_blkid: '9'
-  path: /boot/efi
-  type: mount
-- id: '10'
-  name: disk1
-  parent_disk_blkid: '10'
-  ptable: GPT
-  type: disk
-- device: '16413'
-  id: disk1-part1
-  number: '16413'
-  parent_disk: '10'
-  parent_disk_blkid: '10'
-  size: '499122176'
-  type: partition
-- device: '16446'
-  id: disk1-part2
-  number: '16446'
-  parent_disk: '10'
-  parent_disk_blkid: '10'
-  size: '959686115328'
-  type: partition
-- fstype: ext4
-  id: 16446-format
-  label: ''
-  parent_disk: '10'
-  parent_disk_blkid: '10'
-  type: format
-  volume: '16446'
-- device: 16446-format
-  id: 16446-mount
-  parent_disk: '10'
-  parent_disk_blkid: '10'
-  path: /mnt/disk1p1
-  type: mount
+  - id: '9'
+    name: disk0
+    parent_disk_blkid: '9'
+    ptable: GPT
+    type: disk
+  - device: '16412'
+    id: disk0-part3
+    number: '16412'
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    size: '99996401664'
+    type: partition
+  - fstype: ext4
+    id: 16412-format
+    label: root
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    type: format
+    volume: '16412'
+  - device: 16412-format
+    id: 16412-mount
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    path: /
+    type: mount
+  - device: '16411'
+    id: disk0-part2
+    number: '16411'
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    size: '1996488704'
+    type: partition
+  - fstype: ext4
+    id: 16411-format
+    label: boot
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    type: format
+    volume: '16411'
+  - device: 16411-format
+    id: 16411-mount
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    path: /boot
+    type: mount
+  - device: '16410'
+    id: disk0-part1
+    number: '16410'
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    size: '499122176'
+    type: partition
+  - fstype: fat32
+    id: 16410-format
+    label: efi
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    type: format
+    volume: '16410'
+  - device: 16410-format
+    id: 16410-mount
+    parent_disk: '9'
+    parent_disk_blkid: '9'
+    path: /boot/efi
+    type: mount
+  - id: '10'
+    name: disk1
+    parent_disk_blkid: '10'
+    ptable: GPT
+    type: disk
+  - device: '16413'
+    id: disk1-part1
+    number: '16413'
+    parent_disk: '10'
+    parent_disk_blkid: '10'
+    size: '499122176'
+    type: partition
+  - device: '16446'
+    id: disk1-part2
+    number: '16446'
+    parent_disk: '10'
+    parent_disk_blkid: '10'
+    size: '959686115328'
+    type: partition
+  - fstype: ext4
+    id: 16446-format
+    label: ''
+    parent_disk: '10'
+    parent_disk_blkid: '10'
+    type: format
+    volume: '16446'
+  - device: 16446-format
+    id: 16446-mount
+    parent_disk: '10'
+    parent_disk_blkid: '10'
+    path: /mnt/disk1p1
+    type: mount
 device_ip: 10.245.130.29
 env:
   DEVICE_IP: 10.245.130.29
@@ -104,3 +104,4 @@ env:
 maas_user: testflinger_a
 node_id: syr86p
 node_name: doubletusk
+max_reserve_timeout: 604800

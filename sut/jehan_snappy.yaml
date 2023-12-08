@@ -1,100 +1,100 @@
 agent_name: jehan
 default_disks:
-- id: '350'
-  name: nvme0n1
-  parent_disk_blkid: '350'
-  ptable: GPT
-  type: disk
-- device: '15559'
-  id: nvme0n1-part1
-  number: '15559'
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15559-format
-  label: efi
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  type: format
-  volume: '15559'
-- device: 15559-format
-  id: 15559-mount
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  path: /boot/efi
-  type: mount
-- device: '15560'
-  id: nvme0n1-part2
-  number: '15560'
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  size: '511566675968'
-  type: partition
-- fstype: ext4
-  id: 15560-format
-  label: root
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  type: format
-  volume: '15560'
-- device: 15560-format
-  id: 15560-mount
-  parent_disk: '350'
-  parent_disk_blkid: '350'
-  path: /
-  type: mount
-- id: '351'
-  name: sda
-  parent_disk_blkid: '351'
-  ptable: GPT
-  type: disk
-- device: '15561'
-  id: sda-part1
-  number: '15561'
-  parent_disk: '351'
-  parent_disk_blkid: '351'
-  size: '400077881344'
-  type: partition
-- fstype: ext4
-  id: 15561-format
-  label: ''
-  parent_disk: '351'
-  parent_disk_blkid: '351'
-  type: format
-  volume: '15561'
-- device: 15561-format
-  id: 15561-mount
-  parent_disk: '351'
-  parent_disk_blkid: '351'
-  path: /data/SSDSC2BX40-sda
-  type: mount
-- id: '352'
-  name: sdb
-  parent_disk_blkid: '352'
-  ptable: GPT
-  type: disk
-- device: '15562'
-  id: sdb-part1
-  number: '15562'
-  parent_disk: '352'
-  parent_disk_blkid: '352'
-  size: '400077881344'
-  type: partition
-- fstype: ext4
-  id: 15562-format
-  label: ''
-  parent_disk: '352'
-  parent_disk_blkid: '352'
-  type: format
-  volume: '15562'
-- device: 15562-format
-  id: 15562-mount
-  parent_disk: '352'
-  parent_disk_blkid: '352'
-  path: /data/SSDSC2BX40-sdb
-  type: mount
+  - id: '350'
+    name: nvme0n1
+    parent_disk_blkid: '350'
+    ptable: GPT
+    type: disk
+  - device: '15559'
+    id: nvme0n1-part1
+    number: '15559'
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15559-format
+    label: efi
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    type: format
+    volume: '15559'
+  - device: 15559-format
+    id: 15559-mount
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    path: /boot/efi
+    type: mount
+  - device: '15560'
+    id: nvme0n1-part2
+    number: '15560'
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    size: '511566675968'
+    type: partition
+  - fstype: ext4
+    id: 15560-format
+    label: root
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    type: format
+    volume: '15560'
+  - device: 15560-format
+    id: 15560-mount
+    parent_disk: '350'
+    parent_disk_blkid: '350'
+    path: /
+    type: mount
+  - id: '351'
+    name: sda
+    parent_disk_blkid: '351'
+    ptable: GPT
+    type: disk
+  - device: '15561'
+    id: sda-part1
+    number: '15561'
+    parent_disk: '351'
+    parent_disk_blkid: '351'
+    size: '400077881344'
+    type: partition
+  - fstype: ext4
+    id: 15561-format
+    label: ''
+    parent_disk: '351'
+    parent_disk_blkid: '351'
+    type: format
+    volume: '15561'
+  - device: 15561-format
+    id: 15561-mount
+    parent_disk: '351'
+    parent_disk_blkid: '351'
+    path: /data/SSDSC2BX40-sda
+    type: mount
+  - id: '352'
+    name: sdb
+    parent_disk_blkid: '352'
+    ptable: GPT
+    type: disk
+  - device: '15562'
+    id: sdb-part1
+    number: '15562'
+    parent_disk: '352'
+    parent_disk_blkid: '352'
+    size: '400077881344'
+    type: partition
+  - fstype: ext4
+    id: 15562-format
+    label: ''
+    parent_disk: '352'
+    parent_disk_blkid: '352'
+    type: format
+    volume: '15562'
+  - device: 15562-format
+    id: 15562-mount
+    parent_disk: '352'
+    parent_disk_blkid: '352'
+    path: /data/SSDSC2BX40-sdb
+    type: mount
 device_ip: 10.245.130.93
 env:
   DEVICE_IP: 10.245.130.93
@@ -102,3 +102,4 @@ env:
 maas_user: testflinger_a
 node_id: ad3rhh
 node_name: jehan
+max_reserve_timeout: 604800

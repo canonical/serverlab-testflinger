@@ -1,30 +1,30 @@
 agent_name: mayapple
 default_disks:
-- id: '58'
-  name: sda
-  parent_disk_blkid: '58'
-  ptable: GPT
-  type: disk
-- device: '7853'
-  id: sda-part2
-  number: '7853'
-  parent_disk: '58'
-  parent_disk_blkid: '58'
-  size: '72737619968'
-  type: partition
-- fstype: ext4
-  id: 7853-format
-  label: root
-  parent_disk: '58'
-  parent_disk_blkid: '58'
-  type: format
-  volume: '7853'
-- device: 7853-format
-  id: 7853-mount
-  parent_disk: '58'
-  parent_disk_blkid: '58'
-  path: /
-  type: mount
+  - id: '58'
+    name: sda
+    parent_disk_blkid: '58'
+    ptable: GPT
+    type: disk
+  - device: '7853'
+    id: sda-part2
+    number: '7853'
+    parent_disk: '58'
+    parent_disk_blkid: '58'
+    size: '72737619968'
+    type: partition
+  - fstype: ext4
+    id: 7853-format
+    label: root
+    parent_disk: '58'
+    parent_disk_blkid: '58'
+    type: format
+    volume: '7853'
+  - device: 7853-format
+    id: 7853-mount
+    parent_disk: '58'
+    parent_disk_blkid: '58'
+    path: /
+    type: mount
 device_ip: 10.245.130.8
 env:
   DEVICE_IP: 10.245.130.8
@@ -32,3 +32,4 @@ env:
 maas_user: testflinger_a
 node_id: fbh36g
 node_name: mayapple
+max_reserve_timeout: 604800

@@ -1,50 +1,50 @@
 agent_name: snide
 default_disks:
-- id: '353'
-  name: nvme0n1
-  parent_disk_blkid: '353'
-  ptable: GPT
-  type: disk
-- device: '15676'
-  id: nvme0n1-part1
-  number: '15676'
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15676-format
-  label: efi
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  type: format
-  volume: '15676'
-- device: 15676-format
-  id: 15676-mount
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  path: /boot/efi
-  type: mount
-- device: '15677'
-  id: nvme0n1-part2
-  number: '15677'
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  size: '959652560896'
-  type: partition
-- fstype: ext4
-  id: 15677-format
-  label: root
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  type: format
-  volume: '15677'
-- device: 15677-format
-  id: 15677-mount
-  parent_disk: '353'
-  parent_disk_blkid: '353'
-  path: /
-  type: mount
+  - id: '353'
+    name: nvme0n1
+    parent_disk_blkid: '353'
+    ptable: GPT
+    type: disk
+  - device: '15676'
+    id: nvme0n1-part1
+    number: '15676'
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15676-format
+    label: efi
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    type: format
+    volume: '15676'
+  - device: 15676-format
+    id: 15676-mount
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    path: /boot/efi
+    type: mount
+  - device: '15677'
+    id: nvme0n1-part2
+    number: '15677'
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    size: '959652560896'
+    type: partition
+  - fstype: ext4
+    id: 15677-format
+    label: root
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    type: format
+    volume: '15677'
+  - device: 15677-format
+    id: 15677-mount
+    parent_disk: '353'
+    parent_disk_blkid: '353'
+    path: /
+    type: mount
 device_ip: 10.245.130.90
 env:
   DEVICE_IP: 10.245.130.90
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: fbntw3
 node_name: snide
+max_reserve_timeout: 604800

@@ -1,20 +1,21 @@
 agent_name: kvm-small-8
 default_disks:
-- id: '387'
-  name: vda
-  parent_disk_blkid: '387'
-  ptable: GPT
-  type: disk
-- device: '1276'
-  id: vda-part2
-  number: '1276'
-  parent_disk: '387'
-  parent_disk_blkid: '387'
-  size: '39992688640'
-  type: partition
+  - id: '387'
+    name: vda
+    parent_disk_blkid: '387'
+    ptable: GPT
+    type: disk
+  - device: '1276'
+    id: vda-part2
+    number: '1276'
+    parent_disk: '387'
+    parent_disk_blkid: '387'
+    size: '39992688640'
+    type: partition
 device_ip: 10.245.135.26
 env:
   DEVICE_IP: 10.245.135.26
 maas_user: testflinger_a
 node_id: dqrqnf
 node_name: kvm-small-8
+max_reserve_timeout: 604800

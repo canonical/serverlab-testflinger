@@ -1,50 +1,50 @@
 agent_name: pianta
 default_disks:
-- id: '98'
-  name: nvme0n1
-  parent_disk_blkid: '98'
-  ptable: GPT
-  type: disk
-- device: '8023'
-  id: nvme0n1-part1
-  number: '8023'
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 8023-format
-  label: efi
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  type: format
-  volume: '8023'
-- device: 8023-format
-  id: 8023-mount
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  path: /boot/efi
-  type: mount
-- device: '8025'
-  id: nvme0n1-part2
-  number: '8025'
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  size: '1599778848768'
-  type: partition
-- fstype: ext4
-  id: 8025-format
-  label: root
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  type: format
-  volume: '8025'
-- device: 8025-format
-  id: 8025-mount
-  parent_disk: '98'
-  parent_disk_blkid: '98'
-  path: /
-  type: mount
+  - id: '98'
+    name: nvme0n1
+    parent_disk_blkid: '98'
+    ptable: GPT
+    type: disk
+  - device: '8023'
+    id: nvme0n1-part1
+    number: '8023'
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 8023-format
+    label: efi
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    type: format
+    volume: '8023'
+  - device: 8023-format
+    id: 8023-mount
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    path: /boot/efi
+    type: mount
+  - device: '8025'
+    id: nvme0n1-part2
+    number: '8025'
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    size: '1599778848768'
+    type: partition
+  - fstype: ext4
+    id: 8025-format
+    label: root
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    type: format
+    volume: '8025'
+  - device: 8025-format
+    id: 8025-mount
+    parent_disk: '98'
+    parent_disk_blkid: '98'
+    path: /
+    type: mount
 device_ip: 10.245.130.38
 env:
   DEVICE_IP: 10.245.130.38
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: f8ysyn
 node_name: pianta
+max_reserve_timeout: 604800

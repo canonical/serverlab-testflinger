@@ -1,100 +1,100 @@
 agent_name: ziptoad
 default_disks:
-- id: '221'
-  name: sda
-  parent_disk_blkid: '221'
-  ptable: GPT
-  type: disk
-- device: '16481'
-  id: sda-part1
-  number: '16481'
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 16481-format
-  label: efi
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  type: format
-  volume: '16481'
-- device: 16481-format
-  id: 16481-mount
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  path: /boot/efi
-  type: mount
-- device: '16482'
-  id: sda-part2
-  number: '16482'
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  size: '299456528384'
-  type: partition
-- fstype: ext4
-  id: 16482-format
-  label: root
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  type: format
-  volume: '16482'
-- device: 16482-format
-  id: 16482-mount
-  parent_disk: '221'
-  parent_disk_blkid: '221'
-  path: /
-  type: mount
-- id: '222'
-  name: sdb
-  parent_disk_blkid: '222'
-  ptable: GPT
-  type: disk
-- device: '16483'
-  id: sdb-part1
-  number: '16483'
-  parent_disk: '222'
-  parent_disk_blkid: '222'
-  size: '299989204992'
-  type: partition
-- fstype: ext4
-  id: 16483-format
-  label: ''
-  parent_disk: '222'
-  parent_disk_blkid: '222'
-  type: format
-  volume: '16483'
-- device: 16483-format
-  id: 16483-mount
-  parent_disk: '222'
-  parent_disk_blkid: '222'
-  path: /data-sdb
-  type: mount
-- id: '228'
-  name: sdc
-  parent_disk_blkid: '228'
-  ptable: GPT
-  type: disk
-- device: '16484'
-  id: sdc-part1
-  number: '16484'
-  parent_disk: '228'
-  parent_disk_blkid: '228'
-  size: '239977103360'
-  type: partition
-- fstype: ext4
-  id: 16484-format
-  label: ''
-  parent_disk: '228'
-  parent_disk_blkid: '228'
-  type: format
-  volume: '16484'
-- device: 16484-format
-  id: 16484-mount
-  parent_disk: '228'
-  parent_disk_blkid: '228'
-  path: /data-sdc
-  type: mount
+  - id: '221'
+    name: sda
+    parent_disk_blkid: '221'
+    ptable: GPT
+    type: disk
+  - device: '16481'
+    id: sda-part1
+    number: '16481'
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 16481-format
+    label: efi
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    type: format
+    volume: '16481'
+  - device: 16481-format
+    id: 16481-mount
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    path: /boot/efi
+    type: mount
+  - device: '16482'
+    id: sda-part2
+    number: '16482'
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    size: '299456528384'
+    type: partition
+  - fstype: ext4
+    id: 16482-format
+    label: root
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    type: format
+    volume: '16482'
+  - device: 16482-format
+    id: 16482-mount
+    parent_disk: '221'
+    parent_disk_blkid: '221'
+    path: /
+    type: mount
+  - id: '222'
+    name: sdb
+    parent_disk_blkid: '222'
+    ptable: GPT
+    type: disk
+  - device: '16483'
+    id: sdb-part1
+    number: '16483'
+    parent_disk: '222'
+    parent_disk_blkid: '222'
+    size: '299989204992'
+    type: partition
+  - fstype: ext4
+    id: 16483-format
+    label: ''
+    parent_disk: '222'
+    parent_disk_blkid: '222'
+    type: format
+    volume: '16483'
+  - device: 16483-format
+    id: 16483-mount
+    parent_disk: '222'
+    parent_disk_blkid: '222'
+    path: /data-sdb
+    type: mount
+  - id: '228'
+    name: sdc
+    parent_disk_blkid: '228'
+    ptable: GPT
+    type: disk
+  - device: '16484'
+    id: sdc-part1
+    number: '16484'
+    parent_disk: '228'
+    parent_disk_blkid: '228'
+    size: '239977103360'
+    type: partition
+  - fstype: ext4
+    id: 16484-format
+    label: ''
+    parent_disk: '228'
+    parent_disk_blkid: '228'
+    type: format
+    volume: '16484'
+  - device: 16484-format
+    id: 16484-mount
+    parent_disk: '228'
+    parent_disk_blkid: '228'
+    path: /data-sdc
+    type: mount
 device_ip: 10.245.130.25
 env:
   DEVICE_IP: 10.245.130.25
@@ -102,3 +102,4 @@ env:
 maas_user: testflinger_a
 node_id: 7egcp4
 node_name: ziptoad
+max_reserve_timeout: 604800

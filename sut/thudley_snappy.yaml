@@ -1,50 +1,50 @@
 agent_name: thudley
 default_disks:
-- id: '218'
-  name: sda
-  parent_disk_blkid: '218'
-  ptable: GPT
-  type: disk
-- device: '9076'
-  id: sda-part2
-  number: '9076'
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  size: '479559942144'
-  type: partition
-- fstype: ext4
-  id: 9076-format
-  label: root
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  type: format
-  volume: '9076'
-- device: 9076-format
-  id: 9076-mount
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  path: /
-  type: mount
-- device: '9075'
-  id: sda-part1
-  number: '9075'
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 9075-format
-  label: efi
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  type: format
-  volume: '9075'
-- device: 9075-format
-  id: 9075-mount
-  parent_disk: '218'
-  parent_disk_blkid: '218'
-  path: /boot/efi
-  type: mount
+  - id: '218'
+    name: sda
+    parent_disk_blkid: '218'
+    ptable: GPT
+    type: disk
+  - device: '9076'
+    id: sda-part2
+    number: '9076'
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    size: '479559942144'
+    type: partition
+  - fstype: ext4
+    id: 9076-format
+    label: root
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    type: format
+    volume: '9076'
+  - device: 9076-format
+    id: 9076-mount
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    path: /
+    type: mount
+  - device: '9075'
+    id: sda-part1
+    number: '9075'
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 9075-format
+    label: efi
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    type: format
+    volume: '9075'
+  - device: 9075-format
+    id: 9075-mount
+    parent_disk: '218'
+    parent_disk_blkid: '218'
+    path: /boot/efi
+    type: mount
 device_ip: 10.245.130.71
 env:
   DEVICE_IP: 10.245.130.71
@@ -52,3 +52,4 @@ env:
 maas_user: testflinger_a
 node_id: nx3wwp
 node_name: thudley
+max_reserve_timeout: 604800

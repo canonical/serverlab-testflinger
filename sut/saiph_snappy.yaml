@@ -1,55 +1,55 @@
 agent_name: saiph
 default_disks:
-- id: '27'
-  name: sda
-  parent_disk_blkid: '27'
-  ptable: GPT
-  type: disk
-- device: '16477'
-  id: sda-part2
-  number: '16477'
-  parent_disk: '27'
-  parent_disk_blkid: '27'
-  size: '146796445696'
-  type: partition
-- fstype: ext4
-  id: 16477-format
-  label: ''
-  parent_disk: '27'
-  parent_disk_blkid: '27'
-  type: format
-  volume: '16477'
-- device: 16477-format
-  id: 16477-mount
-  parent_disk: '27'
-  parent_disk_blkid: '27'
-  path: /data-sda
-  type: mount
-- id: '28'
-  name: sdb
-  parent_disk_blkid: '28'
-  ptable: GPT
-  type: disk
-- device: '7447'
-  id: sdb-part2
-  number: '7447'
-  parent_disk: '28'
-  parent_disk_blkid: '28'
-  size: '146809028608'
-  type: partition
-- fstype: ext4
-  id: 7447-format
-  label: root
-  parent_disk: '28'
-  parent_disk_blkid: '28'
-  type: format
-  volume: '7447'
-- device: 7447-format
-  id: 7447-mount
-  parent_disk: '28'
-  parent_disk_blkid: '28'
-  path: /
-  type: mount
+  - id: '27'
+    name: sda
+    parent_disk_blkid: '27'
+    ptable: GPT
+    type: disk
+  - device: '16477'
+    id: sda-part2
+    number: '16477'
+    parent_disk: '27'
+    parent_disk_blkid: '27'
+    size: '146796445696'
+    type: partition
+  - fstype: ext4
+    id: 16477-format
+    label: ''
+    parent_disk: '27'
+    parent_disk_blkid: '27'
+    type: format
+    volume: '16477'
+  - device: 16477-format
+    id: 16477-mount
+    parent_disk: '27'
+    parent_disk_blkid: '27'
+    path: /data-sda
+    type: mount
+  - id: '28'
+    name: sdb
+    parent_disk_blkid: '28'
+    ptable: GPT
+    type: disk
+  - device: '7447'
+    id: sdb-part2
+    number: '7447'
+    parent_disk: '28'
+    parent_disk_blkid: '28'
+    size: '146809028608'
+    type: partition
+  - fstype: ext4
+    id: 7447-format
+    label: root
+    parent_disk: '28'
+    parent_disk_blkid: '28'
+    type: format
+    volume: '7447'
+  - device: 7447-format
+    id: 7447-mount
+    parent_disk: '28'
+    parent_disk_blkid: '28'
+    path: /
+    type: mount
 device_ip: 10.245.130.12
 env:
   DEVICE_IP: 10.245.130.12
@@ -57,3 +57,4 @@ env:
 maas_user: testflinger_a
 node_id: gbe7qy
 node_name: saiph
+max_reserve_timeout: 604800

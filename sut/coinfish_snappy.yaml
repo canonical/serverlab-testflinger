@@ -1,100 +1,100 @@
 agent_name: coinfish
 default_disks:
-- id: '122'
-  name: sda
-  parent_disk_blkid: '122'
-  ptable: GPT
-  type: disk
-- device: '835'
-  id: sda-part1
-  number: '835'
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 835-format
-  label: efi
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  type: format
-  volume: '835'
-- device: 835-format
-  id: 835-mount
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  path: /boot/efi
-  type: mount
-- device: '836'
-  id: sda-part2
-  number: '836'
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  size: '479559942144'
-  type: partition
-- fstype: ext4
-  id: 836-format
-  label: root
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  type: format
-  volume: '836'
-- device: 836-format
-  id: 836-mount
-  parent_disk: '122'
-  parent_disk_blkid: '122'
-  path: /
-  type: mount
-- id: '123'
-  name: sdb
-  parent_disk_blkid: '123'
-  ptable: GPT
-  type: disk
-- device: '854'
-  id: sdb-part1
-  number: '854'
-  parent_disk: '123'
-  parent_disk_blkid: '123'
-  size: '480096813056'
-  type: partition
-- fstype: ext4
-  id: 854-format
-  label: ''
-  parent_disk: '123'
-  parent_disk_blkid: '123'
-  type: format
-  volume: '854'
-- device: 854-format
-  id: 854-mount
-  parent_disk: '123'
-  parent_disk_blkid: '123'
-  path: /data-sdb
-  type: mount
-- id: '124'
-  name: sdc
-  parent_disk_blkid: '124'
-  ptable: GPT
-  type: disk
-- device: '855'
-  id: sdc-part1
-  number: '855'
-  parent_disk: '124'
-  parent_disk_blkid: '124'
-  size: '480096813056'
-  type: partition
-- fstype: ext4
-  id: 855-format
-  label: ''
-  parent_disk: '124'
-  parent_disk_blkid: '124'
-  type: format
-  volume: '855'
-- device: 855-format
-  id: 855-mount
-  parent_disk: '124'
-  parent_disk_blkid: '124'
-  path: /data-sdc
-  type: mount
+  - id: '122'
+    name: sda
+    parent_disk_blkid: '122'
+    ptable: GPT
+    type: disk
+  - device: '835'
+    id: sda-part1
+    number: '835'
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 835-format
+    label: efi
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    type: format
+    volume: '835'
+  - device: 835-format
+    id: 835-mount
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    path: /boot/efi
+    type: mount
+  - device: '836'
+    id: sda-part2
+    number: '836'
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    size: '479559942144'
+    type: partition
+  - fstype: ext4
+    id: 836-format
+    label: root
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    type: format
+    volume: '836'
+  - device: 836-format
+    id: 836-mount
+    parent_disk: '122'
+    parent_disk_blkid: '122'
+    path: /
+    type: mount
+  - id: '123'
+    name: sdb
+    parent_disk_blkid: '123'
+    ptable: GPT
+    type: disk
+  - device: '854'
+    id: sdb-part1
+    number: '854'
+    parent_disk: '123'
+    parent_disk_blkid: '123'
+    size: '480096813056'
+    type: partition
+  - fstype: ext4
+    id: 854-format
+    label: ''
+    parent_disk: '123'
+    parent_disk_blkid: '123'
+    type: format
+    volume: '854'
+  - device: 854-format
+    id: 854-mount
+    parent_disk: '123'
+    parent_disk_blkid: '123'
+    path: /data-sdb
+    type: mount
+  - id: '124'
+    name: sdc
+    parent_disk_blkid: '124'
+    ptable: GPT
+    type: disk
+  - device: '855'
+    id: sdc-part1
+    number: '855'
+    parent_disk: '124'
+    parent_disk_blkid: '124'
+    size: '480096813056'
+    type: partition
+  - fstype: ext4
+    id: 855-format
+    label: ''
+    parent_disk: '124'
+    parent_disk_blkid: '124'
+    type: format
+    volume: '855'
+  - device: 855-format
+    id: 855-mount
+    parent_disk: '124'
+    parent_disk_blkid: '124'
+    path: /data-sdc
+    type: mount
 device_ip: 10.245.130.47
 env:
   DEVICE_IP: 10.245.130.47
@@ -102,3 +102,4 @@ env:
 maas_user: testflinger_a
 node_id: t6wmna
 node_name: coinfish
+max_reserve_timeout: 604800

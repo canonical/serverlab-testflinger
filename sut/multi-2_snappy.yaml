@@ -2,3 +2,4 @@ agent_name: multi-2
 env:
   VIP_RANGE: 10.245.135.197-10.245.135.254
 testflinger_server: https://testflinger.canonical.com
+max_reserve_timeout: 604800

@@ -1,30 +1,30 @@
 agent_name: hogplum
 default_disks:
-- id: '14'
-  name: sdc
-  parent_disk_blkid: '14'
-  ptable: GPT
-  type: disk
-- device: '445'
-  id: sdc-part2
-  number: '445'
-  parent_disk: '14'
-  parent_disk_blkid: '14'
-  size: '73400320000'
-  type: partition
-- fstype: ext4
-  id: 445-format
-  label: root
-  parent_disk: '14'
-  parent_disk_blkid: '14'
-  type: format
-  volume: '445'
-- device: 445-format
-  id: 445-mount
-  parent_disk: '14'
-  parent_disk_blkid: '14'
-  path: /
-  type: mount
+  - id: '14'
+    name: sdc
+    parent_disk_blkid: '14'
+    ptable: GPT
+    type: disk
+  - device: '445'
+    id: sdc-part2
+    number: '445'
+    parent_disk: '14'
+    parent_disk_blkid: '14'
+    size: '73400320000'
+    type: partition
+  - fstype: ext4
+    id: 445-format
+    label: root
+    parent_disk: '14'
+    parent_disk_blkid: '14'
+    type: format
+    volume: '445'
+  - device: 445-format
+    id: 445-mount
+    parent_disk: '14'
+    parent_disk_blkid: '14'
+    path: /
+    type: mount
 device_ip: 10.245.130.2
 env:
   DEVICE_IP: 10.245.130.2
@@ -32,3 +32,4 @@ env:
 maas_user: testflinger_a
 node_id: nfws7e
 node_name: hogplum
+max_reserve_timeout: 604800

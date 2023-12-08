@@ -1,75 +1,75 @@
 agent_name: mokura
 default_disks:
-- id: '100'
-  name: sda
-  parent_disk_blkid: '100'
-  ptable: GPT
-  type: disk
-- device: '15414'
-  id: sda-part1
-  number: '15414'
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 15414-format
-  label: efi
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  type: format
-  volume: '15414'
-- device: 15414-format
-  id: 15414-mount
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  path: /boot/efi
-  type: mount
-- device: '15415'
-  id: sda-part2
-  number: '15415'
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  size: '479559942144'
-  type: partition
-- fstype: ext4
-  id: 15415-format
-  label: root
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  type: format
-  volume: '15415'
-- device: 15415-format
-  id: 15415-mount
-  parent_disk: '100'
-  parent_disk_blkid: '100'
-  path: /
-  type: mount
-- id: '104'
-  name: sdb
-  parent_disk_blkid: '104'
-  ptable: GPT
-  type: disk
-- device: '15416'
-  id: sdb-part1
-  number: '15416'
-  parent_disk: '104'
-  parent_disk_blkid: '104'
-  size: '959107301376'
-  type: partition
-- fstype: ext4
-  id: 15416-format
-  label: ''
-  parent_disk: '104'
-  parent_disk_blkid: '104'
-  type: format
-  volume: '15416'
-- device: 15416-format
-  id: 15416-mount
-  parent_disk: '104'
-  parent_disk_blkid: '104'
-  path: /mnt/sdb1
-  type: mount
+  - id: '100'
+    name: sda
+    parent_disk_blkid: '100'
+    ptable: GPT
+    type: disk
+  - device: '15414'
+    id: sda-part1
+    number: '15414'
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    size: '536870912'
+    type: partition
+  - fstype: fat32
+    id: 15414-format
+    label: efi
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    type: format
+    volume: '15414'
+  - device: 15414-format
+    id: 15414-mount
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    path: /boot/efi
+    type: mount
+  - device: '15415'
+    id: sda-part2
+    number: '15415'
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    size: '479559942144'
+    type: partition
+  - fstype: ext4
+    id: 15415-format
+    label: root
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    type: format
+    volume: '15415'
+  - device: 15415-format
+    id: 15415-mount
+    parent_disk: '100'
+    parent_disk_blkid: '100'
+    path: /
+    type: mount
+  - id: '104'
+    name: sdb
+    parent_disk_blkid: '104'
+    ptable: GPT
+    type: disk
+  - device: '15416'
+    id: sdb-part1
+    number: '15416'
+    parent_disk: '104'
+    parent_disk_blkid: '104'
+    size: '959107301376'
+    type: partition
+  - fstype: ext4
+    id: 15416-format
+    label: ''
+    parent_disk: '104'
+    parent_disk_blkid: '104'
+    type: format
+    volume: '15416'
+  - device: 15416-format
+    id: 15416-mount
+    parent_disk: '104'
+    parent_disk_blkid: '104'
+    path: /mnt/sdb1
+    type: mount
 device_ip: 10.245.130.41
 env:
   DEVICE_IP: 10.245.130.41
@@ -77,3 +77,4 @@ env:
 maas_user: testflinger_a
 node_id: yxrean
 node_name: mokura
+max_reserve_timeout: 604800
