@@ -5,8 +5,8 @@ ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV PATH /data/testflinger:$PATH
-ENV TESTFLINGER_CONFIG=/data/testflinger/testflinger.conf
+ENV PATH /data/testflinger/server:$PATH
+ENV TESTFLINGER_CONFIG=/data/testflinger/server/testflinger.conf
 
 # install deps & cleanup
 RUN apt-get update \
@@ -35,7 +35,7 @@ RUN mkdir -p /var/log/testflinger \
   && chmod 755 /var/log/testflinger
 
 # clone src in volume dir
-WORKDIR /data/testflinger
+WORKDIR /data/testflinger/server
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
@@ -53,7 +53,7 @@ RUN pip install -Iv urllib3==1.26.15
 RUN ./setup.py install
 
 # copy tf config files
-COPY ./code/testflinger.conf /data/testflinger
+COPY ./code/testflinger.conf /data/testflinger/server
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger

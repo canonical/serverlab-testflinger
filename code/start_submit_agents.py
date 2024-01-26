@@ -198,7 +198,7 @@ def main():
     """Load specified SUT agents."""
     user_args = get_args()
     # base dir of tf-agent
-    work_dir = path.join('/', 'data', 'testflinger-cli')
+    work_dir = path.join('/', 'data', 'testflinger', 'cli')
     # config dir of sut confs
     conf_dir = path.join(work_dir, 'sut')
     conf_list = listdir(conf_dir)

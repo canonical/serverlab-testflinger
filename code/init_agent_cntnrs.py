@@ -115,7 +115,8 @@ class InitAgent:
                                   srv_conf)
         dst_sconf_path = PurePath('/',
                                   'data',
-                                  'testflinger-agent',
+                                  'testflinger',
+                                  'agent',
                                   srv_conf)
         # healthcheck
         hlthchk_file = PurePath(
@@ -143,7 +144,8 @@ class InitAgent:
                                  self.sut_conf)
         dst_conf_path = PurePath('/',
                                  'data',
-                                 'testflinger-agent',
+                                 'testflinger',
+                                 'agent',
                                  'sut',
                                  self.sut_conf)
         # agnt snappy
@@ -153,7 +155,8 @@ class InitAgent:
                                  self.sut_snpy)
         dst_snpy_path = PurePath('/',
                                  'data',
-                                 'snappy-device-agents',
+                                 'testflinger',
+                                 'device-connectors',
                                  'sut',
                                  self.sut_snpy)
         # log
@@ -373,7 +376,7 @@ def build_cntnr_img(client, img_name, dockf_dir):
 def main():
     # config dir of sut confs
     conf_dir = PurePath(
-        '/', 'data', 'testflinger-agent', 'sut')
+        '/', 'data', 'testflinger', 'agent', 'sut')
     log_dir = PurePath('/', 'var', 'log', 'sut-agent')
     # conf_list = list(Path(conf_dir).iterdir())
     conf_list = listdir(conf_dir)  # for enumerate

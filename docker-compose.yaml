@@ -122,13 +122,13 @@ services:
     tty: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - agent_data:/data/testflinger-agent
-      - snappy_data:/data/snappy-device-agents
+      - agent_data:/data/testflinger/agent
+      - snappy_data:/data/testflinger/device-connectors
       - docker_data:/data/docker
       - ./code/init_agent_cntnrs.py:/opt/init_agent_cntnrs.py
       - ./log:/var/log/sut-agent
-      - ./sut/agent:/data/testflinger-agent/sut
-      - ./sut/snappy:/data/snappy-device-agents/sut/
+      - ./sut/agent:/data/testflinger/agent/sut
+      - ./sut/snappy:/data/testflinger/device-connectors/sut/
       # netdata volumes
       # - netdata_cache:/var/cache/netdata
       # - netdata_config:/etc/netdata
@@ -161,9 +161,9 @@ services:
         ipv4_address: 172.16.0.12
     hostname: tf-cli
     volumes:
-      - cli_data:/data/testflinger-cli
+      - cli_data:/data/testflinger/cli
     environment:
-      - PATH=/data/testflinger-cli:$PATH
+      - PATH=/data/testflinger/cli:$PATH
 
   portainer:
     depends_on:

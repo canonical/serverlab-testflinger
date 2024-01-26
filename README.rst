@@ -546,7 +546,7 @@ Modify/Create SUT files:
 
    (use actual api ip)
 
--  Make sure the snappy-device-agents yaml files are appended with
+-  Make sure the device-connector yaml files are appended with
    \_snappy if you want the deployment to automatically transfer them
    from the sut directory to the containers. You can alternatively
    create the config files inside the container post-deployment.

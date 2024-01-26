@@ -10,7 +10,7 @@ ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV PATH /data/testflinger-agent:/data/testflinger-cli:/data/snappy-device-agents:$PATH
+ENV PATH /data/testflinger/agent:/data/testflinger/cli:/data/testflinger/device-connectors:$PATH
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \
@@ -92,47 +92,38 @@ RUN cat /tmp/authorized_keys >> /root/.ssh/authorized_keys \
 RUN mkdir -p /var/log/testflinger \
   && chmod 755 /var/log/testflinger
 
-WORKDIR /data/testflinger-agent
+#Install testflinger source
+WORKDIR /data/testflinger
 RUN git init \
-  && git remote add origin https://github.com/canonical/testflinger-agent.git \
+  && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
   && git checkout -b main --track origin/main
-
-WORKDIR /data/snappy-device-agents
-RUN git init \
-  && git remote add origin https://github.com/canonical/snappy-device-agents.git \
-  && git fetch origin \
-  && git checkout -b main --track origin/main
-
-# install tf-cli standalone (no file mapping required)
-WORKDIR /data/
-RUN git clone https://github.com/canonical/testflinger-cli.git
 
 # run tf-agent setup
-WORKDIR /data/testflinger-agent
+WORKDIR /data/testflinger/agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
   && pip3 install .
   # && python3 setup.py install
 
 # run tf-cli setup
-WORKDIR /data/testflinger-cli
+WORKDIR /data/testflinger/cli
 RUN echo && echo "Running testflinger-cli setup:" \
   && pip3 install .
   # && python3 setup.py install
 
-# run snappy-agent setup
-WORKDIR /data/snappy-device-agents
-RUN echo && echo "Running snappy-device-agents setup:" \
+# run device connector
+WORKDIR /data/testflinger/device-connectors
+RUN echo && echo "Running device-connectors setup:" \
   && pip3 install .
   # && python3 setup.py install
 
 # adjust perms on src files
-RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
-  && chmod 775 /data/testflinger-agent \
-  && chown -R ubuntu:ubuntu /data/testflinger-cli \
-  && chmod 775 /data/testflinger-cli \
-  && chown -R ubuntu:ubuntu /data/snappy-device-agents \
-  && chmod 775 /data/snappy-device-agents
+RUN chown -R ubuntu:ubuntu /data/testflinger/agent \
+  && chmod 775 /data/testflinger/agent \
+  && chown -R ubuntu:ubuntu /data/testflinger/cli \
+  && chmod 775 /data/testflinger/cli \
+  && chown -R ubuntu:ubuntu /data/testflinger/device-connectors \
+  && chmod 775 /data/testflinger/device-connectors
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:ch4ng3m3" | chpasswd \

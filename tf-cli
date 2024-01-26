@@ -5,7 +5,7 @@ ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV PATH /data/testflinger-cli:$PATH
+ENV PATH /data/testflinger/cli:$PATH
 
 ARG ubuntu_scr
 # ARG testflinger_scr
@@ -83,21 +83,22 @@ RUN mkdir /var/log/submit-agent \
   && chown ubuntu:ubuntu /var/log/submit-agent
 
 # clone src in volume dir
-WORKDIR /data/testflinger-cli
+WORKDIR /data/testflinger
 RUN git init \
-  && git remote add origin https://github.com/canonical/testflinger-cli.git \
+  && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
   && git checkout -b main --track origin/main
 
 # copy sut files
-RUN mkdir /data/testflinger-cli/sut/
-COPY ./sut/cli/* /data/testflinger-cli/sut/
+RUN mkdir /data/testflinger/cli/sut/
+COPY ./sut/cli/* /data/testflinger/cli/sut/
 
-# USER ubuntu
+WORKDIR /data/testflinger/cli
+#USER ubuntu
 RUN python3 setup.py install
 
 # adjust perms on src files
-RUN chown -R ubuntu:ubuntu /data/testflinger-cli
+RUN chown -R ubuntu:ubuntu /data/testflinger/cli
 
 # copy entrypoint
 COPY ./code/tf-entrypoint.sh /opt/tf-entrypoint.sh
@@ -112,7 +113,7 @@ COPY code/01_run_submit_agents.sh /etc/my_init.d/01_run_submit_agents.sh
 
 # copy refernce yaml file
 USER ubuntu
-COPY code/reference.yaml /data/testflinger-cli/sut/.reference.yaml
+COPY code/reference.yaml /data/testflinger/cli/sut/.reference.yaml
 
 # set user passwords (temp pw)
 USER root

@@ -288,7 +288,7 @@ def load_sut_agent(conf_path, log_dir):
 def main():
     """Load specified SUT agents."""
     # config dir of sut confs
-    conf_dir = Path('/', 'data', 'testflinger-agent', 'sut')
+    conf_dir = Path('/', 'data', 'testflinger', 'agent', 'sut')
     log_dir = PurePath('/', 'var', 'log')
     hostname = platform.node()
     conf_path = PurePath(

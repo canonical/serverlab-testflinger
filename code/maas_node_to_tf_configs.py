@@ -74,13 +74,13 @@ def write_testflinger_config(output_dir, hostname, machine):
     testflinger_config["output_timeout"] = 43200
     testflinger_config[
         "execution_basedir"
-    ] = f"/data/testflinger-agent/tests/{hostname}/run"
+    ] = f"/data/testflinger/agent/tests/{hostname}/run"
     testflinger_config[
         "logging_basedir"
-    ] = f"/data/testflinger-agent/tests/{hostname}/logs"
+    ] = f"/data/testflinger/agent/tests/{hostname}/logs"
     testflinger_config[
         "results_basedir"
-    ] = f"/data/testflinger-agent/tests/{hostname}/results"
+    ] = f"/data/testflinger/agent/tests/{hostname}/results"
     testflinger_config["logging_level"] = "INFO"
     if testflinger_config.get("job_queues") is None:
         testflinger_config["job_queues"] = []
@@ -89,19 +89,19 @@ def write_testflinger_config(output_dir, hostname, machine):
     testflinger_config["setup_command"] = "echo Setup"
     testflinger_config[
         "provison_command"
-    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 provision -c /data/snappy-device-agents/sut/{hostname}_snappy.yaml testflinger.json"
+    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 provision -c /data/testflinger/device-connectors/sut/{hostname}_snappy.yaml testflinger.json"
     testflinger_config[
         "test_command"
-    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 runtest -c /data/snappy-device-agents/sut/{hostname}_snappy.yaml testflinger.json"
+    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 runtest -c /data/testflinger/device-connectors/sut/{hostname}_snappy.yaml testflinger.json"
     testflinger_config[
         "allocate_command"
-    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 allocate -c /srv/testflinger-agent/sut/{hostname}_snappy.yaml testflinger.json"
+    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 allocate -c /srv/testflinger/agent/sut/{hostname}_snappy.yaml testflinger.json"
     testflinger_config[
         "reserve_command"
-    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 reserve -c /data/snappy-device-agents/sut/{hostname}_snappy.yaml testflinger.json"
+    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 reserve -c /data/testflinger/device-connectors/sut/{hostname}_snappy.yaml testflinger.json"
     testflinger_config[
         "cleanup_command"
-    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 cleanup -c /srv/testflinger-agent/sut/{hostname}_snappy.yaml testflinger.json || /bin/true"
+    ] = f"PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent maas2 cleanup -c /srv/testflinger/agent/sut/{hostname}_snappy.yaml testflinger.json || /bin/true"
 
     with open(testflinger_config_path, "w") as f:
         f.write(yaml.safe_dump(testflinger_config, sort_keys=False))

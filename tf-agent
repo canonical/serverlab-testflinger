@@ -8,7 +8,7 @@ ENV HOME /root
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV PATH /data/testflinger-agent:/data/snappy-device-agents:$PATH
+ENV PATH /data/testflinger/agent:/data/testflinger/device-connectors:$PATH
 ENV HOSTDIR ${host_dir}
 
 # add maas-cli PPA
@@ -105,47 +105,31 @@ RUN mkdir -p /var/log/testflinger \
 RUN mkdir /var/log/sut-agent \
   && chown ubuntu:ubuntu /var/log/sut-agent
 
-# clone tf-agent src in volume dir
-WORKDIR /data/testflinger-agent
-RUN git init \
-  && git remote add origin https://github.com/canonical/testflinger-agent.git \
-  && git fetch origin \
-  && git checkout -b main --track origin/main
+# clone testflinger source in volume dir
+WORKDIR /data/testflinger
+RUN git init\
+   && git remote add origin https://github.com/canonical/testflinger.git \
+   && git fetch origin \
+   && git checkout -b main --track origin/main
 
 # copy tf-agent config files
-COPY ./code/testflinger-agent.conf /data/testflinger-agent
-
-# copy tf-agent sut files
-# RUN mkdir ./sut/
-# COPY ./sut/agent/* /data/testflinger-agent/sut/
-
-# clone snappy-agent src in volume dir
-WORKDIR /data/snappy-device-agents
-RUN git init \
-  && git remote add origin https://github.com/canonical/snappy-device-agents.git \
-  && git fetch origin \
-  && git checkout -b main --track origin/main
-
-# copy snappy-agent sut files
-# RUN mkdir ./sut/
-# COPY ./sut/snappy/* /data/snappy-device-agents/sut/
+COPY ./code/testflinger-agent.conf /data/testflinger/agent
 
 # run tf-agent setup
-# USER ubuntu
-WORKDIR /data/testflinger-agent
+WORKDIR /data/testflinger/agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
   && python3 setup.py install
 
 #run snappy-agent setup
-WORKDIR /data/snappy-device-agents
-RUN echo && echo "Running snappy-device-agents setup:" \
+WORKDIR /data/testflinger/device-connectors
+RUN echo && echo "Running device-connectors setup:" \
   && python3 setup.py install
 
 # adjust perms on src files
-RUN chown -R ubuntu:ubuntu /data/testflinger-agent \
-  && chmod 775 /data/testflinger-agent \
-  && chown -R ubuntu:ubuntu /data/snappy-device-agents \
-  && chmod 775 /data/snappy-device-agents
+RUN chown -R ubuntu:ubuntu /data/testflinger/agent \
+  && chmod 775 /data/testflinger/agent \
+  && chown -R ubuntu:ubuntu /data/testflinger/device-connectors \
+  && chmod 775 /data/testflinger/device-connectors
 
 # # netdata
 # RUN git clone https://github.com/netdata/netdata.git --depth=100 --recursive
@@ -168,7 +152,8 @@ COPY ./tf-agent_cntnr /data/docker/Dockerfile
 COPY ./ssh/authorized_keys /data/docker/authorized_keys
 
 # docker auth
-RUN docker login -u alanec -p 32aafe13-c040-4a93-a0e2-848f5468b4c1
+RUN docker login -u dreadpiratejeff -p dckr_pat_trCqJ9o28-RULzrQRhvi9NiuhBo
+#RUN docker login -u alanec -p 32aafe13-c040-4a93-a0e2-848f5468b4c1
 
 # set user passwords (temp pw)
 RUN echo "ubuntu:${ubuntu_scr}" | chpasswd
