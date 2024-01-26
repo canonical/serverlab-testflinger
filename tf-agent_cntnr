@@ -14,7 +14,7 @@ ENV PATH /data/testflinger/agent:/data/testflinger/cli:/data/testflinger/device-
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \
-  && add-apt-repository ppa:checkbox-dev/ppa -y
+  && add-apt-repository ppa:checkbox-dev/stable -y
 
 # install deps & cleanup
 RUN apt-get update \
