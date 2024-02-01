@@ -1,0 +1,9 @@
+device_ip: 10.245.130.97
+node_id: s3fmhg
+node_name: hoodin
+maas_user: testflinger_a
+agent_name: hoodin
+max_reserve_timeout: 604800
+env:
+ HEXR_DEVICE_SECURE_ID: JvvE6MwcsUPnDmE3q4i7dB
+ DEVICE_IP: 10.245.130.97

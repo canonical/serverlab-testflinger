@@ -2,9 +2,9 @@
 
 
 # Check if the number of arguments is 4
-if [ $# -ne 4 ]; then
+if [ $# -ne 5 ]; then
     echo "Error: The script requires exactly 4 arguments."
-    echo "Usage: $0 <HOSTNAME> <MAAS_ID> <SECURE_ID> <IPADDR>"
+    echo "Usage: $0 <HOSTNAME> <CID> <MAAS_ID> <SECURE_ID> <IPADDR>"
     exit 1
 fi
 
