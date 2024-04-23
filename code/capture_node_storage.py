@@ -113,10 +113,11 @@ def parse_json_output(output, node_id, cmd):
     try:
         data = json.loads(output)
         return data
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
         logger.error(
             f"Invalid JSON for node_id: {node_id}. Command: {' '.join(cmd)}"
         )
+        logger.error(e)
         return {}
 
 
