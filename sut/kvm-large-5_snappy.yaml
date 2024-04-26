@@ -1,74 +1,74 @@
 agent_name: kvm-large-5
 default_disks:
-  - id: '336'
-    name: disk0
-    parent_disk_blkid: '336'
-    ptable: GPT
-    type: disk
-  - device: '16370'
-    id: disk0-part4
-    number: '16370'
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    size: '185996410880'
-    type: partition
-  - fstype: ext4
-    id: 16370-format
-    label: root
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    type: format
-    volume: '16370'
-  - device: 16370-format
-    id: 16370-mount
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    path: /
-    type: mount
-  - device: '16366'
-    id: disk0-part2
-    number: '16366'
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16366-format
-    label: efi
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    type: format
-    volume: '16366'
-  - device: 16366-format
-    id: 16366-mount
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    path: /boot/efi
-    type: mount
-  - device: '16368'
-    id: disk0-part3
-    number: '16368'
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16368-format
-    label: boot
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    type: format
-    volume: '16368'
-  - device: 16368-format
-    id: 16368-mount
-    parent_disk: '336'
-    parent_disk_blkid: '336'
-    path: /boot
-    type: mount
+- id: '336'
+  name: disk0
+  parent_disk_blkid: '336'
+  ptable: GPT
+  type: disk
+- device: '39242'
+  id: disk0-part4
+  number: '39242'
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 39242-format
+  label: boot
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  type: format
+  volume: '39242'
+- device: 39242-format
+  id: 39242-mount
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  path: /boot
+  type: mount
+- device: '39235'
+  id: disk0-part2
+  number: '39235'
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  size: '185996410880'
+  type: partition
+- fstype: ext4
+  id: 39235-format
+  label: root
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  type: format
+  volume: '39235'
+- device: 39235-format
+  id: 39235-mount
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  path: /
+  type: mount
+- device: '39238'
+  id: disk0-part3
+  number: '39238'
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 39238-format
+  label: efi
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  type: format
+  volume: '39238'
+- device: 39238-format
+  id: 39238-mount
+  parent_disk: '336'
+  parent_disk_blkid: '336'
+  path: /boot/efi
+  type: mount
 device_ip: 10.245.135.6
 env:
   DEVICE_IP: 10.245.135.6
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: kekg44
 node_name: kvm-large-5
-max_reserve_timeout: 604800

@@ -1,55 +1,55 @@
 agent_name: penguru
 default_disks:
-  - id: '241'
-    name: nvme0n1
-    parent_disk_blkid: '241'
-    ptable: GPT
-    type: disk
-  - device: '8086'
-    id: nvme0n1-part1
-    number: '8086'
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 8086-format
-    label: efi
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    type: format
-    volume: '8086'
-  - device: 8086-format
-    id: 8086-mount
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    path: /boot/efi
-    type: mount
-  - device: '8087'
-    id: nvme0n1-part2
-    number: '8087'
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    size: '479559942144'
-    type: partition
-  - fstype: ext4
-    id: 8087-format
-    label: root
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    type: format
-    volume: '8087'
-  - device: 8087-format
-    id: 8087-mount
-    parent_disk: '241'
-    parent_disk_blkid: '241'
-    path: /
-    type: mount
+- id: '241'
+  name: nvme0n1
+  parent_disk_blkid: '241'
+  ptable: GPT
+  type: disk
+- device: '39211'
+  id: nvme0n1-part1
+  number: '39211'
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39211-format
+  label: efi
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  type: format
+  volume: '39211'
+- device: 39211-format
+  id: 39211-mount
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  path: /boot/efi
+  type: mount
+- device: '39212'
+  id: nvme0n1-part2
+  number: '39212'
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 39212-format
+  label: root
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  type: format
+  volume: '39212'
+- device: 39212-format
+  id: 39212-mount
+  parent_disk: '241'
+  parent_disk_blkid: '241'
+  path: /
+  type: mount
 device_ip: 10.245.130.79
 env:
   DEVICE_IP: 10.245.130.79
   HEXR_DEVICE_SECURE_ID: fJ38kf29vz6nLDjMr2jPkF
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: dkkeb7
 node_name: penguru
-max_reserve_timeout: 604800

@@ -1,80 +1,80 @@
 agent_name: oogtar
 default_disks:
-  - id: '199'
-    name: sda
-    parent_disk_blkid: '199'
-    ptable: GPT
-    type: disk
-  - device: '16470'
-    id: sda-part1
-    number: '16470'
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 16470-format
-    label: efi
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    type: format
-    volume: '16470'
-  - device: 16470-format
-    id: 16470-mount
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    path: /boot/efi
-    type: mount
-  - device: '16471'
-    id: sda-part2
-    number: '16471'
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    size: '799623086080'
-    type: partition
-  - fstype: ext4
-    id: 16471-format
-    label: root
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    type: format
-    volume: '16471'
-  - device: 16471-format
-    id: 16471-mount
-    parent_disk: '199'
-    parent_disk_blkid: '199'
-    path: /
-    type: mount
-  - id: '200'
-    name: sdb
-    parent_disk_blkid: '200'
-    ptable: GPT
-    type: disk
-  - device: '16472'
-    id: sdb-part1
-    number: '16472'
-    parent_disk: '200'
-    parent_disk_blkid: '200'
-    size: '800147374080'
-    type: partition
-  - fstype: ext4
-    id: 16472-format
-    label: ''
-    parent_disk: '200'
-    parent_disk_blkid: '200'
-    type: format
-    volume: '16472'
-  - device: 16472-format
-    id: 16472-mount
-    parent_disk: '200'
-    parent_disk_blkid: '200'
-    path: /data-sdb
-    type: mount
+- id: '199'
+  name: sda
+  parent_disk_blkid: '199'
+  ptable: GPT
+  type: disk
+- device: '39190'
+  id: sda-part1
+  number: '39190'
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39190-format
+  label: efi
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  type: format
+  volume: '39190'
+- device: 39190-format
+  id: 39190-mount
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  path: /boot/efi
+  type: mount
+- device: '39192'
+  id: sda-part2
+  number: '39192'
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 39192-format
+  label: root
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  type: format
+  volume: '39192'
+- device: 39192-format
+  id: 39192-mount
+  parent_disk: '199'
+  parent_disk_blkid: '199'
+  path: /
+  type: mount
+- id: '200'
+  name: sdb
+  parent_disk_blkid: '200'
+  ptable: GPT
+  type: disk
+- device: '39195'
+  id: sdb-part1
+  number: '39195'
+  parent_disk: '200'
+  parent_disk_blkid: '200'
+  size: '800147374080'
+  type: partition
+- fstype: ext4
+  id: 39195-format
+  label: ''
+  parent_disk: '200'
+  parent_disk_blkid: '200'
+  type: format
+  volume: '39195'
+- device: 39195-format
+  id: 39195-mount
+  parent_disk: '200'
+  parent_disk_blkid: '200'
+  path: /data-sdb
+  type: mount
 device_ip: 10.245.130.65
 env:
   DEVICE_IP: 10.245.130.65
   HEXR_DEVICE_SECURE_ID: tJZnmY3w3QXvJ7jo4KkEJJ
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: 7sktac
 node_name: oogtar
-max_reserve_timeout: 604800

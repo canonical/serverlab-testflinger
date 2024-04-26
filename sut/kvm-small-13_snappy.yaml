@@ -1,74 +1,74 @@
 agent_name: kvm-small-13
 default_disks:
-  - id: '382'
-    name: disk0
-    parent_disk_blkid: '382'
-    ptable: GPT
-    type: disk
-  - device: '16356'
-    id: disk0-part3
-    number: '16356'
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16356-format
-    label: boot
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    type: format
-    volume: '16356'
-  - device: 16356-format
-    id: 16356-mount
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    path: /boot
-    type: mount
-  - device: '16355'
-    id: disk0-part2
-    number: '16355'
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16355-format
-    label: efi
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    type: format
-    volume: '16355'
-  - device: 16355-format
-    id: 16355-mount
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    path: /boot/efi
-    type: mount
-  - device: '16357'
-    id: disk0-part4
-    number: '16357'
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    size: '37199282176'
-    type: partition
-  - fstype: ext4
-    id: 16357-format
-    label: root
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    type: format
-    volume: '16357'
-  - device: 16357-format
-    id: 16357-mount
-    parent_disk: '382'
-    parent_disk_blkid: '382'
-    path: /
-    type: mount
+- id: '382'
+  name: disk0
+  parent_disk_blkid: '382'
+  ptable: GPT
+  type: disk
+- device: '38249'
+  id: disk0-part3
+  number: '38249'
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 38249-format
+  label: boot
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  type: format
+  volume: '38249'
+- device: 38249-format
+  id: 38249-mount
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  path: /boot
+  type: mount
+- device: '38250'
+  id: disk0-part4
+  number: '38250'
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  size: '37199282176'
+  type: partition
+- fstype: ext4
+  id: 38250-format
+  label: root
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  type: format
+  volume: '38250'
+- device: 38250-format
+  id: 38250-mount
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  path: /
+  type: mount
+- device: '38248'
+  id: disk0-part2
+  number: '38248'
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 38248-format
+  label: efi
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  type: format
+  volume: '38248'
+- device: 38248-format
+  id: 38248-mount
+  parent_disk: '382'
+  parent_disk_blkid: '382'
+  path: /boot/efi
+  type: mount
 device_ip: 10.245.135.18
 env:
   DEVICE_IP: 10.245.135.18
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: ddgndt
 node_name: kvm-small-13
-max_reserve_timeout: 604800

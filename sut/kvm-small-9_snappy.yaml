@@ -1,74 +1,34 @@
 agent_name: kvm-small-9
 default_disks:
-  - id: '320'
-    name: disk0
-    parent_disk_blkid: '320'
-    ptable: GPT
-    type: disk
-  - device: '16260'
-    id: disk0-part2
-    number: '16260'
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16260-format
-    label: efi
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    type: format
-    volume: '16260'
-  - device: 16260-format
-    id: 16260-mount
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    path: /boot/efi
-    type: mount
-  - device: '16264'
-    id: disk0-part4
-    number: '16264'
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    size: '37199282176'
-    type: partition
-  - fstype: ext4
-    id: 16264-format
-    label: root
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    type: format
-    volume: '16264'
-  - device: 16264-format
-    id: 16264-mount
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    path: /
-    type: mount
-  - device: '16262'
-    id: disk0-part3
-    number: '16262'
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16262-format
-    label: boot
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    type: format
-    volume: '16262'
-  - device: 16262-format
-    id: 16262-mount
-    parent_disk: '320'
-    parent_disk_blkid: '320'
-    path: /boot
-    type: mount
+- id: '320'
+  name: vda
+  parent_disk_blkid: '320'
+  ptable: GPT
+  type: disk
+- device: '38070'
+  id: vda-part2
+  number: '38070'
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  size: '39992688640'
+  type: partition
+- fstype: ext4
+  id: 38070-format
+  label: root
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  type: format
+  volume: '38070'
+- device: 38070-format
+  id: 38070-mount
+  parent_disk: '320'
+  parent_disk_blkid: '320'
+  path: /
+  type: mount
 device_ip: 10.245.135.27
 env:
   DEVICE_IP: 10.245.135.27
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: ghcqnh
 node_name: kvm-small-9
-max_reserve_timeout: 604800

@@ -1,60 +1,80 @@
 agent_name: salout
 default_disks:
-  - id: '102'
-    name: nvme0n1
-    parent_disk_blkid: '102'
-    ptable: GPT
-    type: disk
-  - device: '15730'
-    id: nvme0n1-part1
-    number: '15730'
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 15730-format
-    label: efi
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    type: format
-    volume: '15730'
-  - device: 15730-format
-    id: 15730-mount
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    path: /boot/efi
-    type: mount
-  - device: '15731'
-    id: nvme0n1-part2
-    number: '15731'
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    size: '1599778848768'
-    type: partition
-  - fstype: ext4
-    id: 15731-format
-    label: root
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    type: format
-    volume: '15731'
-  - device: 15731-format
-    id: 15731-mount
-    parent_disk: '102'
-    parent_disk_blkid: '102'
-    path: /
-    type: mount
-  - id: '103'
-    name: sda
-    parent_disk_blkid: '103'
-    ptable: null
-    type: disk
+- id: '102'
+  name: nvme0n1
+  parent_disk_blkid: '102'
+  ptable: GPT
+  type: disk
+- device: '39312'
+  id: nvme0n1-part1
+  number: '39312'
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39312-format
+  label: efi
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  type: format
+  volume: '39312'
+- device: 39312-format
+  id: 39312-mount
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  path: /boot/efi
+  type: mount
+- device: '39313'
+  id: nvme0n1-part2
+  number: '39313'
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 39313-format
+  label: root
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  type: format
+  volume: '39313'
+- device: 39313-format
+  id: 39313-mount
+  parent_disk: '102'
+  parent_disk_blkid: '102'
+  path: /
+  type: mount
+- id: '103'
+  name: sda
+  parent_disk_blkid: '103'
+  ptable: GPT
+  type: disk
+- device: '39314'
+  id: sda-part1
+  number: '39314'
+  parent_disk: '103'
+  parent_disk_blkid: '103'
+  size: '480088424448'
+  type: partition
+- fstype: ext4
+  id: 39314-format
+  label: ''
+  parent_disk: '103'
+  parent_disk_blkid: '103'
+  type: format
+  volume: '39314'
+- device: 39314-format
+  id: 39314-mount
+  parent_disk: '103'
+  parent_disk_blkid: '103'
+  path: /data/sda-MZ7LH480HBHQ0D3
+  type: mount
 device_ip: 10.245.130.40
 env:
   DEVICE_IP: 10.245.130.40
   HEXR_DEVICE_SECURE_ID: BPL46qGyeD5AvBNAzdxGnX
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: wtregq
 node_name: salout
-max_reserve_timeout: 604800

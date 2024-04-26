@@ -1,74 +1,74 @@
 agent_name: kvm-large-6
 default_disks:
-  - id: '337'
-    name: disk0
-    parent_disk_blkid: '337'
-    ptable: GPT
-    type: disk
-  - device: '16377'
-    id: disk0-part3
-    number: '16377'
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16377-format
-    label: boot
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    type: format
-    volume: '16377'
-  - device: 16377-format
-    id: 16377-mount
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    path: /boot
-    type: mount
-  - device: '16378'
-    id: disk0-part4
-    number: '16378'
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    size: '185996410880'
-    type: partition
-  - fstype: ext4
-    id: 16378-format
-    label: root
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    type: format
-    volume: '16378'
-  - device: 16378-format
-    id: 16378-mount
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    path: /
-    type: mount
-  - device: '16376'
-    id: disk0-part2
-    number: '16376'
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16376-format
-    label: efi
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    type: format
-    volume: '16376'
-  - device: 16376-format
-    id: 16376-mount
-    parent_disk: '337'
-    parent_disk_blkid: '337'
-    path: /boot/efi
-    type: mount
+- id: '337'
+  name: disk0
+  parent_disk_blkid: '337'
+  ptable: GPT
+  type: disk
+- device: '39244'
+  id: disk0-part3
+  number: '39244'
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  size: '185996410880'
+  type: partition
+- fstype: ext4
+  id: 39244-format
+  label: root
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  type: format
+  volume: '39244'
+- device: 39244-format
+  id: 39244-mount
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  path: /
+  type: mount
+- device: '39247'
+  id: disk0-part4
+  number: '39247'
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 39247-format
+  label: efi
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  type: format
+  volume: '39247'
+- device: 39247-format
+  id: 39247-mount
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  path: /boot/efi
+  type: mount
+- device: '39239'
+  id: disk0-part2
+  number: '39239'
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 39239-format
+  label: boot
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  type: format
+  volume: '39239'
+- device: 39239-format
+  id: 39239-mount
+  parent_disk: '337'
+  parent_disk_blkid: '337'
+  path: /boot
+  type: mount
 device_ip: 10.245.135.7
 env:
   DEVICE_IP: 10.245.135.7
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: fg8cty
 node_name: kvm-large-6
-max_reserve_timeout: 604800

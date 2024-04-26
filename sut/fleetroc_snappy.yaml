@@ -1,80 +1,80 @@
 agent_name: fleetroc
 default_disks:
-  - id: '204'
-    name: sda
-    parent_disk_blkid: '204'
-    ptable: GPT
-    type: disk
-  - device: '15632'
-    id: sda-part1
-    number: '15632'
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 15632-format
-    label: efi
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    type: format
-    volume: '15632'
-  - device: 15632-format
-    id: 15632-mount
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    path: /boot/efi
-    type: mount
-  - device: '15633'
-    id: sda-part2
-    number: '15633'
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    size: '799623086080'
-    type: partition
-  - fstype: ext4
-    id: 15633-format
-    label: root
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    type: format
-    volume: '15633'
-  - device: 15633-format
-    id: 15633-mount
-    parent_disk: '204'
-    parent_disk_blkid: '204'
-    path: /
-    type: mount
-  - id: '205'
-    name: sdb
-    parent_disk_blkid: '205'
-    ptable: GPT
-    type: disk
-  - device: '16448'
-    id: sdb-part1
-    number: '16448'
-    parent_disk: '205'
-    parent_disk_blkid: '205'
-    size: '800147374080'
-    type: partition
-  - fstype: ext4
-    id: 16448-format
-    label: ''
-    parent_disk: '205'
-    parent_disk_blkid: '205'
-    type: format
-    volume: '16448'
-  - device: 16448-format
-    id: 16448-mount
-    parent_disk: '205'
-    parent_disk_blkid: '205'
-    path: /mnt/sdb1
-    type: mount
+- id: '204'
+  name: sda
+  parent_disk_blkid: '204'
+  ptable: GPT
+  type: disk
+- device: '39221'
+  id: sda-part1
+  number: '39221'
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39221-format
+  label: efi
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  type: format
+  volume: '39221'
+- device: 39221-format
+  id: 39221-mount
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  path: /boot/efi
+  type: mount
+- device: '39222'
+  id: sda-part2
+  number: '39222'
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 39222-format
+  label: root
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  type: format
+  volume: '39222'
+- device: 39222-format
+  id: 39222-mount
+  parent_disk: '204'
+  parent_disk_blkid: '204'
+  path: /
+  type: mount
+- id: '205'
+  name: sdb
+  parent_disk_blkid: '205'
+  ptable: GPT
+  type: disk
+- device: '39223'
+  id: sdb-part1
+  number: '39223'
+  parent_disk: '205'
+  parent_disk_blkid: '205'
+  size: '800147374080'
+  type: partition
+- fstype: ext4
+  id: 39223-format
+  label: ''
+  parent_disk: '205'
+  parent_disk_blkid: '205'
+  type: format
+  volume: '39223'
+- device: 39223-format
+  id: 39223-mount
+  parent_disk: '205'
+  parent_disk_blkid: '205'
+  path: /mnt/sdb1
+  type: mount
 device_ip: 10.245.130.10
 env:
   DEVICE_IP: 10.245.130.10
   HEXR_DEVICE_SECURE_ID: j2889PqRM2EmPN3SEjE8rP
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: gwmhd6
 node_name: fleetroc
-max_reserve_timeout: 604800

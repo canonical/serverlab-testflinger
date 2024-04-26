@@ -1,55 +1,55 @@
 agent_name: fleep
 default_disks:
-  - id: '242'
-    name: sda
-    parent_disk_blkid: '242'
-    ptable: GPT
-    type: disk
-  - device: '16144'
-    id: sda-part1
-    number: '16144'
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 16144-format
-    label: efi
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    type: format
-    volume: '16144'
-  - device: 16144-format
-    id: 16144-mount
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    path: /boot/efi
-    type: mount
-  - device: '16145'
-    id: sda-part2
-    number: '16145'
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    size: '479559942144'
-    type: partition
-  - fstype: ext4
-    id: 16145-format
-    label: root
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    type: format
-    volume: '16145'
-  - device: 16145-format
-    id: 16145-mount
-    parent_disk: '242'
-    parent_disk_blkid: '242'
-    path: /
-    type: mount
+- id: '242'
+  name: sda
+  parent_disk_blkid: '242'
+  ptable: GPT
+  type: disk
+- device: '39057'
+  id: sda-part1
+  number: '39057'
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39057-format
+  label: efi
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  type: format
+  volume: '39057'
+- device: 39057-format
+  id: 39057-mount
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  path: /boot/efi
+  type: mount
+- device: '39060'
+  id: sda-part2
+  number: '39060'
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 39060-format
+  label: root
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  type: format
+  volume: '39060'
+- device: 39060-format
+  id: 39060-mount
+  parent_disk: '242'
+  parent_disk_blkid: '242'
+  path: /
+  type: mount
 device_ip: 10.245.130.78
 env:
   DEVICE_IP: 10.245.130.78
   HEXR_DEVICE_SECURE_ID: BK9cxNangxvMY3YCZYajAa
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: hhp66h
 node_name: fleep
-max_reserve_timeout: 604800

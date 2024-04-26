@@ -1,80 +1,80 @@
 agent_name: prunes
 default_disks:
-  - id: '35'
-    name: sda
-    parent_disk_blkid: '35'
-    ptable: GPT
-    type: disk
-  - device: '8957'
-    id: sda-part2
-    number: '8957'
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    size: '146272157696'
-    type: partition
-  - fstype: ext4
-    id: 8957-format
-    label: root
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    type: format
-    volume: '8957'
-  - device: 8957-format
-    id: 8957-mount
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    path: /
-    type: mount
-  - device: '8955'
-    id: sda-part1
-    number: '8955'
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 8955-format
-    label: efi
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    type: format
-    volume: '8955'
-  - device: 8955-format
-    id: 8955-mount
-    parent_disk: '35'
-    parent_disk_blkid: '35'
-    path: /boot/efi
-    type: mount
-  - id: '36'
-    name: sdb
-    parent_disk_blkid: '36'
-    ptable: GPT
-    type: disk
-  - device: '16476'
-    id: sdb-part1
-    number: '16476'
-    parent_disk: '36'
-    parent_disk_blkid: '36'
-    size: '146796445696'
-    type: partition
-  - fstype: ext4
-    id: 16476-format
-    label: ''
-    parent_disk: '36'
-    parent_disk_blkid: '36'
-    type: format
-    volume: '16476'
-  - device: 16476-format
-    id: 16476-mount
-    parent_disk: '36'
-    parent_disk_blkid: '36'
-    path: /data-sdb
-    type: mount
+- id: '35'
+  name: sda
+  parent_disk_blkid: '35'
+  ptable: GPT
+  type: disk
+- device: '39028'
+  id: sda-part2
+  number: '39028'
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  size: '146272157696'
+  type: partition
+- fstype: ext4
+  id: 39028-format
+  label: root
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  type: format
+  volume: '39028'
+- device: 39028-format
+  id: 39028-mount
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  path: /
+  type: mount
+- device: '39031'
+  id: sda-part3
+  number: '39031'
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39031-format
+  label: efi
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  type: format
+  volume: '39031'
+- device: 39031-format
+  id: 39031-mount
+  parent_disk: '35'
+  parent_disk_blkid: '35'
+  path: /boot/efi
+  type: mount
+- id: '36'
+  name: sdb
+  parent_disk_blkid: '36'
+  ptable: GPT
+  type: disk
+- device: '39035'
+  id: sdb-part2
+  number: '39035'
+  parent_disk: '36'
+  parent_disk_blkid: '36'
+  size: '146796445696'
+  type: partition
+- fstype: ext4
+  id: 39035-format
+  label: ''
+  parent_disk: '36'
+  parent_disk_blkid: '36'
+  type: format
+  volume: '39035'
+- device: 39035-format
+  id: 39035-mount
+  parent_disk: '36'
+  parent_disk_blkid: '36'
+  path: /data-sdb
+  type: mount
 device_ip: 10.245.130.14
 env:
   DEVICE_IP: 10.245.130.14
   HEXR_DEVICE_SECURE_ID: a00D000000IGBG6
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: qnfxr4
 node_name: prunes
-max_reserve_timeout: 604800

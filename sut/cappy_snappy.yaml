@@ -1,105 +1,105 @@
 agent_name: cappy
 default_disks:
-  - id: '151'
-    name: sda
-    parent_disk_blkid: '151'
-    ptable: GPT
-    type: disk
-  - device: '15716'
-    id: sda-part1
-    number: '15716'
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 15716-format
-    label: efi
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    type: format
-    volume: '15716'
-  - device: 15716-format
-    id: 15716-mount
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    path: /boot/efi
-    type: mount
-  - device: '15717'
-    id: sda-part2
-    number: '15717'
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    size: '599584145408'
-    type: partition
-  - fstype: ext4
-    id: 15717-format
-    label: root
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    type: format
-    volume: '15717'
-  - device: 15717-format
-    id: 15717-mount
-    parent_disk: '151'
-    parent_disk_blkid: '151'
-    path: /
-    type: mount
-  - id: '152'
-    name: sdb
-    parent_disk_blkid: '152'
-    ptable: GPT
-    type: disk
-  - device: '16444'
-    id: sdb-part1
-    number: '16444'
-    parent_disk: '152'
-    parent_disk_blkid: '152'
-    size: '600116822016'
-    type: partition
-  - fstype: ext4
-    id: 16444-format
-    label: ''
-    parent_disk: '152'
-    parent_disk_blkid: '152'
-    type: format
-    volume: '16444'
-  - device: 16444-format
-    id: 16444-mount
-    parent_disk: '152'
-    parent_disk_blkid: '152'
-    path: /mnt/sdb1
-    type: mount
-  - id: '153'
-    name: sdc
-    parent_disk_blkid: '153'
-    ptable: GPT
-    type: disk
-  - device: '16445'
-    id: sdc-part1
-    number: '16445'
-    parent_disk: '153'
-    parent_disk_blkid: '153'
-    size: '600116822016'
-    type: partition
-  - fstype: ext4
-    id: 16445-format
-    label: ''
-    parent_disk: '153'
-    parent_disk_blkid: '153'
-    type: format
-    volume: '16445'
-  - device: 16445-format
-    id: 16445-mount
-    parent_disk: '153'
-    parent_disk_blkid: '153'
-    path: /mnt/sdc1
-    type: mount
+- id: '151'
+  name: sda
+  parent_disk_blkid: '151'
+  ptable: GPT
+  type: disk
+- device: '39155'
+  id: sda-part1
+  number: '39155'
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39155-format
+  label: efi
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  type: format
+  volume: '39155'
+- device: 39155-format
+  id: 39155-mount
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  path: /boot/efi
+  type: mount
+- device: '39157'
+  id: sda-part2
+  number: '39157'
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  size: '599584145408'
+  type: partition
+- fstype: ext4
+  id: 39157-format
+  label: root
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  type: format
+  volume: '39157'
+- device: 39157-format
+  id: 39157-mount
+  parent_disk: '151'
+  parent_disk_blkid: '151'
+  path: /
+  type: mount
+- id: '152'
+  name: sdb
+  parent_disk_blkid: '152'
+  ptable: GPT
+  type: disk
+- device: '39158'
+  id: sdb-part1
+  number: '39158'
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  size: '600116822016'
+  type: partition
+- fstype: ext4
+  id: 39158-format
+  label: ''
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  type: format
+  volume: '39158'
+- device: 39158-format
+  id: 39158-mount
+  parent_disk: '152'
+  parent_disk_blkid: '152'
+  path: /mnt/sdb1
+  type: mount
+- id: '153'
+  name: sdc
+  parent_disk_blkid: '153'
+  ptable: GPT
+  type: disk
+- device: '39160'
+  id: sdc-part1
+  number: '39160'
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  size: '600116822016'
+  type: partition
+- fstype: ext4
+  id: 39160-format
+  label: ''
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  type: format
+  volume: '39160'
+- device: 39160-format
+  id: 39160-mount
+  parent_disk: '153'
+  parent_disk_blkid: '153'
+  path: /mnt/sdc1
+  type: mount
 device_ip: 10.245.130.61
 env:
   DEVICE_IP: 10.245.130.61
   HEXR_DEVICE_SECURE_ID: Urvp9vmfPXRUR9vpPiMdSc
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: m7m7r8
 node_name: cappy
-max_reserve_timeout: 604800

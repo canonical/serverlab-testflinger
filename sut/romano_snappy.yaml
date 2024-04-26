@@ -48,8 +48,28 @@ default_disks:
 - id: '431'
   name: nvme1n1
   parent_disk_blkid: '431'
-  ptable: null
+  ptable: GPT
   type: disk
+- device: '39315'
+  id: nvme1n1-part1
+  number: '39315'
+  parent_disk: '431'
+  parent_disk_blkid: '431'
+  size: '960176848896'
+  type: partition
+- fstype: ext4
+  id: 39315-format
+  label: ''
+  parent_disk: '431'
+  parent_disk_blkid: '431'
+  type: format
+  volume: '39315'
+- device: 39315-format
+  id: 39315-mount
+  parent_disk: '431'
+  parent_disk_blkid: '431'
+  path: /data/nvme1n1-Micron_7450_MTFDKCB960TFR
+  type: mount
 device_ip: 10.245.130.101
 env:
   DEVICE_IP: 10.245.130.101

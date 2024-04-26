@@ -1,200 +1,160 @@
 agent_name: hinopio
 default_disks:
-  - id: '155'
-    name: disk0
-    parent_disk_blkid: '155'
-    ptable: GPT
-    type: disk
-  - device: '16120'
-    id: disk0-part2
-    number: '16120'
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16120-format
-    label: boot
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    type: format
-    volume: '16120'
-  - device: 16120-format
-    id: 16120-mount
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    path: /boot
-    type: mount
-  - device: '16121'
-    id: disk0-part3
-    number: '16121'
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    size: '99996401664'
-    type: partition
-  - fstype: ext4
-    id: 16121-format
-    label: root
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    type: format
-    volume: '16121'
-  - device: 16121-format
-    id: 16121-mount
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    path: /
-    type: mount
-  - device: '16119'
-    id: disk0-part1
-    number: '16119'
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16119-format
-    label: efi
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    type: format
-    volume: '16119'
-  - device: 16119-format
-    id: 16119-mount
-    parent_disk: '155'
-    parent_disk_blkid: '155'
-    path: /boot/efi
-    type: mount
-  - id: '156'
-    name: disk1
-    parent_disk_blkid: '156'
-    ptable: GPT
-    type: disk
-  - device: '16453'
-    id: disk1-part1
-    number: '16453'
-    parent_disk: '156'
-    parent_disk_blkid: '156'
-    size: '3200618856448'
-    type: partition
-  - fstype: ext4
-    id: 16453-format
-    label: ''
-    parent_disk: '156'
-    parent_disk_blkid: '156'
-    type: format
-    volume: '16453'
-  - device: 16453-format
-    id: 16453-mount
-    parent_disk: '156'
-    parent_disk_blkid: '156'
-    path: /mnt/disk1p1
-    type: mount
-  - id: '157'
-    name: sda
-    parent_disk_blkid: '157'
-    ptable: GPT
-    type: disk
-  - device: '16454'
-    id: sda-part1
-    number: '16454'
-    parent_disk: '157'
-    parent_disk_blkid: '157'
-    size: '4000766230528'
-    type: partition
-  - fstype: ext4
-    id: 16454-format
-    label: ''
-    parent_disk: '157'
-    parent_disk_blkid: '157'
-    type: format
-    volume: '16454'
-  - device: 16454-format
-    id: 16454-mount
-    parent_disk: '157'
-    parent_disk_blkid: '157'
-    path: /mnt/sda1
-    type: mount
-  - id: '158'
-    name: sdb
-    parent_disk_blkid: '158'
-    ptable: GPT
-    type: disk
-  - device: '16455'
-    id: sdb-part1
-    number: '16455'
-    parent_disk: '158'
-    parent_disk_blkid: '158'
-    size: '4000766230528'
-    type: partition
-  - fstype: ext4
-    id: 16455-format
-    label: ''
-    parent_disk: '158'
-    parent_disk_blkid: '158'
-    type: format
-    volume: '16455'
-  - device: 16455-format
-    id: 16455-mount
-    parent_disk: '158'
-    parent_disk_blkid: '158'
-    path: /mnt/sdb1
-    type: mount
-  - id: '159'
-    name: sdc
-    parent_disk_blkid: '159'
-    ptable: GPT
-    type: disk
-  - device: '16456'
-    id: sdc-part1
-    number: '16456'
-    parent_disk: '159'
-    parent_disk_blkid: '159'
-    size: '4000766230528'
-    type: partition
-  - fstype: ext4
-    id: 16456-format
-    label: ''
-    parent_disk: '159'
-    parent_disk_blkid: '159'
-    type: format
-    volume: '16456'
-  - device: 16456-format
-    id: 16456-mount
-    parent_disk: '159'
-    parent_disk_blkid: '159'
-    path: /mnt/sdc1
-    type: mount
-  - id: '160'
-    name: sdd
-    parent_disk_blkid: '160'
-    ptable: GPT
-    type: disk
-  - device: '16457'
-    id: sdd-part1
-    number: '16457'
-    parent_disk: '160'
-    parent_disk_blkid: '160'
-    size: '4000766230528'
-    type: partition
-  - fstype: ext4
-    id: 16457-format
-    label: ''
-    parent_disk: '160'
-    parent_disk_blkid: '160'
-    type: format
-    volume: '16457'
-  - device: 16457-format
-    id: 16457-mount
-    parent_disk: '160'
-    parent_disk_blkid: '160'
-    path: /mnt/sdd1
-    type: mount
+- id: '155'
+  name: disk0
+  parent_disk_blkid: '155'
+  ptable: GPT
+  type: disk
+- device: '39274'
+  id: disk0-part1
+  number: '39274'
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39274-format
+  label: efi
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  type: format
+  volume: '39274'
+- device: 39274-format
+  id: 39274-mount
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  path: /boot/efi
+  type: mount
+- device: '39275'
+  id: disk0-part2
+  number: '39275'
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  size: '1919837798400'
+  type: partition
+- fstype: ext4
+  id: 39275-format
+  label: root
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  type: format
+  volume: '39275'
+- device: 39275-format
+  id: 39275-mount
+  parent_disk: '155'
+  parent_disk_blkid: '155'
+  path: /
+  type: mount
+- id: '156'
+  name: disk1
+  parent_disk_blkid: '156'
+  ptable: null
+  type: disk
+- id: '157'
+  name: sda
+  parent_disk_blkid: '157'
+  ptable: GPT
+  type: disk
+- device: '39276'
+  id: sda-part1
+  number: '39276'
+  parent_disk: '157'
+  parent_disk_blkid: '157'
+  size: '4000766230528'
+  type: partition
+- fstype: ext4
+  id: 39276-format
+  label: ''
+  parent_disk: '157'
+  parent_disk_blkid: '157'
+  type: format
+  volume: '39276'
+- device: 39276-format
+  id: 39276-mount
+  parent_disk: '157'
+  parent_disk_blkid: '157'
+  path: /data/sda-HUS726T4TALS200
+  type: mount
+- id: '158'
+  name: sdb
+  parent_disk_blkid: '158'
+  ptable: GPT
+  type: disk
+- device: '39277'
+  id: sdb-part1
+  number: '39277'
+  parent_disk: '158'
+  parent_disk_blkid: '158'
+  size: '4000766230528'
+  type: partition
+- fstype: ext4
+  id: 39277-format
+  label: ''
+  parent_disk: '158'
+  parent_disk_blkid: '158'
+  type: format
+  volume: '39277'
+- device: 39277-format
+  id: 39277-mount
+  parent_disk: '158'
+  parent_disk_blkid: '158'
+  path: /data/sdb-HUS726T4TALS200
+  type: mount
+- id: '159'
+  name: sdc
+  parent_disk_blkid: '159'
+  ptable: GPT
+  type: disk
+- device: '39278'
+  id: sdc-part1
+  number: '39278'
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  size: '4000766230528'
+  type: partition
+- fstype: ext4
+  id: 39278-format
+  label: ''
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  type: format
+  volume: '39278'
+- device: 39278-format
+  id: 39278-mount
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  path: /data/sdc-HUS726T4TALS200
+  type: mount
+- id: '160'
+  name: sdd
+  parent_disk_blkid: '160'
+  ptable: GPT
+  type: disk
+- device: '39279'
+  id: sdd-part1
+  number: '39279'
+  parent_disk: '160'
+  parent_disk_blkid: '160'
+  size: '4000766230528'
+  type: partition
+- fstype: ext4
+  id: 39279-format
+  label: ''
+  parent_disk: '160'
+  parent_disk_blkid: '160'
+  type: format
+  volume: '39279'
+- device: 39279-format
+  id: 39279-mount
+  parent_disk: '160'
+  parent_disk_blkid: '160'
+  path: /data/sdd-HUS726T4TALS200
+  type: mount
 device_ip: 10.245.130.51
 env:
   DEVICE_IP: 10.245.130.51
   HEXR_DEVICE_SECURE_ID: wb86hpPniePkJS9unK2i8T
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: pywmpt
 node_name: hinopio
-max_reserve_timeout: 604800
