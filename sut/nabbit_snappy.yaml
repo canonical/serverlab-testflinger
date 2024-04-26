@@ -1,80 +1,60 @@
 agent_name: nabbit
 default_disks:
-  - id: '5'
-    name: nvme0n1
-    parent_disk_blkid: '5'
-    ptable: GPT
-    type: disk
-  - device: '9009'
-    id: nvme0n1-part1
-    number: '9009'
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 9009-format
-    label: efi
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    type: format
-    volume: '9009'
-  - device: 9009-format
-    id: 9009-mount
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    path: /boot/efi
-    type: mount
-  - device: '9010'
-    id: nvme0n1-part2
-    number: '9010'
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    size: '749610205184'
-    type: partition
-  - fstype: ext4
-    id: 9010-format
-    label: root
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    type: format
-    volume: '9010'
-  - device: 9010-format
-    id: 9010-mount
-    parent_disk: '5'
-    parent_disk_blkid: '5'
-    path: /
-    type: mount
-  - id: '6'
-    name: sda
-    parent_disk_blkid: '6'
-    ptable: GPT
-    type: disk
-  - device: '16422'
-    id: sda-part1
-    number: '16422'
-    parent_disk: '6'
-    parent_disk_blkid: '6'
-    size: '299427168256'
-    type: partition
-  - fstype: ext4
-    id: 16422-format
-    label: ''
-    parent_disk: '6'
-    parent_disk_blkid: '6'
-    type: format
-    volume: '16422'
-  - device: 16422-format
-    id: 16422-mount
-    parent_disk: '6'
-    parent_disk_blkid: '6'
-    path: /data-sda1
-    type: mount
+- id: '5'
+  name: nvme0n1
+  parent_disk_blkid: '5'
+  ptable: GPT
+  type: disk
+- device: '39097'
+  id: nvme0n1-part1
+  number: '39097'
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39097-format
+  label: efi
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  type: format
+  volume: '39097'
+- device: 39097-format
+  id: 39097-mount
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  path: /boot/efi
+  type: mount
+- device: '39098'
+  id: nvme0n1-part2
+  number: '39098'
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  size: '749610205184'
+  type: partition
+- fstype: ext4
+  id: 39098-format
+  label: root
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  type: format
+  volume: '39098'
+- device: 39098-format
+  id: 39098-mount
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  path: /
+  type: mount
+- id: '6'
+  name: sda
+  parent_disk_blkid: '6'
+  ptable: null
+  type: disk
 device_ip: 10.245.130.23
 env:
   DEVICE_IP: 10.245.130.23
   HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: x7867a
 node_name: nabbit
-max_reserve_timeout: 604800

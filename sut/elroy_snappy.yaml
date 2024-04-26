@@ -1,55 +1,55 @@
 agent_name: elroy
 default_disks:
-  - id: '208'
-    name: sda
-    parent_disk_blkid: '208'
-    ptable: GPT
-    type: disk
-  - device: '16149'
-    id: sda-part2
-    number: '16149'
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    size: '479559942144'
-    type: partition
-  - fstype: ext4
-    id: 16149-format
-    label: root
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    type: format
-    volume: '16149'
-  - device: 16149-format
-    id: 16149-mount
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    path: /
-    type: mount
-  - device: '16148'
-    id: sda-part1
-    number: '16148'
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 16148-format
-    label: efi
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    type: format
-    volume: '16148'
-  - device: 16148-format
-    id: 16148-mount
-    parent_disk: '208'
-    parent_disk_blkid: '208'
-    path: /boot/efi
-    type: mount
+- id: '208'
+  name: sda
+  parent_disk_blkid: '208'
+  ptable: GPT
+  type: disk
+- device: '39114'
+  id: sda-part1
+  number: '39114'
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 39114-format
+  label: root
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  type: format
+  volume: '39114'
+- device: 39114-format
+  id: 39114-mount
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  path: /
+  type: mount
+- device: '39115'
+  id: sda-part2
+  number: '39115'
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39115-format
+  label: efi
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  type: format
+  volume: '39115'
+- device: 39115-format
+  id: 39115-mount
+  parent_disk: '208'
+  parent_disk_blkid: '208'
+  path: /boot/efi
+  type: mount
 device_ip: 10.245.130.46
 env:
   DEVICE_IP: 10.245.130.46
   HEXR_DEVICE_SECURE_ID: XcdtyT3NEWbMNDAGKWjK7o
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: 64y6tt
 node_name: elroy
-max_reserve_timeout: 604800

@@ -1,65 +1,105 @@
 agent_name: bomberto
 default_disks:
-  - id: '138'
-    name: sda
-    parent_disk_blkid: '138'
-    ptable: GPT
-    type: disk
-  - device: '870'
-    id: sda-part1
-    number: '870'
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 870-format
-    label: efi
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    type: format
-    volume: '870'
-  - device: 870-format
-    id: 870-mount
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    path: /boot/efi
-    type: mount
-  - device: '871'
-    id: sda-part2
-    number: '871'
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    size: '31599886336'
-    type: partition
-  - fstype: ext4
-    id: 871-format
-    label: root
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    type: format
-    volume: '871'
-  - device: 871-format
-    id: 871-mount
-    parent_disk: '138'
-    parent_disk_blkid: '138'
-    path: /
-    type: mount
-  - id: '214'
-    name: sdb
-    parent_disk_blkid: '214'
-    ptable: null
-    type: disk
-  - id: '215'
-    name: sdc
-    parent_disk_blkid: '215'
-    ptable: null
-    type: disk
+- id: '138'
+  name: sda
+  parent_disk_blkid: '138'
+  ptable: GPT
+  type: disk
+- device: '39304'
+  id: sda-part1
+  number: '39304'
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39304-format
+  label: efi
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  type: format
+  volume: '39304'
+- device: 39304-format
+  id: 39304-mount
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  path: /boot/efi
+  type: mount
+- device: '39305'
+  id: sda-part2
+  number: '39305'
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  size: '31599886336'
+  type: partition
+- fstype: ext4
+  id: 39305-format
+  label: root
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  type: format
+  volume: '39305'
+- device: 39305-format
+  id: 39305-mount
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  path: /
+  type: mount
+- id: '214'
+  name: sdb
+  parent_disk_blkid: '214'
+  ptable: GPT
+  type: disk
+- device: '39306'
+  id: sdb-part1
+  number: '39306'
+  parent_disk: '214'
+  parent_disk_blkid: '214'
+  size: '480088424448'
+  type: partition
+- fstype: ext4
+  id: 39306-format
+  label: ''
+  parent_disk: '214'
+  parent_disk_blkid: '214'
+  type: format
+  volume: '39306'
+- device: 39306-format
+  id: 39306-mount
+  parent_disk: '214'
+  parent_disk_blkid: '214'
+  path: /data/sdb-HFS480G3H2X069N
+  type: mount
+- id: '215'
+  name: sdc
+  parent_disk_blkid: '215'
+  ptable: GPT
+  type: disk
+- device: '39307'
+  id: sdc-part1
+  number: '39307'
+  parent_disk: '215'
+  parent_disk_blkid: '215'
+  size: '480088424448'
+  type: partition
+- fstype: ext4
+  id: 39307-format
+  label: ''
+  parent_disk: '215'
+  parent_disk_blkid: '215'
+  type: format
+  volume: '39307'
+- device: 39307-format
+  id: 39307-mount
+  parent_disk: '215'
+  parent_disk_blkid: '215'
+  path: /data/sdc-HFS480G3H2X069N
+  type: mount
 device_ip: 10.245.130.48
 env:
   DEVICE_IP: 10.245.130.48
   HEXR_DEVICE_SECURE_ID: RPcw4dihd3Wv75Q2jpZn3N
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: gy3hfm
 node_name: bomberto
-max_reserve_timeout: 604800

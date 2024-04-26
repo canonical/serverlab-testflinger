@@ -1,105 +1,105 @@
 agent_name: wooster
 default_disks:
-  - id: '270'
-    name: nvme1n1
-    parent_disk_blkid: '270'
-    ptable: GPT
-    type: disk
-  - device: '7348'
-    id: nvme1n1-part1
-    number: '7348'
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 7348-format
-    label: efi
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    type: format
-    volume: '7348'
-  - device: 7348-format
-    id: 7348-mount
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    path: /boot/efi
-    type: mount
-  - device: '7349'
-    id: nvme1n1-part2
-    number: '7349'
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    size: '7680957612032'
-    type: partition
-  - fstype: ext4
-    id: 7349-format
-    label: root
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    type: format
-    volume: '7349'
-  - device: 7349-format
-    id: 7349-mount
-    parent_disk: '270'
-    parent_disk_blkid: '270'
-    path: /
-    type: mount
-  - id: '271'
-    name: nvme2n1
-    parent_disk_blkid: '271'
-    ptable: GPT
-    type: disk
-  - device: '7350'
-    id: nvme2n1-part1
-    number: '7350'
-    parent_disk: '271'
-    parent_disk_blkid: '271'
-    size: '7681486094336'
-    type: partition
-  - fstype: ext4
-    id: 7350-format
-    label: ''
-    parent_disk: '271'
-    parent_disk_blkid: '271'
-    type: format
-    volume: '7350'
-  - device: 7350-format
-    id: 7350-mount
-    parent_disk: '271'
-    parent_disk_blkid: '271'
-    path: /data/nvme2n1part1
-    type: mount
-  - id: '272'
-    name: nvme3n1
-    parent_disk_blkid: '272'
-    ptable: GPT
-    type: disk
-  - device: '7351'
-    id: nvme3n1-part1
-    number: '7351'
-    parent_disk: '272'
-    parent_disk_blkid: '272'
-    size: '7681486094336'
-    type: partition
-  - fstype: ext4
-    id: 7351-format
-    label: ''
-    parent_disk: '272'
-    parent_disk_blkid: '272'
-    type: format
-    volume: '7351'
-  - device: 7351-format
-    id: 7351-mount
-    parent_disk: '272'
-    parent_disk_blkid: '272'
-    path: /data/nvme3n1part1
-    type: mount
+- id: '270'
+  name: nvme1n1
+  parent_disk_blkid: '270'
+  ptable: GPT
+  type: disk
+- device: '38818'
+  id: nvme1n1-part1
+  number: '38818'
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38818-format
+  label: efi
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  type: format
+  volume: '38818'
+- device: 38818-format
+  id: 38818-mount
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  path: /boot/efi
+  type: mount
+- device: '38820'
+  id: nvme1n1-part2
+  number: '38820'
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  size: '7680957612032'
+  type: partition
+- fstype: ext4
+  id: 38820-format
+  label: root
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  type: format
+  volume: '38820'
+- device: 38820-format
+  id: 38820-mount
+  parent_disk: '270'
+  parent_disk_blkid: '270'
+  path: /
+  type: mount
+- id: '271'
+  name: nvme2n1
+  parent_disk_blkid: '271'
+  ptable: GPT
+  type: disk
+- device: '38821'
+  id: nvme2n1-part1
+  number: '38821'
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 38821-format
+  label: ''
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  type: format
+  volume: '38821'
+- device: 38821-format
+  id: 38821-mount
+  parent_disk: '271'
+  parent_disk_blkid: '271'
+  path: /data/nvme2n1part1
+  type: mount
+- id: '272'
+  name: nvme3n1
+  parent_disk_blkid: '272'
+  ptable: GPT
+  type: disk
+- device: '38831'
+  id: nvme3n1-part1
+  number: '38831'
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 38831-format
+  label: ''
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  type: format
+  volume: '38831'
+- device: 38831-format
+  id: 38831-mount
+  parent_disk: '272'
+  parent_disk_blkid: '272'
+  path: /data/nvme3n1part1
+  type: mount
 device_ip: 10.245.130.83
 env:
   DEVICE_IP: 10.245.130.83
   HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: sf3rrg
 node_name: wooster
-max_reserve_timeout: 604800

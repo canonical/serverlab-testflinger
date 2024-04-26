@@ -1,80 +1,80 @@
 agent_name: barbos
 default_disks:
-  - id: '91'
-    name: sda
-    parent_disk_blkid: '91'
-    ptable: GPT
-    type: disk
-  - device: '308'
-    id: sda-part1
-    number: '308'
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 308-format
-    label: efi
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    type: format
-    volume: '308'
-  - device: 308-format
-    id: 308-mount
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    path: /boot/efi
-    type: mount
-  - device: '309'
-    id: sda-part2
-    number: '309'
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    size: '858448199680'
-    type: partition
-  - fstype: ext4
-    id: 309-format
-    label: root
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    type: format
-    volume: '309'
-  - device: 309-format
-    id: 309-mount
-    parent_disk: '91'
-    parent_disk_blkid: '91'
-    path: /
-    type: mount
-  - id: '92'
-    name: sdb
-    parent_disk_blkid: '92'
-    ptable: GPT
-    type: disk
-  - device: '310'
-    id: sdb-part1
-    number: '310'
-    parent_disk: '92'
-    parent_disk_blkid: '92'
-    size: '470647046144'
-    type: partition
-  - fstype: ext4
-    id: 310-format
-    label: ''
-    parent_disk: '92'
-    parent_disk_blkid: '92'
-    type: format
-    volume: '310'
-  - device: 310-format
-    id: 310-mount
-    parent_disk: '92'
-    parent_disk_blkid: '92'
-    path: /data-sdb
-    type: mount
+- id: '91'
+  name: sda
+  parent_disk_blkid: '91'
+  ptable: GPT
+  type: disk
+- device: '39208'
+  id: sda-part1
+  number: '39208'
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39208-format
+  label: efi
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  type: format
+  volume: '39208'
+- device: 39208-format
+  id: 39208-mount
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  path: /boot/efi
+  type: mount
+- device: '39209'
+  id: sda-part2
+  number: '39209'
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  size: '858448199680'
+  type: partition
+- fstype: ext4
+  id: 39209-format
+  label: root
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  type: format
+  volume: '39209'
+- device: 39209-format
+  id: 39209-mount
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  path: /
+  type: mount
+- id: '92'
+  name: sdb
+  parent_disk_blkid: '92'
+  ptable: GPT
+  type: disk
+- device: '39210'
+  id: sdb-part1
+  number: '39210'
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  size: '470647046144'
+  type: partition
+- fstype: ext4
+  id: 39210-format
+  label: ''
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  type: format
+  volume: '39210'
+- device: 39210-format
+  id: 39210-mount
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  path: /data-sdb
+  type: mount
 device_ip: 10.245.130.9
 env:
   DEVICE_IP: 10.245.130.9
   HEXR_DEVICE_SECURE_ID: GLz2HwHGA5dNnsbpiLKQB5
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: 7meykp
 node_name: barbos
-max_reserve_timeout: 604800

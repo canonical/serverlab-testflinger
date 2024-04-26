@@ -1,74 +1,34 @@
 agent_name: kvm-large-3
 default_disks:
-  - id: '334'
-    name: disk0
-    parent_disk_blkid: '334'
-    ptable: GPT
-    type: disk
-  - device: '16379'
-    id: disk0-part2
-    number: '16379'
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    size: '499122176'
-    type: partition
-  - fstype: fat32
-    id: 16379-format
-    label: efi
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    type: format
-    volume: '16379'
-  - device: 16379-format
-    id: 16379-mount
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    path: /boot/efi
-    type: mount
-  - device: '16380'
-    id: disk0-part3
-    number: '16380'
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    size: '1996488704'
-    type: partition
-  - fstype: ext4
-    id: 16380-format
-    label: boot
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    type: format
-    volume: '16380'
-  - device: 16380-format
-    id: 16380-mount
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    path: /boot
-    type: mount
-  - device: '16382'
-    id: disk0-part4
-    number: '16382'
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    size: '185996410880'
-    type: partition
-  - fstype: ext4
-    id: 16382-format
-    label: root
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    type: format
-    volume: '16382'
-  - device: 16382-format
-    id: 16382-mount
-    parent_disk: '334'
-    parent_disk_blkid: '334'
-    path: /
-    type: mount
+- id: '334'
+  name: vda
+  parent_disk_blkid: '334'
+  ptable: GPT
+  type: disk
+- device: '38073'
+  id: vda-part2
+  number: '38073'
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 38073-format
+  label: root
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  type: format
+  volume: '38073'
+- device: 38073-format
+  id: 38073-mount
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  path: /
+  type: mount
 device_ip: 10.245.135.4
 env:
   DEVICE_IP: 10.245.135.4
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: t4dx77
 node_name: kvm-large-3
-max_reserve_timeout: 604800

@@ -5,22 +5,22 @@ default_disks:
   parent_disk_blkid: '89'
   ptable: GPT
   type: disk
-- device: '33747'
+- device: '39231'
   id: sda-part1
-  number: '33747'
+  number: '39231'
   parent_disk: '89'
   parent_disk_blkid: '89'
   size: '1000186314752'
   type: partition
 - fstype: ext4
-  id: 33747-format
+  id: 39231-format
   label: ''
   parent_disk: '89'
   parent_disk_blkid: '89'
   type: format
-  volume: '33747'
-- device: 33747-format
-  id: 33747-mount
+  volume: '39231'
+- device: 39231-format
+  id: 39231-mount
   parent_disk: '89'
   parent_disk_blkid: '89'
   path: /data/HUS722T1TALA600
@@ -30,42 +30,42 @@ default_disks:
   parent_disk_blkid: '90'
   ptable: GPT
   type: disk
-- device: '33745'
+- device: '39232'
   id: sdb-part1
-  number: '33745'
+  number: '39232'
   parent_disk: '90'
   parent_disk_blkid: '90'
   size: '511705088'
   type: partition
 - fstype: fat32
-  id: 33745-format
+  id: 39232-format
   label: ''
   parent_disk: '90'
   parent_disk_blkid: '90'
   type: format
-  volume: '33745'
-- device: 33745-format
-  id: 33745-mount
+  volume: '39232'
+- device: 39232-format
+  id: 39232-mount
   parent_disk: '90'
   parent_disk_blkid: '90'
   path: /boot/efi/
   type: mount
-- device: '33746'
+- device: '39233'
   id: sdb-part2
-  number: '33746'
+  number: '39233'
   parent_disk: '90'
   parent_disk_blkid: '90'
   size: '239457009664'
   type: partition
 - fstype: ext4
-  id: 33746-format
+  id: 39233-format
   label: ''
   parent_disk: '90'
   parent_disk_blkid: '90'
   type: format
-  volume: '33746'
-- device: 33746-format
-  id: 33746-mount
+  volume: '39233'
+- device: 39233-format
+  id: 39233-mount
   parent_disk: '90'
   parent_disk_blkid: '90'
   path: /

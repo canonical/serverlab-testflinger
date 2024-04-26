@@ -1,55 +1,55 @@
 agent_name: garamond
 default_disks:
-  - id: '211'
-    name: sda
-    parent_disk_blkid: '211'
-    ptable: GPT
-    type: disk
-  - device: '15372'
-    id: sda-part1
-    number: '15372'
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 15372-format
-    label: efi
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    type: format
-    volume: '15372'
-  - device: 15372-format
-    id: 15372-mount
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    path: /boot/efi
-    type: mount
-  - device: '15373'
-    id: sda-part2
-    number: '15373'
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    size: '999662026752'
-    type: partition
-  - fstype: ext4
-    id: 15373-format
-    label: root
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    type: format
-    volume: '15373'
-  - device: 15373-format
-    id: 15373-mount
-    parent_disk: '211'
-    parent_disk_blkid: '211'
-    path: /
-    type: mount
+- id: '211'
+  name: sda
+  parent_disk_blkid: '211'
+  ptable: GPT
+  type: disk
+- device: '38712'
+  id: sda-part2
+  number: '38712'
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 38712-format
+  label: root
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  type: format
+  volume: '38712'
+- device: 38712-format
+  id: 38712-mount
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  path: /
+  type: mount
+- device: '38711'
+  id: sda-part1
+  number: '38711'
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38711-format
+  label: efi
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  type: format
+  volume: '38711'
+- device: 38711-format
+  id: 38711-mount
+  parent_disk: '211'
+  parent_disk_blkid: '211'
+  path: /boot/efi
+  type: mount
 device_ip: 10.245.130.33
 env:
   DEVICE_IP: 10.245.130.33
   HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: wkwxnb
 node_name: garamond
-max_reserve_timeout: 604800

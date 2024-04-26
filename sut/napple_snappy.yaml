@@ -1,80 +1,80 @@
 agent_name: napple
 default_disks:
-  - id: '85'
-    name: sda
-    parent_disk_blkid: '85'
-    ptable: GPT
-    type: disk
-  - device: '4397'
-    id: sda-part1
-    number: '4397'
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 4397-format
-    label: efi
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    type: format
-    volume: '4397'
-  - device: 4397-format
-    id: 4397-mount
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    path: /boot/efi
-    type: mount
-  - device: '4398'
-    id: sda-part2
-    number: '4398'
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    size: '299422973952'
-    type: partition
-  - fstype: ext4
-    id: 4398-format
-    label: root
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    type: format
-    volume: '4398'
-  - device: 4398-format
-    id: 4398-mount
-    parent_disk: '85'
-    parent_disk_blkid: '85'
-    path: /
-    type: mount
-  - id: '86'
-    name: sdb
-    parent_disk_blkid: '86'
-    ptable: GPT
-    type: disk
-  - device: '16473'
-    id: sdb-part1
-    number: '16473'
-    parent_disk: '86'
-    parent_disk_blkid: '86'
-    size: '480059064320'
-    type: partition
-  - fstype: ext4
-    id: 16473-format
-    label: ''
-    parent_disk: '86'
-    parent_disk_blkid: '86'
-    type: format
-    volume: '16473'
-  - device: 16473-format
-    id: 16473-mount
-    parent_disk: '86'
-    parent_disk_blkid: '86'
-    path: /data-sdb
-    type: mount
+- id: '85'
+  name: sda
+  parent_disk_blkid: '85'
+  ptable: GPT
+  type: disk
+- device: '39039'
+  id: sda-part1
+  number: '39039'
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39039-format
+  label: efi
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  type: format
+  volume: '39039'
+- device: 39039-format
+  id: 39039-mount
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  path: /boot/efi
+  type: mount
+- device: '39040'
+  id: sda-part2
+  number: '39040'
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 39040-format
+  label: root
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  type: format
+  volume: '39040'
+- device: 39040-format
+  id: 39040-mount
+  parent_disk: '85'
+  parent_disk_blkid: '85'
+  path: /
+  type: mount
+- id: '86'
+  name: sdb
+  parent_disk_blkid: '86'
+  ptable: GPT
+  type: disk
+- device: '39052'
+  id: sdb-part1
+  number: '39052'
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  size: '480059064320'
+  type: partition
+- fstype: ext4
+  id: 39052-format
+  label: ''
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  type: format
+  volume: '39052'
+- device: 39052-format
+  id: 39052-mount
+  parent_disk: '86'
+  parent_disk_blkid: '86'
+  path: /data-sdb
+  type: mount
 device_ip: 10.245.130.34
 env:
   DEVICE_IP: 10.245.130.34
   HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: b4r6nh
 node_name: napple
-max_reserve_timeout: 604800

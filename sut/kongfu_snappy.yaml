@@ -1,55 +1,55 @@
 agent_name: kongfu
 default_disks:
-  - id: '213'
-    name: sda
-    parent_disk_blkid: '213'
-    ptable: GPT
-    type: disk
-  - device: '4904'
-    id: sda-part1
-    number: '4904'
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    size: '536870912'
-    type: partition
-  - fstype: fat32
-    id: 4904-format
-    label: efi
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    type: format
-    volume: '4904'
-  - device: 4904-format
-    id: 4904-mount
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    path: /boot/efi
-    type: mount
-  - device: '4905'
-    id: sda-part2
-    number: '4905'
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    size: '799056855040'
-    type: partition
-  - fstype: ext4
-    id: 4905-format
-    label: root
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    type: format
-    volume: '4905'
-  - device: 4905-format
-    id: 4905-mount
-    parent_disk: '213'
-    parent_disk_blkid: '213'
-    path: /
-    type: mount
+- id: '213'
+  name: sda
+  parent_disk_blkid: '213'
+  ptable: GPT
+  type: disk
+- device: '39047'
+  id: sda-part1
+  number: '39047'
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39047-format
+  label: efi
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  type: format
+  volume: '39047'
+- device: 39047-format
+  id: 39047-mount
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  path: /boot/efi
+  type: mount
+- device: '39048'
+  id: sda-part2
+  number: '39048'
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  size: '799056855040'
+  type: partition
+- fstype: ext4
+  id: 39048-format
+  label: root
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  type: format
+  volume: '39048'
+- device: 39048-format
+  id: 39048-mount
+  parent_disk: '213'
+  parent_disk_blkid: '213'
+  path: /
+  type: mount
 device_ip: 10.245.130.84
 env:
   DEVICE_IP: 10.245.130.84
   HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
 maas_user: testflinger_a
+max_reserve_timeout: 604800
 node_id: fcmq3a
 node_name: kongfu
-max_reserve_timeout: 604800
