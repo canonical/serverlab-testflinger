@@ -1,0 +1,60 @@
+agent_name: novbi
+default_disks:
+- id: '440'
+  name: sda
+  parent_disk_blkid: '440'
+  ptable: GPT
+  type: disk
+- device: '38961'
+  id: sda-part1
+  number: '38961'
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38961-format
+  label: efi
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  type: format
+  volume: '38961'
+- device: 38961-format
+  id: 38961-mount
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  path: /boot/efi
+  type: mount
+- device: '38962'
+  id: sda-part2
+  number: '38962'
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 38962-format
+  label: root
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  type: format
+  volume: '38962'
+- device: 38962-format
+  id: 38962-mount
+  parent_disk: '440'
+  parent_disk_blkid: '440'
+  path: /
+  type: mount
+- id: '441'
+  name: sdb
+  parent_disk_blkid: '441'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.104
+env:
+  DEVICE_IP: 10.245.130.104
+  HEXR_DEVICE_SECURE_ID: YqdXkdYVowytqXbdFB2BXF
+maas_user: testflinger_a
+max_reserve_timeout: 604800
+node_id: 4wawr7
+node_name: novbi
