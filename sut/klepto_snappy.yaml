@@ -1,0 +1,55 @@
+agent_name: klepto
+default_disks:
+- id: '442'
+  name: nvme0n1
+  parent_disk_blkid: '442'
+  ptable: GPT
+  type: disk
+- device: '38954'
+  id: nvme0n1-part1
+  number: '38954'
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38954-format
+  label: efi
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  type: format
+  volume: '38954'
+- device: 38954-format
+  id: 38954-mount
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  path: /boot/efi
+  type: mount
+- device: '38955'
+  id: nvme0n1-part2
+  number: '38955'
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 38955-format
+  label: root
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  type: format
+  volume: '38955'
+- device: 38955-format
+  id: 38955-mount
+  parent_disk: '442'
+  parent_disk_blkid: '442'
+  path: /
+  type: mount
+device_ip: 10.245.130.102
+env:
+  DEVICE_IP: 10.245.130.102
+  HEXR_DEVICE_SECURE_ID: cEkjtLNKdEuFZrns4aECss
+maas_user: testflinger_a
+max_reserve_timeout: 604800
+node_id: d8m8r8
+node_name: klepto
