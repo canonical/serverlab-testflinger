@@ -1,0 +1,6 @@
+job_queue: klepto
+provision_data:
+ distro: focal
+test_data:
+ test_cmds: |
+  ssh -o StrictHostKeyChecking=no ubuntu@10.245.130.102 ifconfig
