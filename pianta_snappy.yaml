@@ -49,7 +49,7 @@ device_ip: 10.245.130.38
 env:
   DEVICE_IP: 10.245.130.38
   HEXR_DEVICE_SECURE_ID: mDNyEtE94uGX3fq3XFENZg
-maas_user: testflinger_a
+maas_user: testflinger-maastiff
 max_reserve_timeout: 604800
 node_id: f8ysyn
 node_name: pianta

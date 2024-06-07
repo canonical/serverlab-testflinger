@@ -53,12 +53,13 @@ fi
 echo "> copying agent snappy-agent files"
 cp $SNAPPY_F $SNAPPY_DIR
 
+# DEPRECATED - files not used
 # copy tf-cli files	
-CLI_F=./sut/!(*snappy*).y*ml
-CLI_DIR=./sut/cli
-if ! test -d $CLI_DIR; then
-	echo "> creating cli directory"
-	mkdir $CLI_DIR
-fi
-echo "> copying agent cli files"
-cp $CLI_F $CLI_DIR
+#CLI_F=./sut/!(*snappy*).y*ml
+#CLI_DIR=./sut/cli
+#if ! test -d $CLI_DIR; then
+#	echo "> creating cli directory"
+#	mkdir $CLI_DIR
+#fi
+#echo "> copying agent cli files"
+#cp $CLI_F $CLI_DIR

@@ -51,7 +51,7 @@ def write_snappy_config(output_dir, hostname, machine):
     snappy_config["device_ip"] = machine["public_ip"]
     snappy_config["node_id"] = machine["system_id"]
     snappy_config["node_name"] = hostname
-    snappy_config["maas_user"] = "testflinger_a"
+    snappy_config["maas_user"] = "testflinger-maastiff"
     snappy_config["agent_name"] = hostname
     if snappy_config.get("env") is None:
         snappy_config["env"] = {}

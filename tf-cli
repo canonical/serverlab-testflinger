@@ -89,9 +89,10 @@ RUN git init \
   && git fetch origin \
   && git checkout -b main --track origin/main
 
+#DEPRECATED - files not needed
 # copy sut files
-RUN mkdir /data/testflinger/cli/sut/
-COPY ./sut/cli/* /data/testflinger/cli/sut/
+#RUN mkdir /data/testflinger/cli/sut/
+#COPY ./sut/cli/* /data/testflinger/cli/sut/
 
 WORKDIR /data/testflinger/cli
 #USER ubuntu

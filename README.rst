@@ -478,6 +478,17 @@ script):
 Customize source and config files for environment:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- Edit the file ``~/.bashrc`` and add the following lines::
+
+     TF_MAAS_ACT=testflinger-maastiff
+     MAAS_SERVER=10.245.128.4
+     MAAS_PORT=5240
+     MAAS_API_KEY=''
+
+-  Source the file::
+
+     source ~/.bashrc
+
 All work is done in the Git cloned Docker root dir
 (``serverlab-testflinger/``).
 
@@ -523,9 +534,10 @@ executed upon container boot/start.
    -  MAAS API key is located in the MAAS dashboard for the testflinger
       account's settings (create one if it doesn't exist).
 
--  Add them to the file as follows (w/ real values)::
+-  DEPRECATED Set these using environment variables noted above
+   Add them to the file as follows (w/ real values)::
 
-     TF_MAAS_ACT=testflinger_a
+     TF_MAAS_ACT=testflinger-maastiff
      MAAS_SERVER=10.245.128.4
      MAAS_PORT=5240
      MAAS_API_KEY=''

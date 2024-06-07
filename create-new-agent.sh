@@ -65,25 +65,13 @@ allocate_command: "PYTHONIOENCODING=utf-8 PYTHONUNBUFFERED=1 snappy-device-agent
  testflinger.json"
 EOF
 
-# HOSTNAME.yaml
-echo "  Creating sut/$HOSTNAME.yaml"
-cat << EOF > sut/$HOSTNAME.yaml
-job_queue: $HOSTNAME
-provision_data:
- distro: focal
-test_data:
- test_cmds: |
-  ssh -o StrictHostKeyChecking=no ubuntu@$IPADDR ifconfig
-EOF
-
-
 # HOSTNAME_snappy.yaml
 echo "  Creating sut/${HOSTNAME}_snappy.yaml"
 cat << EOF > sut/"$HOSTNAME"_snappy.yaml
 device_ip: $IPADDR
 node_id: $MAAS_ID
 node_name: $HOSTNAME
-maas_user: testflinger_a
+maas_user: testflinger-maastiff
 agent_name: $HOSTNAME
 max_reserve_timeout: 604800
 env:

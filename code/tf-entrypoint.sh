@@ -1,10 +1,11 @@
 #!/usr/bin/bash
 
+#Deprecated in favor of using env vars from the calling shell.
 # these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
-: ${TF_MAAS_ACT:=testflinger_a}
-: ${MAAS_HOST:=10.245.128.4}
-: ${MAAS_PORT:=5240}
-: ${MAAS_API_KEY:='YQg7utpEbD5sZ5jyPP:frwtnUJbXReMtfZxtz:vnAAt9zrGZPxNKEGRyp76Eku5nedq2xD'}
+#: ${TF_MAAS_ACT:=testflinger-maastiff}
+#: ${MAAS_HOST:=10.245.128.4}
+#: ${MAAS_PORT:=5240}
+#: ${MAAS_API_KEY:=''}
 
 echo
 echo "###########################"
