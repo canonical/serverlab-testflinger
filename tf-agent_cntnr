@@ -48,7 +48,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # link python3 bin
 RUN ln -s /usr/bin/python3 /usr/bin/python
-RUN pip3 install requests_oauthlib paho-mqtt xdg ruamel.yaml urllib3
+RUN pip3 install requests_oauthlib "paho-mqtt<2.0.0" xdg ruamel.yaml urllib3
 RUN pip3 install --upgrade requests urllib3
 
 # add users
