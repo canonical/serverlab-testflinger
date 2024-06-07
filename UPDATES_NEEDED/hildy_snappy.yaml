@@ -1,0 +1,55 @@
+agent_name: hildy
+default_disks:
+- id: '106'
+  name: sda
+  parent_disk_blkid: '106'
+  ptable: GPT
+  type: disk
+- device: '39215'
+  id: sda-part1
+  number: '39215'
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39215-format
+  label: efi
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  type: format
+  volume: '39215'
+- device: 39215-format
+  id: 39215-mount
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  path: /boot/efi
+  type: mount
+- device: '39218'
+  id: sda-part2
+  number: '39218'
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  size: '299456528384'
+  type: partition
+- fstype: ext4
+  id: 39218-format
+  label: root
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  type: format
+  volume: '39218'
+- device: 39218-format
+  id: 39218-mount
+  parent_disk: '106'
+  parent_disk_blkid: '106'
+  path: /
+  type: mount
+device_ip: 10.245.130.42
+env:
+  DEVICE_IP: 10.245.130.42
+  HEXR_DEVICE_SECURE_ID: SzyNwsKFPe9jh3TVSevuga
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qmkr74
+node_name: hildy

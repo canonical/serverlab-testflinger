@@ -1,0 +1,34 @@
+agent_name: kvm-large-3
+default_disks:
+- id: '334'
+  name: vda
+  parent_disk_blkid: '334'
+  ptable: GPT
+  type: disk
+- device: '38073'
+  id: vda-part2
+  number: '38073'
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 38073-format
+  label: root
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  type: format
+  volume: '38073'
+- device: 38073-format
+  id: 38073-mount
+  parent_disk: '334'
+  parent_disk_blkid: '334'
+  path: /
+  type: mount
+device_ip: 10.245.135.4
+env:
+  DEVICE_IP: 10.245.135.4
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: t4dx77
+node_name: kvm-large-3

@@ -1,0 +1,55 @@
+agent_name: birdo
+default_disks:
+- id: '17'
+  name: nvme0n1
+  parent_disk_blkid: '17'
+  ptable: GPT
+  type: disk
+- device: '14'
+  id: nvme0n1-part1
+  number: '14'
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 14-format
+  label: efi
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  type: format
+  volume: '14'
+- device: 14-format
+  id: 14-mount
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  path: /boot/efi
+  type: mount
+- device: '15'
+  id: nvme0n1-part2
+  number: '15'
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 15-format
+  label: root
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  type: format
+  volume: '15'
+- device: 15-format
+  id: 15-mount
+  parent_disk: '17'
+  parent_disk_blkid: '17'
+  path: /
+  type: mount
+device_ip: 10.245.130.50
+env:
+  DEVICE_IP: 10.245.130.50
+  HEXR_DEVICE_SECURE_ID: AgRZZycCv37CuFTMXjvpJT
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: n6rggc
+node_name: birdo

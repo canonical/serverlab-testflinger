@@ -1,0 +1,74 @@
+agent_name: kvm-small-1
+default_disks:
+- id: '312'
+  name: disk0
+  parent_disk_blkid: '312'
+  ptable: GPT
+  type: disk
+- device: '38229'
+  id: disk0-part2
+  number: '38229'
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 38229-format
+  label: efi
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  type: format
+  volume: '38229'
+- device: 38229-format
+  id: 38229-mount
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  path: /boot/efi
+  type: mount
+- device: '38232'
+  id: disk0-part4
+  number: '38232'
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  size: '37199282176'
+  type: partition
+- fstype: ext4
+  id: 38232-format
+  label: root
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  type: format
+  volume: '38232'
+- device: 38232-format
+  id: 38232-mount
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  path: /
+  type: mount
+- device: '38230'
+  id: disk0-part3
+  number: '38230'
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 38230-format
+  label: boot
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  type: format
+  volume: '38230'
+- device: 38230-format
+  id: 38230-mount
+  parent_disk: '312'
+  parent_disk_blkid: '312'
+  path: /boot
+  type: mount
+device_ip: 10.245.135.14
+env:
+  DEVICE_IP: 10.245.135.14
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: h7d7er
+node_name: kvm-small-1

@@ -1,0 +1,60 @@
+agent_name: prunus
+default_disks:
+- id: '33'
+  name: sda
+  parent_disk_blkid: '33'
+  ptable: GPT
+  type: disk
+- device: '39225'
+  id: sda-part3
+  number: '39225'
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  size: '499101204480'
+  type: partition
+- fstype: ext4
+  id: 39225-format
+  label: ''
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  type: format
+  volume: '39225'
+- device: 39225-format
+  id: 39225-mount
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  path: /
+  type: mount
+- device: '39224'
+  id: sda-part2
+  number: '39224'
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  size: '998244352'
+  type: partition
+- fstype: fat32
+  id: 39224-format
+  label: ''
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  type: format
+  volume: '39224'
+- device: 39224-format
+  id: 39224-mount
+  parent_disk: '33'
+  parent_disk_blkid: '33'
+  path: /boot/efi
+  type: mount
+- id: '34'
+  name: sdb
+  parent_disk_blkid: '34'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.11
+env:
+  DEVICE_IP: 10.245.130.11
+  HEXR_DEVICE_SECURE_ID: a00D000000IGBFw
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: yaybhw
+node_name: prunus

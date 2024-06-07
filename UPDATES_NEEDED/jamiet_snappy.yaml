@@ -1,0 +1,55 @@
+agent_name: jamiet
+default_disks:
+- id: '105'
+  name: sda
+  parent_disk_blkid: '105'
+  ptable: GPT
+  type: disk
+- device: '39270'
+  id: sda-part1
+  number: '39270'
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39270-format
+  label: efi
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  type: format
+  volume: '39270'
+- device: 39270-format
+  id: 39270-mount
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  path: /boot/efi
+  type: mount
+- device: '39271'
+  id: sda-part2
+  number: '39271'
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  size: '16001429143552'
+  type: partition
+- fstype: ext4
+  id: 39271-format
+  label: root
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  type: format
+  volume: '39271'
+- device: 39271-format
+  id: 39271-mount
+  parent_disk: '105'
+  parent_disk_blkid: '105'
+  path: /
+  type: mount
+device_ip: 10.245.130.39
+env:
+  DEVICE_IP: 10.245.130.39
+  HEXR_DEVICE_SECURE_ID: QBRTP45EsDeg8uBCz8RktD
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: b7mhe6
+node_name: jamiet

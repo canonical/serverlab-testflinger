@@ -1,0 +1,80 @@
+agent_name: toadsworth
+default_disks:
+- id: '187'
+  name: sda
+  parent_disk_blkid: '187'
+  ptable: GPT
+  type: disk
+- device: '38822'
+  id: sda-part1
+  number: '38822'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38822-format
+  label: efi
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '38822'
+- device: 38822-format
+  id: 38822-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /boot/efi
+  type: mount
+- device: '38832'
+  id: sda-part2
+  number: '38832'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 38832-format
+  label: root
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '38832'
+- device: 38832-format
+  id: 38832-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /
+  type: mount
+- id: '188'
+  name: sdb
+  parent_disk_blkid: '188'
+  ptable: GPT
+  type: disk
+- device: '38842'
+  id: sdb-part1
+  number: '38842'
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  size: '957987422208'
+  type: partition
+- fstype: ext4
+  id: 38842-format
+  label: ''
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  type: format
+  volume: '38842'
+- device: 38842-format
+  id: 38842-mount
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  path: /data-sdb
+  type: mount
+device_ip: 10.245.130.67
+env:
+  DEVICE_IP: 10.245.130.67
+  HEXR_DEVICE_SECURE_ID: gYGHh36Y2w3wtQ3CeqN4Jh
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: cbbhky
+node_name: toadsworth

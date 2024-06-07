@@ -1,0 +1,80 @@
+agent_name: notso
+default_disks:
+- id: '438'
+  name: sda
+  parent_disk_blkid: '438'
+  ptable: GPT
+  type: disk
+- device: '38946'
+  id: sda-part1
+  number: '38946'
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38946-format
+  label: efi
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  type: format
+  volume: '38946'
+- device: 38946-format
+  id: 38946-mount
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  path: /boot/efi
+  type: mount
+- device: '38947'
+  id: sda-part2
+  number: '38947'
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 38947-format
+  label: root
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  type: format
+  volume: '38947'
+- device: 38947-format
+  id: 38947-mount
+  parent_disk: '438'
+  parent_disk_blkid: '438'
+  path: /
+  type: mount
+- id: '439'
+  name: sdb
+  parent_disk_blkid: '439'
+  ptable: GPT
+  type: disk
+- device: '38948'
+  id: sdb-part1
+  number: '38948'
+  parent_disk: '439'
+  parent_disk_blkid: '439'
+  size: '480059064320'
+  type: partition
+- fstype: ext4
+  id: 38948-format
+  label: ''
+  parent_disk: '439'
+  parent_disk_blkid: '439'
+  type: format
+  volume: '38948'
+- device: 38948-format
+  id: 38948-mount
+  parent_disk: '439'
+  parent_disk_blkid: '439'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.103
+env:
+  DEVICE_IP: 10.245.130.103
+  HEXR_DEVICE_SECURE_ID: KW5bG9VtFTc34MHMiMCaef
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 8t8fyq
+node_name: notso

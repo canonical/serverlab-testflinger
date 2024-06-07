@@ -1,0 +1,74 @@
+agent_name: kvm-medium-3
+default_disks:
+- id: '328'
+  name: disk0
+  parent_disk_blkid: '328'
+  ptable: GPT
+  type: disk
+- device: '38240'
+  id: disk0-part3
+  number: '38240'
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 38240-format
+  label: boot
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  type: format
+  volume: '38240'
+- device: 38240-format
+  id: 38240-mount
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  path: /boot
+  type: mount
+- device: '38238'
+  id: disk0-part2
+  number: '38238'
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 38238-format
+  label: efi
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  type: format
+  volume: '38238'
+- device: 38238-format
+  id: 38238-mount
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  path: /boot/efi
+  type: mount
+- device: '38241'
+  id: disk0-part4
+  number: '38241'
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  size: '92996108288'
+  type: partition
+- fstype: ext4
+  id: 38241-format
+  label: root
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  type: format
+  volume: '38241'
+- device: 38241-format
+  id: 38241-mount
+  parent_disk: '328'
+  parent_disk_blkid: '328'
+  path: /
+  type: mount
+device_ip: 10.245.135.10
+env:
+  DEVICE_IP: 10.245.135.10
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: ehc6em
+node_name: kvm-medium-3

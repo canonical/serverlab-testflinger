@@ -1,0 +1,74 @@
+agent_name: kvm-small-7
+default_disks:
+- id: '388'
+  name: disk0
+  parent_disk_blkid: '388'
+  ptable: GPT
+  type: disk
+- device: '39258'
+  id: disk0-part4
+  number: '39258'
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  size: '499122176'
+  type: partition
+- fstype: fat32
+  id: 39258-format
+  label: efi
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  type: format
+  volume: '39258'
+- device: 39258-format
+  id: 39258-mount
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  path: /boot/efi
+  type: mount
+- device: '39256'
+  id: disk0-part3
+  number: '39256'
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  size: '37199282176'
+  type: partition
+- fstype: ext4
+  id: 39256-format
+  label: root
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  type: format
+  volume: '39256'
+- device: 39256-format
+  id: 39256-mount
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  path: /
+  type: mount
+- device: '39254'
+  id: disk0-part2
+  number: '39254'
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  size: '1996488704'
+  type: partition
+- fstype: ext4
+  id: 39254-format
+  label: boot
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  type: format
+  volume: '39254'
+- device: 39254-format
+  id: 39254-mount
+  parent_disk: '388'
+  parent_disk_blkid: '388'
+  path: /boot
+  type: mount
+device_ip: 10.245.135.25
+env:
+  DEVICE_IP: 10.245.135.25
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 73bhct
+node_name: kvm-small-7

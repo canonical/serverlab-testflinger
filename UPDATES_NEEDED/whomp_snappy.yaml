@@ -1,0 +1,55 @@
+agent_name: whomp
+default_disks:
+- id: '216'
+  name: nvme0n1
+  parent_disk_blkid: '216'
+  ptable: GPT
+  type: disk
+- device: '38963'
+  id: nvme0n1-part1
+  number: '38963'
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 38963-format
+  label: root
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  type: format
+  volume: '38963'
+- device: 38963-format
+  id: 38963-mount
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  path: /
+  type: mount
+- device: '38964'
+  id: nvme0n1-part2
+  number: '38964'
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38964-format
+  label: efi
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  type: format
+  volume: '38964'
+- device: 38964-format
+  id: 38964-mount
+  parent_disk: '216'
+  parent_disk_blkid: '216'
+  path: /boot/efi
+  type: mount
+device_ip: 10.245.130.53
+env:
+  DEVICE_IP: 10.245.130.53
+  HEXR_DEVICE_SECURE_ID: GnZzh78ERa5eQ7Xyo9yPfP
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 8pk6f8
+node_name: whomp

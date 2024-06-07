@@ -1,0 +1,80 @@
+agent_name: kroc
+default_disks:
+- id: '340'
+  name: sda
+  parent_disk_blkid: '340'
+  ptable: GPT
+  type: disk
+- device: '39265'
+  id: sda-part1
+  number: '39265'
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39265-format
+  label: efi
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  type: format
+  volume: '39265'
+- device: 39265-format
+  id: 39265-mount
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  path: /boot/efi
+  type: mount
+- device: '39266'
+  id: sda-part2
+  number: '39266'
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 39266-format
+  label: root
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  type: format
+  volume: '39266'
+- device: 39266-format
+  id: 39266-mount
+  parent_disk: '340'
+  parent_disk_blkid: '340'
+  path: /
+  type: mount
+- id: '341'
+  name: sdb
+  parent_disk_blkid: '341'
+  ptable: GPT
+  type: disk
+- device: '39269'
+  id: sdb-part1
+  number: '39269'
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  size: '1000186314752'
+  type: partition
+- fstype: ext4
+  id: 39269-format
+  label: ''
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  type: format
+  volume: '39269'
+- device: 39269-format
+  id: 39269-mount
+  parent_disk: '341'
+  parent_disk_blkid: '341'
+  path: /data-sdb
+  type: mount
+device_ip: 10.245.130.88
+env:
+  DEVICE_IP: 10.245.130.88
+  HEXR_DEVICE_SECURE_ID: d4UWQFbgJwuc4GZKjuUKqs
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qa88b8
+node_name: kroc

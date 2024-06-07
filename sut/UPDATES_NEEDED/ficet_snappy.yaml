@@ -1,9 +1,0 @@
-agent_name: ficet
-device_ip: 10.245.130.56
-env:
-  DEVICE_IP: 10.245.130.56
-  HEXR_DEVICE_SECURE_ID: g6mtsoXweQx2nS8h8hEJR2
-maas_user: testflinger_a
-max_reserve_timeout: 604800
-node_id: xnbkhw
-node_name: ficet

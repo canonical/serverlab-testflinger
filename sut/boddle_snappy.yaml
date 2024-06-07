@@ -1,0 +1,80 @@
+agent_name: boddle
+default_disks:
+- id: '24'
+  name: sda
+  parent_disk_blkid: '24'
+  ptable: GPT
+  type: disk
+- device: '21'
+  id: sda-part1
+  number: '21'
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 21-format
+  label: efi
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  type: format
+  volume: '21'
+- device: 21-format
+  id: 21-mount
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  path: /boot/efi
+  type: mount
+- device: '22'
+  id: sda-part2
+  number: '22'
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 22-format
+  label: root
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  type: format
+  volume: '22'
+- device: 22-format
+  id: 22-mount
+  parent_disk: '24'
+  parent_disk_blkid: '24'
+  path: /
+  type: mount
+- id: '25'
+  name: sdb
+  parent_disk_blkid: '25'
+  ptable: GPT
+  type: disk
+- device: '29'
+  id: sdb-part1
+  number: '29'
+  parent_disk: '25'
+  parent_disk_blkid: '25'
+  size: '960176848896'
+  type: partition
+- fstype: ext4
+  id: 29-format
+  label: ''
+  parent_disk: '25'
+  parent_disk_blkid: '25'
+  type: format
+  volume: '29'
+- device: 29-format
+  id: 29-mount
+  parent_disk: '25'
+  parent_disk_blkid: '25'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.94
+env:
+  DEVICE_IP: 10.245.130.94
+  HEXR_DEVICE_SECURE_ID: nxS7pArgZzPqfrSX8JKHd7
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: mkenmq
+node_name: boddle

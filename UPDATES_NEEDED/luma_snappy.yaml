@@ -1,0 +1,55 @@
+agent_name: luma
+default_disks:
+- id: '179'
+  name: nvme0n1
+  parent_disk_blkid: '179'
+  ptable: GPT
+  type: disk
+- device: '39100'
+  id: nvme0n1-part1
+  number: '39100'
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39100-format
+  label: efi
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  type: format
+  volume: '39100'
+- device: 39100-format
+  id: 39100-mount
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  path: /boot/efi
+  type: mount
+- device: '39101'
+  id: nvme0n1-part2
+  number: '39101'
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  size: '649592832000'
+  type: partition
+- fstype: ext4
+  id: 39101-format
+  label: root
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  type: format
+  volume: '39101'
+- device: 39101-format
+  id: 39101-mount
+  parent_disk: '179'
+  parent_disk_blkid: '179'
+  path: /
+  type: mount
+device_ip: 10.245.130.60
+env:
+  DEVICE_IP: 10.245.130.60
+  HEXR_DEVICE_SECURE_ID: D4fWMrJ4maP3TaoY3o5Mpd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: xtpyry
+node_name: luma

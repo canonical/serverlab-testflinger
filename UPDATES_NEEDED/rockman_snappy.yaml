@@ -1,0 +1,55 @@
+agent_name: rockman
+default_disks:
+- id: '399'
+  name: nvme0n1
+  parent_disk_blkid: '399'
+  ptable: GPT
+  type: disk
+- device: '39140'
+  id: nvme0n1-part1
+  number: '39140'
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39140-format
+  label: efi
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  type: format
+  volume: '39140'
+- device: 39140-format
+  id: 39140-mount
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  path: /boot/efi
+  type: mount
+- device: '39141'
+  id: nvme0n1-part2
+  number: '39141'
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 39141-format
+  label: root
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  type: format
+  volume: '39141'
+- device: 39141-format
+  id: 39141-mount
+  parent_disk: '399'
+  parent_disk_blkid: '399'
+  path: /
+  type: mount
+device_ip: 10.245.130.84
+env:
+  DEVICE_IP: 10.245.130.84
+  HEXR_DEVICE_SECURE_ID: 7oVHU9DXEFFU6T97LtNBsd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: dhbdpt
+node_name: rockman

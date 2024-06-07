@@ -1,0 +1,40 @@
+agent_name: cractus
+default_disks:
+- id: '42'
+  name: sda
+  parent_disk_blkid: '42'
+  ptable: GPT
+  type: disk
+- device: '67'
+  id: sda-part2
+  number: '67'
+  parent_disk: '42'
+  parent_disk_blkid: '42'
+  size: '299993399296'
+  type: partition
+- fstype: ext4
+  id: 67-format
+  label: root
+  parent_disk: '42'
+  parent_disk_blkid: '42'
+  type: format
+  volume: '67'
+- device: 67-format
+  id: 67-mount
+  parent_disk: '42'
+  parent_disk_blkid: '42'
+  path: /
+  type: mount
+- id: '43'
+  name: sdb
+  parent_disk_blkid: '43'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.70
+env:
+  DEVICE_IP: 10.245.130.70
+  HEXR_DEVICE_SECURE_ID: mxBVzDwSGt4wbmrqVz2KLy
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 73wty8
+node_name: cractus

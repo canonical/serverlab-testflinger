@@ -1,0 +1,55 @@
+agent_name: cloaker
+default_disks:
+- id: '202'
+  name: sda
+  parent_disk_blkid: '202'
+  ptable: GPT
+  type: disk
+- device: '39302'
+  id: sda-part1
+  number: '39302'
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 39302-format
+  label: efi
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  type: format
+  volume: '39302'
+- device: 39302-format
+  id: 39302-mount
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  path: /boot/efi
+  type: mount
+- device: '39303'
+  id: sda-part2
+  number: '39303'
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  size: '998454067200'
+  type: partition
+- fstype: ext4
+  id: 39303-format
+  label: root
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  type: format
+  volume: '39303'
+- device: 39303-format
+  id: 39303-mount
+  parent_disk: '202'
+  parent_disk_blkid: '202'
+  path: /
+  type: mount
+device_ip: 10.245.130.63
+env:
+  DEVICE_IP: 10.245.130.63
+  HEXR_DEVICE_SECURE_ID: 2xQsJUuCdb3Pmj4XDFfEvc
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: sggdpd
+node_name: cloaker

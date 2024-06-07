@@ -1,0 +1,80 @@
+agent_name: drilbur
+default_disks:
+- id: '62'
+  name: sda
+  parent_disk_blkid: '62'
+  ptable: GPT
+  type: disk
+- device: '38879'
+  id: sda-part1
+  number: '38879'
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 38879-format
+  label: efi
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  type: format
+  volume: '38879'
+- device: 38879-format
+  id: 38879-mount
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  path: /boot/efi
+  type: mount
+- device: '38880'
+  id: sda-part2
+  number: '38880'
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  size: '499562577920'
+  type: partition
+- fstype: ext4
+  id: 38880-format
+  label: root
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  type: format
+  volume: '38880'
+- device: 38880-format
+  id: 38880-mount
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  path: /
+  type: mount
+- id: '63'
+  name: sdb
+  parent_disk_blkid: '63'
+  ptable: GPT
+  type: disk
+- device: '38881'
+  id: sdb-part1
+  number: '38881'
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  size: '500099448832'
+  type: partition
+- fstype: ext4
+  id: 38881-format
+  label: ''
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  type: format
+  volume: '38881'
+- device: 38881-format
+  id: 38881-mount
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  path: /mnt/sdb
+  type: mount
+device_ip: null
+env:
+  DEVICE_IP: null
+  HEXR_DEVICE_SECURE_ID: a00D000000feNAjIAM
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: hpkh87
+node_name: drilbur
