@@ -214,7 +214,7 @@ device_ip: 10.245.130.64
 env:
   DEVICE_IP: 10.245.130.64
   HEXR_DEVICE_SECURE_ID: KooKBE6tCN245ZSStNH5bP
-maas_user: admin
+maas_user: testflinger-maastiff
 max_reserve_timeout: 604800
 node_id: hrfkre
 node_name: aitken

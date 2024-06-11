@@ -74,7 +74,7 @@ device_ip: 10.245.130.102
 env:
   DEVICE_IP: 10.245.130.102
   HEXR_DEVICE_SECURE_ID: cEkjtLNKdEuFZrns4aECss
-maas_user: admin
+maas_user: testflinger-maastiff
 max_reserve_timeout: 604800
 node_id: 8p6tn4
 node_name: klepto
