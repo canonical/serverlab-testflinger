@@ -1,11 +1,10 @@
 #!/usr/bin/bash
 
-# Deprecated this in favor of env vars
 # these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
-#: ${TF_MAAS_ACT:=testflinger-maastiff}
-#: ${MAAS_HOST:=10.245.128.4}
-#: ${MAAS_PORT:=5240}
-#: ${MAAS_API_KEY:='USE ENV VAR INSTEAD'}
+: ${TF_MAAS_ACT:=testflinger-maastiff}
+: ${MAAS_HOST:=10.245.128.4}
+: ${MAAS_PORT:=5240}
+: ${MAAS_API_KEY:='***REMOVED***'}
 
 /usr/sbin/ip route change default via 10.245.128.1
 

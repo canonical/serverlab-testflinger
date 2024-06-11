@@ -296,7 +296,7 @@ class InitAgent:
                 tty=True
             )
         except docker.errors.APIError as error:
-            logger.error(f'{error}\nError creating container!')
+            logger.error(f'{error}\nAPIError while creating container!')
 
         return cntnr
 
@@ -307,7 +307,7 @@ class InitAgent:
                 self.client.api.start(container=cntnr_id)
             except docker.errors.APIError as error:
                 logger.error(
-                    f' # unable to start agent for: {self.sut}'
+                    f' # (init_agent_cntnr()) unable to start agent for: {self.sut}'
                     f'\n    e: {error})'
                     '\n  -----------------------'
                 )

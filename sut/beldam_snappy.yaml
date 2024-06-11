@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '18'
   ptable: GPT
   type: disk
-- device: '16'
+- device: '379'
   id: nvme0n1-part1
-  number: '16'
+  number: '379'
   parent_disk: '18'
   parent_disk_blkid: '18'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 16-format
+  id: 379-format
   label: efi
   parent_disk: '18'
   parent_disk_blkid: '18'
   type: format
-  volume: '16'
-- device: 16-format
-  id: 16-mount
+  volume: '379'
+- device: 379-format
+  id: 379-mount
   parent_disk: '18'
   parent_disk_blkid: '18'
   path: /boot/efi
   type: mount
-- device: '17'
+- device: '380'
   id: nvme0n1-part2
-  number: '17'
+  number: '380'
   parent_disk: '18'
   parent_disk_blkid: '18'
   size: '1599778848768'
   type: partition
 - fstype: ext4
-  id: 17-format
+  id: 380-format
   label: root
   parent_disk: '18'
   parent_disk_blkid: '18'
   type: format
-  volume: '17'
-- device: 17-format
-  id: 17-mount
+  volume: '380'
+- device: 380-format
+  id: 380-mount
   parent_disk: '18'
   parent_disk_blkid: '18'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '19'
   ptable: GPT
   type: disk
-- device: '23'
+- device: '381'
   id: sda-part1
-  number: '23'
+  number: '381'
   parent_disk: '19'
   parent_disk_blkid: '19'
   size: '6001159831552'
   type: partition
 - fstype: ext4
-  id: 23-format
+  id: 381-format
   label: ''
   parent_disk: '19'
   parent_disk_blkid: '19'
   type: format
-  volume: '23'
-- device: 23-format
-  id: 23-mount
+  volume: '381'
+- device: 381-format
+  id: 381-mount
   parent_disk: '19'
   parent_disk_blkid: '19'
   path: /mnt/sda1
@@ -75,22 +75,22 @@ default_disks:
   parent_disk_blkid: '20'
   ptable: GPT
   type: disk
-- device: '24'
+- device: '382'
   id: sdb-part1
-  number: '24'
+  number: '382'
   parent_disk: '20'
   parent_disk_blkid: '20'
   size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 24-format
+  id: 382-format
   label: ''
   parent_disk: '20'
   parent_disk_blkid: '20'
   type: format
-  volume: '24'
-- device: 24-format
-  id: 24-mount
+  volume: '382'
+- device: 382-format
+  id: 382-mount
   parent_disk: '20'
   parent_disk_blkid: '20'
   path: /mnt/sdb1
@@ -100,22 +100,22 @@ default_disks:
   parent_disk_blkid: '21'
   ptable: GPT
   type: disk
-- device: '25'
+- device: '383'
   id: sdc-part1
-  number: '25'
+  number: '383'
   parent_disk: '21'
   parent_disk_blkid: '21'
   size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 25-format
+  id: 383-format
   label: ''
   parent_disk: '21'
   parent_disk_blkid: '21'
   type: format
-  volume: '25'
-- device: 25-format
-  id: 25-mount
+  volume: '383'
+- device: 383-format
+  id: 383-mount
   parent_disk: '21'
   parent_disk_blkid: '21'
   path: /mnt/sdc1
@@ -125,22 +125,22 @@ default_disks:
   parent_disk_blkid: '22'
   ptable: GPT
   type: disk
-- device: '28'
+- device: '384'
   id: sdd-part1
-  number: '28'
+  number: '384'
   parent_disk: '22'
   parent_disk_blkid: '22'
   size: '6001159831552'
   type: partition
 - fstype: ext4
-  id: 28-format
+  id: 384-format
   label: ''
   parent_disk: '22'
   parent_disk_blkid: '22'
   type: format
-  volume: '28'
-- device: 28-format
-  id: 28-mount
+  volume: '384'
+- device: 384-format
+  id: 384-mount
   parent_disk: '22'
   parent_disk_blkid: '22'
   path: /mnt/sdd1

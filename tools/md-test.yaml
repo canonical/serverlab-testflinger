@@ -1,0 +1,49 @@
+name: test-multi-device-job
+job_queue: multi-3
+provision_data:
+    jobs:
+    - name: everything-1
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+    - name: everything-2
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+    - name: everything-3
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+    - name: everything-4
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+    - name: everything-5
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+    - name: everything-6
+      job_queue: anything
+      provision_data:
+        distro: jammy
+      test_data:
+        test_cmds:
+        - echo "hello world"
+test_data:
+  test_cmds:
+    - echo "Hello world"

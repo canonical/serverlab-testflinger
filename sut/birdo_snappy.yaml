@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '17'
   ptable: GPT
   type: disk
-- device: '14'
+- device: '364'
   id: nvme0n1-part1
-  number: '14'
+  number: '364'
   parent_disk: '17'
   parent_disk_blkid: '17'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 14-format
+  id: 364-format
   label: efi
   parent_disk: '17'
   parent_disk_blkid: '17'
   type: format
-  volume: '14'
-- device: 14-format
-  id: 14-mount
+  volume: '364'
+- device: 364-format
+  id: 364-mount
   parent_disk: '17'
   parent_disk_blkid: '17'
   path: /boot/efi
   type: mount
-- device: '15'
+- device: '365'
   id: nvme0n1-part2
-  number: '15'
+  number: '365'
   parent_disk: '17'
   parent_disk_blkid: '17'
   size: '999662026752'
   type: partition
 - fstype: ext4
-  id: 15-format
+  id: 365-format
   label: root
   parent_disk: '17'
   parent_disk_blkid: '17'
   type: format
-  volume: '15'
-- device: 15-format
-  id: 15-mount
+  volume: '365'
+- device: 365-format
+  id: 365-mount
   parent_disk: '17'
   parent_disk_blkid: '17'
   path: /

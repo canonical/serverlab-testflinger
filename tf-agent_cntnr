@@ -12,6 +12,12 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger/agent:/data/testflinger/cli:/data/testflinger/device-connectors:$PATH
 
+RUN echo "RUNNING tf-agent_cntnr dockerfile"
+RUN echo "influx_host: ${influx_host}"
+RUN echo "influx_port: ${influx_port}"
+RUN echo "influx_user: ${influx_user}"
+RUN echo "influx_pw: ${influx_pw}"
+
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y \
   && add-apt-repository ppa:checkbox-dev/stable -y
@@ -97,25 +103,36 @@ WORKDIR /data/testflinger
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
+  #&& git checkout -b main 525468018
   && git checkout -b main --track origin/main
 
 # run tf-agent setup
 WORKDIR /data/testflinger/agent
 RUN echo && echo "Running testflinger-agent setup:" \ 
-  && pip3 install .
-  # && python3 setup.py install
+  && echo "Updating pip from $(pip3 --version)" \
+  && pip3 install -U pip \
+  && hash -r \
+  && echo "New pip version: $(pip3 --version)" \
+  && echo "Attempting build/install of testflinger-agent" \
+  && pip install -I .
+
+## run tf-agent setup
+#WORKDIR /data/testflinger/agent
+#RUN echo && echo "Running testflinger-agent setup:" \ 
+#  && pip3 install .
+#  #&& python3 setup.py install
 
 # run tf-cli setup
 WORKDIR /data/testflinger/cli
 RUN echo && echo "Running testflinger-cli setup:" \
-  && pip3 install .
-  # && python3 setup.py install
+  && pip3 install .  
+#&& python3 setup.py install
 
 # run device connector
 WORKDIR /data/testflinger/device-connectors
 RUN echo && echo "Running device-connectors setup:" \
-  && pip3 install .
-  # && python3 setup.py install
+  && pip install -I .
+  #&& python3 setup.py install
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger/agent \

@@ -12,4 +12,6 @@ git mv $UPDATE_FILE_DIR/$NODE_NAME* $PWD/sut/
 
 yq e ".node_id = \"$NODE_ID\"" -i ${PWD}/sut/${NODE_NAME}_snappy.yaml
 
+# and make sure the maas user is updated
+yq e ".maas_user = \"admin\"" -i ${PWD}/sut/${NODE_NAME}_snappy.yaml
 

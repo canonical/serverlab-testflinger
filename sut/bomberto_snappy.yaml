@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '29'
   ptable: GPT
   type: disk
-- device: '30'
+- device: '360'
   id: sda-part1
-  number: '30'
+  number: '360'
   parent_disk: '29'
   parent_disk_blkid: '29'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 30-format
+  id: 360-format
   label: efi
   parent_disk: '29'
   parent_disk_blkid: '29'
   type: format
-  volume: '30'
-- device: 30-format
-  id: 30-mount
+  volume: '360'
+- device: 360-format
+  id: 360-mount
   parent_disk: '29'
   parent_disk_blkid: '29'
   path: /boot/efi
   type: mount
-- device: '31'
+- device: '361'
   id: sda-part2
-  number: '31'
+  number: '361'
   parent_disk: '29'
   parent_disk_blkid: '29'
   size: '479559942144'
   type: partition
 - fstype: ext4
-  id: 31-format
+  id: 361-format
   label: root
   parent_disk: '29'
   parent_disk_blkid: '29'
   type: format
-  volume: '31'
-- device: 31-format
-  id: 31-mount
+  volume: '361'
+- device: 361-format
+  id: 361-mount
   parent_disk: '29'
   parent_disk_blkid: '29'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '30'
   ptable: GPT
   type: disk
-- device: '34'
+- device: '362'
   id: sdb-part1
-  number: '34'
+  number: '362'
   parent_disk: '30'
   parent_disk_blkid: '30'
   size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 34-format
+  id: 362-format
   label: ''
   parent_disk: '30'
   parent_disk_blkid: '30'
   type: format
-  volume: '34'
-- device: 34-format
-  id: 34-mount
+  volume: '362'
+- device: 362-format
+  id: 362-mount
   parent_disk: '30'
   parent_disk_blkid: '30'
   path: /mnt/sdb1
@@ -75,22 +75,22 @@ default_disks:
   parent_disk_blkid: '31'
   ptable: GPT
   type: disk
-- device: '35'
+- device: '363'
   id: sdc-part1
-  number: '35'
+  number: '363'
   parent_disk: '31'
   parent_disk_blkid: '31'
   size: '32128368640'
   type: partition
 - fstype: ext4
-  id: 35-format
+  id: 363-format
   label: ''
   parent_disk: '31'
   parent_disk_blkid: '31'
   type: format
-  volume: '35'
-- device: 35-format
-  id: 35-mount
+  volume: '363'
+- device: 363-format
+  id: 363-mount
   parent_disk: '31'
   parent_disk_blkid: '31'
   path: /mnt/sdc1
