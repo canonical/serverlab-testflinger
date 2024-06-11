@@ -1,55 +1,80 @@
 agent_name: klepto
 default_disks:
-- id: '442'
+- id: '56'
   name: nvme0n1
-  parent_disk_blkid: '442'
+  parent_disk_blkid: '56'
   ptable: GPT
   type: disk
-- device: '38954'
+- device: '170'
   id: nvme0n1-part1
-  number: '38954'
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  number: '170'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 38954-format
+  id: 170-format
   label: efi
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   type: format
-  volume: '38954'
-- device: 38954-format
-  id: 38954-mount
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  volume: '170'
+- device: 170-format
+  id: 170-mount
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   path: /boot/efi
   type: mount
-- device: '38955'
+- device: '171'
   id: nvme0n1-part2
-  number: '38955'
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  number: '171'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   size: '799623086080'
   type: partition
 - fstype: ext4
-  id: 38955-format
+  id: 171-format
   label: root
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   type: format
-  volume: '38955'
-- device: 38955-format
-  id: 38955-mount
-  parent_disk: '442'
-  parent_disk_blkid: '442'
+  volume: '171'
+- device: 171-format
+  id: 171-mount
+  parent_disk: '56'
+  parent_disk_blkid: '56'
   path: /
+  type: mount
+- id: '57'
+  name: sda
+  parent_disk_blkid: '57'
+  ptable: GPT
+  type: disk
+- device: '172'
+  id: sda-part1
+  number: '172'
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  size: '1000186314752'
+  type: partition
+- fstype: ext4
+  id: 172-format
+  label: ''
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  type: format
+  volume: '172'
+- device: 172-format
+  id: 172-mount
+  parent_disk: '57'
+  parent_disk_blkid: '57'
+  path: /mnt/sda1
   type: mount
 device_ip: 10.245.130.102
 env:
   DEVICE_IP: 10.245.130.102
   HEXR_DEVICE_SECURE_ID: cEkjtLNKdEuFZrns4aECss
-maas_user: testflinger_a
+maas_user: admin
 max_reserve_timeout: 604800
-node_id: d8m8r8
+node_id: 8p6tn4
 node_name: klepto

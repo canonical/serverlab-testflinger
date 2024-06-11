@@ -8,6 +8,8 @@ ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger/server:$PATH
 ENV TESTFLINGER_CONFIG=/data/testflinger/server/testflinger.conf
 
+RUN echo "RUNNING tf-api dockerfile"
+
 # install deps & cleanup
 RUN apt-get update \
   && apt-get install -y \
@@ -39,8 +41,8 @@ WORKDIR /data/testflinger/server
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
-  && git checkout -b main --track origin/main \
-  && git checkout c1a1d6ab6de04dca3fcfd8fac3db962f0c35272e
+  && git checkout -b main --track origin/main
+  #&& git checkout c1a1d6ab6de04dca3fcfd8fac3db962f0c35272e
 
 # Remove gunicorn from install scripts
 # RUN sed -i '22 s/^/#/' ./setup.py
@@ -50,7 +52,14 @@ RUN pip install gevent packaging
 RUN pip install -Iv urllib3==1.26.15
 
 # run setup
-RUN ./setup.py install
+# RUN ./setup.py install
+RUN echo && echo "Running testflinger-api setup:" \
+  && echo "Updating pip from $(pip3 --version)" \
+  && pip3 install -U pip \
+  && hash -r \
+  && echo "New pip version: $(pip3 --version)" \
+  && echo "Attempting build/install of testflinger api" \
+  && pip install -I .
 
 # copy tf config files
 COPY ./code/testflinger.conf /data/testflinger/server

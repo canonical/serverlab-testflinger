@@ -1,3 +1,5 @@
 FROM eclipse-mosquitto
 
+RUN echo "RUNNING tf-mqtt dockerfile"
+
 COPY ./mqtt/conf/mosquitto.conf /mosquitto/config/mosquitto.conf

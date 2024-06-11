@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
 # Deprecating these to use env vars instead
-#export MAAS_HOST=10.245.128.4
-#export MAAS_PORT=5240
-#export MAAS_API_KEY='USE ENV VAR INSTEAD'
+export MAAS_HOST=10.245.128.4
+export MAAS_PORT=5240
+export MAAS_API_KEY='VRYdPMmUzJREPGFDxt:Ytt69wm78rFSJLUrdW:wbrWdjEnDECfXcStMfKqpyMMGkfFTHVE'
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 

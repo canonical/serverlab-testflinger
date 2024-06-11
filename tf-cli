@@ -7,8 +7,11 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger/cli:$PATH
 
-ARG ubuntu_scr
+ARG ubuntu_scr="ch4ng3m3"
 # ARG testflinger_scr
+
+RUN echo "RUNNING tf-cli dockerfile"
+RUN echo "ubuntu_scr: ${ubuntu_scr}"
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
@@ -87,6 +90,7 @@ WORKDIR /data/testflinger
 RUN git init \
   && git remote add origin https://github.com/canonical/testflinger.git \
   && git fetch origin \
+  #&& git checkout -b main 525468018
   && git checkout -b main --track origin/main
 
 #DEPRECATED - files not needed
@@ -96,7 +100,8 @@ RUN git init \
 
 WORKDIR /data/testflinger/cli
 #USER ubuntu
-RUN python3 setup.py install
+#RUN python3 setup.py install
+RUN pip install -I .
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger/cli

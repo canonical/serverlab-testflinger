@@ -1,7 +1,9 @@
 FROM phusion/baseimage:focal-1.0.0
 
-ARG ubuntu_scr
-ARG host_dir
+ARG ubuntu_scr="ch4ng3m3"
+#ARG ubuntu_scr
+ARG host_dir="/opt/serverlab-testflinger"
+#ARG host_dir
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
@@ -10,6 +12,10 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV PATH /data/testflinger/agent:/data/testflinger/device-connectors:$PATH
 ENV HOSTDIR ${host_dir}
+
+RUN echo "RUNNING tf-agent dockerfile"
+RUN echo "ubuntu_scr: ${ubuntu_scr}"
+RUN echo "host_dir: ${host_dir}"
 
 # add maas-cli PPA
 RUN apt-add-repository ppa:maas/2.9 -y
@@ -60,7 +66,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # link python3 bin
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-RUN pip3 install requests_oauthlib psutil setproctitle "paho-mqtt<2.0.0" docker urllib3 get_docker_secret hvac
+RUN pip3 install --ignore-installed requests_oauthlib psutil setproctitle "paho-mqtt<2.0.0" docker urllib3 get_docker_secret hvac
 
 # add ubuntu user
 RUN useradd -ms /bin/bash ubuntu \
@@ -110,6 +116,7 @@ WORKDIR /data/testflinger
 RUN git init\
    && git remote add origin https://github.com/canonical/testflinger.git \
    && git fetch origin \
+   #&& git checkout -b main 525468018
    && git checkout -b main --track origin/main
 
 # copy tf-agent config files
@@ -117,13 +124,22 @@ COPY ./code/testflinger-agent.conf /data/testflinger/agent
 
 # run tf-agent setup
 WORKDIR /data/testflinger/agent
+RUN echo && ls -l .. && echo
+RUN echo && ls -l && echo
 RUN echo && echo "Running testflinger-agent setup:" \ 
-  && python3 setup.py install
+  && echo "Updating pip from $(pip3 --version)" \
+  && pip3 install -U pip \
+  && hash -r \
+  && echo "New pip version: $(pip3 --version)" \
+  && echo "Attempting build/install of testflinger-agent" \
+  && pip install -I .
+  #&& python3 setup.py install
 
 #run snappy-agent setup
 WORKDIR /data/testflinger/device-connectors
 RUN echo && echo "Running device-connectors setup:" \
-  && python3 setup.py install
+  && pip install -I .
+  #&& python3 setup.py install --verbose
 
 # adjust perms on src files
 RUN chown -R ubuntu:ubuntu /data/testflinger/agent \
