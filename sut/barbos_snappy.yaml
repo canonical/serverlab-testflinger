@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '3'
   ptable: GPT
   type: disk
-- device: '12'
+- device: '366'
   id: sda-part1
-  number: '12'
+  number: '366'
   parent_disk: '3'
   parent_disk_blkid: '3'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 12-format
+  id: 366-format
   label: efi
   parent_disk: '3'
   parent_disk_blkid: '3'
   type: format
-  volume: '12'
-- device: 12-format
-  id: 12-mount
+  volume: '366'
+- device: 366-format
+  id: 366-mount
   parent_disk: '3'
   parent_disk_blkid: '3'
   path: /boot/efi
   type: mount
-- device: '13'
+- device: '367'
   id: sda-part2
-  number: '13'
+  number: '367'
   parent_disk: '3'
   parent_disk_blkid: '3'
   size: '858448199680'
   type: partition
 - fstype: ext4
-  id: 13-format
+  id: 367-format
   label: root
   parent_disk: '3'
   parent_disk_blkid: '3'
   type: format
-  volume: '13'
-- device: 13-format
-  id: 13-mount
+  volume: '367'
+- device: 367-format
+  id: 367-mount
   parent_disk: '3'
   parent_disk_blkid: '3'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '4'
   ptable: GPT
   type: disk
-- device: '20'
+- device: '368'
   id: sdb-part1
-  number: '20'
+  number: '368'
   parent_disk: '4'
   parent_disk_blkid: '4'
   size: '470638657536'
   type: partition
 - fstype: ext4
-  id: 20-format
+  id: 368-format
   label: ''
   parent_disk: '4'
   parent_disk_blkid: '4'
   type: format
-  volume: '20'
-- device: 20-format
-  id: 20-mount
+  volume: '368'
+- device: 368-format
+  id: 368-mount
   parent_disk: '4'
   parent_disk_blkid: '4'
   path: /mnt/sdb1
