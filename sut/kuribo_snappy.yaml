@@ -1,0 +1,80 @@
+agent_name: kuribo
+default_disks:
+- id: '64'
+  name: sda
+  parent_disk_blkid: '64'
+  ptable: GPT
+  type: disk
+- device: '93'
+  id: sda-part1
+  number: '93'
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 93-format
+  label: efi
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  type: format
+  volume: '93'
+- device: 93-format
+  id: 93-mount
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  path: /boot/efi
+  type: mount
+- device: '94'
+  id: sda-part2
+  number: '94'
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 94-format
+  label: root
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  type: format
+  volume: '94'
+- device: 94-format
+  id: 94-mount
+  parent_disk: '64'
+  parent_disk_blkid: '64'
+  path: /
+  type: mount
+- id: '65'
+  name: sdb
+  parent_disk_blkid: '65'
+  ptable: GPT
+  type: disk
+- device: '230'
+  id: sdb-part1
+  number: '230'
+  parent_disk: '65'
+  parent_disk_blkid: '65'
+  size: '239977103360'
+  type: partition
+- fstype: ext4
+  id: 230-format
+  label: ''
+  parent_disk: '65'
+  parent_disk_blkid: '65'
+  type: format
+  volume: '230'
+- device: 230-format
+  id: 230-mount
+  parent_disk: '65'
+  parent_disk_blkid: '65'
+  path: /data/sdb
+  type: mount
+device_ip: 10.245.130.35
+env:
+  DEVICE_IP: 10.245.130.35
+  HEXR_DEVICE_SECURE_ID: TEGVjfbK94HPopQbddKLxQ
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qstsph
+node_name: kuribo
