@@ -1,0 +1,55 @@
+agent_name: joliet
+default_disks:
+- id: '79'
+  name: sda
+  parent_disk_blkid: '79'
+  ptable: GPT
+  type: disk
+- device: '125'
+  id: sda-part1
+  number: '125'
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 125-format
+  label: efi
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  type: format
+  volume: '125'
+- device: 125-format
+  id: 125-mount
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  path: /boot/efi
+  type: mount
+- device: '126'
+  id: sda-part2
+  number: '126'
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  size: '999108378624'
+  type: partition
+- fstype: ext4
+  id: 126-format
+  label: root
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  type: format
+  volume: '126'
+- device: 126-format
+  id: 126-mount
+  parent_disk: '79'
+  parent_disk_blkid: '79'
+  path: /
+  type: mount
+device_ip: 10.245.130.24
+env:
+  DEVICE_IP: 10.245.130.24
+  HEXR_DEVICE_SECURE_ID: eyodx7THtDUUP23XCszDxA
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 6ncbyq
+node_name: joliet
