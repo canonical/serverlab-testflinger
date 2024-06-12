@@ -1,0 +1,80 @@
+agent_name: nabbit
+default_disks:
+- id: '194'
+  name: nvme0n1
+  parent_disk_blkid: '194'
+  ptable: GPT
+  type: disk
+- device: '245'
+  id: nvme0n1-part1
+  number: '245'
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 245-format
+  label: efi
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  type: format
+  volume: '245'
+- device: 245-format
+  id: 245-mount
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  path: /boot/efi
+  type: mount
+- device: '246'
+  id: nvme0n1-part2
+  number: '246'
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  size: '749610205184'
+  type: partition
+- fstype: ext4
+  id: 246-format
+  label: root
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  type: format
+  volume: '246'
+- device: 246-format
+  id: 246-mount
+  parent_disk: '194'
+  parent_disk_blkid: '194'
+  path: /
+  type: mount
+- id: '195'
+  name: sda
+  parent_disk_blkid: '195'
+  ptable: GPT
+  type: disk
+- device: '312'
+  id: sda-part1
+  number: '312'
+  parent_disk: '195'
+  parent_disk_blkid: '195'
+  size: '299427168256'
+  type: partition
+- fstype: ext4
+  id: 312-format
+  label: ''
+  parent_disk: '195'
+  parent_disk_blkid: '195'
+  type: format
+  volume: '312'
+- device: 312-format
+  id: 312-mount
+  parent_disk: '195'
+  parent_disk_blkid: '195'
+  path: /mnt/sda1
+  type: mount
+device_ip: 10.245.130.23
+env:
+  DEVICE_IP: 10.245.130.23
+  HEXR_DEVICE_SECURE_ID: NdGxes8yKGiUWgPuLG6w2G
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: edfknc
+node_name: nabbit

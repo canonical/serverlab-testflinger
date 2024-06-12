@@ -1,0 +1,80 @@
+agent_name: gravetusk
+default_disks:
+- id: '136'
+  name: sda
+  parent_disk_blkid: '136'
+  ptable: GPT
+  type: disk
+- device: '165'
+  id: sda-part1
+  number: '165'
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 165-format
+  label: efi
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  type: format
+  volume: '165'
+- device: 165-format
+  id: 165-mount
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  path: /boot/efi
+  type: mount
+- device: '166'
+  id: sda-part2
+  number: '166'
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 166-format
+  label: root
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  type: format
+  volume: '166'
+- device: 166-format
+  id: 166-mount
+  parent_disk: '136'
+  parent_disk_blkid: '136'
+  path: /
+  type: mount
+- id: '137'
+  name: sdb
+  parent_disk_blkid: '137'
+  ptable: GPT
+  type: disk
+- device: '283'
+  id: sdb-part1
+  number: '283'
+  parent_disk: '137'
+  parent_disk_blkid: '137'
+  size: '1600307331072'
+  type: partition
+- fstype: ext4
+  id: 283-format
+  label: ''
+  parent_disk: '137'
+  parent_disk_blkid: '137'
+  type: format
+  volume: '283'
+- device: 283-format
+  id: 283-mount
+  parent_disk: '137'
+  parent_disk_blkid: '137'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.96
+env:
+  DEVICE_IP: 10.245.130.96
+  HEXR_DEVICE_SECURE_ID: 2yaEoCRbhXR22MWtAFxLNQ
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qaykkm
+node_name: gravetusk
