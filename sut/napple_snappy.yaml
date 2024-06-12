@@ -1,0 +1,80 @@
+agent_name: napple
+default_disks:
+- id: '192'
+  name: sda
+  parent_disk_blkid: '192'
+  ptable: GPT
+  type: disk
+- device: '243'
+  id: sda-part1
+  number: '243'
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 243-format
+  label: efi
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  type: format
+  volume: '243'
+- device: 243-format
+  id: 243-mount
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  path: /boot/efi
+  type: mount
+- device: '244'
+  id: sda-part2
+  number: '244'
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  size: '299422973952'
+  type: partition
+- fstype: ext4
+  id: 244-format
+  label: root
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  type: format
+  volume: '244'
+- device: 244-format
+  id: 244-mount
+  parent_disk: '192'
+  parent_disk_blkid: '192'
+  path: /
+  type: mount
+- id: '193'
+  name: sdb
+  parent_disk_blkid: '193'
+  ptable: GPT
+  type: disk
+- device: '258'
+  id: sdb-part1
+  number: '258'
+  parent_disk: '193'
+  parent_disk_blkid: '193'
+  size: '480059064320'
+  type: partition
+- fstype: ext4
+  id: 258-format
+  label: ''
+  parent_disk: '193'
+  parent_disk_blkid: '193'
+  type: format
+  volume: '258'
+- device: 258-format
+  id: 258-mount
+  parent_disk: '193'
+  parent_disk_blkid: '193'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.34
+env:
+  DEVICE_IP: 10.245.130.34
+  HEXR_DEVICE_SECURE_ID: 9KCstGL7Qmqr8fZj5uhqZC
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: f3x8s3
+node_name: napple

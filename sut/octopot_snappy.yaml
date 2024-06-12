@@ -1,0 +1,55 @@
+agent_name: octopot
+default_disks:
+- id: '173'
+  name: sda
+  parent_disk_blkid: '173'
+  ptable: GPT
+  type: disk
+- device: '223'
+  id: sda-part1
+  number: '223'
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 223-format
+  label: efi
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  type: format
+  volume: '223'
+- device: 223-format
+  id: 223-mount
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  path: /boot/efi
+  type: mount
+- device: '224'
+  id: sda-part2
+  number: '224'
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  size: '11999593365504'
+  type: partition
+- fstype: ext4
+  id: 224-format
+  label: root
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  type: format
+  volume: '224'
+- device: 224-format
+  id: 224-mount
+  parent_disk: '173'
+  parent_disk_blkid: '173'
+  path: /
+  type: mount
+device_ip: 10.245.130.49
+env:
+  DEVICE_IP: 10.245.130.49
+  HEXR_DEVICE_SECURE_ID: yWxS5NCiPTzwhym2Ycrf2X
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: sa876y
+node_name: octopot
