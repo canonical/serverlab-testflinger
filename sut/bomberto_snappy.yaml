@@ -5,67 +5,67 @@ default_disks:
   parent_disk_blkid: '29'
   ptable: GPT
   type: disk
-- device: '360'
-  id: sda-part1
-  number: '360'
-  parent_disk: '29'
-  parent_disk_blkid: '29'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 360-format
-  label: efi
-  parent_disk: '29'
-  parent_disk_blkid: '29'
-  type: format
-  volume: '360'
-- device: 360-format
-  id: 360-mount
-  parent_disk: '29'
-  parent_disk_blkid: '29'
-  path: /boot/efi
-  type: mount
-- device: '361'
+- device: '399'
   id: sda-part2
-  number: '361'
+  number: '399'
   parent_disk: '29'
   parent_disk_blkid: '29'
   size: '479559942144'
   type: partition
 - fstype: ext4
-  id: 361-format
+  id: 399-format
   label: root
   parent_disk: '29'
   parent_disk_blkid: '29'
   type: format
-  volume: '361'
-- device: 361-format
-  id: 361-mount
+  volume: '399'
+- device: 399-format
+  id: 399-mount
   parent_disk: '29'
   parent_disk_blkid: '29'
   path: /
+  type: mount
+- device: '397'
+  id: sda-part1
+  number: '397'
+  parent_disk: '29'
+  parent_disk_blkid: '29'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 397-format
+  label: efi
+  parent_disk: '29'
+  parent_disk_blkid: '29'
+  type: format
+  volume: '397'
+- device: 397-format
+  id: 397-mount
+  parent_disk: '29'
+  parent_disk_blkid: '29'
+  path: /boot/efi
   type: mount
 - id: '30'
   name: sdb
   parent_disk_blkid: '30'
   ptable: GPT
   type: disk
-- device: '362'
+- device: '401'
   id: sdb-part1
-  number: '362'
+  number: '401'
   parent_disk: '30'
   parent_disk_blkid: '30'
   size: '480088424448'
   type: partition
 - fstype: ext4
-  id: 362-format
+  id: 401-format
   label: ''
   parent_disk: '30'
   parent_disk_blkid: '30'
   type: format
-  volume: '362'
-- device: 362-format
-  id: 362-mount
+  volume: '401'
+- device: 401-format
+  id: 401-mount
   parent_disk: '30'
   parent_disk_blkid: '30'
   path: /mnt/sdb1
@@ -75,22 +75,22 @@ default_disks:
   parent_disk_blkid: '31'
   ptable: GPT
   type: disk
-- device: '363'
+- device: '403'
   id: sdc-part1
-  number: '363'
+  number: '403'
   parent_disk: '31'
   parent_disk_blkid: '31'
   size: '32128368640'
   type: partition
 - fstype: ext4
-  id: 363-format
+  id: 403-format
   label: ''
   parent_disk: '31'
   parent_disk_blkid: '31'
   type: format
-  volume: '363'
-- device: 363-format
-  id: 363-mount
+  volume: '403'
+- device: 403-format
+  id: 403-mount
   parent_disk: '31'
   parent_disk_blkid: '31'
   path: /mnt/sdc1
