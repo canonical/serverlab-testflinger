@@ -1,0 +1,9 @@
+agent_name: wingo
+device_ip: null
+env:
+  DEVICE_IP: null
+  HEXR_DEVICE_SECURE_ID: FKFRkXHejhDH6MWXvZZz2p
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: awgqq3
+node_name: wingo

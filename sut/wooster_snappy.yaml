@@ -1,0 +1,85 @@
+agent_name: wooster
+default_disks:
+- id: '138'
+  name: nvme1n1
+  parent_disk_blkid: '138'
+  ptable: GPT
+  type: disk
+- device: '167'
+  id: nvme1n1-part1
+  number: '167'
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 167-format
+  label: efi
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  type: format
+  volume: '167'
+- device: 167-format
+  id: 167-mount
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  path: /boot/efi
+  type: mount
+- device: '168'
+  id: nvme1n1-part2
+  number: '168'
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  size: '7680957612032'
+  type: partition
+- fstype: ext4
+  id: 168-format
+  label: root
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  type: format
+  volume: '168'
+- device: 168-format
+  id: 168-mount
+  parent_disk: '138'
+  parent_disk_blkid: '138'
+  path: /
+  type: mount
+- id: '139'
+  name: nvme2n1
+  parent_disk_blkid: '139'
+  ptable: GPT
+  type: disk
+- device: '175'
+  id: nvme2n1-part1
+  number: '175'
+  parent_disk: '139'
+  parent_disk_blkid: '139'
+  size: '7681486094336'
+  type: partition
+- fstype: ext4
+  id: 175-format
+  label: ''
+  parent_disk: '139'
+  parent_disk_blkid: '139'
+  type: format
+  volume: '175'
+- device: 175-format
+  id: 175-mount
+  parent_disk: '139'
+  parent_disk_blkid: '139'
+  path: /mnt/nvme2n1-part1
+  type: mount
+- id: '140'
+  name: nvme3n1
+  parent_disk_blkid: '140'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.83
+env:
+  DEVICE_IP: 10.245.130.83
+  HEXR_DEVICE_SECURE_ID: MRzTSR8LvTVpZi7sC6S2AZ
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qgsba8
+node_name: wooster

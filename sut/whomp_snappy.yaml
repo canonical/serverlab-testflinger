@@ -1,0 +1,65 @@
+agent_name: whomp
+default_disks:
+- id: '146'
+  name: nvme0n1
+  parent_disk_blkid: '146'
+  ptable: GPT
+  type: disk
+- device: '179'
+  id: nvme0n1-part1
+  number: '179'
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 179-format
+  label: efi
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  type: format
+  volume: '179'
+- device: 179-format
+  id: 179-mount
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  path: /boot/efi
+  type: mount
+- device: '180'
+  id: nvme0n1-part2
+  number: '180'
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 180-format
+  label: root
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  type: format
+  volume: '180'
+- device: 180-format
+  id: 180-mount
+  parent_disk: '146'
+  parent_disk_blkid: '146'
+  path: /
+  type: mount
+- id: '147'
+  name: pmem0s
+  parent_disk_blkid: '147'
+  ptable: null
+  type: disk
+- id: '148'
+  name: pmem1s
+  parent_disk_blkid: '148'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.53
+env:
+  DEVICE_IP: 10.245.130.53
+  HEXR_DEVICE_SECURE_ID: GnZzh78ERa5eQ7Xyo9yPfP
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: xd4a4x
+node_name: whomp
