@@ -1,0 +1,60 @@
+agent_name: makrutlime
+default_disks:
+- id: '183'
+  name: sdc
+  parent_disk_blkid: '183'
+  ptable: GPT
+  type: disk
+- device: '235'
+  id: sdc-part2
+  number: '235'
+  parent_disk: '183'
+  parent_disk_blkid: '183'
+  size: '146809028608'
+  type: partition
+- fstype: ext4
+  id: 235-format
+  label: root
+  parent_disk: '183'
+  parent_disk_blkid: '183'
+  type: format
+  volume: '235'
+- device: 235-format
+  id: 235-mount
+  parent_disk: '183'
+  parent_disk_blkid: '183'
+  path: /
+  type: mount
+- id: '184'
+  name: sdd
+  parent_disk_blkid: '184'
+  ptable: GPT
+  type: disk
+- device: '236'
+  id: sdd-part2
+  number: '236'
+  parent_disk: '184'
+  parent_disk_blkid: '184'
+  size: '146796445696'
+  type: partition
+- fstype: ext4
+  id: 236-format
+  label: ''
+  parent_disk: '184'
+  parent_disk_blkid: '184'
+  type: format
+  volume: '236'
+- device: 236-format
+  id: 236-mount
+  parent_disk: '184'
+  parent_disk_blkid: '184'
+  path: /data/sdd
+  type: mount
+device_ip: 10.245.130.13
+env:
+  DEVICE_IP: 10.245.130.13
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0r
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: gbmeyh
+node_name: makrutlime
