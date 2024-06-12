@@ -1,0 +1,55 @@
+agent_name: jamano
+default_disks:
+- id: '133'
+  name: sda
+  parent_disk_blkid: '133'
+  ptable: GPT
+  type: disk
+- device: '159'
+  id: sda-part1
+  number: '159'
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 159-format
+  label: efi
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  type: format
+  volume: '159'
+- device: 159-format
+  id: 159-mount
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  path: /boot/efi
+  type: mount
+- device: '160'
+  id: sda-part2
+  number: '160'
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  size: '298454089728'
+  type: partition
+- fstype: ext4
+  id: 160-format
+  label: root
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  type: format
+  volume: '160'
+- device: 160-format
+  id: 160-mount
+  parent_disk: '133'
+  parent_disk_blkid: '133'
+  path: /
+  type: mount
+device_ip: 10.245.130.32
+env:
+  DEVICE_IP: 10.245.130.32
+  HEXR_DEVICE_SECURE_ID: f65c82xBxy4uMDdDRwpfrk
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 4pyt84
+node_name: jamano
