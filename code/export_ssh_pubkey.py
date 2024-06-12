@@ -56,7 +56,11 @@ def post_pubkey(auth1, ssh_key, url):
         print('User key already exists!')
         print('Replacing offending key...')
         print('    * delete:')
-        response_delete = delete_pubkey(auth1, url, session)
+        try:
+            response_delete = delete_pubkey(auth1, url, session)
+        except AttributeError as e:
+            print('        - %s' % e)
+            print('        - Response was: %s' % response_delete)
         print('        - OK: %r' % response_delete.ok)
         print('        - Status code: %i' % response_delete.status_code)
 
