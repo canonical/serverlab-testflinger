@@ -1,0 +1,65 @@
+agent_name: rozary
+default_disks:
+- id: '165'
+  name: sda
+  parent_disk_blkid: '165'
+  ptable: GPT
+  type: disk
+- device: '210'
+  id: sda-part1
+  number: '210'
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 210-format
+  label: efi
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  type: format
+  volume: '210'
+- device: 210-format
+  id: 210-mount
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  path: /boot/efi
+  type: mount
+- device: '211'
+  id: sda-part2
+  number: '211'
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  size: '1198555922432'
+  type: partition
+- fstype: ext4
+  id: 211-format
+  label: root
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  type: format
+  volume: '211'
+- device: 211-format
+  id: 211-mount
+  parent_disk: '165'
+  parent_disk_blkid: '165'
+  path: /
+  type: mount
+- id: '166'
+  name: sdb
+  parent_disk_blkid: '166'
+  ptable: null
+  type: disk
+- id: '167'
+  name: sdc
+  parent_disk_blkid: '167'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.44
+env:
+  DEVICE_IP: 10.245.130.44
+  HEXR_DEVICE_SECURE_ID: 2MVcdQUU6dJs3saNTW5CnR
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 8p6s37
+node_name: rozary
