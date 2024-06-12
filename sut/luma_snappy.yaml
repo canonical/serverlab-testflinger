@@ -1,0 +1,55 @@
+agent_name: luma
+default_disks:
+- id: '75'
+  name: nvme0n1
+  parent_disk_blkid: '75'
+  ptable: GPT
+  type: disk
+- device: '296'
+  id: nvme0n1-part1
+  number: '296'
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 296-format
+  label: efi
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  type: format
+  volume: '296'
+- device: 296-format
+  id: 296-mount
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  path: /boot/efi
+  type: mount
+- device: '297'
+  id: nvme0n1-part2
+  number: '297'
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  size: '649592832000'
+  type: partition
+- fstype: ext4
+  id: 297-format
+  label: root
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  type: format
+  volume: '297'
+- device: 297-format
+  id: 297-mount
+  parent_disk: '75'
+  parent_disk_blkid: '75'
+  path: /
+  type: mount
+device_ip: 10.245.130.60
+env:
+  DEVICE_IP: 10.245.130.60
+  HEXR_DEVICE_SECURE_ID: D4fWMrJ4maP3TaoY3o5Mpd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: y8sqy3
+node_name: luma
