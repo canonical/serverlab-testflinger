@@ -1,0 +1,80 @@
+agent_name: mokura
+default_disks:
+- id: '187'
+  name: sda
+  parent_disk_blkid: '187'
+  ptable: GPT
+  type: disk
+- device: '239'
+  id: sda-part1
+  number: '239'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 239-format
+  label: efi
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '239'
+- device: 239-format
+  id: 239-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /boot/efi
+  type: mount
+- device: '240'
+  id: sda-part2
+  number: '240'
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 240-format
+  label: root
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  type: format
+  volume: '240'
+- device: 240-format
+  id: 240-mount
+  parent_disk: '187'
+  parent_disk_blkid: '187'
+  path: /
+  type: mount
+- id: '188'
+  name: sdb
+  parent_disk_blkid: '188'
+  ptable: GPT
+  type: disk
+- device: '252'
+  id: sdb-part1
+  number: '252'
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  size: '959107301376'
+  type: partition
+- fstype: ext4
+  id: 252-format
+  label: ''
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  type: format
+  volume: '252'
+- device: 252-format
+  id: 252-mount
+  parent_disk: '188'
+  parent_disk_blkid: '188'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.41
+env:
+  DEVICE_IP: 10.245.130.41
+  HEXR_DEVICE_SECURE_ID: 6xR8sswGKftLj6HX85GaYh
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: wthgep
+node_name: mokura

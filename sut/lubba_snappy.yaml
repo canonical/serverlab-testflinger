@@ -1,0 +1,80 @@
+agent_name: lubba
+default_disks:
+- id: '73'
+  name: nvme0n1
+  parent_disk_blkid: '73'
+  ptable: GPT
+  type: disk
+- device: '313'
+  id: nvme0n1-part1
+  number: '313'
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 313-format
+  label: efi
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  type: format
+  volume: '313'
+- device: 313-format
+  id: 313-mount
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  path: /boot/efi
+  type: mount
+- device: '314'
+  id: nvme0n1-part2
+  number: '314'
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 314-format
+  label: root
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  type: format
+  volume: '314'
+- device: 314-format
+  id: 314-mount
+  parent_disk: '73'
+  parent_disk_blkid: '73'
+  path: /
+  type: mount
+- id: '74'
+  name: sda
+  parent_disk_blkid: '74'
+  ptable: GPT
+  type: disk
+- device: '315'
+  id: sda-part1
+  number: '315'
+  parent_disk: '74'
+  parent_disk_blkid: '74'
+  size: '1920366280704'
+  type: partition
+- fstype: ext4
+  id: 315-format
+  label: ''
+  parent_disk: '74'
+  parent_disk_blkid: '74'
+  type: format
+  volume: '315'
+- device: 315-format
+  id: 315-mount
+  parent_disk: '74'
+  parent_disk_blkid: '74'
+  path: /mnt/sda1
+  type: mount
+device_ip: 10.245.130.105
+env:
+  DEVICE_IP: 10.245.130.105
+  HEXR_DEVICE_SECURE_ID: 2Vsiu9zbMqyH4AiSezyEUG
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: ag68ys
+node_name: lubba
