@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '24'
   ptable: GPT
   type: disk
-- device: '386'
+- device: '394'
   id: sda-part1
-  number: '386'
+  number: '394'
   parent_disk: '24'
   parent_disk_blkid: '24'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 386-format
+  id: 394-format
   label: efi
   parent_disk: '24'
   parent_disk_blkid: '24'
   type: format
-  volume: '386'
-- device: 386-format
-  id: 386-mount
+  volume: '394'
+- device: 394-format
+  id: 394-mount
   parent_disk: '24'
   parent_disk_blkid: '24'
   path: /boot/efi
   type: mount
-- device: '387'
+- device: '395'
   id: sda-part2
-  number: '387'
+  number: '395'
   parent_disk: '24'
   parent_disk_blkid: '24'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 387-format
+  id: 395-format
   label: root
   parent_disk: '24'
   parent_disk_blkid: '24'
   type: format
-  volume: '387'
-- device: 387-format
-  id: 387-mount
+  volume: '395'
+- device: 395-format
+  id: 395-mount
   parent_disk: '24'
   parent_disk_blkid: '24'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '25'
   ptable: GPT
   type: disk
-- device: '388'
+- device: '396'
   id: sdb-part1
-  number: '388'
+  number: '396'
   parent_disk: '25'
   parent_disk_blkid: '25'
   size: '960176848896'
   type: partition
 - fstype: ext4
-  id: 388-format
+  id: 396-format
   label: ''
   parent_disk: '25'
   parent_disk_blkid: '25'
   type: format
-  volume: '388'
-- device: 388-format
-  id: 388-mount
+  volume: '396'
+- device: 396-format
+  id: 396-mount
   parent_disk: '25'
   parent_disk_blkid: '25'
   path: /mnt/sdb1

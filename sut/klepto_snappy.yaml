@@ -5,67 +5,67 @@ default_disks:
   parent_disk_blkid: '56'
   ptable: GPT
   type: disk
-- device: '170'
-  id: nvme0n1-part1
-  number: '170'
-  parent_disk: '56'
-  parent_disk_blkid: '56'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 170-format
-  label: efi
-  parent_disk: '56'
-  parent_disk_blkid: '56'
-  type: format
-  volume: '170'
-- device: 170-format
-  id: 170-mount
-  parent_disk: '56'
-  parent_disk_blkid: '56'
-  path: /boot/efi
-  type: mount
-- device: '171'
+- device: '425'
   id: nvme0n1-part2
-  number: '171'
+  number: '425'
   parent_disk: '56'
   parent_disk_blkid: '56'
   size: '799623086080'
   type: partition
 - fstype: ext4
-  id: 171-format
+  id: 425-format
   label: root
   parent_disk: '56'
   parent_disk_blkid: '56'
   type: format
-  volume: '171'
-- device: 171-format
-  id: 171-mount
+  volume: '425'
+- device: 425-format
+  id: 425-mount
   parent_disk: '56'
   parent_disk_blkid: '56'
   path: /
+  type: mount
+- device: '424'
+  id: nvme0n1-part1
+  number: '424'
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 424-format
+  label: efi
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  type: format
+  volume: '424'
+- device: 424-format
+  id: 424-mount
+  parent_disk: '56'
+  parent_disk_blkid: '56'
+  path: /boot/efi
   type: mount
 - id: '57'
   name: sda
   parent_disk_blkid: '57'
   ptable: GPT
   type: disk
-- device: '172'
+- device: '426'
   id: sda-part1
-  number: '172'
+  number: '426'
   parent_disk: '57'
   parent_disk_blkid: '57'
   size: '1000186314752'
   type: partition
 - fstype: ext4
-  id: 172-format
+  id: 426-format
   label: ''
   parent_disk: '57'
   parent_disk_blkid: '57'
   type: format
-  volume: '172'
-- device: 172-format
-  id: 172-mount
+  volume: '426'
+- device: 426-format
+  id: 426-mount
   parent_disk: '57'
   parent_disk_blkid: '57'
   path: /mnt/sda1

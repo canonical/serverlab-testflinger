@@ -1,0 +1,55 @@
+agent_name: torchtusk
+default_disks:
+- id: '149'
+  name: nvme0n1
+  parent_disk_blkid: '149'
+  ptable: GPT
+  type: disk
+- device: '181'
+  id: nvme0n1-part1
+  number: '181'
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 181-format
+  label: efi
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  type: format
+  volume: '181'
+- device: 181-format
+  id: 181-mount
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  path: /boot/efi
+  type: mount
+- device: '182'
+  id: nvme0n1-part2
+  number: '182'
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 182-format
+  label: root
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  type: format
+  volume: '182'
+- device: 182-format
+  id: 182-mount
+  parent_disk: '149'
+  parent_disk_blkid: '149'
+  path: /
+  type: mount
+device_ip: 10.245.130.30
+env:
+  DEVICE_IP: 10.245.130.30
+  HEXR_DEVICE_SECURE_ID: vnDCsfJgz6biCkF2fS3Q25
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: k6dpnr
+node_name: torchtusk

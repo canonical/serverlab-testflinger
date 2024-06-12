@@ -5,67 +5,67 @@ default_disks:
   parent_disk_blkid: '26'
   ptable: GPT
   type: disk
-- device: '376'
-  id: sda-part2
-  number: '376'
-  parent_disk: '26'
-  parent_disk_blkid: '26'
-  size: '599584145408'
-  type: partition
-- fstype: ext4
-  id: 376-format
-  label: root
-  parent_disk: '26'
-  parent_disk_blkid: '26'
-  type: format
-  volume: '376'
-- device: 376-format
-  id: 376-mount
-  parent_disk: '26'
-  parent_disk_blkid: '26'
-  path: /
-  type: mount
-- device: '375'
+- device: '404'
   id: sda-part1
-  number: '375'
+  number: '404'
   parent_disk: '26'
   parent_disk_blkid: '26'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 375-format
+  id: 404-format
   label: efi
   parent_disk: '26'
   parent_disk_blkid: '26'
   type: format
-  volume: '375'
-- device: 375-format
-  id: 375-mount
+  volume: '404'
+- device: 404-format
+  id: 404-mount
   parent_disk: '26'
   parent_disk_blkid: '26'
   path: /boot/efi
+  type: mount
+- device: '405'
+  id: sda-part2
+  number: '405'
+  parent_disk: '26'
+  parent_disk_blkid: '26'
+  size: '599584145408'
+  type: partition
+- fstype: ext4
+  id: 405-format
+  label: root
+  parent_disk: '26'
+  parent_disk_blkid: '26'
+  type: format
+  volume: '405'
+- device: 405-format
+  id: 405-mount
+  parent_disk: '26'
+  parent_disk_blkid: '26'
+  path: /
   type: mount
 - id: '27'
   name: sdb
   parent_disk_blkid: '27'
   ptable: GPT
   type: disk
-- device: '377'
+- device: '406'
   id: sdb-part1
-  number: '377'
+  number: '406'
   parent_disk: '27'
   parent_disk_blkid: '27'
   size: '600116822016'
   type: partition
 - fstype: ext4
-  id: 377-format
+  id: 406-format
   label: ''
   parent_disk: '27'
   parent_disk_blkid: '27'
   type: format
-  volume: '377'
-- device: 377-format
-  id: 377-mount
+  volume: '406'
+- device: 406-format
+  id: 406-mount
   parent_disk: '27'
   parent_disk_blkid: '27'
   path: /mnt/sdb1
@@ -75,22 +75,22 @@ default_disks:
   parent_disk_blkid: '28'
   ptable: GPT
   type: disk
-- device: '378'
+- device: '407'
   id: sdc-part1
-  number: '378'
+  number: '407'
   parent_disk: '28'
   parent_disk_blkid: '28'
   size: '600116822016'
   type: partition
 - fstype: ext4
-  id: 378-format
+  id: 407-format
   label: ''
   parent_disk: '28'
   parent_disk_blkid: '28'
   type: format
-  volume: '378'
-- device: 378-format
-  id: 378-mount
+  volume: '407'
+- device: 407-format
+  id: 407-mount
   parent_disk: '28'
   parent_disk_blkid: '28'
   path: /mnt/sdc1
