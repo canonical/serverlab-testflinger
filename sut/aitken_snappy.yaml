@@ -5,45 +5,45 @@ default_disks:
   parent_disk_blkid: '5'
   ptable: GPT
   type: disk
-- device: '109'
-  id: nvme0n1-part1
-  number: '109'
-  parent_disk: '5'
-  parent_disk_blkid: '5'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 109-format
-  label: efi
-  parent_disk: '5'
-  parent_disk_blkid: '5'
-  type: format
-  volume: '109'
-- device: 109-format
-  id: 109-mount
-  parent_disk: '5'
-  parent_disk_blkid: '5'
-  path: /boot/efi
-  type: mount
-- device: '110'
+- device: '428'
   id: nvme0n1-part2
-  number: '110'
+  number: '428'
   parent_disk: '5'
   parent_disk_blkid: '5'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 110-format
+  id: 428-format
   label: root
   parent_disk: '5'
   parent_disk_blkid: '5'
   type: format
-  volume: '110'
-- device: 110-format
-  id: 110-mount
+  volume: '428'
+- device: 428-format
+  id: 428-mount
   parent_disk: '5'
   parent_disk_blkid: '5'
   path: /
+  type: mount
+- device: '427'
+  id: nvme0n1-part1
+  number: '427'
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 427-format
+  label: efi
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  type: format
+  volume: '427'
+- device: 427-format
+  id: 427-mount
+  parent_disk: '5'
+  parent_disk_blkid: '5'
+  path: /boot/efi
   type: mount
 - id: '6'
   name: nvme1n1
@@ -65,22 +65,22 @@ default_disks:
   parent_disk_blkid: '9'
   ptable: GPT
   type: disk
-- device: '111'
+- device: '429'
   id: pmem0-part1
-  number: '111'
+  number: '429'
   parent_disk: '9'
   parent_disk_blkid: '9'
   size: '266338304000'
   type: partition
 - fstype: ext4
-  id: 111-format
+  id: 429-format
   label: ''
   parent_disk: '9'
   parent_disk_blkid: '9'
   type: format
-  volume: '111'
-- device: 111-format
-  id: 111-mount
+  volume: '429'
+- device: 429-format
+  id: 429-mount
   parent_disk: '9'
   parent_disk_blkid: '9'
   path: /mnt/pmem0p1
@@ -90,22 +90,22 @@ default_disks:
   parent_disk_blkid: '10'
   ptable: GPT
   type: disk
-- device: '112'
+- device: '430'
   id: pmem1-part1
-  number: '112'
+  number: '430'
   parent_disk: '10'
   parent_disk_blkid: '10'
   size: '163196174336'
   type: partition
 - fstype: ext4
-  id: 112-format
+  id: 430-format
   label: ''
   parent_disk: '10'
   parent_disk_blkid: '10'
   type: format
-  volume: '112'
-- device: 112-format
-  id: 112-mount
+  volume: '430'
+- device: 430-format
+  id: 430-mount
   parent_disk: '10'
   parent_disk_blkid: '10'
   path: /mnt/pmem1p1
@@ -115,22 +115,22 @@ default_disks:
   parent_disk_blkid: '11'
   ptable: GPT
   type: disk
-- device: '113'
+- device: '431'
   id: pmem1.1s-part1
-  number: '113'
+  number: '431'
   parent_disk: '11'
   parent_disk_blkid: '11'
   size: '107256741888'
   type: partition
 - fstype: ext4
-  id: 113-format
+  id: 431-format
   label: ''
   parent_disk: '11'
   parent_disk_blkid: '11'
   type: format
-  volume: '113'
-- device: 113-format
-  id: 113-mount
+  volume: '431'
+- device: 431-format
+  id: 431-mount
   parent_disk: '11'
   parent_disk_blkid: '11'
   path: /mnt/pmem1.1sp1
@@ -140,22 +140,22 @@ default_disks:
   parent_disk_blkid: '12'
   ptable: GPT
   type: disk
-- device: '114'
+- device: '432'
   id: sda-part1
-  number: '114'
+  number: '432'
   parent_disk: '12'
   parent_disk_blkid: '12'
   size: '9994976100352'
   type: partition
 - fstype: ext4
-  id: 114-format
+  id: 432-format
   label: ''
   parent_disk: '12'
   parent_disk_blkid: '12'
   type: format
-  volume: '114'
-- device: 114-format
-  id: 114-mount
+  volume: '432'
+- device: 432-format
+  id: 432-mount
   parent_disk: '12'
   parent_disk_blkid: '12'
   path: /mnt/sda1
@@ -165,22 +165,22 @@ default_disks:
   parent_disk_blkid: '13'
   ptable: GPT
   type: disk
-- device: '115'
+- device: '433'
   id: sdb-part1
-  number: '115'
+  number: '433'
   parent_disk: '13'
   parent_disk_blkid: '13'
   size: '1597987880960'
   type: partition
 - fstype: ext4
-  id: 115-format
+  id: 433-format
   label: ''
   parent_disk: '13'
   parent_disk_blkid: '13'
   type: format
-  volume: '115'
-- device: 115-format
-  id: 115-mount
+  volume: '433'
+- device: 433-format
+  id: 433-mount
   parent_disk: '13'
   parent_disk_blkid: '13'
   path: /mnt/sdb1
@@ -190,22 +190,22 @@ default_disks:
   parent_disk_blkid: '14'
   ptable: GPT
   type: disk
-- device: '116'
+- device: '434'
   id: sdc-part1
-  number: '116'
+  number: '434'
   parent_disk: '14'
   parent_disk_blkid: '14'
   size: '127947243520'
   type: partition
 - fstype: ext4
-  id: 116-format
+  id: 434-format
   label: ''
   parent_disk: '14'
   parent_disk_blkid: '14'
   type: format
-  volume: '116'
-- device: 116-format
-  id: 116-mount
+  volume: '434'
+- device: 434-format
+  id: 434-mount
   parent_disk: '14'
   parent_disk_blkid: '14'
   path: /mnt/sdc1

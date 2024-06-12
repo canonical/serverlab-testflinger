@@ -1,0 +1,60 @@
+agent_name: toadsworth
+default_disks:
+- id: '150'
+  name: nvme0n1
+  parent_disk_blkid: '150'
+  ptable: GPT
+  type: disk
+- device: '184'
+  id: nvme0n1-part1
+  number: '184'
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 184-format
+  label: efi
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  type: format
+  volume: '184'
+- device: 184-format
+  id: 184-mount
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  path: /boot/efi
+  type: mount
+- device: '185'
+  id: nvme0n1-part2
+  number: '185'
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 185-format
+  label: root
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  type: format
+  volume: '185'
+- device: 185-format
+  id: 185-mount
+  parent_disk: '150'
+  parent_disk_blkid: '150'
+  path: /
+  type: mount
+- id: '151'
+  name: sda
+  parent_disk_blkid: '151'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.67
+env:
+  DEVICE_IP: 10.245.130.67
+  HEXR_DEVICE_SECURE_ID: gYGHh36Y2w3wtQ3CeqN4Jh
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: bnhme6
+node_name: toadsworth

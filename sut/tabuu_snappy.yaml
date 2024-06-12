@@ -1,0 +1,60 @@
+agent_name: tabuu
+default_disks:
+- id: '154'
+  name: sda
+  parent_disk_blkid: '154'
+  ptable: GPT
+  type: disk
+- device: '190'
+  id: sda-part1
+  number: '190'
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 190-format
+  label: efi
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  type: format
+  volume: '190'
+- device: 190-format
+  id: 190-mount
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  path: /boot/efi
+  type: mount
+- device: '191'
+  id: sda-part2
+  number: '191'
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 191-format
+  label: root
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  type: format
+  volume: '191'
+- device: 191-format
+  id: 191-mount
+  parent_disk: '154'
+  parent_disk_blkid: '154'
+  path: /
+  type: mount
+- id: '155'
+  name: sdb
+  parent_disk_blkid: '155'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.43
+env:
+  DEVICE_IP: 10.245.130.43
+  HEXR_DEVICE_SECURE_ID: ACkcUsNimCoPYEDMAjY6nK
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 76ettx
+node_name: tabuu

@@ -5,42 +5,42 @@ default_disks:
   parent_disk_blkid: '15'
   ptable: GPT
   type: disk
-- device: '389'
+- device: '409'
   id: sda-part1
-  number: '389'
+  number: '409'
   parent_disk: '15'
   parent_disk_blkid: '15'
   size: '536870912'
   type: partition
 - fstype: fat32
-  id: 389-format
+  id: 409-format
   label: efi
   parent_disk: '15'
   parent_disk_blkid: '15'
   type: format
-  volume: '389'
-- device: 389-format
-  id: 389-mount
+  volume: '409'
+- device: 409-format
+  id: 409-mount
   parent_disk: '15'
   parent_disk_blkid: '15'
   path: /boot/efi
   type: mount
-- device: '390'
+- device: '410'
   id: sda-part2
-  number: '390'
+  number: '410'
   parent_disk: '15'
   parent_disk_blkid: '15'
   size: '959652560896'
   type: partition
 - fstype: ext4
-  id: 390-format
+  id: 410-format
   label: root
   parent_disk: '15'
   parent_disk_blkid: '15'
   type: format
-  volume: '390'
-- device: 390-format
-  id: 390-mount
+  volume: '410'
+- device: 410-format
+  id: 410-mount
   parent_disk: '15'
   parent_disk_blkid: '15'
   path: /
@@ -50,22 +50,22 @@ default_disks:
   parent_disk_blkid: '16'
   ptable: GPT
   type: disk
-- device: '391'
+- device: '411'
   id: sdb-part1
-  number: '391'
+  number: '411'
   parent_disk: '16'
   parent_disk_blkid: '16'
   size: '960176848896'
   type: partition
 - fstype: ext4
-  id: 391-format
+  id: 411-format
   label: ''
   parent_disk: '16'
   parent_disk_blkid: '16'
   type: format
-  volume: '391'
-- device: 391-format
-  id: 391-mount
+  volume: '411'
+- device: 411-format
+  id: 411-mount
   parent_disk: '16'
   parent_disk_blkid: '16'
   path: /mnt/sdb1

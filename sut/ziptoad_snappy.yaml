@@ -1,0 +1,65 @@
+agent_name: ziptoad
+default_disks:
+- id: '143'
+  name: sda
+  parent_disk_blkid: '143'
+  ptable: GPT
+  type: disk
+- device: '176'
+  id: sda-part1
+  number: '176'
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 176-format
+  label: efi
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  type: format
+  volume: '176'
+- device: 176-format
+  id: 176-mount
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  path: /boot/efi
+  type: mount
+- device: '177'
+  id: sda-part2
+  number: '177'
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  size: '239444426752'
+  type: partition
+- fstype: ext4
+  id: 177-format
+  label: root
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  type: format
+  volume: '177'
+- device: 177-format
+  id: 177-mount
+  parent_disk: '143'
+  parent_disk_blkid: '143'
+  path: /
+  type: mount
+- id: '144'
+  name: sdb
+  parent_disk_blkid: '144'
+  ptable: null
+  type: disk
+- id: '145'
+  name: sdc
+  parent_disk_blkid: '145'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.25
+env:
+  DEVICE_IP: 10.245.130.25
+  HEXR_DEVICE_SECURE_ID: 98XGTF3R6GGLVYL2ST4qnb
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: c8xeef
+node_name: ziptoad
