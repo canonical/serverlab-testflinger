@@ -1,0 +1,55 @@
+agent_name: jasperoid
+default_disks:
+- id: '122'
+  name: nvme0n1
+  parent_disk_blkid: '122'
+  ptable: GPT
+  type: disk
+- device: '145'
+  id: nvme0n1-part1
+  number: '145'
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 145-format
+  label: efi
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  type: format
+  volume: '145'
+- device: 145-format
+  id: 145-mount
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  path: /boot/efi
+  type: mount
+- device: '146'
+  id: nvme0n1-part2
+  number: '146'
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  size: '479492833280'
+  type: partition
+- fstype: ext4
+  id: 146-format
+  label: root
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  type: format
+  volume: '146'
+- device: 146-format
+  id: 146-mount
+  parent_disk: '122'
+  parent_disk_blkid: '122'
+  path: /
+  type: mount
+device_ip: 10.245.130.86
+env:
+  DEVICE_IP: 10.245.130.86
+  HEXR_DEVICE_SECURE_ID: WzbdGqt65bV4UpJNscv2bp
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: k3ata6
+node_name: jasperoid
