@@ -1,0 +1,55 @@
+agent_name: snide
+default_disks:
+- id: '156'
+  name: nvme0n1
+  parent_disk_blkid: '156'
+  ptable: GPT
+  type: disk
+- device: '200'
+  id: nvme0n1-part1
+  number: '200'
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 200-format
+  label: efi
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  type: format
+  volume: '200'
+- device: 200-format
+  id: 200-mount
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  path: /boot/efi
+  type: mount
+- device: '201'
+  id: nvme0n1-part2
+  number: '201'
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 201-format
+  label: root
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  type: format
+  volume: '201'
+- device: 201-format
+  id: 201-mount
+  parent_disk: '156'
+  parent_disk_blkid: '156'
+  path: /
+  type: mount
+device_ip: 10.245.130.90
+env:
+  DEVICE_IP: 10.245.130.90
+  HEXR_DEVICE_SECURE_ID: L9r79mnTdimMQ6aU3NtX3M
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 7rhhe4
+node_name: snide

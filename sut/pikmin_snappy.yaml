@@ -1,0 +1,9 @@
+agent_name: pikmin
+device_ip: 10.245.130.80
+env:
+  DEVICE_IP: 10.245.130.80
+  HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: fa3f3f
+node_name: pikmin

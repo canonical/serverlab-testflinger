@@ -1,0 +1,40 @@
+agent_name: saiph
+default_disks:
+- id: '168'
+  name: sda
+  parent_disk_blkid: '168'
+  ptable: GPT
+  type: disk
+- device: '212'
+  id: sda-part2
+  number: '212'
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  size: '146809028608'
+  type: partition
+- fstype: ext4
+  id: 212-format
+  label: root
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  type: format
+  volume: '212'
+- device: 212-format
+  id: 212-mount
+  parent_disk: '168'
+  parent_disk_blkid: '168'
+  path: /
+  type: mount
+- id: '169'
+  name: sdb
+  parent_disk_blkid: '169'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.12
+env:
+  DEVICE_IP: 10.245.130.12
+  HEXR_DEVICE_SECURE_ID: a00D000000IjNgp
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: kgchnb
+node_name: saiph
