@@ -1,6 +1,0 @@
-job_queue: wildorange
-provision_data:
-  distro: focal
-test_data:
-  test_cmds: |
-    ssh -o StrictHostKeyChecking=no ubuntu@$DEVICE_IP ifconfig
