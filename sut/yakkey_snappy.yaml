@@ -1,0 +1,55 @@
+agent_name: yakkey
+default_disks:
+- id: '78'
+  name: nvme0n1
+  parent_disk_blkid: '78'
+  ptable: GPT
+  type: disk
+- device: '123'
+  id: nvme0n1-part1
+  number: '123'
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 123-format
+  label: efi
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  type: format
+  volume: '123'
+- device: 123-format
+  id: 123-mount
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  path: /boot/efi
+  type: mount
+- device: '124'
+  id: nvme0n1-part2
+  number: '124'
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 124-format
+  label: root
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  type: format
+  volume: '124'
+- device: 124-format
+  id: 124-mount
+  parent_disk: '78'
+  parent_disk_blkid: '78'
+  path: /
+  type: mount
+device_ip: 10.245.130.106
+env:
+  DEVICE_IP: 10.245.130.106
+  HEXR_DEVICE_SECURE_ID: XUVnpDEcyRuYQ7vKCmmVQM
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: nha8ne
+node_name: yakkey

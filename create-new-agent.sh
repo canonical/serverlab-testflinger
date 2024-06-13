@@ -2,9 +2,9 @@
 
 
 # Check if the number of arguments is 4
-if [ $# -ne 5 ]; then
+if [ $# -ne 6 ]; then
     echo "Error: The script requires exactly 4 arguments."
-    echo "Usage: $0 <HOSTNAME> <CID> <MAAS_ID> <SECURE_ID> <IPADDR>"
+    echo "Usage: $0 <HOSTNAME> <CID> <MAAS_ID> <SECURE_ID> <IPADDR> <MAAS_PROFILE>"
     exit 1
 fi
 
@@ -14,6 +14,7 @@ CID="$2"
 MAAS_ID="$3"
 SECURE_ID="$4"
 IPADDR="$5"
+MAAS_USER="$6"
 
 echo "Creating a new agent config using the following:"
 echo "  Hostname is $HOSTNAME"
@@ -21,6 +22,7 @@ echo "  CID is $CID"
 echo "  MAAS ID is $MAAS_ID"
 echo "  SECURE ID is $SECURE_ID"
 echo "  IP ADDRESS is $IPADDR"
+echo "  MAAS PROFILE is $MAAS_USER"
 echo
 read -p "Y/y to continue, N/n to exit " KEEP_GOING
 KEEP_GOING="${KEEP_GOING,,}"
@@ -78,3 +80,13 @@ env:
  HEXR_DEVICE_SECURE_ID: $SECURE_ID
  DEVICE_IP: $IPADDR
 EOF
+
+# verify maas connection and update storage if it works
+if maas $MAAS_USER version read &> /dev/null; then
+    echo "MAAS connection verified, updating storage"
+    $PWD/code/capture_node_storage.py --profile $MAAS_USER --clear $PWD/sut/${HOSTNAME}_snappy.yaml
+    $PWD/code/capture_node_storage.py --profile $MAAS_USER --process $PWD/sut/${HOSTNAME}_snappy.yaml
+else
+    echo "MAAS connection failed, update storage later"
+fi
+
