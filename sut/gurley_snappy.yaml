@@ -1,0 +1,35 @@
+agent_name: gurley
+default_disks:
+- id: '90'
+  name: sda
+  parent_disk_blkid: '90'
+  ptable: GPT
+  type: disk
+- device: '131'
+  id: sda-part2
+  number: '131'
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  size: '1000161148928'
+  type: partition
+- fstype: ext4
+  id: 131-format
+  label: root
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  type: format
+  volume: '131'
+- device: 131-format
+  id: 131-mount
+  parent_disk: '90'
+  parent_disk_blkid: '90'
+  path: /
+  type: mount
+device_ip: 10.245.130.6
+env:
+  DEVICE_IP: 10.245.130.6
+  HEXR_DEVICE_SECURE_ID: a00D000000SgZX9IAN
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: y4a7tb
+node_name: gurley

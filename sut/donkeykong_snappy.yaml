@@ -1,0 +1,55 @@
+agent_name: donkeykong
+default_disks:
+- id: '46'
+  name: sda
+  parent_disk_blkid: '46'
+  ptable: GPT
+  type: disk
+- device: '81'
+  id: sda-part1
+  number: '81'
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 81-format
+  label: efi
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  type: format
+  volume: '81'
+- device: 81-format
+  id: 81-mount
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  path: /boot/efi
+  type: mount
+- device: '82'
+  id: sda-part2
+  number: '82'
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  size: '957454745600'
+  type: partition
+- fstype: ext4
+  id: 82-format
+  label: root
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  type: format
+  volume: '82'
+- device: 82-format
+  id: 82-mount
+  parent_disk: '46'
+  parent_disk_blkid: '46'
+  path: /
+  type: mount
+device_ip: 10.245.130.66
+env:
+  DEVICE_IP: 10.245.130.66
+  HEXR_DEVICE_SECURE_ID: F7UTGtnispX4pbNWfoF7K4
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: f3qew4
+node_name: donkeykong

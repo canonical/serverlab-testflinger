@@ -1,0 +1,80 @@
+agent_name: krow
+default_disks:
+- id: '62'
+  name: sda
+  parent_disk_blkid: '62'
+  ptable: GPT
+  type: disk
+- device: '91'
+  id: sda-part1
+  number: '91'
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 91-format
+  label: efi
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  type: format
+  volume: '91'
+- device: 91-format
+  id: 91-mount
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  path: /boot/efi
+  type: mount
+- device: '92'
+  id: sda-part2
+  number: '92'
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 92-format
+  label: root
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  type: format
+  volume: '92'
+- device: 92-format
+  id: 92-mount
+  parent_disk: '62'
+  parent_disk_blkid: '62'
+  path: /
+  type: mount
+- id: '63'
+  name: sdb
+  parent_disk_blkid: '63'
+  ptable: GPT
+  type: disk
+- device: '295'
+  id: sdb-part1
+  number: '295'
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  size: '1000186314752'
+  type: partition
+- fstype: ext4
+  id: 295-format
+  label: ''
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  type: format
+  volume: '295'
+- device: 295-format
+  id: 295-mount
+  parent_disk: '63'
+  parent_disk_blkid: '63'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.89
+env:
+  DEVICE_IP: 10.245.130.89
+  HEXR_DEVICE_SECURE_ID: nNQgn76BemottjorYSGB9Z
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: fh47bx
+node_name: krow

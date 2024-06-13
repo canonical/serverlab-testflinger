@@ -1,0 +1,55 @@
+agent_name: danet
+default_disks:
+- id: '41'
+  name: nvme0n1
+  parent_disk_blkid: '41'
+  ptable: GPT
+  type: disk
+- device: '45'
+  id: nvme0n1-part1
+  number: '45'
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 45-format
+  label: efi
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  type: format
+  volume: '45'
+- device: 45-format
+  id: 45-mount
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  path: /boot/efi
+  type: mount
+- device: '46'
+  id: nvme0n1-part2
+  number: '46'
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 46-format
+  label: root
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  type: format
+  volume: '46'
+- device: 46-format
+  id: 46-mount
+  parent_disk: '41'
+  parent_disk_blkid: '41'
+  path: /
+  type: mount
+device_ip: 10.245.130.52
+env:
+  DEVICE_IP: 10.245.130.52
+  HEXR_DEVICE_SECURE_ID: 6TimgMA3UYqj2E3K2LPpt3
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: rbrna8
+node_name: danet
