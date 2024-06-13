@@ -1,0 +1,55 @@
+agent_name: rockman
+default_disks:
+- id: '170'
+  name: nvme0n1
+  parent_disk_blkid: '170'
+  ptable: GPT
+  type: disk
+- device: '213'
+  id: nvme0n1-part1
+  number: '213'
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 213-format
+  label: efi
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  type: format
+  volume: '213'
+- device: 213-format
+  id: 213-mount
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  path: /boot/efi
+  type: mount
+- device: '214'
+  id: nvme0n1-part2
+  number: '214'
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 214-format
+  label: root
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  type: format
+  volume: '214'
+- device: 214-format
+  id: 214-mount
+  parent_disk: '170'
+  parent_disk_blkid: '170'
+  path: /
+  type: mount
+device_ip: 10.245.130.84
+env:
+  DEVICE_IP: 10.245.130.84
+  HEXR_DEVICE_SECURE_ID: 7oVHU9DXEFFU6T97LtNBsd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: eqm4a6
+node_name: rockman

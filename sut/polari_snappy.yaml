@@ -1,0 +1,55 @@
+agent_name: polari
+default_disks:
+- id: '171'
+  name: sda
+  parent_disk_blkid: '171'
+  ptable: GPT
+  type: disk
+- device: '215'
+  id: sda-part1
+  number: '215'
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 215-format
+  label: efi
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  type: format
+  volume: '215'
+- device: 215-format
+  id: 215-mount
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  path: /boot/efi
+  type: mount
+- device: '216'
+  id: sda-part2
+  number: '216'
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  size: '959111495680'
+  type: partition
+- fstype: ext4
+  id: 216-format
+  label: root
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  type: format
+  volume: '216'
+- device: 216-format
+  id: 216-mount
+  parent_disk: '171'
+  parent_disk_blkid: '171'
+  path: /
+  type: mount
+device_ip: 10.245.130.22
+env:
+  DEVICE_IP: 10.245.130.22
+  HEXR_DEVICE_SECURE_ID: p6rBUqTxZYtJBfeoJMakCW
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 8d6tay
+node_name: polari

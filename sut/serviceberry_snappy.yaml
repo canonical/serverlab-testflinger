@@ -1,0 +1,60 @@
+agent_name: serviceberry
+default_disks:
+- id: '159'
+  name: sdc
+  parent_disk_blkid: '159'
+  ptable: GPT
+  type: disk
+- device: '204'
+  id: sdc-part1
+  number: '204'
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 204-format
+  label: efi
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  type: format
+  volume: '204'
+- device: 204-format
+  id: 204-mount
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  path: /boot/efi
+  type: mount
+- device: '205'
+  id: sdc-part2
+  number: '205'
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  size: '599584145408'
+  type: partition
+- fstype: ext4
+  id: 205-format
+  label: root
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  type: format
+  volume: '205'
+- device: 205-format
+  id: 205-mount
+  parent_disk: '159'
+  parent_disk_blkid: '159'
+  path: /
+  type: mount
+- id: '160'
+  name: sdd
+  parent_disk_blkid: '160'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.18
+env:
+  DEVICE_IP: 10.245.130.18
+  HEXR_DEVICE_SECURE_ID: a002000000EuC0h
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: qmshhb
+node_name: serviceberry
