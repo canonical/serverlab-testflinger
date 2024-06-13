@@ -1,0 +1,60 @@
+agent_name: romano
+default_disks:
+- id: '163'
+  name: nvme0n1
+  parent_disk_blkid: '163'
+  ptable: GPT
+  type: disk
+- device: '208'
+  id: nvme0n1-part1
+  number: '208'
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 208-format
+  label: efi
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  type: format
+  volume: '208'
+- device: 208-format
+  id: 208-mount
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  path: /boot/efi
+  type: mount
+- device: '209'
+  id: nvme0n1-part2
+  number: '209'
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 209-format
+  label: root
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  type: format
+  volume: '209'
+- device: 209-format
+  id: 209-mount
+  parent_disk: '163'
+  parent_disk_blkid: '163'
+  path: /
+  type: mount
+- id: '164'
+  name: nvme1n1
+  parent_disk_blkid: '164'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.101
+env:
+  DEVICE_IP: 10.245.130.101
+  HEXR_DEVICE_SECURE_ID: MsUxbvnYSuwhHhXRHN4bxd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: dfrbss
+node_name: romano

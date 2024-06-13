@@ -1,55 +1,9 @@
 agent_name: pikmin
-default_disks:
-- id: '240'
-  name: nvme0n1
-  parent_disk_blkid: '240'
-  ptable: GPT
-  type: disk
-- device: '39022'
-  id: nvme0n1-part1
-  number: '39022'
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  size: '536870912'
-  type: partition
-- fstype: fat32
-  id: 39022-format
-  label: efi
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  type: format
-  volume: '39022'
-- device: 39022-format
-  id: 39022-mount
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  path: /boot/efi
-  type: mount
-- device: '39025'
-  id: nvme0n1-part2
-  number: '39025'
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  size: '479559942144'
-  type: partition
-- fstype: ext4
-  id: 39025-format
-  label: root
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  type: format
-  volume: '39025'
-- device: 39025-format
-  id: 39025-mount
-  parent_disk: '240'
-  parent_disk_blkid: '240'
-  path: /
-  type: mount
 device_ip: 10.245.130.80
 env:
   DEVICE_IP: 10.245.130.80
   HEXR_DEVICE_SECURE_ID: 38fmYiCapWHq5qLfdRT463
 maas_user: testflinger-maastiff
 max_reserve_timeout: 604800
-node_id: nqby4y
+node_id: fa3f3f
 node_name: pikmin

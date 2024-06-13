@@ -1,0 +1,55 @@
+agent_name: pianta
+default_disks:
+- id: '172'
+  name: nvme0n1
+  parent_disk_blkid: '172'
+  ptable: GPT
+  type: disk
+- device: '217'
+  id: nvme0n1-part1
+  number: '217'
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 217-format
+  label: efi
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  type: format
+  volume: '217'
+- device: 217-format
+  id: 217-mount
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  path: /boot/efi
+  type: mount
+- device: '218'
+  id: nvme0n1-part2
+  number: '218'
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 218-format
+  label: root
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  type: format
+  volume: '218'
+- device: 218-format
+  id: 218-mount
+  parent_disk: '172'
+  parent_disk_blkid: '172'
+  path: /
+  type: mount
+device_ip: 10.245.130.38
+env:
+  DEVICE_IP: 10.245.130.38
+  HEXR_DEVICE_SECURE_ID: mDNyEtE94uGX3fq3XFENZg
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: swqy3a
+node_name: pianta
