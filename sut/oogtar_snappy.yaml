@@ -1,0 +1,80 @@
+agent_name: oogtar
+default_disks:
+- id: '174'
+  name: sda
+  parent_disk_blkid: '174'
+  ptable: GPT
+  type: disk
+- device: '225'
+  id: sda-part1
+  number: '225'
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 225-format
+  label: efi
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  type: format
+  volume: '225'
+- device: 225-format
+  id: 225-mount
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  path: /boot/efi
+  type: mount
+- device: '226'
+  id: sda-part2
+  number: '226'
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 226-format
+  label: root
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  type: format
+  volume: '226'
+- device: 226-format
+  id: 226-mount
+  parent_disk: '174'
+  parent_disk_blkid: '174'
+  path: /
+  type: mount
+- id: '175'
+  name: sdb
+  parent_disk_blkid: '175'
+  ptable: GPT
+  type: disk
+- device: '229'
+  id: sdb-part1
+  number: '229'
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  size: '800147374080'
+  type: partition
+- fstype: ext4
+  id: 229-format
+  label: ''
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  type: format
+  volume: '229'
+- device: 229-format
+  id: 229-mount
+  parent_disk: '175'
+  parent_disk_blkid: '175'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.65
+env:
+  DEVICE_IP: 10.245.130.65
+  HEXR_DEVICE_SECURE_ID: tJZnmY3w3QXvJ7jo4KkEJJ
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: f4sft4
+node_name: oogtar

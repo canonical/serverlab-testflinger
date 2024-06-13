@@ -1,0 +1,55 @@
+agent_name: hildy
+default_disks:
+- id: '128'
+  name: sda
+  parent_disk_blkid: '128'
+  ptable: GPT
+  type: disk
+- device: '151'
+  id: sda-part1
+  number: '151'
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 151-format
+  label: efi
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  type: format
+  volume: '151'
+- device: 151-format
+  id: 151-mount
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  path: /boot/efi
+  type: mount
+- device: '152'
+  id: sda-part2
+  number: '152'
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  size: '299456528384'
+  type: partition
+- fstype: ext4
+  id: 152-format
+  label: root
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  type: format
+  volume: '152'
+- device: 152-format
+  id: 152-mount
+  parent_disk: '128'
+  parent_disk_blkid: '128'
+  path: /
+  type: mount
+device_ip: 10.245.130.42
+env:
+  DEVICE_IP: 10.245.130.42
+  HEXR_DEVICE_SECURE_ID: SzyNwsKFPe9jh3TVSevuga
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: s4hyce
+node_name: hildy

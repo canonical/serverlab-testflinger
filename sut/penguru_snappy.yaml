@@ -1,0 +1,55 @@
+agent_name: penguru
+default_disks:
+- id: '176'
+  name: nvme0n1
+  parent_disk_blkid: '176'
+  ptable: GPT
+  type: disk
+- device: '227'
+  id: nvme0n1-part1
+  number: '227'
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 227-format
+  label: efi
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  type: format
+  volume: '227'
+- device: 227-format
+  id: 227-mount
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  path: /boot/efi
+  type: mount
+- device: '228'
+  id: nvme0n1-part2
+  number: '228'
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 228-format
+  label: root
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  type: format
+  volume: '228'
+- device: 228-format
+  id: 228-mount
+  parent_disk: '176'
+  parent_disk_blkid: '176'
+  path: /
+  type: mount
+device_ip: 10.245.130.79
+env:
+  DEVICE_IP: 10.245.130.79
+  HEXR_DEVICE_SECURE_ID: fJ38kf29vz6nLDjMr2jPkF
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: xqkfwp
+node_name: penguru
