@@ -1,0 +1,60 @@
+agent_name: boshi
+default_disks:
+- id: '32'
+  name: sda
+  parent_disk_blkid: '32'
+  ptable: GPT
+  type: disk
+- device: '32'
+  id: sda-part1
+  number: '32'
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 32-format
+  label: efi
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  type: format
+  volume: '32'
+- device: 32-format
+  id: 32-mount
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  path: /boot/efi
+  type: mount
+- device: '33'
+  id: sda-part2
+  number: '33'
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 33-format
+  label: root
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  type: format
+  volume: '33'
+- device: 33-format
+  id: 33-mount
+  parent_disk: '32'
+  parent_disk_blkid: '32'
+  path: /
+  type: mount
+- id: '33'
+  name: sdb
+  parent_disk_blkid: '33'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.69
+env:
+  DEVICE_IP: 10.245.130.69
+  HEXR_DEVICE_SECURE_ID: XuA6CivPEzuJgEqP2YrNgj
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: xtqfxp
+node_name: boshi
