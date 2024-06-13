@@ -7,7 +7,7 @@ usage() {
     echo "SECURE_ID: The secure ID for the device from C3"
     echo "IPADDR: The IP address of the device"
     echo "MAAS_PROFILE: The MAAS profile to use to access MAAS to get certain data"
-    echo "Optional:
+    echo "Optional:"
     echo "MAAS_ID: The MAAS node_id for the device. If you specify this the script"
     echo "         will use your supplied value, otherwise it will try to fetch it"
     echo "         from MAAS"
@@ -15,7 +15,7 @@ usage() {
 }
 
 # Check if the number of arguments is 4
-if [ $# -ne 5 ]; then
+if [ $# -lt 5 ]; then
     usage
 fi
 
