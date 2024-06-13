@@ -1,0 +1,55 @@
+agent_name: garamond
+default_disks:
+- id: '134'
+  name: sda
+  parent_disk_blkid: '134'
+  ptable: GPT
+  type: disk
+- device: '293'
+  id: sda-part1
+  number: '293'
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 293-format
+  label: efi
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  type: format
+  volume: '293'
+- device: 293-format
+  id: 293-mount
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  path: /boot/efi
+  type: mount
+- device: '294'
+  id: sda-part2
+  number: '294'
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  size: '999662026752'
+  type: partition
+- fstype: ext4
+  id: 294-format
+  label: root
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  type: format
+  volume: '294'
+- device: 294-format
+  id: 294-mount
+  parent_disk: '134'
+  parent_disk_blkid: '134'
+  path: /
+  type: mount
+device_ip: 10.245.130.33
+env:
+  DEVICE_IP: 10.245.130.33
+  HEXR_DEVICE_SECURE_ID: JCVoSCgYP4NMiTEHgVdXTc
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: a6agxf
+node_name: garamond
