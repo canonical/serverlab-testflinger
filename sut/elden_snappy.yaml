@@ -1,0 +1,55 @@
+agent_name: elden
+default_disks:
+- id: '66'
+  name: sda
+  parent_disk_blkid: '66'
+  ptable: GPT
+  type: disk
+- device: '95'
+  id: sda-part1
+  number: '95'
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 95-format
+  label: efi
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  type: format
+  volume: '95'
+- device: 95-format
+  id: 95-mount
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  path: /boot/efi
+  type: mount
+- device: '96'
+  id: sda-part2
+  number: '96'
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  size: '479526387712'
+  type: partition
+- fstype: ext4
+  id: 96-format
+  label: root
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  type: format
+  volume: '96'
+- device: 96-format
+  id: 96-mount
+  parent_disk: '66'
+  parent_disk_blkid: '66'
+  path: /
+  type: mount
+device_ip: 10.245.130.73
+env:
+  DEVICE_IP: 10.245.130.73
+  HEXR_DEVICE_SECURE_ID: QrgCFnyRMNnAyjXvSAFfyC
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: m6eead
+node_name: elden

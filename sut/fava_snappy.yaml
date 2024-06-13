@@ -1,0 +1,80 @@
+agent_name: fava
+default_disks:
+- id: '91'
+  name: sda
+  parent_disk_blkid: '91'
+  ptable: GPT
+  type: disk
+- device: '132'
+  id: sda-part1
+  number: '132'
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 132-format
+  label: efi
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  type: format
+  volume: '132'
+- device: 132-format
+  id: 132-mount
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  path: /boot/efi
+  type: mount
+- device: '133'
+  id: sda-part2
+  number: '133'
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  size: '299456528384'
+  type: partition
+- fstype: ext4
+  id: 133-format
+  label: root
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  type: format
+  volume: '133'
+- device: 133-format
+  id: 133-mount
+  parent_disk: '91'
+  parent_disk_blkid: '91'
+  path: /
+  type: mount
+- id: '92'
+  name: sdb
+  parent_disk_blkid: '92'
+  ptable: GPT
+  type: disk
+- device: '169'
+  id: sdb-part1
+  number: '169'
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  size: '299989204992'
+  type: partition
+- fstype: ext4
+  id: 169-format
+  label: ''
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  type: format
+  volume: '169'
+- device: 169-format
+  id: 169-mount
+  parent_disk: '92'
+  parent_disk_blkid: '92'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.77
+env:
+  DEVICE_IP: 10.245.130.77
+  HEXR_DEVICE_SECURE_ID: nBs8AYyMMYjYaDYNx3XQcb
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: rnk4sy
+node_name: fava
