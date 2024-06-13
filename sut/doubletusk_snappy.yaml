@@ -1,0 +1,80 @@
+agent_name: doubletusk
+default_disks:
+- id: '48'
+  name: nvme0n1
+  parent_disk_blkid: '48'
+  ptable: GPT
+  type: disk
+- device: '61'
+  id: nvme0n1-part1
+  number: '61'
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 61-format
+  label: efi
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  type: format
+  volume: '61'
+- device: 61-format
+  id: 61-mount
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  path: /boot/efi
+  type: mount
+- device: '62'
+  id: nvme0n1-part2
+  number: '62'
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  size: '959652560896'
+  type: partition
+- fstype: ext4
+  id: 62-format
+  label: root
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  type: format
+  volume: '62'
+- device: 62-format
+  id: 62-mount
+  parent_disk: '48'
+  parent_disk_blkid: '48'
+  path: /
+  type: mount
+- id: '49'
+  name: nvme1n1
+  parent_disk_blkid: '49'
+  ptable: GPT
+  type: disk
+- device: '68'
+  id: nvme1n1-part1
+  number: '68'
+  parent_disk: '49'
+  parent_disk_blkid: '49'
+  size: '960176848896'
+  type: partition
+- fstype: ext4
+  id: 68-format
+  label: ''
+  parent_disk: '49'
+  parent_disk_blkid: '49'
+  type: format
+  volume: '68'
+- device: 68-format
+  id: 68-mount
+  parent_disk: '49'
+  parent_disk_blkid: '49'
+  path: /mnt/nvme1n1p1
+  type: mount
+device_ip: 10.245.130.29
+env:
+  DEVICE_IP: 10.245.130.29
+  HEXR_DEVICE_SECURE_ID: wLWDLeWK5H9JbeezsyLZoK
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: whbfep
+node_name: doubletusk
