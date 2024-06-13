@@ -1,0 +1,55 @@
+agent_name: flavio
+default_disks:
+- id: '130'
+  name: nvme0n1
+  parent_disk_blkid: '130'
+  ptable: GPT
+  type: disk
+- device: '155'
+  id: nvme0n1-part1
+  number: '155'
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 155-format
+  label: efi
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  type: format
+  volume: '155'
+- device: 155-format
+  id: 155-mount
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  path: /boot/efi
+  type: mount
+- device: '156'
+  id: nvme0n1-part2
+  number: '156'
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 156-format
+  label: root
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  type: format
+  volume: '156'
+- device: 156-format
+  id: 156-mount
+  parent_disk: '130'
+  parent_disk_blkid: '130'
+  path: /
+  type: mount
+device_ip: 10.245.130.4
+env:
+  DEVICE_IP: 10.245.130.4
+  HEXR_DEVICE_SECURE_ID: 2Rhoju2kwe52yKRdroCRpR
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: scnndq
+node_name: flavio
