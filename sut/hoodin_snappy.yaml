@@ -1,0 +1,80 @@
+agent_name: hoodin
+default_disks:
+- id: '131'
+  name: sda
+  parent_disk_blkid: '131'
+  ptable: GPT
+  type: disk
+- device: '157'
+  id: sda-part1
+  number: '157'
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 157-format
+  label: efi
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  type: format
+  volume: '157'
+- device: 157-format
+  id: 157-mount
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  path: /boot/efi
+  type: mount
+- device: '158'
+  id: sda-part2
+  number: '158'
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  size: '1599778848768'
+  type: partition
+- fstype: ext4
+  id: 158-format
+  label: root
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  type: format
+  volume: '158'
+- device: 158-format
+  id: 158-mount
+  parent_disk: '131'
+  parent_disk_blkid: '131'
+  path: /
+  type: mount
+- id: '132'
+  name: sdb
+  parent_disk_blkid: '132'
+  ptable: GPT
+  type: disk
+- device: '259'
+  id: sdb-part1
+  number: '259'
+  parent_disk: '132'
+  parent_disk_blkid: '132'
+  size: '1600307331072'
+  type: partition
+- fstype: ext4
+  id: 259-format
+  label: ''
+  parent_disk: '132'
+  parent_disk_blkid: '132'
+  type: format
+  volume: '259'
+- device: 259-format
+  id: 259-mount
+  parent_disk: '132'
+  parent_disk_blkid: '132'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.97
+env:
+  DEVICE_IP: 10.245.130.97
+  HEXR_DEVICE_SECURE_ID: JvvE6MwcsUPnDmE3q4i7dB
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 4ydpqa
+node_name: hoodin
