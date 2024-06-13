@@ -1,0 +1,55 @@
+agent_name: fleep
+default_disks:
+- id: '93'
+  name: sda
+  parent_disk_blkid: '93'
+  ptable: GPT
+  type: disk
+- device: '134'
+  id: sda-part1
+  number: '134'
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 134-format
+  label: efi
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  type: format
+  volume: '134'
+- device: 134-format
+  id: 134-mount
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  path: /boot/efi
+  type: mount
+- device: '135'
+  id: sda-part2
+  number: '135'
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  size: '479559942144'
+  type: partition
+- fstype: ext4
+  id: 135-format
+  label: root
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  type: format
+  volume: '135'
+- device: 135-format
+  id: 135-mount
+  parent_disk: '93'
+  parent_disk_blkid: '93'
+  path: /
+  type: mount
+device_ip: 10.245.130.78
+env:
+  DEVICE_IP: 10.245.130.78
+  HEXR_DEVICE_SECURE_ID: BK9cxNangxvMY3YCZYajAa
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: d8qg8r
+node_name: fleep

@@ -1,0 +1,80 @@
+agent_name: fleetroc
+default_disks:
+- id: '123'
+  name: sda
+  parent_disk_blkid: '123'
+  ptable: GPT
+  type: disk
+- device: '147'
+  id: sda-part1
+  number: '147'
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 147-format
+  label: efi
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  type: format
+  volume: '147'
+- device: 147-format
+  id: 147-mount
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  path: /boot/efi
+  type: mount
+- device: '148'
+  id: sda-part2
+  number: '148'
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  size: '799623086080'
+  type: partition
+- fstype: ext4
+  id: 148-format
+  label: root
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  type: format
+  volume: '148'
+- device: 148-format
+  id: 148-mount
+  parent_disk: '123'
+  parent_disk_blkid: '123'
+  path: /
+  type: mount
+- id: '124'
+  name: sdb
+  parent_disk_blkid: '124'
+  ptable: GPT
+  type: disk
+- device: '292'
+  id: sdb-part1
+  number: '292'
+  parent_disk: '124'
+  parent_disk_blkid: '124'
+  size: '800147374080'
+  type: partition
+- fstype: ext4
+  id: 292-format
+  label: ''
+  parent_disk: '124'
+  parent_disk_blkid: '124'
+  type: format
+  volume: '292'
+- device: 292-format
+  id: 292-mount
+  parent_disk: '124'
+  parent_disk_blkid: '124'
+  path: /mnt/sdb1
+  type: mount
+device_ip: 10.245.130.10
+env:
+  DEVICE_IP: 10.245.130.10
+  HEXR_DEVICE_SECURE_ID: j2889PqRM2EmPN3SEjE8rP
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: wb7df8
+node_name: fleetroc
