@@ -1,0 +1,55 @@
+agent_name: kongfu
+default_disks:
+- id: '76'
+  name: sda
+  parent_disk_blkid: '76'
+  ptable: GPT
+  type: disk
+- device: '316'
+  id: sda-part1
+  number: '316'
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 316-format
+  label: efi
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  type: format
+  volume: '316'
+- device: 316-format
+  id: 316-mount
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  path: /boot/efi
+  type: mount
+- device: '317'
+  id: sda-part2
+  number: '317'
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  size: '799056855040'
+  type: partition
+- fstype: ext4
+  id: 317-format
+  label: root
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  type: format
+  volume: '317'
+- device: 317-format
+  id: 317-mount
+  parent_disk: '76'
+  parent_disk_blkid: '76'
+  path: /
+  type: mount
+device_ip: 10.245.130.84
+env:
+  DEVICE_IP: 10.245.130.84
+  HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 6empn7
+node_name: kongfu

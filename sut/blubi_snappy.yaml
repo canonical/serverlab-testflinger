@@ -1,0 +1,55 @@
+agent_name: blubi
+default_disks:
+- id: '23'
+  name: sda
+  parent_disk_blkid: '23'
+  ptable: GPT
+  type: disk
+- device: '18'
+  id: sda-part1
+  number: '18'
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 18-format
+  label: efi
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  type: format
+  volume: '18'
+- device: 18-format
+  id: 18-mount
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  path: /boot/efi
+  type: mount
+- device: '19'
+  id: sda-part2
+  number: '19'
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  size: '1919271567360'
+  type: partition
+- fstype: ext4
+  id: 19-format
+  label: root
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  type: format
+  volume: '19'
+- device: 19-format
+  id: 19-mount
+  parent_disk: '23'
+  parent_disk_blkid: '23'
+  path: /
+  type: mount
+device_ip: 10.245.130.68
+env:
+  DEVICE_IP: 10.245.130.68
+  HEXR_DEVICE_SECURE_ID: hz6sDsz3JuQfnbRGKyNFY8
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: 7etbhm
+node_name: blubi

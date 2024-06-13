@@ -1,20 +1,42 @@
 #!/bin/bash
 
+usage() {
+    echo "Usage: $0 <HOSTNAME> <CID> <SECURE_ID> <IPADDR> <MAAS_PROFILE> <MAAS_ID>"
+    echo "HOSTNAME: The hostname of the device in MAAS"
+    echo "CID: The unique C3 identifier for the device"
+    echo "SECURE_ID: The secure ID for the device from C3"
+    echo "IPADDR: The IP address of the device"
+    echo "MAAS_PROFILE: The MAAS profile to use to access MAAS to get certain data"
+    echo "Optional:"
+    echo "MAAS_ID: The MAAS node_id for the device. If you specify this the script"
+    echo "         will use your supplied value, otherwise it will try to fetch it"
+    echo "         from MAAS"
+    exit 1
+}
 
 # Check if the number of arguments is 4
-if [ $# -ne 6 ]; then
-    echo "Error: The script requires exactly 4 arguments."
-    echo "Usage: $0 <HOSTNAME> <CID> <MAAS_ID> <SECURE_ID> <IPADDR> <MAAS_PROFILE>"
-    exit 1
+if [ $# -lt 5 ]; then
+    usage
 fi
 
 # Assign each argument to a specific variable
 HOSTNAME="$1"
 CID="$2"
-MAAS_ID="$3"
-SECURE_ID="$4"
-IPADDR="$5"
-MAAS_USER="$6"
+SECURE_ID="$3"
+IPADDR="$4"
+MAAS_USER="$5"
+MAAS_ID="$6"
+
+if [ -z "$MAAS_ID" ]; then
+    echo "No node_id supplied, fetching from MAAS"
+    MAAS_ID=$(maas $MAAS_USER machines read | jq -r --arg HOSTNAME "$HOSTNAME" '.[] | select(.hostname == $HOSTNAME) | .system_id')
+    if [ -z "$MAAS_ID" ]; then
+        echo "No node_id found in MAAS, exiting"
+        echo "You can supply the node_id as the last argument"
+        usage
+        exit 1
+    fi
+fi
 
 echo "Creating a new agent config using the following:"
 echo "  Hostname is $HOSTNAME"
