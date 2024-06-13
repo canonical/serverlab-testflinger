@@ -1,0 +1,55 @@
+agent_name: juppi
+default_disks:
+- id: '121'
+  name: sda
+  parent_disk_blkid: '121'
+  ptable: GPT
+  type: disk
+- device: '143'
+  id: sda-part1
+  number: '143'
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 143-format
+  label: efi
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  type: format
+  volume: '143'
+- device: 143-format
+  id: 143-mount
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  path: /boot/efi
+  type: mount
+- device: '144'
+  id: sda-part2
+  number: '144'
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  size: '478456840192'
+  type: partition
+- fstype: ext4
+  id: 144-format
+  label: root
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  type: format
+  volume: '144'
+- device: 144-format
+  id: 144-mount
+  parent_disk: '121'
+  parent_disk_blkid: '121'
+  path: /
+  type: mount
+device_ip: 10.245.130.57
+env:
+  DEVICE_IP: 10.245.130.57
+  HEXR_DEVICE_SECURE_ID: 56qNSjF3mVkNja469w8jEd
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: rammyt
+node_name: juppi

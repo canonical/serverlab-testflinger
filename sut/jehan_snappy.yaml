@@ -1,0 +1,65 @@
+agent_name: jehan
+default_disks:
+- id: '125'
+  name: nvme0n1
+  parent_disk_blkid: '125'
+  ptable: GPT
+  type: disk
+- device: '149'
+  id: nvme0n1-part1
+  number: '149'
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 149-format
+  label: efi
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  type: format
+  volume: '149'
+- device: 149-format
+  id: 149-mount
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  path: /boot/efi
+  type: mount
+- device: '150'
+  id: nvme0n1-part2
+  number: '150'
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  size: '511566675968'
+  type: partition
+- fstype: ext4
+  id: 150-format
+  label: root
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  type: format
+  volume: '150'
+- device: 150-format
+  id: 150-mount
+  parent_disk: '125'
+  parent_disk_blkid: '125'
+  path: /
+  type: mount
+- id: '126'
+  name: sda
+  parent_disk_blkid: '126'
+  ptable: null
+  type: disk
+- id: '127'
+  name: sdb
+  parent_disk_blkid: '127'
+  ptable: null
+  type: disk
+device_ip: 10.245.130.93
+env:
+  DEVICE_IP: 10.245.130.93
+  HEXR_DEVICE_SECURE_ID: 5RL7Mw4VVfmswKE6imzc6i
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: a3mkwq
+node_name: jehan

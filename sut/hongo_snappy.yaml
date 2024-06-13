@@ -1,0 +1,55 @@
+agent_name: hongo
+default_disks:
+- id: '135'
+  name: sda
+  parent_disk_blkid: '135'
+  ptable: GPT
+  type: disk
+- device: '318'
+  id: sda-part1
+  number: '318'
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  size: '536870912'
+  type: partition
+- fstype: fat32
+  id: 318-format
+  label: efi
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  type: format
+  volume: '318'
+- device: 318-format
+  id: 318-mount
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  path: /boot/efi
+  type: mount
+- device: '319'
+  id: sda-part2
+  number: '319'
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  size: '239511535616'
+  type: partition
+- fstype: ext4
+  id: 319-format
+  label: root
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  type: format
+  volume: '319'
+- device: 319-format
+  id: 319-mount
+  parent_disk: '135'
+  parent_disk_blkid: '135'
+  path: /
+  type: mount
+device_ip: 10.245.130.85
+env:
+  DEVICE_IP: 10.245.130.85
+  HEXR_DEVICE_SECURE_ID: QunqfHmWqM3SwSo9FUc8BQ
+maas_user: testflinger-maastiff
+max_reserve_timeout: 604800
+node_id: cbqydq
+node_name: hongo
