@@ -45,9 +45,9 @@ default_disks:
   parent_disk_blkid: '76'
   path: /
   type: mount
-device_ip: 10.245.130.84
+device_ip: 10.245.130.58
 env:
-  DEVICE_IP: 10.245.130.84
+  DEVICE_IP: 10.245.130.58
   HEXR_DEVICE_SECURE_ID: R4oL6A8q4tMqmuAR9nHS7k
 maas_user: testflinger-maastiff
 max_reserve_timeout: 604800
