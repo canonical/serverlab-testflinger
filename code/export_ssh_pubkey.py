@@ -110,6 +110,7 @@ def main():
         raise RuntimeError('MaaS host required!')
 
     # split api_key into tuple for auth components
+    print('Preparing to add public key: %s' % ssh_key)
     api_key = tuple(api_key.split(':'))
 
     try:
