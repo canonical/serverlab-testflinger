@@ -1,11 +1,12 @@
 #!/usr/bin/bash
 
-#Deprecated in favor of using env vars from the calling shell.
+source /opt/serverlab-testflinger/config.sh
+
 # these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
-: ${TF_MAAS_ACT:=testflinger-maastiff}
-: ${MAAS_HOST:=10.245.128.4}
+: ${TF_MAAS_ACT:=$TF_MAAS_ACT}
+: ${MAAS_HOST:=$MAAS_HOST}
 : ${MAAS_PORT:=5240}
-: ${MAAS_API_KEY:='***REMOVED***'}
+: ${MAAS_API_KEY:=$MAAS_API_KEY}
 
 echo
 echo "###########################"

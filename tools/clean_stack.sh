@@ -1,9 +1,10 @@
 #!/usr/bin/bash
 
-# Deprecating these to use env vars instead
-export MAAS_HOST=10.245.128.4
+source /opt/serverlab-testflinger/config.sh
+
+export MAAS_HOST=$MAAS_HOST
 export MAAS_PORT=5240
-export MAAS_API_KEY='***REMOVED***'
+export MAAS_API_KEY=$MAAS_API_KEY
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 

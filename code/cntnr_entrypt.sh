@@ -1,12 +1,14 @@
 #!/usr/bin/bash
 
-# these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
-: ${TF_MAAS_ACT:=testflinger-maastiff}
-: ${MAAS_HOST:=10.245.128.4}
-: ${MAAS_PORT:=5240}
-: ${MAAS_API_KEY:='***REMOVED***'}
+source /opt/serverlab-testflinger/config.sh
 
-/usr/sbin/ip route change default via 10.245.128.1
+# these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
+: ${TF_MAAS_ACT:=$TF_MAAS_ACT}
+: ${MAAS_HOST:=$MAAS_HOST}
+: ${MAAS_PORT:=5240}
+: ${MAAS_API_KEY:=$MAAS_API_KEY}
+
+/usr/sbin/ip route change default via $LAB_GATEWAY
 
 echo
 echo "###########################"
