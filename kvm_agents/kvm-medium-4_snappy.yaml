@@ -1,0 +1,7 @@
+device_ip: 10.245.131.11
+node_id: e63xbn
+node_name: kvm-medium-4
+maas_user: testflinger_a
+agent_name: kvm-medium-4
+env:
+  DEVICE_IP: 10.245.131.11
