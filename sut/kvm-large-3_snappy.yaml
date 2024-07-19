@@ -1,7 +1,8 @@
 device_ip: 10.245.131.14
 node_id: hbr8kr
 node_name: kvm-large-3
-maas_user: testflinger_a
+maas_user: maastiff-testflinger
 agent_name: kvm-large-3
+max_reserve_timeout: 129600
 env:
   DEVICE_IP: 10.245.131.14
