@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source /opt/serverlab-testflinger/config.sh
+source /opt/env_config.sh
 
 # these values can be overriden with exec (VAR='value' ./tf-entrypoint.sh)
 : ${TF_MAAS_ACT:=$TF_MAAS_ACT}

@@ -53,6 +53,7 @@ class InitAgent:
         endpt_config = self.client.api.create_endpoint_config(
             aliases=[self.sut, ]
         )
+
         net_config = self.client.api.create_networking_config({
             self.net_name: endpt_config}
         )
@@ -70,6 +71,15 @@ class InitAgent:
             sys.exit()
 
         # paths (relative to host docker root)
+        # config.sh
+        sec_conf_file = PurePath(
+            'env_config').with_suffix('.sh')
+        src_secconf_path = PurePath(dhost_path,
+                                 'code',
+                                 sec_conf_file)
+        dst_secconf_path = PurePath('/',
+                                 'opt',
+                                 sec_conf_file) 
         # init
         init_file = PurePath(
             '01_start_agent').with_suffix('.sh')
@@ -174,6 +184,13 @@ class InitAgent:
             mem_limit='1g',
             mounts=[
                 # shared mounts
+                # env_conf.sh
+                docker.types.Mount(
+                    type='bind',
+                    target=fspath(dst_secconf_path),
+                    source=fspath(src_secconf_path),
+                    read_only=True
+                ),
                 # init
                 docker.types.Mount(
                     type='bind',
