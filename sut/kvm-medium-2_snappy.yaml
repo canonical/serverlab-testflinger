@@ -28,7 +28,7 @@ default_disks:
 device_ip: 10.245.131.35
 env:
   DEVICE_IP: 10.245.131.35
-maas_user: maastiff-testflinger
+maas_user: testflinger-maastiff
 max_reserve_timeout: 129600
 node_id: eefr4x
 node_name: kvm-medium-2
