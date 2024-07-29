@@ -1,7 +1,8 @@
 device_ip: 10.245.131.13
 node_id: hmchg6
 node_name: kvm-large-2
-maas_user: testflinger_a
+maas_user: maastiff-testflinger
 agent_name: kvm-large-2
 env:
   DEVICE_IP: 10.245.131.13
+max_reserve_timeout: 129600
