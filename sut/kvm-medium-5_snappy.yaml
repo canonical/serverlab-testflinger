@@ -1,8 +1,34 @@
-device_ip: 10.245.131.10
-node_id: 4wtper
-node_name: kvm-medium-5
-maas_user: maastiff-testflinger
 agent_name: kvm-medium-5
+default_disks:
+- id: '268'
+  name: vda
+  parent_disk_blkid: '268'
+  ptable: GPT
+  type: disk
+- device: '9376'
+  id: vda-part2
+  number: '9376'
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  size: '99992207360'
+  type: partition
+- fstype: ext4
+  id: 9376-format
+  label: root
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  type: format
+  volume: '9376'
+- device: 9376-format
+  id: 9376-mount
+  parent_disk: '268'
+  parent_disk_blkid: '268'
+  path: /
+  type: mount
+device_ip: 10.245.131.10
 env:
   DEVICE_IP: 10.245.131.10
+maas_user: maastiff-testflinger
 max_reserve_timeout: 129600
+node_id: 4wtper
+node_name: kvm-medium-5

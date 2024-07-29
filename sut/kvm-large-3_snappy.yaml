@@ -1,8 +1,34 @@
-device_ip: 10.245.131.14
-node_id: hbr8kr
-node_name: kvm-large-3
-maas_user: maastiff-testflinger
 agent_name: kvm-large-3
+default_disks:
+- id: '255'
+  name: vda
+  parent_disk_blkid: '255'
+  ptable: GPT
+  type: disk
+- device: '9363'
+  id: vda-part2
+  number: '9363'
+  parent_disk: '255'
+  parent_disk_blkid: '255'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 9363-format
+  label: root
+  parent_disk: '255'
+  parent_disk_blkid: '255'
+  type: format
+  volume: '9363'
+- device: 9363-format
+  id: 9363-mount
+  parent_disk: '255'
+  parent_disk_blkid: '255'
+  path: /
+  type: mount
+device_ip: 10.245.131.14
 env:
   DEVICE_IP: 10.245.131.14
+maas_user: maastiff-testflinger
 max_reserve_timeout: 129600
+node_id: hbr8kr
+node_name: kvm-large-3

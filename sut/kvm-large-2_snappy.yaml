@@ -1,8 +1,34 @@
-device_ip: 10.245.131.13
-node_id: hmchg6
-node_name: kvm-large-2
-maas_user: maastiff-testflinger
 agent_name: kvm-large-2
+default_disks:
+- id: '254'
+  name: vda
+  parent_disk_blkid: '254'
+  ptable: GPT
+  type: disk
+- device: '9362'
+  id: vda-part2
+  number: '9362'
+  parent_disk: '254'
+  parent_disk_blkid: '254'
+  size: '199992803328'
+  type: partition
+- fstype: ext4
+  id: 9362-format
+  label: root
+  parent_disk: '254'
+  parent_disk_blkid: '254'
+  type: format
+  volume: '9362'
+- device: 9362-format
+  id: 9362-mount
+  parent_disk: '254'
+  parent_disk_blkid: '254'
+  path: /
+  type: mount
+device_ip: 10.245.131.13
 env:
   DEVICE_IP: 10.245.131.13
+maas_user: maastiff-testflinger
 max_reserve_timeout: 129600
+node_id: hmchg6
+node_name: kvm-large-2
